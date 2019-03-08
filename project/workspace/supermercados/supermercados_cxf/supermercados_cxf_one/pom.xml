@@ -11,6 +11,47 @@
 
     <groupId>supermercados_cxf</groupId>
     <artifactId>supermercados_cxf_one</artifactId>
+    <packaging>war</packaging>
 
+    <!-- Dependency properties -->
+    <properties>
+        <serviceLocation>ws.SupermercadoCXFOne</serviceLocation>
+    </properties>
+
+    <!-- Plugin configuration -->
+    <build>
+        <!-- Name of the generated WAR file -->
+        <finalName>supermercado_cxf_one</finalName>
+        <plugins>
+            <!-- CXF SERVICE GENERATOR -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-java2ws-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>process-classes</id>
+                        <phase>process-classes</phase>
+                        <configuration>
+                            <className>${serviceLocation}</className>
+                            <genWsdl>true</genWsdl>
+                            <verbose>true</verbose>
+                            <genServer>true</genServer>
+                            <genClient>false</genClient>
+                            <genWrapperbean>true</genWrapperbean>
+                            <frontend>jaxws</frontend>
+                            <databinding>jaxb</databinding>
+                            <soap12>true</soap12>
+                            <quiet>false</quiet>
+                            <attachWsdl>true</attachWsdl>
+                        </configuration>
+                        <goals>
+                            <goal>java2ws</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -11,4 +11,16 @@
 
     <groupId>supermercados_rest</groupId>
     <artifactId>supermercados_rest_two</artifactId>
+    <packaging>war</packaging>
+
+    <!-- Dependency properties -->
+    <properties>
+    </properties>
+
+    <!-- Plugin configuration -->
+    <build>
+        <!--Name of the generated WAR file -->
+        <finalName>supermercado_rest_two</finalName>
+    </build>
+
 </project>
