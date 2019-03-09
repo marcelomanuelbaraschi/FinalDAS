@@ -42,9 +42,7 @@ public class MSMarcasDao extends DaoImpl {
 	public List<Bean> select(Bean bean) throws SQLException {
 		MarcaBean    marca_param = (MarcaBean) bean;
 		List<Bean>   marcas;
-
 		this.connect();
-
 		this.setProcedure("dbo.get_marcas(?)");
 		if(marca_param.getMarca() == null) {
 			this.setNull(1, Types.VARCHAR);
@@ -53,9 +51,7 @@ public class MSMarcasDao extends DaoImpl {
 			this.setParameter(1, marca_param.getMarca());
 		}
 		marcas = this.executeQuery();
-
 		this.disconnect();
-
 		return marcas;
 
 
