@@ -12,6 +12,7 @@
 
 *.wsdl
 
+project/workspace/supermercados/supermercados_cxf/supermercados_cxf_one/target/
 
 project/workspace/supermercados/supermercados_axis/supermercados_axis_one/target/
 
