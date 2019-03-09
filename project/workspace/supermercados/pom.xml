@@ -6,14 +6,17 @@
 
     <groupId>supermercados</groupId>
     <artifactId>supermercados</artifactId>
-    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <name>Supermercados</name>
+    <packaging>pom</packaging>
+
+
     <modules>
         <module>supermercados_core</module>
-        <module>supermercados_db</module>
         <module>supermercados_rest</module>
         <module>supermercados_cxf</module>
         <module>supermercados_axis</module>
+        <module>supermercados_db</module>
     </modules>
 
     <prerequisites>
@@ -90,7 +93,7 @@
             <tomcat.port>8001</tomcat.port>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_supermercados;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.99.100:1435;databaseName=db_supermercados;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>supermercado_rest_one</contextDB>

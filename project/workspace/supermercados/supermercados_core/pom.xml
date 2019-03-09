@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-
     <artifactId>supermercados_core</artifactId>
 
     <!-- Dependency definitions -->
@@ -35,7 +34,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -59,6 +57,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

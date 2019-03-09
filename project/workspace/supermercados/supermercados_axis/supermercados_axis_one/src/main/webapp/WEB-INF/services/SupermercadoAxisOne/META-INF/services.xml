@@ -1,0 +1,10 @@
+<serviceGroup>
+	<service name="SupermercadoAxisOne" targetNamespace="http://ws.SupermercadoAxisOne/">
+		<description>JNLPGenerator service</description>
+		<schema schemaNamespace="http://ws.SupermercadoAxisOne/"/>
+		<parameter name="ServiceClass" locked="false">ws.SupermercadoAxisOne</parameter>
+		<operation name="ping">
+			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+		</operation>
+	</service>
+</serviceGroup>
