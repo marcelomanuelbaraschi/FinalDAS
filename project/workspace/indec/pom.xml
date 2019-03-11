@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>indec</groupId>
+    <artifactId>indec</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Indec</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>indec_service</module>
+        <module>indec_db</module>
+    </modules>
+
+    <prerequisites>
+        <maven>3.3.9</maven>
+    </prerequisites>
+
+    <!-- Dependency properties -->
+    <properties>
+        <!-- specify which version of Java to build against-->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+
+        <liquibase.version>3.6.1</liquibase.version>
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+
+        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <log4j.slf4j.impl.version>2.11.0</log4j.slf4j.impl.version>
+    </properties>
+
+    <profiles>
+        <!-- REST -->
+        <profile>
+            <id>rest_indec</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>rest_indec</value>
+                </property>
+            </activation>
+            <properties>
+                <!-- SERVER -->
+                <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                <webResources.resource.directory>/src/main/resources</webResources.resource.directory>
+                <webResources.resource.targetPath>WEB-INF/wsdl</webResources.resource.targetPath>
+                <includePattern>*.wsdl</includePattern>
+
+                <tomcat.server>myTomcat</tomcat.server>
+                <tomcat.url>http://localhost:8085/manager/text</tomcat.url>
+                <tomcat.path>/${project.build.finalName}</tomcat.path>
+                <tomcat.port>8005</tomcat.port>
+                <!-- DB -->
+                <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
+                <urlDB>jdbc:sqlserver://localhost:1439;databaseName=db_indec;</urlDB>
+                <usernameDB>SA</usernameDB>
+                <passwordDB>Das12345</passwordDB>
+                <contextDB>indec_rest</contextDB>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>6.1.0.jre8</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>${liquibase.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.slf4j.impl.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Plugin configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- TOMCAT SERVER -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat7-maven-plugin.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <server>${tomcat.server}</server>
+                    <url>${tomcat.url}</url>
+                    <path>${tomcat.path}</path>
+                    <port>${tomcat.port}</port>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+                <configuration>
+                    <webXml>${webXml}</webXml>
+                    <webResources>
+                        <resource>
+                            <directory>${webResources.resource.directory}</directory>
+                            <targetPath>${webResources.resource.targetPath}</targetPath>
+                            <includes>
+                                <include>${includePattern}</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
