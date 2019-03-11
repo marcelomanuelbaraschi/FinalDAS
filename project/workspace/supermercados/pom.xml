@@ -93,7 +93,7 @@
             <tomcat.port>8001</tomcat.port>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.99.100:1435;databaseName=db_supermercados;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_supermercados;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>supermercado_rest_one</contextDB>
