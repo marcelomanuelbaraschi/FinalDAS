@@ -7,5 +7,5 @@ function test_db(){
 }
 
 # Example of usages
-# test_db axis_one
-# use db_supermercados
+# test_db mssql_indec
+# use db_indec

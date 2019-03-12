@@ -16,27 +16,14 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
+				AND SPECIFIC_CATALOG = 'db_indec'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<dropProcedure procedureName="cleanDB"/>
 	</changeSet>
 
-	<changeSet id="Drop procedure get_marcas" author="DAS-Team" runAlways="true"
-	           runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="1">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
-				AND ROUTINE_NAME = 'get_marcas'
-			</sqlCheck>
-		</preConditions>
-		<dropProcedure procedureName="get_marcas"/>
-	</changeSet>
-	
+
 	<!-- ******************************* -->
 	<!--  CREATE PROCEDURES CHANGE-SETS  -->
 	<!-- ******************************* -->
@@ -48,7 +35,7 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
+				AND SPECIFIC_CATALOG = 'db_indec'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
@@ -56,18 +43,4 @@
 				path="/src/main/resources/liquibase/procedures/cleanDB.sql"/>
 	</changeSet>
 
-	<changeSet id="Create procedure get_marcas" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="0">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
-				AND ROUTINE_NAME = 'get_marcas'
-			</sqlCheck>
-		</preConditions>
-		<sqlFile
-				path="/src/main/resources/liquibase/procedures/get_marcas.sql"/>
-	</changeSet>
 </databaseChangeLog>

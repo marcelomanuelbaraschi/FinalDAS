@@ -1,3 +1,3 @@
 :ON ERROR EXIT
-CREATE DATABASE db_supermercados;
+CREATE DATABASE db_indec;
 GO
