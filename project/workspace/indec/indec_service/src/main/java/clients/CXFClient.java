@@ -1,15 +1,15 @@
 package clients;
 import beans.MarcaBean;
 import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.JsonUtils;
-import java.sql.Timestamp;
+
+import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import static constants.Constants.*;
 import clients.exceptions.ClientException;
 import contract.SupermercadosServiceContract;
@@ -20,7 +20,7 @@ public class CXFClient implements SupermercadosServiceContract {
     protected Logger log = LoggerFactory.getLogger(CXFClient.class);
 
     public CXFClient(final String wsdlUrl) {
-        this.wsdlUrl = wsdlUrl; // "http://localhost:8000/concesionarias_cxf_one_war/services/concesionaria_cxf_one_service?wsdl"
+        this.wsdlUrl = wsdlUrl;
     }
 
     public static Optional<SupermercadosServiceContract> create(final Map<String, String> params) {
@@ -32,14 +32,15 @@ public class CXFClient implements SupermercadosServiceContract {
     }
 
     private <A> Object executeMethod(final String methodName, final A... params) throws ClientException {
+        JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
+
         final JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
 
         try (final Client client = dcf.createClient(wsdlUrl)) {
 
             final Object[] res = client.invoke(methodName, params);
 
-            Long statusCode =
-                    Long.parseLong(client.getResponseContext().get("org.apache.cxf.message.Message.RESPONSE_CODE").toString());
+            Long statusCode = Long.parseLong(client.getResponseContext().get("org.apache.cxf.message.Message.RESPONSE_CODE").toString());
 
             if (statusCode >= 500)
                 throw new ClientException("ENDPOINT IS DOWN = " + client.getResponseContext().get("org.apache.cxf.service.model.MessageInfo").toString());
