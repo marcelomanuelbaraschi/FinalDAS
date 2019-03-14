@@ -22,7 +22,7 @@ public class ConsumeServiceSpec {
         params.put("targetNameSpace", targetNameSpace);
         //params.put("wsdlUrl", wsdlUrl);
         final  Optional<SupermercadosServiceContract> maybeClient =
-                ClientFactory.getInstance().getClientFor(ClientType.CXF, params);
+                ClientFactory.getInstance().getClientFor(ClientType.AXIS, params);
         assertTrue(maybeClient.isPresent());
         try {
             final String confirmation = maybeClient.get().health("INDEC");
