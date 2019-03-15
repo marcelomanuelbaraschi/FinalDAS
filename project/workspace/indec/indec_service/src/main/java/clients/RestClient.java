@@ -1,6 +1,6 @@
 package clients;
 
-import beans.Bean;
+import db.Bean;
 import beans.MarcaBean;
 import clients.exceptions.ClientException;
 import contract.SupermercadosServiceContract;

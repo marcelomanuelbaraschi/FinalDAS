@@ -14,6 +14,7 @@ public class ConsumeServiceSpec {
 
     @Test
     public void test_axis_one_health(){ //Walmart
+
         final String endpointUrl = "http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne.SupermercadoAxisOneHttpEndpoint/";
         //final String wsdlUrl = "http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne?wsdl";
         final String targetNameSpace = "http://ws.SupermercadoAxisOne/";
@@ -66,6 +67,7 @@ public class ConsumeServiceSpec {
         } catch (ClientException e) {
             fail();
         }
+
     }
 
 }

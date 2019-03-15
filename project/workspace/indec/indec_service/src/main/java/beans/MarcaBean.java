@@ -1,6 +1,7 @@
 package beans;
 
 import com.google.gson.annotations.SerializedName;
+import db.Bean;
 
 public class MarcaBean implements Bean {
 

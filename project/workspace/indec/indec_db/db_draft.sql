@@ -1,3 +1,6 @@
+use db_indec;
+create database db_indec;
+drop database db_indec;
 
 CREATE TABLE tecnologia (
 	  nombre VARCHAR(20) 
@@ -63,10 +66,37 @@ CREATE TABLE cadena_params_config (
 	, FOREIGN KEY(tecnologia, nombreParametro) REFERENCES tecnologia_param (tecnologia, nombreParametro)
 );
 
-
+GO
 INSERT INTO cadena_params_config (id_cadena, tecnologia, nombreParametro, valor)
 VALUES
        (1, 'AXIS', 'endpointUrl', 'http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne.SupermercadoAxisOneHttpEndpoint/')--Walmart
       ,(1, 'AXIS','targetNameSpace','http://ws.SupermercadoAxisOne/')--Walmart
       ,(2, 'CXF' ,'wsdlUrl','http://localhost:8003/supermercado_cxf_one/services/supermercado_cxf_one?wsdl')--Jumbo
       ,(3, 'REST','url','http://localhost:8001/supermercado_rest_one/supermercadoRestOne')--Carrefour
+GO
+
+
+CREATE OR ALTER PROCEDURE get_cadena_service_config  @id_cadena BIGINT 
+AS 
+	SELECT cpc.id_cadena as idCadena, c.nombre as nombreCadena, cpc.nombreParametro, cpc.tecnologia, cpc.valor
+	FROM cadena_params_config cpc 
+	JOIN cadena c
+	ON  c.id = cpc.id_cadena
+	WHERE cpc.id_cadena = @id_cadena
+GO
+
+EXEC get_cadena_service_config @id_cadena = 1
+GO
+
+CREATE OR ALTER PROCEDURE get_cadenas 
+AS
+	SELECT C.id, C.nombre, CT.tecnologia
+		FROM cadena C
+		JOIN cadena_tecnologia CT 
+		ON C.id = CT.id_cadena
+GO
+
+EXEC get_cadenas
+GO
+
+

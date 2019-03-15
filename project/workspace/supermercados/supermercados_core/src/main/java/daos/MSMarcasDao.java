@@ -3,7 +3,6 @@ package daos;
 import bean.MarcaBean;
 import db.Bean;
 import db.DaoImpl;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;

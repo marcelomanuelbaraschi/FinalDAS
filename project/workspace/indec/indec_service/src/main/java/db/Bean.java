@@ -1,4 +1,5 @@
-package beans;
+package db;
 
 public interface Bean {
+
 }
