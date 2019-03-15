@@ -7,8 +7,6 @@
 
 	<!--   TABLE DROP CHANGE-SETS      -->
 
-
-
     <changeSet id="Drop table marca" author="DAS-Team" runAlways="true" runOnChange="true">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="marca"/>
