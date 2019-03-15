@@ -1,7 +1,5 @@
 package clients;
 
-import db.Bean;
-import beans.MarcaBean;
 import clients.exceptions.ClientException;
 import contract.SupermercadosServiceContract;
 import org.apache.http.HttpEntity;
@@ -27,7 +25,7 @@ import static constants.Constants.*;
 
 public class RestClient implements SupermercadosServiceContract {
 
-    protected Logger log = LoggerFactory.getLogger(RestClient.class);
+    //protected Logger log = LoggerFactory.getLogger(RestClient.class);
 
     private final String url;
     private final HttpClient client;
@@ -124,7 +122,7 @@ public class RestClient implements SupermercadosServiceContract {
     }
 
 
-    @Override
+    /*@Override
     public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
 
         final String query = getQuery(CONSULTAR_MARCA, IDENTIFICADOR, MARCA);
@@ -132,13 +130,13 @@ public class RestClient implements SupermercadosServiceContract {
         final String jsonPlanBean = call(GET, url);
         log.info("[GET consultarPlan][URL {}][jsonPlanBean = {}]", url, jsonPlanBean);
         return JsonUtils.toObject(jsonPlanBean, MarcaBean.class);
-    }
+    }*/
 
 
     @Override
     public String health(final String identificador) throws ClientException {
         final String url = getQuery(HEALTH, IDENTIFICADOR);
-        log.info("[GET health][URL {}]", url);
+        //log.info("[GET health][URL {}]", url);
         return call(GET, String.format(url, identificador));
     }
 }

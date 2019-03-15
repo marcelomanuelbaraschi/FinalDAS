@@ -7,9 +7,41 @@
 
 	<!--   TABLE DROP CHANGE-SETS      -->
 
+	<changeSet id="Drop table Cadena_Params_Config" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="cadena_params_config"/>
+		</preConditions>
+		<dropTable tableName="cadena_params_config"/>
+	</changeSet>
+
+	<changeSet id="Drop table Cadena_Tecnologia" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="cadena_tecnologia"/>
+		</preConditions>
+		<dropTable tableName="cadena_tecnologia"/>
+	</changeSet>
+
+	<changeSet id="Drop table Cadena" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="cadena"/>
+		</preConditions>
+		<dropTable tableName="cadena"/>
+	</changeSet>
+
+	<changeSet id="Drop table Tecnologia_Param" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="tecnologia_param"/>
+		</preConditions>
+		<dropTable tableName="tecnologia_param"/>
+	</changeSet>
 
 
-
+	<changeSet id="Drop table Tecnologia" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="tecnologia"/>
+		</preConditions>
+		<dropTable tableName="tecnologia"/>
+	</changeSet>
 
 
 </databaseChangeLog>

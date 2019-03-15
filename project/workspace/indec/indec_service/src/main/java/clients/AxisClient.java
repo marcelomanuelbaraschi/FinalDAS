@@ -1,5 +1,4 @@
 package clients;
-import beans.MarcaBean;
 import clients.exceptions.ClientException;
 import contract.SupermercadosServiceContract;
 import org.apache.axiom.om.OMAbstractFactory;
@@ -12,19 +11,16 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.JsonUtils;
-
 import java.util.Map;
 import java.util.Optional;
 import static constants.Constants.*;
-
 public class AxisClient implements SupermercadosServiceContract {
 
     private final String endpointUrl;
     private final OMFactory fac;
     private final OMNamespace omNs;
 
-    protected Logger log = LoggerFactory.getLogger(AxisClient.class);
+    //protected Logger log = LoggerFactory.getLogger(AxisClient.class);
 
     public AxisClient(final String endpointUrl
             , final String targetNameSpace
@@ -89,7 +85,7 @@ public class AxisClient implements SupermercadosServiceContract {
     }
 
 
-    @Override
+   /* @Override
     public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
         final OMElement method = createMethod(CONSULTAR_MARCA);
         final OMElement param_id = createParam(IDENTIFICADOR, identificador);
@@ -101,7 +97,7 @@ public class AxisClient implements SupermercadosServiceContract {
         final String jsonMarcaBean = returnValue.getText();
         log.info("[GET consultarMarca][method {}][jsonPlanBean = {}]", method, jsonMarcaBean);
         return JsonUtils.toObject(jsonMarcaBean, MarcaBean.class);
-    }
+    }*/
 
     @Override
     public String health(final String identificador) throws ClientException {
@@ -111,7 +107,7 @@ public class AxisClient implements SupermercadosServiceContract {
         final OMElement omElement = executeMethod(method); // response
         final OMElement returnValue = omElement.getFirstElement();
         final String jsonHealth = returnValue.getText();
-        log.info("[GET health][jsonHealth {}]", jsonHealth);
+        //log.info("[GET health][jsonHealth {}]", jsonHealth);
         return jsonHealth;
     }
 }

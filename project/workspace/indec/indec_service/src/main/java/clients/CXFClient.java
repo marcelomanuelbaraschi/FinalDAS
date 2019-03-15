@@ -1,5 +1,4 @@
 package clients;
-import beans.MarcaBean;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
@@ -7,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.JsonUtils;
 
-import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
 import static constants.Constants.*;
@@ -17,7 +15,7 @@ import contract.SupermercadosServiceContract;
 public class CXFClient implements SupermercadosServiceContract {
 
     private final String wsdlUrl;
-    protected Logger log = LoggerFactory.getLogger(CXFClient.class);
+    //protected Logger log = LoggerFactory.getLogger(CXFClient.class);
 
     public CXFClient(final String wsdlUrl) {
         this.wsdlUrl = wsdlUrl;
@@ -56,19 +54,19 @@ public class CXFClient implements SupermercadosServiceContract {
         }
     }
 
-    @Override
+   /* @Override
     public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
         final Object object = executeMethod(CONSULTAR_MARCA ,identificador, marca);
         final String jsonMarcaBean = object.toString();
         log.info("[GET consultarPlan][object {}][jsonPlanBean = {}]", object, jsonMarcaBean);
         return JsonUtils.toObject(jsonMarcaBean, MarcaBean.class);
-    }
+    }*/
 
     @Override
     public String health(final String identificador) throws ClientException {
         final Object object = executeMethod(HEALTH, identificador);
         final String jsonPlanBean = object.toString();
-        log.info("[GET health][jsonPlanBean {}]", jsonPlanBean);
+        //log.info("[GET health][jsonPlanBean {}]", jsonPlanBean);
         return jsonPlanBean;
     }
 }
