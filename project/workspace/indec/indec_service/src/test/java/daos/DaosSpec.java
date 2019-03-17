@@ -1,5 +1,5 @@
 package daos;
-import beans.ServiceConfigBean;
+import beans.CadenaServiceConfig;
 import com.google.gson.GsonBuilder;
 import db.Bean;
 import db.Dao;
@@ -28,7 +28,7 @@ public class DaosSpec {
         try {
             Dao daoCadenaServiceConfig = DaoFactory.getDaoSimple("CadenaServiceConfigs");
             assertNotNull(daoCadenaServiceConfig);
-            List<Bean> expectedConfigs = daoCadenaServiceConfig.select(new ServiceConfigBean());
+            List<Bean> expectedConfigs = daoCadenaServiceConfig.select(new CadenaServiceConfig());
             System.out.println(gson.toJson(expectedConfigs));
             assertTrue(true);
         } catch (SQLException e) {

@@ -1,15 +1,13 @@
 package beans;
 
-import clients.factory.ClientType;
+import clients.ClientType;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-import java.util.HashMap;
+public class CadenaServiceConfig implements Bean {
 
-public class ServiceConfigBean  implements Bean {
-
-    @SerializedName("params")
-    private HashMap<String, String> params = new HashMap<>();
+    @SerializedName("paramValue")
+    private String paramValue ;
     @SerializedName("clientType")
     private ClientType clientType;
     @SerializedName("idCadena")
@@ -17,12 +15,13 @@ public class ServiceConfigBean  implements Bean {
     @SerializedName("nombreCadena")
     private String nombreCadena;
 
-    public HashMap<String, String> getParams() {
-        return params;
+
+    public String getParamValue() {
+        return paramValue;
     }
 
-    public void setParams(HashMap<String, String> params) {
-        this.params = params;
+    public void setParamValue(String paramValue) {
+        this.paramValue = paramValue;
     }
 
     public ClientType getClientType() {
@@ -48,5 +47,6 @@ public class ServiceConfigBean  implements Bean {
     public void setNombreCadena(String nombreCadena) {
         this.nombreCadena = nombreCadena;
     }
+
 
 }

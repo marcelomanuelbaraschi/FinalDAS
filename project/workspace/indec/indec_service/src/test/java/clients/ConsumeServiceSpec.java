@@ -1,63 +1,29 @@
 package clients;
-
-import beans.ServiceConfigBean;
 import clients.exceptions.ClientException;
-import clients.factory.ClientFactory;
-import clients.factory.ClientType;
 import contract.SupermercadosServiceContract;
-import db.Bean;
-import db.Dao;
-import db.DaoFactory;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.JsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import repositories.CadenaServiceRepository;
+import java.util.Optional;
 
-import java.sql.SQLException;
-import java.util.*;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
 
 public class ConsumeServiceSpec {
-
-    @BeforeClass
-    public static void cacheConfigs() throws SQLException {
-
-    }
-
+    protected static final Logger log = LoggerFactory.getLogger(ConsumeServiceSpec.class);
     @Test
-    public void test_all_health(){
-
-        try {
-            List<ServiceConfigBean> configs = cadenasServiceConfigs();
-            for(ServiceConfigBean config:configs) {
-                final Optional<SupermercadosServiceContract> maybeClient =
-                        ClientFactory.getInstance().getClientFor(config.getClientType(), config.getParams());
-                assertTrue(maybeClient.isPresent());
+    public void test_axis_one_health(){ //Walmart
+            final Optional<SupermercadosServiceContract> maybeClient = CadenaServiceRepository.getInstance().query(1L);
+            assertTrue(maybeClient.isPresent());
+            try {
                 final String confirmation = maybeClient.get().health("INDEC");
-                System.out.println(confirmation);
+                assertEquals(confirmation,"OK");
+            } catch (ClientException e) {
+                log.error("Client Exception:{}",e.getMessage());
+
             }
-            assertTrue(true);
-        } catch (ClientException | SQLException e) {
-            fail();
+
         }
-    }
-
-    public ServiceConfigBean cadenasServiceConfigsByCadenaId(Long id) throws SQLException {
-        Dao daoServiceConfig = DaoFactory.getDaoSimple("ServiceConfigs");
-        ServiceConfigBean bean = new ServiceConfigBean();
-        bean.setIdCadena(id);
-        List<Bean> beans = daoServiceConfig.select(bean);
-        final ServiceConfigBean[] serviceConfigBeans = JsonUtils.toObject(JsonUtils.toJsonString(beans), ServiceConfigBean[].class);
-        return serviceConfigBeans[0];
-    }
-
-    public static List<ServiceConfigBean> cadenasServiceConfigs() throws SQLException {
-        Dao daoServiceConfig = DaoFactory.getDaoSimple("ServiceConfigs");
-        ServiceConfigBean bean = new ServiceConfigBean();
-        List<Bean> beans = daoServiceConfig.select(bean);
-        final ServiceConfigBean[] serviceConfigBeans = JsonUtils.toObject(JsonUtils.toJsonString(beans), ServiceConfigBean[].class);
-        return Arrays.asList(serviceConfigBeans);
-
-    }
 }

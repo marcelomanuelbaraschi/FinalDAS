@@ -67,8 +67,8 @@ public class RestClient implements SupermercadosServiceContract {
             if (statusCode >= 400)
                 throw new ClientException("BAD REQUEST = " + resp.toString());
 
-            final String jsonPlanBean = EntityUtils.toString(responseEntity);
-            return jsonPlanBean;
+            final String jsonBean = EntityUtils.toString(responseEntity);
+            return jsonBean;
         } catch (final IOException e) {
             throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
         }
@@ -95,9 +95,8 @@ public class RestClient implements SupermercadosServiceContract {
         this.client = HttpClientBuilder.create().build();
     }
 
-    public static Optional<SupermercadosServiceContract> create(final Map<String, String> params) {
-        final String url = params.getOrDefault(REST_PARAM_URL, "");
-        if (url.isEmpty())
+    public static Optional<SupermercadosServiceContract> create(final String url) {
+        if (url == null)
             return Optional.empty();
 
         final RestClient restClient = new RestClient(url);

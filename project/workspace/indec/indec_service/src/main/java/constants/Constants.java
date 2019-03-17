@@ -9,8 +9,7 @@ public class Constants {
 
 
     public static final String REST = "REST";
-    public static final String AXIS = "AXIS";
-    public static final String CXF = "CXF";
+    public static final String SOAP = "SOAP";
 
     public static final String AXIS_PARAM_ENDP_URL = "endpointUrl";
     public static final String AXIS_PARAM_TARGET = "targetNameSpace";
@@ -19,10 +18,10 @@ public class Constants {
 
 
     public static final String IDENTIFICADOR    = "identificador";
-    public static final String CONSULTAR_MARCA = "marcas";
+    //public static final String CONSULTAR_MARCA = "marcas";
 
     public static final String HEALTH = "health";
-    public static final String MARCA = "marca";
+    //public static final String MARCA = "marca";
 
 
 

@@ -30,7 +30,7 @@ public class SupermercadoCXFOne {
         return "OK";
     }
 
-    @WebMethod(operationName = "marcas", action = "urn:Marcas")
+    /*@WebMethod(operationName = "marcas", action = "urn:Marcas")
     public String marcas(@WebParam(name = "identificador") final String identificador,
                          @WebParam(name = "marca") final String marca) throws SQLException {
         log.debug("Cxf marcas identificador -> {} - marca -> {}", identificador, marca);
@@ -40,5 +40,5 @@ public class SupermercadoCXFOne {
         List<Bean> marcas = dao.select(bean);
 
         return gson.toJson(marcas);
-    }
+    }*/
 }

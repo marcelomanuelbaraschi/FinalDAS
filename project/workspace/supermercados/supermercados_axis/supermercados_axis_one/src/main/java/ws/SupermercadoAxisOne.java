@@ -9,9 +9,6 @@ import db.DaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.util.List;
-
 
 public class SupermercadoAxisOne {
     protected static final Logger log = LoggerFactory.getLogger(SupermercadoAxisOne.class);
@@ -25,7 +22,7 @@ public class SupermercadoAxisOne {
         return "OK";
     }
 
-    public String marcas(final String identificador, final String marca) throws SQLException {
+    /*public String marcas(final String identificador, final String marca) throws SQLException {
         log.debug("Axis marcas identificador -> {}, marca {}", identificador, marca);
 
         Dao dao = DaoFactory.getDaoSimple("Marcas");
@@ -34,5 +31,5 @@ public class SupermercadoAxisOne {
         List<Bean> marcas = dao.select(bean);
 
         return gson.toJson(marcas);
-    }
+    }*/
 }
