@@ -1,7 +1,6 @@
 package repositories;
 import beans.CadenaServiceConfig;
-import clients.RestClient;
-import clients.SoapClient;
+import clients.factory.ClientFactory;
 import contract.SupermercadosServiceContract;
 import db.Bean;
 import db.Dao;
@@ -13,18 +12,16 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import static clients.ClientType.*;
-import static java.util.stream.Collectors.toList;
 
-public class CadenaServiceRepository implements ICadenaServiceRepository{
+public class CadenaServiceConfigRepository implements ICadenaServiceConfigRepository{
 
-    private static CadenaServiceRepository instance = new CadenaServiceRepository();
-    protected static final Logger log = LoggerFactory.getLogger(CadenaServiceRepository.class);
+    private static CadenaServiceConfigRepository instance = new CadenaServiceConfigRepository();
+    protected static final Logger log = LoggerFactory.getLogger(CadenaServiceConfigRepository.class);
 
-    private CadenaServiceRepository() {
+    private CadenaServiceConfigRepository() {
     }
 
-    public static CadenaServiceRepository getInstance() {
+    public static CadenaServiceConfigRepository getInstance() {
         return instance;
     }
 
@@ -38,26 +35,40 @@ public class CadenaServiceRepository implements ICadenaServiceRepository{
             bean.setIdCadena(cadenaId);
             List<Bean> beans = daoServiceConfig.select(bean);
             final CadenaServiceConfig[] arrayConfigs = JsonUtils.toObject(JsonUtils.toJsonString(beans), CadenaServiceConfig[].class);
-            List<CadenaServiceConfig> listConfig = Arrays.asList(arrayConfigs)
-                                                         .stream()
-                                                         .filter(conf -> conf.getIdCadena().equals(cadenaId))
-                                                         .collect(toList());
+            List<CadenaServiceConfig> listConfig = Arrays.asList(arrayConfigs);
+
             if (listConfig.isEmpty()){
                 return Optional.empty();
             }else{
                 CadenaServiceConfig config  = listConfig.get(0);
-                if(config.getClientType().equals(SOAP)){
-                    return SoapClient.create(config.getParamValue());
-                }
-                else if (config.getClientType().equals(REST)){
-                    return RestClient.create(config.getParamValue());
-                }
+                ClientFactory.getInstance().getClient(config.getTecnologia(),config.getUrl());
             }
+
         } catch (SQLException e) {
             return Optional.empty();
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<SupermercadosServiceContract> store(CadenaServiceConfig config) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Boolean activate(Long cadenaId) {
+        return false;
+    }
+
+    @Override
+    public Boolean deactivate(Long cadenaId) {
+        return false;
+    }
+
+    @Override
+    public Boolean delete(Long cadenaId) {
+        return false;
     }
 }
 

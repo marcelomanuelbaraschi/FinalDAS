@@ -1,6 +1,6 @@
 package daos;
 import beans.CadenaServiceConfig;
-import clients.ClientType;
+import clients.Tecnologia;
 import db.Bean;
 import db.DaoImpl;
 import java.sql.ResultSet;
@@ -34,10 +34,10 @@ public class MSCadenaServiceConfigsDao extends DaoImpl {
         List<Bean> configs;
         configs = new LinkedList<>();
         CadenaServiceConfig cadenaConfig = new CadenaServiceConfig();
-        cadenaConfig.setClientType(ClientType.SOAP);
         cadenaConfig.setIdCadena(1L);
         cadenaConfig.setNombreCadena("Wallmart");
-        cadenaConfig.setParamValue("http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne?wsdl");
+        cadenaConfig.setTecnologia(Tecnologia.SOAP);
+        cadenaConfig.setUrl("http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne?wsdl");
         configs.add(cadenaConfig);
         return configs;
     }

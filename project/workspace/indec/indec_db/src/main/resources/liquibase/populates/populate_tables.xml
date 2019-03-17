@@ -15,36 +15,13 @@
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/populates/tecnologia.sql"/>
 	</changeSet>
-
-	<changeSet id="Populate table tecnologia_param" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="tecnologia_param"/>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/tecnologia_param.sql"/>
-	</changeSet>
-
+	
 	<changeSet id="Populate table Cadena" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<tableExists tableName="cadena"/>
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/populates/cadena.sql"/>
 	</changeSet>
-
-	<changeSet id="Populate table Cadena_Tecnologia" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="cadena_tecnologia"/>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/cadena_tecnologia.sql"/>
-	</changeSet>
-
-	<changeSet id="Populate table Cadena_Params_Config" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="cadena_params_config"/>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/cadena_params_config.sql"/>
-
-	</changeSet>
-
 
 
 </databaseChangeLog>

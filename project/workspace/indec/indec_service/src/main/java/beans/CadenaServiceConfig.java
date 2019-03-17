@@ -1,35 +1,37 @@
 package beans;
 
-import clients.ClientType;
+import clients.Tecnologia;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
 public class CadenaServiceConfig implements Bean {
 
-    @SerializedName("paramValue")
-    private String paramValue ;
-    @SerializedName("clientType")
-    private ClientType clientType;
+
     @SerializedName("idCadena")
     private Long idCadena;
     @SerializedName("nombreCadena")
     private String nombreCadena;
+    @SerializedName("tecnologia")
+    private Tecnologia tecnologia;
+    @SerializedName("url")
+    private String url ;
 
 
-    public String getParamValue() {
-        return paramValue;
+    public String getUrl() {
+        return url;
     }
 
-    public void setParamValue(String paramValue) {
-        this.paramValue = paramValue;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public ClientType getClientType() {
-        return clientType;
+
+    public Tecnologia getTecnologia() {
+        return tecnologia;
     }
 
-    public void setClientType(ClientType clientType) {
-        this.clientType = clientType;
+    public void setTecnologia(Tecnologia tecnologia) {
+        this.tecnologia = tecnologia;
     }
 
     public Long getIdCadena() {
@@ -47,6 +49,8 @@ public class CadenaServiceConfig implements Bean {
     public void setNombreCadena(String nombreCadena) {
         this.nombreCadena = nombreCadena;
     }
+
+
 
 
 }

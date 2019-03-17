@@ -16,16 +16,6 @@
 		<sqlFile path="/src/main/resources/liquibase/tables/tecnologia.sql"/>
 	</changeSet>
 
-	<!--Tecnologia_Param-->
-	<changeSet id="Create table tecnologia_param" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<not>
-				<tableExists tableName="tecnologia_param"/>
-			</not>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/tecnologia_param.sql"/>
-	</changeSet>
-
 	<!--Cadena-->
 	<changeSet id="Create table cadena" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
@@ -35,29 +25,5 @@
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/tables/cadena.sql"/>
 	</changeSet>
-
-	<!--Cadena_Tecnologia-->
-	<changeSet id="Create table cadena_tecnologia" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<not>
-				<tableExists tableName="cadena_tecnologia"/>
-			</not>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/cadena_tecnologia.sql"/>
-	</changeSet>
-
-	<!--Cadena_Params_Config-->
-	<changeSet id="Create table Cadena_Params_Config" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<not>
-				<tableExists tableName="cadena_params_config"/>
-			</not>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/cadena_params_config.sql"/>
-	</changeSet>
-
-
-
-
 
 </databaseChangeLog>
