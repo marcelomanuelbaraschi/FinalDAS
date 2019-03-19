@@ -14,8 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import java.sql.SQLException;
-import java.util.List;
+
 
 @Path("/supermercadoRestOne")
 public class SupermercadoRestOne {
