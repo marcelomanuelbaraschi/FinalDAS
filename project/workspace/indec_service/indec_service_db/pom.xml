@@ -2,24 +2,25 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<parent>
-    <artifactId>indec_service</artifactId>
+
+    <parent>
+        <artifactId>indec_service</artifactId>
+        <groupId>indec_service</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
     <groupId>indec_service</groupId>
-    <version>1.0-SNAPSHOT</version>
-</parent>
-<modelVersion>4.0.0</modelVersion>
+    <artifactId>indec_service_db</artifactId>
+    <packaging>jar</packaging>
 
-<groupId>indec_service</groupId>
-<artifactId>indec_service_db</artifactId>
-<packaging>jar</packaging>
-
-<properties>
-    <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-    <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_indec_service;</urlDB>
-    <usernameDB>SA</usernameDB>
-    <passwordDB>Das12345</passwordDB>
-    <contextDB>rest_indec_service</contextDB>
-</properties>
+    <properties>
+        <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
+        <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_indec_service;</urlDB>
+        <usernameDB>SA</usernameDB>
+        <passwordDB>Das12345</passwordDB>
+        <contextDB>rest_indec_service</contextDB>
+    </properties>
     <profiles>
         <profile>
             <id>rest_service</id>
