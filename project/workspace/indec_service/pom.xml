@@ -24,6 +24,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <liquibase.version>3.6.1</liquibase.version>
     </properties>
 
     <!-- Plugin configuration -->
