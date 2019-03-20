@@ -13,6 +13,7 @@
     <modules>
         <module>indec_service_rest</module>
         <module>indec_service_db</module>
+        <module>indec_supermercados_sdk</module>
     </modules>
 
     <prerequisites>
@@ -23,7 +24,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-
     </properties>
 
     <!-- Plugin configuration -->
@@ -40,5 +40,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
