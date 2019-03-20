@@ -1,3 +1,3 @@
 :ON ERROR EXIT
-CREATE DATABASE db_indec;
+CREATE DATABASE db_indec_service;
 GO
