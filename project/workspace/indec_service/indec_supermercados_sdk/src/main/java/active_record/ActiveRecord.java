@@ -439,6 +439,7 @@ abstract class ActiveRecord<Record> extends ConnectionDB<Record> {
         }
     }
 
+    // TODO FILL THIS
     public static DatasourceConfig getDatasource() {
         DatasourceConfig datasourceConfig = new DatasourceConfig();
         datasourceConfig.setDriver("");
@@ -494,9 +495,6 @@ abstract class ActiveRecord<Record> extends ConnectionDB<Record> {
             i++;
         }
     }
-    // public abstract Boolean activate();
-    // public abstract Boolean deactivate();
-    // public abstract Boolean delete();
 }
 
 // BEAN
@@ -553,13 +551,16 @@ class ServiceConfigRecord extends ActiveRecord<ServiceConfig> {
 
 class Runner {
     public static void main(String[] args) throws SQLException, NoEntityException {
-        ServiceConfigRecord config = new ServiceConfigRecord(1L, ServiceConfig.class);
-        Optional<ServiceConfig> select = config.select();
+        ServiceConfigRecord serviceConfigRecord = new ServiceConfigRecord(1L, ServiceConfig.class);
+        Optional<ServiceConfig> select1 = serviceConfigRecord.select();
+        serviceConfigRecord.delete();
+        Optional<ServiceConfig> select2 = serviceConfigRecord.select();
+        ServiceConfig config = new ServiceConfig(); // TODO FILL config
+        ServiceConfigRecord.insert(config);
+        Optional<ServiceConfig> select3 = serviceConfigRecord.select();
         ServiceConfig newConfig = new ServiceConfig();
         newConfig.setTecnologia("AXIS");
-        config.update(newConfig, "tecnologia");
-        config.delete();
-
-        ServiceConfigRecord.insert(newConfig);
+        serviceConfigRecord.update(newConfig, "tecnologia");
+        Optional<ServiceConfig> select4 = serviceConfigRecord.select();
     }
 }
