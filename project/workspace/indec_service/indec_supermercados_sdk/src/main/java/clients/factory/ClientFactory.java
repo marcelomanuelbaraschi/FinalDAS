@@ -3,8 +3,8 @@ package clients.factory;
 import clients.*;
 import clients.Tecnologia;
 import clients.RestClient;
-import contract.SupermercadosServiceContract;
-import java.util.Optional;
+import clients.exceptions.ClientException;
+import contract.CadenaServiceContract;
 
 public class ClientFactory implements IClientFactory {
 
@@ -18,13 +18,13 @@ public class ClientFactory implements IClientFactory {
     }
 
     @Override
-    public Optional<SupermercadosServiceContract> getClient(final Tecnologia tecnologia, final String url) {
+    public CadenaServiceContract clientFor(final Tecnologia tecnologia, final String url)  throws ClientException {
         if (url == null)
-            return Optional.empty();
+            throw new ClientException ("Could not create a client, the provided url is null");
         if (tecnologia.equals(Tecnologia.SOAP)) {
             return SoapClient.create(url);
         } else if (tecnologia.equals(Tecnologia.REST)) {
             return RestClient.create(url);
-        } else return Optional.empty();
+        } else  throw new ClientException ("Could not create a client, check the provided parameters");
     }
 }

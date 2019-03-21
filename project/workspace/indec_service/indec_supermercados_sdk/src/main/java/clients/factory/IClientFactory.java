@@ -1,11 +1,8 @@
 package clients.factory;
-
-
 import clients.Tecnologia;
-import contract.SupermercadosServiceContract;
-
-import java.util.Optional;
+import clients.exceptions.ClientException;
+import contract.CadenaServiceContract;
 
 public interface IClientFactory {
-    Optional<SupermercadosServiceContract> getClient(final Tecnologia tecnologia, final String url);
+    CadenaServiceContract clientFor(final Tecnologia tecnologia, final String url) throws ClientException;
 }

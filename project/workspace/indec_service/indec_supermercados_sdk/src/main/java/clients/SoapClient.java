@@ -3,13 +3,11 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 import static constants.Constants.*;
 import clients.exceptions.ClientException;
-import contract.SupermercadosServiceContract;
+import contract.CadenaServiceContract;
 
-public class SoapClient implements SupermercadosServiceContract {
+public class SoapClient implements CadenaServiceContract {
 
     private final String wsdlUrl;
     protected Logger log = LoggerFactory.getLogger(SoapClient.class);
@@ -18,11 +16,11 @@ public class SoapClient implements SupermercadosServiceContract {
         this.wsdlUrl = wsdlUrl;
     }
 
-    public static Optional<SupermercadosServiceContract> create(final String wsdlUrl) {
-        if (wsdlUrl == null)
-            return Optional.empty();
+    public static CadenaServiceContract create(final String wsdlUrl) throws ClientException {
+        if (wsdlUrl == null) throw new ClientException ("Could not create SoapClient, the provided wsdlUrl is null");
         final SoapClient soapClient = new SoapClient(wsdlUrl);
-        return Optional.of(soapClient);
+        if (soapClient == null) throw new ClientException ("Could not create RestClient");
+        return soapClient;
     }
 
     private <A> Object executeMethod(final String methodName, final A... params) throws ClientException {
@@ -48,14 +46,6 @@ public class SoapClient implements SupermercadosServiceContract {
         }
     }
 
-   /* @Override
-    public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
-        final Object object = executeMethod(CONSULTAR_MARCA ,identificador, marca);
-        final String jsonMarcaBean = object.toString();
-        log.info("[GET consultarPlan][object {}][jsonPlanBean = {}]", object, jsonMarcaBean);
-        return JsonUtils.toObject(jsonMarcaBean, MarcaBean.class);
-    }*/
-
     @Override
     public String health(final String identificador) throws ClientException {
         final Object object = executeMethod(HEALTH, identificador);
@@ -63,4 +53,13 @@ public class SoapClient implements SupermercadosServiceContract {
         log.info("[GET health][jsonBean {}]", jsonBean);
         return jsonBean;
     }
+
+       /* @Override
+    public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
+        final Object object = executeMethod(CONSULTAR_MARCA ,identificador, marca);
+        final String jsonMarcaBean = object.toString();
+        log.info("[GET consultarPlan][object {}][jsonPlanBean = {}]", object, jsonMarcaBean);
+        return JsonUtils.toObject(jsonMarcaBean, MarcaBean.class);
+    }*/
+
 }

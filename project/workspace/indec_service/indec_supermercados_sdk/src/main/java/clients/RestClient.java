@@ -1,7 +1,7 @@
 package clients;
 
 import clients.exceptions.ClientException;
-import contract.SupermercadosServiceContract;
+import contract.CadenaServiceContract;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,29 +13,50 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.JsonUtils;
 import java.io.IOException;
 import java.net.URI;
-import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static constants.Constants.*;
 
-public class RestClient implements SupermercadosServiceContract {
+public class RestClient implements CadenaServiceContract {
 
-    //protected Logger log = LoggerFactory.getLogger(RestClient.class);
-
+    protected Logger log = LoggerFactory.getLogger(RestClient.class);
     private final String url;
     private final HttpClient client;
 
+    private String url() {
+        return this.url;
+    }
+    private HttpClient client() {
+        return this.client;
+    }
+
+    public RestClient(final String url) {
+        this.url = url;
+        this.client = HttpClientBuilder.create().build();
+    }
+
+    public static CadenaServiceContract create(final String url) throws ClientException {
+        if (url == null) throw new ClientException ("Could not create RestClient, the provided url is null");
+        final RestClient restClient = new RestClient(url);
+        if (restClient == null) throw new ClientException ("Could not create RestClient");
+        return restClient;
+    }
+
+    private String buildQueryString(final String base, final String... params) {
+        final String target = "/" + base + "?";
+        final String args = Stream.of(params)
+                .map(p -> p + "=%s")
+                .collect(Collectors.joining("&"));
+        final String arg = (params.length > 1 ? args : params[0] + "=%s");
+        return target + arg;
+    }
+
     private BiFunction<String, String, HttpUriRequest> HTTPFactory = (method, callTo) -> {
 
-        System.out.println(getUrl() + callTo);
-        URI uri = URI.create(getUrl() + callTo);
-        System.out.println(uri.toString());
-
+        URI uri = URI.create(url() + callTo);
         switch (method) {
             case POST:
                 HttpPost postReq = new HttpPost();
@@ -57,69 +78,32 @@ public class RestClient implements SupermercadosServiceContract {
     private String call(final String method, final String callTo) throws ClientException {
 
         try {
-            final HttpResponse resp = getCliente().execute(HTTPFactory.apply(method, callTo));
+            final HttpResponse resp = client().execute(HTTPFactory.apply(method, callTo));
             final HttpEntity responseEntity = resp.getEntity();
 
             final int statusCode = resp.getStatusLine().getStatusCode();
 
             if (statusCode >= 500)
-                throw new ClientException("ENDPOINT IS DOWN = " + resp.toString());
+                throw new ClientException("SERVER ERROR = " + resp.toString());
             if (statusCode >= 400)
-                throw new ClientException("BAD REQUEST = " + resp.toString());
+                throw new ClientException("CLIENT ERROR = " + resp.toString());
 
             final String jsonBean = EntityUtils.toString(responseEntity);
+
             return jsonBean;
         } catch (final IOException e) {
-            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
+            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage());
         }
     }
 
-    private void fireAndForget(final String method, final String callTo) throws ClientException {
-        try {
-            final HttpResponse resp = getCliente().execute(HTTPFactory.apply(method, callTo));
 
-            final int statusCode = resp.getStatusLine().getStatusCode();
 
-            if (statusCode >= 500)
-                throw new ClientException("ENDPOINT IS DOWN = " + resp.toString());
-            if (statusCode >= 400)
-                throw new ClientException("BAD REQUEST = " + resp.toString());
-
-        } catch (final IOException e) {
-            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
-        }
+    @Override
+    public String health(final String identificador) throws ClientException {
+        final String url = buildQueryString(HEALTH, IDENTIFICADOR);
+        log.info("[GET health][URL {}]", url);
+        return call(GET, String.format(url, identificador));
     }
-
-    public RestClient(final String url) {
-        this.url = url;
-        this.client = HttpClientBuilder.create().build();
-    }
-
-    public static Optional<SupermercadosServiceContract> create(final String url) {
-        if (url == null)
-            return Optional.empty();
-
-        final RestClient restClient = new RestClient(url);
-        return Optional.of(restClient);
-    }
-
-    private String getUrl() {
-        return this.url;
-    }
-
-    private HttpClient getCliente() {
-        return this.client;
-    }
-
-    public String getQuery(final String base, final String... params) {
-        final String target = "/" + base + "?";
-        final String args = Stream.of(params)
-                .map(p -> p + "=%s")
-                .collect(Collectors.joining("&"));
-        final String arg = (params.length > 1 ? args : params[0] + "=%s");
-        return target + arg;
-    }
-
 
     /*@Override
     public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
@@ -132,10 +116,20 @@ public class RestClient implements SupermercadosServiceContract {
     }*/
 
 
-    @Override
-    public String health(final String identificador) throws ClientException {
-        final String url = getQuery(HEALTH, IDENTIFICADOR);
-        //log.info("[GET health][URL {}]", url);
-        return call(GET, String.format(url, identificador));
-    }
+   /* private void fireAndForget(final String method, final String callTo) throws ClientException {
+        try {
+            final HttpResponse resp = client().execute(HTTPFactory.apply(method, callTo));
+
+            final int statusCode = resp.getStatusLine().getStatusCode();
+
+            if (statusCode >= 500)
+                throw new ClientException("ENDPOINT IS DOWN = " + resp.toString());
+            if (statusCode >= 400)
+                throw new ClientException("BAD REQUEST = " + resp.toString());
+
+        } catch (final IOException e) {
+            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
+        }
+    }*/
+
 }

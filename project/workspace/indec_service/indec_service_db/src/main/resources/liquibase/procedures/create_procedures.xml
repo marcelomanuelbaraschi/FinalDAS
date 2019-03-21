@@ -35,7 +35,7 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec'
+				AND SPECIFIC_CATALOG = 'indec_service_db'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>

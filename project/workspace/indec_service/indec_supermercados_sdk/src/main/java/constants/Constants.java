@@ -7,7 +7,6 @@ public class Constants {
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
 
-
     public static final String REST = "REST";
     public static final String SOAP = "SOAP";
 
@@ -22,7 +21,5 @@ public class Constants {
 
     public static final String HEALTH = "health";
     //public static final String MARCA = "marca";
-
-
 
 }
