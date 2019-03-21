@@ -30,15 +30,17 @@ public class MSCadenaServiceConfigsDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        List<Bean> configs;
+       /* List<Bean> configs;
         configs = new LinkedList<>();
         CadenaServiceConfig cadenaConfig = new CadenaServiceConfig();
-        cadenaConfig.setIdCadena(1L);
+        cadenaConfig.setId(1L);
         cadenaConfig.setNombreCadena("Wallmart");
         cadenaConfig.setTecnologia("SOAP");
         cadenaConfig.setUrl("http://localhost:8000/supermercado_axis_one/services/SupermercadoAxisOne?wsdl");
         configs.add(cadenaConfig);
         return configs;
+        */
+        return null;
     }
 
     @Override
