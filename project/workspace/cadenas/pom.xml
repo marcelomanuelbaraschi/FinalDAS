@@ -9,8 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>Cadenas</name>
     <packaging>pom</packaging>
-
-
+    
     <modules>
         <module>cadena_core</module>
         <module>cadenas_rest</module>
@@ -43,6 +42,7 @@
     <profiles>
 
     <!-- AXIS PROFILES -->
+        <!-- AXIS ONE PROFILE -->
     <profile>
         <id>cadena_axis_one_profile_id</id>
         <activation>
@@ -72,6 +72,7 @@
     </profile>
 
     <!-- REST PROFILES -->
+        <!-- REST ONE PROFILE -->
     <profile>
         <id>cadena_rest_one_profile_id</id>
         <activation>
@@ -91,7 +92,6 @@
             <webResources.resource.directory>/src/main/resources</webResources.resource.directory>
             <webResources.resource.targetPath>WEB-INF/wsdl</webResources.resource.targetPath>
             <includePattern>*.wsdl</includePattern>
-
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
             <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadenas;</urlDB>
@@ -101,7 +101,7 @@
         </properties>
     </profile>
 
-
+        <!-- REST TWO PROFILE -->
     <profile>
         <id>cadena_rest_two_profile_id</id>
         <activation>
@@ -121,7 +121,6 @@
             <webResources.resource.directory>/src/main/resources</webResources.resource.directory>
             <webResources.resource.targetPath>WEB-INF/wsdl</webResources.resource.targetPath>
             <includePattern>*.wsdl</includePattern>
-
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
             <urlDB>jdbc:sqlserver://localhost:1436;databaseName=db_cadenas;</urlDB>
@@ -130,7 +129,9 @@
             <contextDB>cadena_rest_two</contextDB>
         </properties>
     </profile>
-        <!-- CXF PROFILES -->
+
+    <!-- CXF PROFILES -->
+        <!-- CXF ONE PROFILE  -->
     <profile>
         <id>cadena_cxf_one_profile_id</id>
         <activation>
@@ -150,7 +151,6 @@
             <webResources.resource.directory>/src/main/resources</webResources.resource.directory>
             <webResources.resource.targetPath>WEB-INF/wsdl</webResources.resource.targetPath>
             <includePattern>*.wsdl</includePattern>
-
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
             <urlDB>jdbc:sqlserver://localhost:1437;databaseName=db_cadenas;</urlDB>
@@ -159,6 +159,8 @@
             <contextDB>cadena_cxf_one</contextDB>
         </properties>
     </profile>
+
+        <!-- CXF TWO PROFILE  -->
     <profile>
         <id>cadena_cxf_two_profile_id</id>
         <activation>
@@ -178,7 +180,6 @@
             <webResources.resource.directory>/src/main/resources</webResources.resource.directory>
             <webResources.resource.targetPath>WEB-INF/wsdl</webResources.resource.targetPath>
             <includePattern>*.wsdl</includePattern>
-
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
             <urlDB>jdbc:sqlserver://localhost:1438;databaseName=db_cadenas;</urlDB>
