@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>Cadenas</name>
     <packaging>pom</packaging>
-    
+
     <modules>
         <module>cadena_core</module>
         <module>cadenas_rest</module>

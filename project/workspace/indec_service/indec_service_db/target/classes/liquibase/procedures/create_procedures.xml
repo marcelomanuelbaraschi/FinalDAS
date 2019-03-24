@@ -16,25 +16,11 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec'
+				AND SPECIFIC_CATALOG = 'indec_service_db'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<dropProcedure procedureName="cleanDB"/>
-	</changeSet>
-
-	<changeSet id="Drop procedure Get_Cadena_Service_Configs" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="1">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec'
-				AND ROUTINE_NAME = 'get_cadena_service_configs'
-			</sqlCheck>
-		</preConditions>
-		<dropProcedure procedureName="get_cadena_service_configs"/>
 	</changeSet>
 
 
@@ -49,27 +35,11 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec'
+				AND SPECIFIC_CATALOG = 'indec_service_db'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<sqlFile
 				path="/src/main/resources/liquibase/procedures/cleanDB.sql"/>
 	</changeSet>
-
-	<changeSet id="Create procedure Get_Cadena_Service_Configs" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="0">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec'
-				AND ROUTINE_NAME = 'get_cadena_service_configs'
-			</sqlCheck>
-		</preConditions>
-		<sqlFile
-				path="/src/main/resources/liquibase/procedures/get_cadena_service_configs.sql"/>
-	</changeSet>
-
 </databaseChangeLog>
