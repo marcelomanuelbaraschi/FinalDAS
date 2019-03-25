@@ -9,4 +9,4 @@ function dbstart () {
 
 echo "Refreshing Dbs"
 
-dbstart "rest_indec"
+dbstart "indec_rest_service_env"
