@@ -14,7 +14,7 @@
     <packaging>war</packaging>
     <!-- Dependency properties -->
     <properties>
-        <serviceLocation>ws.SupermercadoAxisOne</serviceLocation>
+        <serviceLocation>ws.CadenaAxisOne</serviceLocation>
     </properties>
 
     <!-- Plugin configuration -->
@@ -37,7 +37,7 @@
                 </executions>
                 <configuration>
                     <className>${serviceLocation}</className>
-                    <outputFileName>${project.build.directory}/classes/ws/SupermercadoAxisOne.wsdl</outputFileName>
+                    <outputFileName>${project.build.directory}/classes/ws/CadenaAxisOne.wsdl</outputFileName>
                 </configuration>
             </plugin>
         </plugins>

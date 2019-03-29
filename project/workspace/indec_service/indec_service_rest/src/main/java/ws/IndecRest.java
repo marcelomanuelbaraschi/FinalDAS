@@ -3,6 +3,9 @@ package ws;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,7 +17,7 @@ import java.util.List;
 @Path("/app")
 public class IndecRest {
 
-  // protected static final Logger log = LoggerFactory.getLogger(IndecRest.class);
+    //protected static final Logger log = LoggerFactory.getLogger(IndecRest.class);
 
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
@@ -24,9 +27,7 @@ public class IndecRest {
     @Path("/health")
     @Produces(MediaType.APPLICATION_JSON)
     public String health(@QueryParam("identificador") final String identificador) {
-
-       // log.debug("Rest health identificador -> {}", identificador);
-
+        System.out.println("Rest health identificador ->" + identificador);
         return "OK";
     }
 
@@ -35,9 +36,9 @@ public class IndecRest {
     @Produces(MediaType.APPLICATION_JSON)
     public String categorias (@QueryParam("identificador") final String identificador) {
 
-     //   log.debug("Rest categorias identificador -> {}", identificador);
+         System.out.println("Rest categorias identificador ->" + identificador);
 
-        return gson.toJson(getCategorias());
+         return gson.toJson(getCategorias());
     }
 
     private List<Categoria> getCategorias(){

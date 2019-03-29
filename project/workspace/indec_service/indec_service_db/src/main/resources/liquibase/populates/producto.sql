@@ -1,0 +1,2 @@
+--INSERT INTO producto (nombre,nombreCategoria,nombreMarca,imagen) VALUES
+--GO

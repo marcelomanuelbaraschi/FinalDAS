@@ -15,7 +15,7 @@
 
     <!-- Dependency properties -->
     <properties>
-        <serviceLocation>ws.SupermercadoCXFOne</serviceLocation>
+        <serviceLocation>ws.CadenaCXFOne</serviceLocation>
     </properties>
 
     <!-- Plugin configuration -->

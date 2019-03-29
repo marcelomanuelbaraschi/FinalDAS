@@ -8,14 +8,4 @@
 
 	<!--   TABLE CREATION CHANGE-SETS  -->
 
-    <!--Marca-->
-    <changeSet id="Create table marca" author="DAS-Team" runAlways="true" runOnChange="true">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="marca"/>
-            </not>
-        </preConditions>
-        <sqlFile path="/src/main/resources/liquibase/tables/marca.sql"/>
-    </changeSet>
-
 </databaseChangeLog>

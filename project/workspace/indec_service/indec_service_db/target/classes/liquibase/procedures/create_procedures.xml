@@ -16,11 +16,39 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'indec_service_db'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<dropProcedure procedureName="cleanDB"/>
+	</changeSet>
+
+	<changeSet id="Drop procedure spCadenasServicesConfigs" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCadenasServicesConfigs'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spCadenasServicesConfigs"/>
+	</changeSet>
+
+	<changeSet id="Drop procedure spCategoriasProducto" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCategoriasProducto'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spCategoriasProducto"/>
 	</changeSet>
 
 
@@ -35,11 +63,42 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'indec_service_db'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<sqlFile
 				path="/src/main/resources/liquibase/procedures/cleanDB.sql"/>
 	</changeSet>
+
+	<changeSet id="Create procedure spCadenasServicesConfigs" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCadenasServicesConfigs'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spCadenasServicesConfigs.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure spCategoriasProducto" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCategoriasProducto'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spCategoriasProducto.sql"/>
+	</changeSet>
+
 </databaseChangeLog>

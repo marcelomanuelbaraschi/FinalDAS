@@ -1,4 +1,7 @@
 CREATE TABLE tecnologia (
-	  nombre VARCHAR(20)
-	, PRIMARY KEY(nombre)
+	   id BIGINT IDENTITY (1,1)
+      ,nombre VARCHAR(20) NOT NULL
+	  ,PRIMARY KEY(id)
+      ,UNIQUE (nombre)
 );
+GO

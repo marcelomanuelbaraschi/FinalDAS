@@ -4,6 +4,7 @@ CREATE TABLE cadenaServiceConfig (
 	, tecnologia VARCHAR(20) NOT NULL
     , url VARCHAR(200) NOT NULL
 	, FOREIGN KEY(tecnologia) REFERENCES tecnologia(nombre)
+    , FOREIGN KEY(nombreCadena) REFERENCES cadena(nombre)
 	, PRIMARY KEY(id)
 );
-
+GO

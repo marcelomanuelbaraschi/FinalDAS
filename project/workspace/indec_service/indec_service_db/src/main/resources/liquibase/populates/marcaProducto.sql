@@ -1,0 +1,2 @@
+--INSERT INTO marcaProducto (nombre) VALUES
+--GO

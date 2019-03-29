@@ -9,8 +9,8 @@
          http://cxf.apache.org/schemas/jaxws.xsd">
 	
 	<jaxws:endpoint
-			id="supermercado_cxf_one"
-			implementor="ws.SupermercadoCXFOne"
-			address="/supermercado_cxf_one">
+			id="cadena_cxf_one"
+			implementor="ws.CadenaCXFOne"
+			address="/cadena_cxf_one">
 	</jaxws:endpoint>
 </beans>

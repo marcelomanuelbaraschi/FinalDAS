@@ -13,7 +13,7 @@
     <modules>
         <module>indec_service_rest</module>
         <module>indec_service_db</module>
-        <module>indec_supermercados_sdk</module>
+        <module>indec_cadenas_sdk</module>
     </modules>
 
     <prerequisites>
