@@ -1,6 +1,4 @@
-import beans.CadenaServiceConfigBean;
-import beans.CategoriaProductoBean;
-import beans.ProductoBean;
+import beans.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import db.Bean;
@@ -58,6 +56,52 @@ public class DaosSpecs {
             Dao dao = DaoFactory.getDao("Productos", "");
             List<Bean> productos = dao.select(producto);
             System.out.println(gson.toJson(productos));
+            assertTrue(true);
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void MSProvinciasDao_success() {
+        try {
+            ProvinciaBean provincia = new ProvinciaBean();
+            Dao dao = DaoFactory.getDao("Provincias", "");
+            List<Bean> provincias = dao.select(provincia);
+            System.out.println(gson.toJson(provincias));
+            assertTrue(true);
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void MSLocalidadesDao_success() {
+        try {
+            LocalidadBean localidad = new LocalidadBean();
+            localidad.setIdProv(2L);
+            Dao dao = DaoFactory.getDao("Localidades", "");
+            List<Bean> localidades = dao.select(localidad);
+            System.out.println(gson.toJson(localidades));
+            assertTrue(true);
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void MSLocalidadesDao_success_null_case() {
+        try {
+            LocalidadBean localidad = new LocalidadBean();
+            Dao dao = DaoFactory.getDao("Localidades", "");
+            List<Bean> localidades = dao.select(localidad);
+            System.out.println(gson.toJson(localidades));
             assertTrue(true);
         }
         catch(SQLException ex) {

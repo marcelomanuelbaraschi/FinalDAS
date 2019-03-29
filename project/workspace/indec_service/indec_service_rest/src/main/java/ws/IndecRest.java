@@ -1,7 +1,9 @@
 package ws;
 
 import beans.CategoriaProductoBean;
+import beans.LocalidadBean;
 import beans.ProductoBean;
+import beans.ProvinciaBean;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
@@ -46,8 +48,8 @@ public class IndecRest {
         try {
             CategoriaProductoBean categoria = new CategoriaProductoBean();
             Dao dao = DaoFactory.getDao("CategoriasProducto", "");
-            List<Bean> configs = dao.select(categoria);
-            return gson.toJson(configs);
+            List<Bean> categorias = dao.select(categoria);
+            return gson.toJson(categorias);
         }
         catch(SQLException ex) {
             System.out.println("Error: "+ex.getMessage());
@@ -73,6 +75,41 @@ public class IndecRest {
             return "must be a proper error";
         }
     }
+
+    @GET
+    @Path("/provincias")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String provincias (@QueryParam("identificador") final String identificador) {
+        try {
+            ProvinciaBean provincia = new ProvinciaBean();
+            Dao dao = DaoFactory.getDao("Provincias", "");
+            List<Bean> provincias = dao.select(provincia);
+            return (gson.toJson(provincias));
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return "must be a proper error";
+        }
+    }
+
+    @GET
+    @Path("/localidades")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String localidades (@QueryParam("identificador") final String identificador,
+                               @QueryParam("idprovincia") final Long idProvincia) {
+        try {
+            LocalidadBean localidad = new LocalidadBean();
+            localidad.setIdProv(idProvincia);
+            Dao dao = DaoFactory.getDao("Localidades", "");
+            List<Bean> localidades = dao.select(localidad);
+            return (gson.toJson(localidades));
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return "must be a proper error";
+        }
+    }
+
 
 }
 

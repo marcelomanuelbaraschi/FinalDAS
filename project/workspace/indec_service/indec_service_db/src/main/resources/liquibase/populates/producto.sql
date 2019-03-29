@@ -1,5 +1,5 @@
 
-INSERT INTO producto 
+INSERT INTO producto
 (idComercial,idCategoria,nombre,nombreMarca,precio_desde,precio_hasta,imagen)
 VALUES
  (7791708001231,1,'Pan Hamburguesas con Sesamo Veneziana 210 Gr','VANEZIANA',38.90,45.00,NULL)
@@ -11,6 +11,8 @@ VALUES
 ,(7793890001150,1,'Pan para Panchos Lactal 210 Gr','LACTAL',49.99,63.93,NULL)
 ,(7796989007729,1,'Pan para Panchos Bimbo 210 Gr','BIMBO',48.99,74.01,NULL)
 ,(7796989008740,1,'Pan Hamburguesas Artesanal Bimbo 240 Gr','BIMBO',73.50,81.00,NULL)
+
+
 
 INSERT INTO producto 
 (idComercial,idCategoria,nombre,nombreMarca,precio_desde,precio_hasta,imagen)

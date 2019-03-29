@@ -52,4 +52,18 @@
 		<sqlFile path="/src/main/resources/liquibase/populates/producto.sql"/>
 	</changeSet>
 
+	<changeSet id="Populate table provincia" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="provincia"/>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/provincia.sql"/>
+	</changeSet>
+
+	<changeSet id="Populate table localidad" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="localidad"/>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/localidad.sql"/>
+	</changeSet>
+
 </databaseChangeLog>
