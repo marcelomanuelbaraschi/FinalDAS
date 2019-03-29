@@ -1,11 +1,15 @@
 CREATE TABLE producto (
 	  id BIGINT IDENTITY (1,1)
-	, nombre VARCHAR(50) NOT NULL
-    , nombreCategoria VARCHAR(50) NOT NULL
+    , idComercial BIGINT NOT NULL
+    , idCategoria BIGINT NOT NULL
+	, nombre VARCHAR(100) NOT NULL
     , nombreMarca VARCHAR(50) NOT NULL
+    , precio_desde decimal (5,2)
+    , precio_hasta decimal (5,2)
     , imagen VARCHAR(200) NULL
-    , FOREIGN KEY(nombreCategoria) REFERENCES categoriaProducto(nombre)
+    , FOREIGN KEY(idCategoria) REFERENCES categoriaProducto(id)
     , FOREIGN KEY(nombreMarca) REFERENCES marcaProducto(nombre)
 	, PRIMARY KEY(id)
 );
 GO
+

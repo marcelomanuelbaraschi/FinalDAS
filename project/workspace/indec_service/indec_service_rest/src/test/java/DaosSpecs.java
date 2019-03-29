@@ -1,13 +1,12 @@
 import beans.CadenaServiceConfigBean;
 import beans.CategoriaProductoBean;
+import beans.ProductoBean;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import db.Bean;
 import db.Dao;
 import db.DaoFactory;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import static org.junit.Assert.*;
 
 public class DaosSpecs {
 
-    protected Logger log = LoggerFactory.getLogger(DaosSpecs.class);
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
             .create();
@@ -31,7 +29,7 @@ public class DaosSpecs {
             assertTrue(true);
         }
         catch(SQLException ex) {
-            log.error(ex.getMessage());
+            System.out.println("Error: "+ex.getMessage());
             fail();
         }
     }
@@ -47,7 +45,23 @@ public class DaosSpecs {
             assertTrue(true);
         }
         catch(SQLException ex) {
-            log.error(ex.getMessage());
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void MSProductosDao_success() {
+        try {
+            ProductoBean producto = new ProductoBean();
+            producto.setIdCategoria(1L);
+            Dao dao = DaoFactory.getDao("Productos", "");
+            List<Bean> productos = dao.select(producto);
+            System.out.println(gson.toJson(productos));
+            assertTrue(true);
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
             fail();
         }
     }

@@ -3244,3 +3244,4 @@ select * from producto
 
 
 EXECUTE dbo.GenerateInsert @ObjectName = N'producto';
+k

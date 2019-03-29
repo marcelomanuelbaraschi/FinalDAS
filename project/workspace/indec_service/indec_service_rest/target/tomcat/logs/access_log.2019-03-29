@@ -1,0 +1,6 @@
+127.0.0.1 - - [29/Mar/2019:04:00:23 -0300] "GET /IndecService/app/categorias?identificador=lol HTTP/1.1" 200 1641 http-bio-9000-exec-1 1331
+127.0.0.1 - - [29/Mar/2019:04:00:35 -0300] "GET /IndecService/app/categorias?identificador=lol HTTP/1.1" 200 1641 http-bio-9000-exec-2 269
+127.0.0.1 - - [29/Mar/2019:04:01:26 -0300] "GET /IndecService/app/productos?identificador=lol&idcategoria=7 HTTP/1.1" 200 3801 http-bio-9000-exec-3 279
+127.0.0.1 - - [29/Mar/2019:04:01:56 -0300] "GET /IndecService/app/productos?identificador=lol&idcategoria=10 HTTP/1.1" 200 674 http-bio-9000-exec-4 258
+127.0.0.1 - - [29/Mar/2019:04:02:01 -0300] "GET /IndecService/app/productos?identificador=lol&idcategoria=1 HTTP/1.1" 200 869 http-bio-9000-exec-5 264
+127.0.0.1 - - [29/Mar/2019:04:02:07 -0300] "GET /IndecService/app/productos?identificador=lol&idcategoria=2 HTTP/1.1" 200 2174 http-bio-9000-exec-6 254
