@@ -12,34 +12,18 @@
 
 *.wsdl
 
-project/workspace/supermercados/supermercados_cxf/supermercados_cxf_one/target/
+project/workspace/cadenas/cadena_core/target/
 
-project/workspace/supermercados/supermercados_axis/supermercados_axis_one/target/
+project/workspace/cadenas/cadenas_axis/cadena_axis_one/target/
 
-project/workspace/supermercados/supermercados_core/target/
+project/workspace/cadenas/cadenas_cxf/cadena_cxf_one/ws/
 
-project/workspace/supermercados/supermercados_cxf/supermercados_cxf_one/target/tomcat/conf/
+project/workspace/cadenas/cadenas_cxf/cadena_cxf_one/target/
 
-project/workspace/supermercados/supermercados_rest/supermercados_rest_two/target/
+project/workspace/cadenas/cadenas_cxf/cadena_cxf_two/target/
 
-project/workspace/supermercados/supermercados_db/target/
+project/workspace/cadenas/cadenas_cxf/cadena_cxf_two/ws/
 
-project/workspace/supermercados/supermercados_rest/supermercados_rest_one/target/tomcat/
+project/workspace/cadenas/cadenas_rest/cadena_rest_one/target/
 
-
-project/workspace/supermercados/supermercados_cxf/supermercados_cxf_one/target/tomcat/logs/
-
-project/workspace/supermercados/supermercados_cxf/supermercados_cxf_two/target/tomcat/logs/
-
-project/workspace/supermercados/supermercados_cxf/supermercados_cxf_two/target/
-
-project/workspace/supermercados/supermercados_rest/supermercados_rest_one/target/classes/
-
-project/workspace/indec/target/
-
-project/workspace/indec/indec_db/target/
-
-project/workspace/indec/indec_service/target/
-
-project/workspace/indec_service/indec_service_rest/target/
-
+project/workspace/cadenas/cadenas_rest/cadena_rest_two/target/
