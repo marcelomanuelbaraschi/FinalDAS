@@ -13,6 +13,26 @@
     <artifactId>cadenas_db</artifactId>
     <packaging>jar</packaging>
 
+    <profiles>
+        <profile>
+            <id>cadena_db_profile_id</id>
+            <activation>
+                <property>
+                    <name>env</name>
+                    <value>cadena_db_profile_env</value>
+                </property>
+            </activation>
+            <properties>
+                <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
+                <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadena</urlDB>
+                <usernameDB>SA</usernameDB>
+                <passwordDB>Das12345</passwordDB>
+                <contextDB>db_cadena</contextDB>
+            </properties>
+        </profile>
+    </profiles>
+
+
     <build>
         <plugins>
             <!-- LIQUIBASE -->

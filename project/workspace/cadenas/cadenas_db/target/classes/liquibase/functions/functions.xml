@@ -8,9 +8,11 @@
     <!-- ******************************* -->
     <!--  CREATE FUNCTIONS CHANGE-SETS  -->
     <!-- ******************************* -->
-    <changeSet id="Create function get_new_id" author="DAS-Team" runAlways="true" runOnChange="true">
+
+    <changeSet id="Create function splitList" author="DAS-Team" runAlways="true" runOnChange="true">
+
         <sqlFile encoding="utf8"
-                 path="/src/main/resources/liquibase/functions/get_new_id.sql"
+                 path="/src/main/resources/liquibase/functions/splitList.sql"
                  relativeToChangelogFile="false"
                  splitStatements="true"
                  stripComments="false"
@@ -18,14 +20,4 @@
         />
     </changeSet>
 
-    <changeSet id="Create function date_in_range" author="DAS-Team" runAlways="true" runOnChange="true">
-
-        <sqlFile encoding="utf8"
-                 path="/src/main/resources/liquibase/functions/date_in_range.sql"
-                 relativeToChangelogFile="false"
-                 splitStatements="true"
-                 stripComments="false"
-                 endDelimiter="\nGO"
-        />
-    </changeSet>
 </databaseChangeLog>

@@ -8,13 +8,6 @@
 	<!-- ***************************** -->
 	<!--   DROP CHANGE-SETS            -->
 	<!-- ***************************** -->
-	<changeSet id="Drop view v_marca" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<viewExists viewName="v_marca"/>
-		</preConditions>
-		<dropView schemaName="dbo"
-		          viewName="v_marca"/>
-	</changeSet>
 	
 	<changeSet id="Drop view getNewID" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
@@ -27,14 +20,6 @@
 	<!-- ***************************** -->
 	<!--   CREATE CHANGE-SETS          -->
 	<!-- ***************************** -->
-	<changeSet id="Create view v_marca" author="DAS-Team" runAlways="true" runOnChange="true">
-		<createView replaceIfExists="true"
-		            schemaName="dbo"
-		            viewName="v_marca">
-			SELECT *
-			FROM marca
-		</createView>
-	</changeSet>
 	
 	<changeSet id="Create view getNewID" author="DAS-Team" runAlways="true" runOnChange="true">
 		<createView replaceIfExists="true" schemaName="dbo" viewName="getNewID">

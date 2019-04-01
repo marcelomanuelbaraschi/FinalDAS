@@ -10,12 +10,5 @@
 	<!-- ******************************** -->
 
 
-    <changeSet id="Populate table marca" author="DAS-Team" runAlways="true" runOnChange="true">
-        <preConditions onFail="MARK_RAN">
-            <tableExists tableName="marca"/>
-        </preConditions>
-        <sqlFile path="/src/main/resources/liquibase/populates/marca.sql"/>
-    </changeSet>
-
 
 </databaseChangeLog>

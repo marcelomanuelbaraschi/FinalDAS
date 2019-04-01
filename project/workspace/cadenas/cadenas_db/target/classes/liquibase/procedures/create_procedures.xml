@@ -16,26 +16,55 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
+				AND SPECIFIC_CATALOG = 'db_cadena'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
 		<dropProcedure procedureName="cleanDB"/>
 	</changeSet>
 
-	<changeSet id="Drop procedure get_marcas" author="DAS-Team" runAlways="true"
-	           runOnChange="true">
+	<changeSet id="Drop procedure spGetSucursales" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<sqlCheck expectedResult="1">
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
-				AND ROUTINE_NAME = 'get_marcas'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETSUCURSALES'
 			</sqlCheck>
 		</preConditions>
-		<dropProcedure procedureName="get_marcas"/>
+		<dropProcedure procedureName="SP_GETSUCURSALES"/>
 	</changeSet>
+
+	<changeSet id="Drop procedure spGetInfoSucursal" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETINFOSUCURSAL'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="SP_GETINFOSUCURSAL"/>
+	</changeSet>
+
+	<changeSet id="Drop procedure spGetPreciosSucursales" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETPRECIOSSUCURSALES'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="SP_GETPRECIOSSUCURSALES"/>
+	</changeSet>
+
 	
 	<!-- ******************************* -->
 	<!--  CREATE PROCEDURES CHANGE-SETS  -->
@@ -48,7 +77,7 @@
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
+				AND SPECIFIC_CATALOG = 'db_cadena'
 				AND ROUTINE_NAME = 'cleanDB'
 			</sqlCheck>
 		</preConditions>
@@ -56,18 +85,49 @@
 				path="/src/main/resources/liquibase/procedures/cleanDB.sql"/>
 	</changeSet>
 
-	<changeSet id="Create procedure get_marcas" author="DAS-Team" runAlways="true"
+	<changeSet id="Create procedure spGetSucursales" author="DAS-Team" runAlways="true"
 			   runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<sqlCheck expectedResult="0">
 				SELECT COUNT(*)
 				FROM information_schema.routines
 				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_supermercados'
-				AND ROUTINE_NAME = 'get_marcas'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETSUCURSALES'
 			</sqlCheck>
 		</preConditions>
 		<sqlFile
-				path="/src/main/resources/liquibase/procedures/get_marcas.sql"/>
+				path="/src/main/resources/liquibase/procedures/spGetSucursales.sql"/>
 	</changeSet>
+
+	<changeSet id="Create procedure spGetInfoSucursal" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETINFOSUCURSAL'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spGetInfoSucursal.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure spGetPreciosSucursales" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETPRECIOSSUCURSALES'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spGetPreciosSucursales.sql"/>
+	</changeSet>
+
 </databaseChangeLog>

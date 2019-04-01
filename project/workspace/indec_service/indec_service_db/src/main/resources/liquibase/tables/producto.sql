@@ -9,6 +9,7 @@ CREATE TABLE producto (
     , imagen VARCHAR(200) NULL
     , FOREIGN KEY(idCategoria) REFERENCES categoriaProducto(id)
     , FOREIGN KEY(nombreMarca) REFERENCES marcaProducto(nombre)
+    --, UNIQUE (idComercial)
 	, PRIMARY KEY(id)
 );
 GO
