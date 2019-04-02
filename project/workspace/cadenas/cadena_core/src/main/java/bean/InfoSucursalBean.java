@@ -3,13 +3,10 @@ package bean;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class SucursalBean implements Bean {
+public class InfoSucursalBean implements Bean {
 
     @SerializedName("direccion")
     private String direccion;
-
-    @SerializedName("idSucursal")
-    private Long idSucursal;
 
     @SerializedName("lat")
     private String lat;
@@ -20,20 +17,23 @@ public class SucursalBean implements Bean {
     @SerializedName("sucursalNombre")
     private String sucursalNombre;
 
+    @SerializedName("codigoEntidadFederal")
+    private String codigoEntidadFederal;
+
+    public String getCodigoEntidadFederal() {
+        return codigoEntidadFederal;
+    }
+
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
+        this.codigoEntidadFederal = codigoEntidadFederal;
+    }
+
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public Long getIdSucursal() {
-        return idSucursal;
-    }
-
-    public void setIdSucursal(Long idSucursal) {
-        this.idSucursal = idSucursal;
     }
 
     public String getLat() {
@@ -59,4 +59,5 @@ public class SucursalBean implements Bean {
     public void setSucursalNombre(String sucursalNombre) {
         this.sucursalNombre = sucursalNombre;
     }
+
 }

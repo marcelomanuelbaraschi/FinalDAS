@@ -1,5 +1,6 @@
 CREATE  PROCEDURE SP_GETPRECIOSSUCURSAL (@codigoEntidadFederal VARCHAR(10), @localidad  VARCHAR (100) ,@codigos VARCHAR(MAX))
 AS
+    SET NOCOUNT ON
 BEGIN
 
   IF (@codigoEntidadFederal IS NULL) OR (TRIM(@codigoEntidadFederal) = '')

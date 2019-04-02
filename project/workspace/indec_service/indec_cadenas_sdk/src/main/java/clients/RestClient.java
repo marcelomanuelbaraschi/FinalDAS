@@ -1,6 +1,8 @@
 package clients;
 
-import beans.Sucursal;
+import cadenasObjects.InfoSucursal;
+import cadenasObjects.PreciosSucursal;
+import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 import org.apache.http.HttpEntity;
@@ -124,6 +126,26 @@ public class RestClient implements CadenaServiceContract {
         //TODO log
         final Sucursal[] arrsucs = JsonUtils.toObject(sucursales , Sucursal[].class);
         return Stream.of(arrsucs).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
+        final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD, CODIGOS);
+        final String url = String.format(query, identificador, codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
+        final String preciosSucursales = call(POST, url);
+        //TODO log
+        final PreciosSucursal[] arrpsucs = JsonUtils.toObject(preciosSucursales , PreciosSucursal[].class);
+        return Stream.of(arrpsucs).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
+        final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
+        final String url = String.format(query, identificador, idSucursal);
+        final String infoSucursal = call(GET, url);
+        //TODO log
+        final InfoSucursal[] arrpsucs = JsonUtils.toObject(infoSucursal, InfoSucursal[].class);
+        return Stream.of(arrpsucs).collect(Collectors.toList());
     }
 
 

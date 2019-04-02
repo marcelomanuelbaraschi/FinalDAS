@@ -1,5 +1,7 @@
 package clients;
-import beans.Sucursal;
+import cadenasObjects.InfoSucursal;
+import cadenasObjects.PreciosSucursal;
+import cadenasObjects.Sucursal;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import static constants.Constants.*;
@@ -64,6 +66,24 @@ public class SoapClient implements CadenaServiceContract {
        //TODO log
         Sucursal[] arrsucs = JsonUtils.toObject(sucursales, Sucursal[].class);
         return Stream.of(arrsucs).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
+        final Object object = executeMethod(PRECIOS, identificador,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
+        final String preciosSucursales = object.toString();
+        //TODO log
+        PreciosSucursal[] arrpsucs = JsonUtils.toObject(preciosSucursales, PreciosSucursal[].class);
+        return Stream.of(arrpsucs).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
+        final Object object = executeMethod(INFO, identificador, idSucursal);
+        final String infoSucursal = object.toString();
+        //TODO log
+        InfoSucursal[] arrpsucs = JsonUtils.toObject(infoSucursal, InfoSucursal[].class);
+        return Stream.of(arrpsucs).collect(Collectors.toList());
     }
 
        /* @Override

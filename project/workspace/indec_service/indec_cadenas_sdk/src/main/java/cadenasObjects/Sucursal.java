@@ -1,4 +1,4 @@
-package beans;
+package cadenasObjects;
 
 import com.google.gson.annotations.SerializedName;
 

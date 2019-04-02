@@ -34,6 +34,7 @@ EXEC SP_GETPRECIOSSUCURSAL @codigoEntidadFederal = 'AR-X',@localidad =' ', @codi
 GO
 CREATE OR ALTER PROCEDURE SP_GETPRECIOSSUCURSAL (@codigoEntidadFederal VARCHAR(10), @localidad  VARCHAR (100) ,@codigos VARCHAR(MAX))
 AS
+SET NOCOUNT ON
 BEGIN
 
   IF (@codigoEntidadFederal IS NULL) OR (TRIM(@codigoEntidadFederal) = '')
@@ -67,7 +68,7 @@ BEGIN
             WHERE 
                      ps.codigoProducto IN (SELECT * FROM @tcodigos)
                  AND ps.activo = 'S'
-END;
+END
 GO
 
 CREATE OR ALTER PROCEDURE SP_GETINFOSUCURSAL (@idSucursal BIGINT )
@@ -184,7 +185,7 @@ CREATE TABLE productoSucursal (
    ,codigoProducto           VARCHAR (100)  NOT NULL
    ,activo                   CHAR           NOT NULL
    ,fechaUltimaActualizacion DATETIME       DEFAULT  GETDATE ( )
-   ,precio                   DECIMAL (6,2)  NOT NULL
+   ,precio                   REAL NOT NULL
    ,CONSTRAINT rango_activo CHECK (activo IN ('S','N'))
    ,PRIMARY KEY (idSucursal,codigoProducto)
    ,FOREIGN KEY (codigoProducto) REFERENCES producto (codigoProducto) 

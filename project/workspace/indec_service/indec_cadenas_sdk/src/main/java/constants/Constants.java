@@ -18,9 +18,12 @@ public class Constants {
 
     public static final String IDENTIFICADOR    = "identificador";
     public static final String SUCURSALES = "sucursales";
+    public static final String PRECIOS = "precios";
+    public static final String INFO = "info";
 
     public static final String HEALTH = "health";
     public static final String CODIGO_IDENTIDAD_FEDERAL = "codigoentidadfederal";
     public static final String LOCALIDAD = "localidad";
-
+    public static final String CODIGOS = "codigos";
+    public static final String IDSUCURSAL = "idsucursal";
 }

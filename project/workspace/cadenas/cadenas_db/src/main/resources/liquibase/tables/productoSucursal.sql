@@ -3,7 +3,7 @@ CREATE TABLE productoSucursal (
    ,codigoProducto           VARCHAR (100)  NOT NULL
    ,activo                   CHAR           NOT NULL
    ,fechaUltimaActualizacion DATETIME       DEFAULT  GETDATE()
-   ,precio                   DECIMAL (6,2)  NOT NULL
+   ,precio                   REAL           NOT NULL
    ,CONSTRAINT rango_activo CHECK (activo IN ('S','N'))
    ,PRIMARY KEY (idSucursal,codigoProducto)
    ,FOREIGN KEY (codigoProducto) REFERENCES producto (codigoProducto)
