@@ -1,25 +1,22 @@
 package ws;
 
+
+import db.Bean;
+import db.Dao;
+import db.DaoFactory;
+
 import beans.CategoriaProductoBean;
 import beans.LocalidadBean;
 import beans.ProductoBean;
 import beans.ProvinciaBean;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
-import db.Bean;
-import db.Dao;
-import db.DaoFactory;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 @Path("/app")

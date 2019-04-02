@@ -1,5 +1,6 @@
 package clients;
 
+import beans.Sucursal;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 import org.apache.http.HttpEntity;
@@ -11,8 +12,11 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import utils.JsonUtils;
+
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -72,6 +76,15 @@ public class RestClient implements CadenaServiceContract {
         }
     };
 
+    public String getQuery(final String base, final String... params) {
+        final String target = "/" + base + "?";
+        final String args = Stream.of(params)
+                .map(p -> p + "=%s")
+                .collect(Collectors.joining("&"));
+        final String arg = (params.length > 1 ? args : params[0] + "=%s");
+        return target + arg;
+    }
+
     private String call(final String method, final String callTo) throws ClientException {
 
         try {
@@ -98,19 +111,21 @@ public class RestClient implements CadenaServiceContract {
     @Override
     public String health(final String identificador) throws ClientException {
         final String url = buildQueryString(HEALTH, IDENTIFICADOR);
-        System.out.println("[GET health][URL "+url+"]");
+        //TODO log
         return call(GET, String.format(url, identificador));
     }
 
-    /*@Override
-    public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
+    @Override
+    public List<Sucursal> sucursales(final String identificador, final String codigoentidadfederal, final String localidad) throws ClientException {
 
-        final String query = getQuery(CONSULTAR_MARCA, IDENTIFICADOR, MARCA);
-        final String url = String.format(query, identificador, marca);
-        final String jsonPlanBean = call(GET, url);
-        log.info("[GET consultarPlan][URL {}][jsonPlanBean = {}]", url, jsonPlanBean);
-        return JsonUtils.toObject(jsonPlanBean, MarcaBean.class);
-    }*/
+        final String query = getQuery(SUCURSALES, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD);
+        final String url = String.format(query, identificador, codigoentidadfederal,localidad);
+        final String sucursales = call(GET, url);
+        //TODO log
+        final Sucursal[] arrsucs = JsonUtils.toObject(sucursales , Sucursal[].class);
+        return Stream.of(arrsucs).collect(Collectors.toList());
+    }
+
 
 
    /* private void fireAndForget(final String method, final String callTo) throws ClientException {

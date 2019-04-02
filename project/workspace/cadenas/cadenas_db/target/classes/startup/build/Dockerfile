@@ -5,4 +5,3 @@ EXPOSE 1433
 WORKDIR /opt/mssql-tools/bin
 RUN mkdir scripts
 COPY script.sql ./scripts
-COPY ./datasets ./datasets

@@ -1,9 +1,15 @@
 package clients;
+import beans.Sucursal;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import static constants.Constants.*;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
+import utils.JsonUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SoapClient implements CadenaServiceContract {
 
@@ -47,8 +53,17 @@ public class SoapClient implements CadenaServiceContract {
     public String health(final String identificador) throws ClientException {
         final Object object = executeMethod(HEALTH, identificador);
         final String jsonBean = object.toString();
-        System.out.println("[GET health][jsonBean {"+jsonBean+"}]");
+        //TODO log
         return jsonBean;
+    }
+
+    @Override
+    public List<Sucursal> sucursales(String identificador, String codigoentidadfederal, String localidad) throws ClientException {
+        final Object object = executeMethod(SUCURSALES, identificador,codigoentidadfederal,localidad);
+        final String sucursales = object.toString();
+       //TODO log
+        Sucursal[] arrsucs = JsonUtils.toObject(sucursales, Sucursal[].class);
+        return Stream.of(arrsucs).collect(Collectors.toList());
     }
 
        /* @Override

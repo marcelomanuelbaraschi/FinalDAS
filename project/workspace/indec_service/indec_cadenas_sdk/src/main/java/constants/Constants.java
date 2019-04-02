@@ -17,9 +17,10 @@ public class Constants {
 
 
     public static final String IDENTIFICADOR    = "identificador";
-    //public static final String CONSULTAR_MARCA = "marcas";
+    public static final String SUCURSALES = "sucursales";
 
     public static final String HEALTH = "health";
-    //public static final String MARCA = "marca";
+    public static final String CODIGO_IDENTIDAD_FEDERAL = "codigoentidadfederal";
+    public static final String LOCALIDAD = "localidad";
 
 }

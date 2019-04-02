@@ -7,7 +7,7 @@
     <groupId>cadenas</groupId>
     <artifactId>cadenas</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Cadenas</name>
+    <name>cadenas</name>
     <packaging>pom</packaging>
 
     <modules>

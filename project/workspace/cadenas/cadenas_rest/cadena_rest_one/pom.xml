@@ -11,7 +11,6 @@
     </parent>
 
 
-    <groupId>cadenas_rest</groupId>
     <artifactId>cadena_rest_one</artifactId>
     <packaging>war</packaging>
 
