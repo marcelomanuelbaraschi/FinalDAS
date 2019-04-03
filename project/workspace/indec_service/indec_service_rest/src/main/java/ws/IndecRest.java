@@ -1,23 +1,29 @@
 package ws;
 
 
+import beans.*;
+import cadenasObjects.PreciosSucursal;
+import clients.Tecnologia;
+import clients.exceptions.ClientException;
+import clients.factory.ClientFactory;
+import contract.CadenaServiceContract;
 import db.Bean;
 import db.Dao;
 import db.DaoFactory;
 
-import beans.CategoriaProductoBean;
-import beans.LocalidadBean;
-import beans.ProductoBean;
-import beans.ProvinciaBean;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import indecObjects.Cadena;
+import utils.JsonUtils;
+
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Path("/app")
 public class IndecRest {
@@ -107,6 +113,79 @@ public class IndecRest {
         }
     }
 
+
+
+    @POST
+    @Path("/precios")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String precios (@QueryParam("identificador") final String identificador
+                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                          ,@QueryParam("localidad") final String localidad
+                          ,@QueryParam("codigos") final String codigos) {
+
+        List <Cadena> cadenas = new LinkedList<Cadena>();
+
+        try {
+            CadenaServiceConfigBean config = new CadenaServiceConfigBean();
+            Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
+            List<Bean> configs = dao.select(config);
+            final  CadenaServiceConfigBean []  arrconfigs  = JsonUtils.toObject(gson.toJson(configs) ,CadenaServiceConfigBean[].class);
+            final List<CadenaServiceConfigBean> lconfis = Stream.of(arrconfigs).collect(Collectors.toList());
+            Cadena cadena;
+            for (CadenaServiceConfigBean conf:lconfis){
+                    try {
+                        final CadenaServiceContract client =
+                                ClientFactory.getInstance()
+                                             .clientFor(inferEnum(conf.getTecnologia())
+                                                                      ,conf.getUrl());
+
+
+                        final List<PreciosSucursal> preciosSucursales =
+                                client.precios("INDEC",codigoentidadfederal,localidad, fromCsvToList(codigos));
+
+                        cadena = new Cadena();
+                        cadena.setId(conf.getId());
+                        cadena.setNombre(conf.getNombreCadena());
+                        cadena.setSucursales(preciosSucursales);
+                        cadenas.add(cadena);
+                        cadena.setDisponibilidad("Disponible");
+
+                        //assertFalse(preciosSucursales.isEmpty());//si fallo por aca es porque la lista es vacia
+                    } catch (ClientException e) {
+                        cadena = new Cadena();
+                        cadena.setId(conf.getId());
+                        cadena.setNombre(conf.getNombreCadena());
+                        cadenas.add(cadena);
+                        cadena.setDisponibilidad("No Disponible");
+                    }
+            }
+
+        }
+
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+        }
+
+        //TODO USE UTILS DONDE SEA POJIBLE
+        return JsonUtils.toJsonString(cadenas);
+    }
+
+   //TODO MOVERLA
+   private Tecnologia inferEnum (String t){
+       if (t.equals("SOAP")){
+           return Tecnologia.SOAP;
+       }
+       else {
+           return Tecnologia.REST;
+       }
+   }
+
+    private static List<String> fromCsvToList(String commaSeparatedStr)
+    {
+        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
+        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
+        return result;
+    }
 
 }
 
