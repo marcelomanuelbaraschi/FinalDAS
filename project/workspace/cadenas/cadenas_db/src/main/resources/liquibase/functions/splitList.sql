@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS  [dbo].[splitList]
+GO
 CREATE FUNCTION [dbo].[splitList] (@list VARCHAR(MAX), @separator VARCHAR(MAX) = ';')
 RETURNS @table TABLE (Value VARCHAR(MAX))
 AS BEGIN

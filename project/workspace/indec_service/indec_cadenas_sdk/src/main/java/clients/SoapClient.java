@@ -1,6 +1,7 @@
 package clients;
 import cadenasObjects.InfoSucursal;
 import cadenasObjects.PreciosSucursal;
+import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
@@ -60,38 +61,51 @@ public class SoapClient implements CadenaServiceContract {
     }
 
     @Override
+    //TODO update and test
     public List<Sucursal> sucursales(String identificador, String codigoentidadfederal, String localidad) throws ClientException {
         final Object object = executeMethod(SUCURSALES, identificador,codigoentidadfederal,localidad);
-        final String sucursales = object.toString();
-       //TODO log
-        Sucursal[] arrsucs = JsonUtils.toObject(sucursales, Sucursal[].class);
-        return Stream.of(arrsucs).collect(Collectors.toList());
+        final String responsejson = object.toString();
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
+        //TODO log
+        if(resp.getCodigo()==0) {
+            final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
+            return Stream.of(arrsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
     }
 
     @Override
+    //TODO update and test
     public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
         final Object object = executeMethod(PRECIOS, identificador,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
-        final String preciosSucursales = object.toString();
+        final String responsejson = object.toString();
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
         //TODO log
-        PreciosSucursal[] arrpsucs = JsonUtils.toObject(preciosSucursales, PreciosSucursal[].class);
-        return Stream.of(arrpsucs).collect(Collectors.toList());
+        if(resp.getCodigo()==0) {
+            final PreciosSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , PreciosSucursal[].class);
+            return Stream.of(arrpsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
     }
 
     @Override
+    //TODO update and test
     public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
         final Object object = executeMethod(INFO, identificador, idSucursal);
-        final String infoSucursal = object.toString();
+        final String responsejson = object.toString();
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
         //TODO log
-        InfoSucursal[] arrpsucs = JsonUtils.toObject(infoSucursal, InfoSucursal[].class);
-        return Stream.of(arrpsucs).collect(Collectors.toList());
+        if(resp.getCodigo()==0) {
+            final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , InfoSucursal[].class);
+            return Stream.of(arrpsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
     }
-
-       /* @Override
-    public MarcaBean consultarMarca(final String identificador, final String marca) throws ClientException {
-        final Object object = executeMethod(CONSULTAR_MARCA ,identificador, marca);
-        final String jsonMarcaBean = object.toString();
-        log.info("[GET consultarPlan][object {}][jsonPlanBean = {}]", object, jsonMarcaBean);
-        return JsonUtils.toObject(jsonMarcaBean, MarcaBean.class);
-    }*/
 
 }

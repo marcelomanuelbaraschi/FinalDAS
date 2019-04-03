@@ -2,6 +2,7 @@ package clients;
 
 import cadenasObjects.InfoSucursal;
 import cadenasObjects.PreciosSucursal;
+import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
@@ -122,30 +123,49 @@ public class RestClient implements CadenaServiceContract {
 
         final String query = getQuery(SUCURSALES, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad);
-        final String sucursales = call(GET, url);
+        final String responsejson = call(GET, url);
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
         //TODO log
-        final Sucursal[] arrsucs = JsonUtils.toObject(sucursales , Sucursal[].class);
-        return Stream.of(arrsucs).collect(Collectors.toList());
+        if(resp.getCodigo()==0) {
+            final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
+            return Stream.of(arrsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
     }
 
     @Override
     public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
         final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD, CODIGOS);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
-        final String preciosSucursales = call(POST, url);
+        final String responsejson = call(POST, url);
         //TODO log
-        final PreciosSucursal[] arrpsucs = JsonUtils.toObject(preciosSucursales , PreciosSucursal[].class);
-        return Stream.of(arrpsucs).collect(Collectors.toList());
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
+        if(resp.getCodigo()==0) {
+            final PreciosSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), PreciosSucursal[].class);
+            return Stream.of(arrpsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
+
     }
 
     @Override
     public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
         final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
         final String url = String.format(query, identificador, idSucursal);
-        final String infoSucursal = call(GET, url);
+        final String responsejson = call(GET, url);
         //TODO log
-        final InfoSucursal[] arrpsucs = JsonUtils.toObject(infoSucursal, InfoSucursal[].class);
-        return Stream.of(arrpsucs).collect(Collectors.toList());
+        final Response resp = JsonUtils.toObject(responsejson , Response.class);
+        if(resp.getCodigo()==0) {
+            final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), InfoSucursal[].class);
+            return Stream.of(arrpsucs).collect(Collectors.toList());
+        }
+        else {
+            throw new ClientException(resp.getMensaje());
+        }
     }
 
 

@@ -10,7 +10,6 @@
     <!-- ******************************* -->
 
     <changeSet id="Create function splitList" author="DAS-Team" runAlways="true" runOnChange="true">
-
         <sqlFile encoding="utf8"
                  path="/src/main/resources/liquibase/functions/splitList.sql"
                  relativeToChangelogFile="false"

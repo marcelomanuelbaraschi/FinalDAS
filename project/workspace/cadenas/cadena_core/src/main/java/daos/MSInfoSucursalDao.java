@@ -1,11 +1,9 @@
 package daos;
 
-import bean.CriterioInfoBean;
-import bean.CriterioLocalizacionBean;
 import bean.InfoSucursalBean;
-import bean.SucursalBean;
 import db.Bean;
 import db.DaoImpl;
+import bean.CriterioInfoSucursalBean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +39,7 @@ public class MSInfoSucursalDao  extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        final CriterioInfoBean criterio = (CriterioInfoBean) bean;
+        final CriterioInfoSucursalBean criterio = (CriterioInfoSucursalBean) bean;
         List<Bean>  suc;
         this.connect();
         this.setProcedure("dbo.SP_GETINFOSUCURSAL(?)");

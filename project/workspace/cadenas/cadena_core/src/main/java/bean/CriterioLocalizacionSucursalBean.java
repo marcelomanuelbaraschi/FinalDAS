@@ -3,7 +3,7 @@ package bean;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class CriterioLocalizacionBean implements Bean {
+public class CriterioLocalizacionSucursalBean implements Bean {
     @SerializedName("codigoEntidadFederal")
     private String codigoEntidadFederal;
 

@@ -88,7 +88,6 @@ public abstract class ActiveRecord<Record> extends ConnectionDB<Record> {
         }
     }
 
-    // TODO FILL THIS
     public static DatasourceConfig getDatasource() {
         DatasourceConfig datasourceConfig = new DatasourceConfig();
         datasourceConfig.setDriver("com.microsoft.sqlserver.jdbc.SQLServerDriver");

@@ -1,3 +1,0 @@
-:ON ERROR EXIT
-CREATE DATABASE db_cadena;
-GO

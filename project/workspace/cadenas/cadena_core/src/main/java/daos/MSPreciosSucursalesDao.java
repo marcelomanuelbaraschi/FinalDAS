@@ -1,6 +1,6 @@
 package daos;
 
-import bean.CriterioSeleccionBean;
+import bean.CriterioBusquedaProductosBean;
 import bean.PreciosSucursalesBean;
 import db.Bean;
 import db.DaoImpl;
@@ -37,7 +37,7 @@ public class MSPreciosSucursalesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        final CriterioSeleccionBean cs =  (CriterioSeleccionBean) bean;
+        final CriterioBusquedaProductosBean cs =  (CriterioBusquedaProductosBean) bean;
         List<Bean>  sucs;
         this.connect();
         this.setProcedure("dbo.SP_GETPRECIOSSUCURSAL(?,?,?)");

@@ -1,6 +1,6 @@
 package daos;
 
-import bean.CriterioLocalizacionBean;
+import bean.CriterioLocalizacionSucursalBean;
 import bean.SucursalBean;
 import db.Bean;
 import db.DaoImpl;
@@ -39,7 +39,7 @@ public class MSSucursalesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        final CriterioLocalizacionBean criterio = (CriterioLocalizacionBean) bean;
+        final CriterioLocalizacionSucursalBean criterio = (CriterioLocalizacionSucursalBean) bean;
         List<Bean>  sucs;
         this.connect();
         this.setProcedure("dbo.SP_GETSUCURSALES(?,?)");
