@@ -22,12 +22,23 @@
 
     <!-- Dependency properties -->
     <properties>
+        <!-- JAVA VERSION -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
+        <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
         <liquibase.version>3.6.1</liquibase.version>
+
+        <jaxrs.version>2.0.1</jaxrs.version>
+        <jersey2.version>2.19</jersey2.version>
     </properties>
 
-    <!-- Plugin configuration -->
+
+<!-- Plugin configuration -->
     <build>
         <plugins>
             <plugin>
@@ -39,8 +50,24 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- TOMCAT SERVER -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat7-maven-plugin.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <server>${tomcat.server}</server>
+                    <url>${tomcat.url}</url>
+                    <path>${tomcat.path}</path>
+                    <port>${tomcat.port}</port>
+                    <contextReloadable>true</contextReloadable>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
-
-
 </project>

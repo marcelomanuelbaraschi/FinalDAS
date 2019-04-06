@@ -23,7 +23,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
     </servlet-mapping>
 
     <!--  Cors -->
-    <filter>
+
+    <!--<filter>
         <filter-name>CORS</filter-name>
         <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
 
@@ -62,11 +63,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
             <param-value>3600</param-value>
         </init-param>
 
-    </filter>
-    <filter-mapping>
-        <!-- CORS Filter mapping -->
+    </filter>-->
+
+    <!--<filter-mapping>
+        // CORS Filter mapping
         <filter-name>CORS</filter-name>
         <url-pattern>*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <!--  Cors -->
 </web-app>

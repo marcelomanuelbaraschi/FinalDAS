@@ -207,6 +207,7 @@
             <version>2.2.4</version>
         </dependency>
     </dependencies>
+
     <!-- Plugin configuration -->
     <build>
         <plugins>
@@ -230,6 +231,7 @@
                     <url>${tomcat.url}</url>
                     <path>${tomcat.path}</path>
                     <port>${tomcat.port}</port>
+                    <contextReloadable>true</contextReloadable>
                 </configuration>
             </plugin>
             <plugin>

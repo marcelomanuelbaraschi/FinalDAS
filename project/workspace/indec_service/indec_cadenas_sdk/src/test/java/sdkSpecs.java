@@ -2,7 +2,6 @@ import cadenasObjects.InfoSucursal;
 import cadenasObjects.PreciosSucursal;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
-import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class sdkSpecs {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final String confirmation = client.health("INDEC");
             assertEquals(confirmation.toLowerCase(), "ok");
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -37,7 +36,7 @@ public class sdkSpecs {
             final List<Sucursal> sucursales = client.sucursales("INDEC","AR-X","Capital");
             System.out.println(sucursales.toString());
             assertFalse(sucursales.isEmpty());
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -50,7 +49,7 @@ public class sdkSpecs {
             final List<InfoSucursal> sucursal = client.info("INDEC",1L);
             System.out.println(sucursal.toString());
             assertFalse(sucursal.isEmpty());
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -67,7 +66,7 @@ public class sdkSpecs {
             final List<PreciosSucursal> preciosSucursales = client.precios("INDEC","AR-X","Capital", codigos);
             System.out.println(preciosSucursales.toString());
             assertFalse(preciosSucursales.isEmpty());//si fallo por aca es porque la lista es vacia
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -79,7 +78,7 @@ public class sdkSpecs {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.REST, url);
             final String confirmation = client.health("INDEC");
             assertEquals(confirmation.toLowerCase(), "ok");
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -92,7 +91,7 @@ public class sdkSpecs {
             final List<Sucursal> sucursales = client.sucursales("INDEC","AR-X","Capital");
             System.out.println(sucursales.toString());
             assertFalse(sucursales.isEmpty());
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -109,7 +108,7 @@ public class sdkSpecs {
             final List<PreciosSucursal> preciosSucursales = client.precios("INDEC","AR-X","Capital", codigos);
             System.out.println(preciosSucursales.toString());
             assertFalse(preciosSucursales.isEmpty());//si fallo por aca es porque la lista es vacia
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -122,7 +121,7 @@ public class sdkSpecs {
             final List<InfoSucursal> infoSucursal = client.info("INDEC",1L);
             System.out.println(infoSucursal.toString());
             assertFalse(infoSucursal.isEmpty());//si fallo por aca es porque la lista es vacia
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -134,7 +133,7 @@ public class sdkSpecs {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final String confirmation = client.health("INDEC");
             assertEquals(confirmation.toLowerCase(), "ok");
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -147,7 +146,7 @@ public class sdkSpecs {
             final List<InfoSucursal> infoSucursal = client.info("INDEC",1L);
             System.out.println(infoSucursal.toString());
             assertFalse(infoSucursal.isEmpty());//si fallo por aca es porque la lista es vacia
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -160,7 +159,7 @@ public class sdkSpecs {
             final List<Sucursal> sucursales = client.sucursales("INDEC","AR-X","Capital");
             System.out.println(sucursales.toString());
             assertFalse(sucursales.isEmpty());
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -177,7 +176,7 @@ public class sdkSpecs {
             final List<PreciosSucursal> preciosSucursales = client.precios("INDEC","AR-X","Capital", codigos);
             System.out.println(preciosSucursales.toString());
             assertFalse(preciosSucursales.isEmpty());//si fallo por aca es porque la lista es vacia
-        } catch (ClientException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }

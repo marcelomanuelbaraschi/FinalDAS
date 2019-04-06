@@ -1,5 +1,7 @@
 package indecObjects;
 
+import com.google.gson.annotations.SerializedName;
+
 import cadenasObjects.PreciosSucursal;
 import com.google.gson.annotations.SerializedName;
 

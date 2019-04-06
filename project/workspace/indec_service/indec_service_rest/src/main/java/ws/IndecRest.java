@@ -4,7 +4,6 @@ package ws;
 import beans.*;
 import cadenasObjects.PreciosSucursal;
 import clients.Tecnologia;
-import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import db.Bean;
@@ -14,12 +13,12 @@ import db.DaoFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import indecObjects.Cadena;
-import utils.JsonUtils;
+import indecObjects.Helper;
+import utilities.JsonUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -123,6 +122,8 @@ public class IndecRest {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos) {
 
+        System.out.println("salio");
+
         List <Cadena> cadenas = new LinkedList<Cadena>();
 
         try {
@@ -135,13 +136,13 @@ public class IndecRest {
             for (CadenaServiceConfigBean conf:lconfis){
                     try {
                         final CadenaServiceContract client =
-                                ClientFactory.getInstance()
-                                             .clientFor(inferEnum(conf.getTecnologia())
+                                    ClientFactory.getInstance()
+                                             .clientFor(Enum.valueOf(Tecnologia.class,conf.getTecnologia())
                                                                       ,conf.getUrl());
 
 
                         final List<PreciosSucursal> preciosSucursales =
-                                client.precios("INDEC",codigoentidadfederal,localidad, fromCsvToList(codigos));
+                                client.precios("INDEC",codigoentidadfederal,localidad, Helper.fromCsvToList(codigos));
 
                         cadena = new Cadena();
                         cadena.setId(conf.getId());
@@ -150,8 +151,7 @@ public class IndecRest {
                         cadenas.add(cadena);
                         cadena.setDisponibilidad("Disponible");
 
-                        //assertFalse(preciosSucursales.isEmpty());//si fallo por aca es porque la lista es vacia
-                    } catch (ClientException e) {
+                    } catch (Exception e) {
                         cadena = new Cadena();
                         cadena.setId(conf.getId());
                         cadena.setNombre(conf.getNombreCadena());
@@ -159,6 +159,7 @@ public class IndecRest {
                         cadena.setDisponibilidad("No Disponible");
                     }
             }
+            System.out.println("salio del  for");
 
         }
 
@@ -167,25 +168,10 @@ public class IndecRest {
         }
 
         //TODO USE UTILS DONDE SEA POJIBLE
+        System.out.println("llego return");
         return JsonUtils.toJsonString(cadenas);
     }
 
-   //TODO MOVERLA
-   private Tecnologia inferEnum (String t){
-       if (t.equals("SOAP")){
-           return Tecnologia.SOAP;
-       }
-       else {
-           return Tecnologia.REST;
-       }
-   }
-
-    private static List<String> fromCsvToList(String commaSeparatedStr)
-    {
-        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
-        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
-        return result;
-    }
 
 }
 
