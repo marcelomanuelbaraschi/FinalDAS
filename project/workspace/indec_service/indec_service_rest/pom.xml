@@ -12,6 +12,7 @@
 
     <artifactId>indec_service_rest</artifactId>
     <packaging>war</packaging>
+
     <properties>
         <!-- SERVER -->
         <tomcat.server>IndecService</tomcat.server>
@@ -28,12 +29,6 @@
             <groupId>indec_service</groupId>
             <artifactId>indec_cadenas_sdk</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.ws.commons.schema</groupId>
-                    <artifactId>XmlSchema</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!--CORS-->
         <dependency>

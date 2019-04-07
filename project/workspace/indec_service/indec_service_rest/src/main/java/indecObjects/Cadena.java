@@ -1,9 +1,8 @@
 package indecObjects;
 
+import cadenasObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;
 
-import cadenasObjects.PreciosSucursal;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -16,10 +15,11 @@ public class Cadena {
     private String nombre;
 
     @SerializedName("sucursales")
-    private List<PreciosSucursal> sucursales;
+    private List<Sucursal> sucursales;
 
     @SerializedName("disponibilidad")
     private String disponibilidad;
+
 
 
     public String getDisponibilidad() {
@@ -29,8 +29,6 @@ public class Cadena {
     public void setDisponibilidad(String disponibilidad) {
         this.disponibilidad = disponibilidad;
     }
-
-
 
     public Long getId() {
         return id;
@@ -48,11 +46,11 @@ public class Cadena {
         this.nombre = nombre;
     }
 
-    public List<PreciosSucursal> getSucursales() {
+    public List<Sucursal> getSucursales() {
         return sucursales;
     }
 
-    public void setSucursales(List<PreciosSucursal> sucursales) {
+    public void setSucursales(List<Sucursal> sucursales) {
         this.sucursales = sucursales;
     }
 

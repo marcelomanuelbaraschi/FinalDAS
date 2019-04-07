@@ -3,6 +3,8 @@ package bean;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
+import java.util.List;
+
 public class SucursalBean implements Bean {
 
     @SerializedName("direccion")
@@ -19,6 +21,9 @@ public class SucursalBean implements Bean {
 
     @SerializedName("sucursalNombre")
     private String sucursalNombre;
+
+    @SerializedName("productos")
+    private List<ProductoBean> productos;
 
     public String getDireccion() {
         return direccion;
@@ -59,4 +64,15 @@ public class SucursalBean implements Bean {
     public void setSucursalNombre(String sucursalNombre) {
         this.sucursalNombre = sucursalNombre;
     }
+
+    public List<ProductoBean> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoBean> productos) {
+        this.productos = productos;
+    }
+
+
+
 }

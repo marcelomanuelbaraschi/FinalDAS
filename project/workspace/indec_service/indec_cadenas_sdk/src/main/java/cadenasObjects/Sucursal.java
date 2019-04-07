@@ -2,9 +2,10 @@ package cadenasObjects;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 
 public class Sucursal {
-
 
     @SerializedName("direccion")
     private String direccion;
@@ -21,7 +22,13 @@ public class Sucursal {
     @SerializedName("sucursalNombre")
     private String sucursalNombre;
 
-    @SerializedName("sucursalNombre")
+    @SerializedName("productos")
+    private List<Producto> productos;
+
+    @SerializedName("mejorOpcion")
+    private Boolean mejorOpcion;
+
+
     public String getDireccion() {
         return direccion;
     }
@@ -62,16 +69,20 @@ public class Sucursal {
         this.sucursalNombre = sucursalNombre;
     }
 
-    @Override
-    public String toString() {
-        return "Sucursal{" +
-                "direccion='" + direccion + '\'' +
-                ", idSucursal=" + idSucursal +
-                ", lat='" + lat + '\'' +
-                ", lng='" + lng + '\'' +
-                ", sucursalNombre='" + sucursalNombre + '\'' +
-                '}';
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
 
+    public Boolean getMejorOpcion() {
+        return mejorOpcion;
+    }
+
+    public void setMejorOpcion(Boolean mejorOpcion) {
+        this.mejorOpcion = mejorOpcion;
+    }
 }

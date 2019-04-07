@@ -91,10 +91,10 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadenas;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.0.11:1435;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
-            <contextDB>cadena_rest_one</contextDB>
+            <contextDB>rest_one</contextDB>
         </properties>
     </profile>
 
@@ -120,10 +120,10 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1436;databaseName=db_cadenas;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.0.11:1436;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
-            <contextDB>cadena_rest_two</contextDB>
+            <contextDB>rest_two</contextDB>
         </properties>
     </profile>
 

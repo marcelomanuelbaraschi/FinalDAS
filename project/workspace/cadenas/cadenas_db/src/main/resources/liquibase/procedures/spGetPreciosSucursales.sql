@@ -1,4 +1,4 @@
-CREATE  PROCEDURE SP_GETPRECIOSSUCURSALES (@codigoEntidadFederal VARCHAR(10), @localidad  VARCHAR (100) ,@codigos VARCHAR(MAX))
+CREATE PROCEDURE SP_GETPRECIOSSUCURSALES (@codigoEntidadFederal VARCHAR(10), @localidad  VARCHAR (100) ,@codigos VARCHAR(MAX))
 AS
     SET NOCOUNT ON
 BEGIN
@@ -22,15 +22,20 @@ BEGIN
     DECLARE @tcodigos TABLE (id  VARCHAR (100))
         INSERT INTO @tcodigos (id)
             SELECT *
-                FROM dbo.splitList(@codigos, ',')
+                FROM string_split(@codigos, ',')
 
         SELECT ps.idSucursal
+              ,s.sucursalNombre
+              ,s.direccion
+              ,s.lat
+              ,s.lng
               ,ps.codigoProducto
               ,ps.precio
             FROM productoSucursal ps
                 JOIN sucursal s
-                ON s.codigoEntidadFederal = @codigoEntidadFederal
+                ON ps.idSucursal = s.idSucursal
                 AND s.localidad = @localidad
+                AND s.codigoEntidadFederal = @codigoEntidadFederal
             WHERE
                      ps.codigoProducto IN (SELECT * FROM @tcodigos)
                  AND ps.activo = 'S'

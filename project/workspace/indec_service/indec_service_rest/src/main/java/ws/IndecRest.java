@@ -2,7 +2,8 @@ package ws;
 
 
 import beans.*;
-import cadenasObjects.PreciosSucursal;
+import cadenasObjects.Producto;
+import cadenasObjects.Sucursal;
 import clients.Tecnologia;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
@@ -14,13 +15,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import indecObjects.Cadena;
 import indecObjects.Helper;
+import org.javatuples.Pair;
 import utilities.JsonUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -112,8 +113,6 @@ public class IndecRest {
         }
     }
 
-
-
     @POST
     @Path("/precios")
     @Produces(MediaType.APPLICATION_JSON)
@@ -121,8 +120,6 @@ public class IndecRest {
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos) {
-
-        System.out.println("salio");
 
         List <Cadena> cadenas = new LinkedList<Cadena>();
 
@@ -141,13 +138,13 @@ public class IndecRest {
                                                                       ,conf.getUrl());
 
 
-                        final List<PreciosSucursal> preciosSucursales =
+                        final List<Sucursal> sucursales =
                                 client.precios("INDEC",codigoentidadfederal,localidad, Helper.fromCsvToList(codigos));
 
                         cadena = new Cadena();
                         cadena.setId(conf.getId());
                         cadena.setNombre(conf.getNombreCadena());
-                        cadena.setSucursales(preciosSucursales);
+                        cadena.setSucursales(sucursales);
                         cadenas.add(cadena);
                         cadena.setDisponibilidad("Disponible");
 
@@ -159,8 +156,6 @@ public class IndecRest {
                         cadena.setDisponibilidad("No Disponible");
                     }
             }
-            System.out.println("salio del  for");
-
         }
 
         catch(SQLException ex) {
@@ -168,10 +163,68 @@ public class IndecRest {
         }
 
         //TODO USE UTILS DONDE SEA POJIBLE
-        System.out.println("llego return");
+        //TODO NEED BETTER WAY
+
+        List <Producto >tempProductos = new LinkedList<>();
+        for (Cadena c : cadenas){
+            for(Sucursal s :c.getSucursales()){
+                for (Producto p: s.getProductos()){
+                    tempProductos.add(p);
+                }
+            }
+        }
+
+        Map<String, List<Producto>> m = tempProductos.stream().collect(Collectors.groupingBy(producto -> producto.getCodigoProducto()));
+
+        Map <String, Float> cod_min = new HashMap<String, Float>();
+        for (Map.Entry<String, List<Producto>> entry : m.entrySet()) {
+            Producto a =  entry.getValue().stream().min( Comparator.comparing(producto -> producto.getPrecio()) ).get();
+            cod_min.put(entry.getKey(),a.getPrecio());
+        }
+
+        for (Cadena c : cadenas){
+            for(Sucursal s :c.getSucursales()){
+                for (Producto p: s.getProductos()){
+                    Float precio =  cod_min.get(p.getCodigoProducto());
+                    if ( p.getPrecio().equals(precio)) {
+                        p.setMejorPrecio(true);
+                    } else {
+                        p.setMejorPrecio(false);
+                    }
+                }
+            }
+        }
+
+        Map<Pair <Long,Long>,Long> mapa = new HashMap<>();
+        for (Cadena c : cadenas){
+            for(Sucursal s :c.getSucursales()){
+                  mapa.put(Pair.with(c.getId(),s.getIdSucursal()),s.getProductos().stream().filter(p -> p.getMejorPrecio() ).count());
+                }
+        }
+
+         mapa.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+
+        Pair <Long,Long> key = Collections.max(mapa.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        for (Cadena c : cadenas){
+            for(Sucursal s :c.getSucursales()){
+                if ( c.getId().equals(key.getValue0()) &&  s.getIdSucursal().equals(key.getValue1()) ){
+                    s.setMejorOpcion(true);
+                } else s.setMejorOpcion(false);
+            }
+        }
+
         return JsonUtils.toJsonString(cadenas);
     }
 
 
+    @POST
+    @Path("/info")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String info (@QueryParam("identificador") final String identificador
+                        ,@QueryParam("idsucursal") final Long idsucursal
+                        ,@QueryParam("idcadena") final Long idcadena) {
+        return null;
+    }
 }
 

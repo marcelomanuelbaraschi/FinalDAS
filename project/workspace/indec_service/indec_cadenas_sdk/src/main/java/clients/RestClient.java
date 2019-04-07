@@ -1,7 +1,6 @@
 package clients;
 
 import cadenasObjects.InfoSucursal;
-import cadenasObjects.PreciosSucursal;
 import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import contract.CadenaServiceContract;
@@ -136,14 +135,14 @@ public class RestClient implements CadenaServiceContract {
     }
 
     @Override
-    public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws RuntimeException {
+    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws RuntimeException {
         final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD, CODIGOS);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
         final String responsejson = call(POST, url);
         //TODO log
         final Response resp = JsonUtils.toObject(responsejson , Response.class);
         if(resp.getCodigo()==0) {
-            final PreciosSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), PreciosSucursal[].class);
+            final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), Sucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {

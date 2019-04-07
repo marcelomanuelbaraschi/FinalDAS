@@ -2,10 +2,7 @@ package cadenasObjects;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PreciosSucursal {
-
-    @SerializedName("idSucursal")
-    private Long idSucursal;
+public class Producto {
 
     @SerializedName("codigoProducto")
     private String codigoProducto;
@@ -13,13 +10,8 @@ public class PreciosSucursal {
     @SerializedName("precio")
     private Float precio;
 
-    public Long getIdSucursal() {
-        return idSucursal;
-    }
-
-    public void setIdSucursal(Long idSucursal) {
-        this.idSucursal = idSucursal;
-    }
+    @SerializedName("mejorPrecio")
+    private Boolean mejorPrecio;
 
     public String getCodigoProducto() {
         return codigoProducto;
@@ -37,13 +29,24 @@ public class PreciosSucursal {
         this.precio = precio;
     }
 
+    public Boolean getMejorPrecio() {
+        return mejorPrecio;
+    }
+
+    public void setMejorPrecio(Boolean mejorPrecio) {
+        this.mejorPrecio = mejorPrecio;
+    }
+
     @Override
     public String toString() {
-        return "PreciosSucursal{" +
-                "idSucursal=" + idSucursal +
-                ", codigoProducto='" + codigoProducto + '\'' +
+        return "Producto{" +
+                "codigoProducto='" + codigoProducto + '\'' +
                 ", precio=" + precio +
+                ", mejorPrecio=" + mejorPrecio +
                 '}';
     }
 
+
+
 }
+

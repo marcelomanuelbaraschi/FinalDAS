@@ -1,7 +1,6 @@
 package clients;
 
 import cadenasObjects.InfoSucursal;
-import cadenasObjects.PreciosSucursal;
 import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import contract.CadenaServiceContract;
@@ -79,13 +78,13 @@ public class SoapClient implements CadenaServiceContract {
 
     @Override
     //TODO update and test
-    public List<PreciosSucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws RuntimeException {
+    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws RuntimeException {
         final Object object = executeMethod(PRECIOS, identificador,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
         final String responsejson = object.toString();
         final Response resp = JsonUtils.toObject(responsejson , Response.class);
         //TODO log
         if(resp.getCodigo()==0) {
-            final PreciosSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , PreciosSucursal[].class);
+            final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {

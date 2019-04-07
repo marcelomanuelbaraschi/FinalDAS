@@ -1,23 +1,21 @@
 package daos;
 
 import bean.CriterioBusquedaProductosBean;
-import bean.PreciosSucursalesBean;
+import bean.ProductoBean;
+import bean.SucursalBean;
 import db.Bean;
 import db.DaoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MSPreciosSucursalesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        PreciosSucursalesBean ps = new PreciosSucursalesBean();
-        ps.setIdSucursal(result.getLong("idSucursal"));
-        ps.setCodigoProducto(result.getString("codigoProducto"));
-        ps.setPrecio(result.getFloat("precio"));
-        return ps;
+      return null;
     }
 
     @Override
@@ -38,9 +36,11 @@ public class MSPreciosSucursalesDao extends DaoImpl {
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
         final CriterioBusquedaProductosBean cs =  (CriterioBusquedaProductosBean) bean;
-        List<Bean>  sucs;
+        List<Bean>  sucursales = new LinkedList<Bean>(); //prestar atencion a esto
+        List <ProductoBean> productos;
+        ProductoBean producto;
         this.connect();
-        this.setProcedure("dbo.SP_GETPRECIOSSUCURSAL(?,?,?)");
+        this.setProcedure("dbo.SP_GETPRECIOSSUCURSALES(?,?,?)",ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 
         if(cs.getCodigoEntidadFederal() == null) {
             this.setNull(1, Types.VARCHAR);
@@ -61,9 +61,29 @@ public class MSPreciosSucursalesDao extends DaoImpl {
             this.setParameter(3, cs.getCodigos());
         }
 
-        sucs = this.executeQuery();
+        ResultSet result  = this.getStatement().executeQuery();
+        result.next();
+
+        while(result.getRow()>0){
+            SucursalBean sucursal = new SucursalBean();
+            sucursal.setIdSucursal(result.getLong("idSucursal"));
+            sucursal.setSucursalNombre(result.getString("sucursalNombre"));
+            sucursal.setDireccion(result.getString("direccion"));
+            sucursal.setLat(result.getString("lat"));
+            sucursal.setLng(result.getString("lng"));
+            productos = new LinkedList<ProductoBean>();
+            while (result.getRow()>0 && sucursal.getIdSucursal() == result.getLong("idSucursal")){
+                producto = new ProductoBean();
+                producto.setCodigoProducto(result.getString("codigoProducto"));
+                producto.setPrecio(result.getFloat("precio"));
+                productos.add(producto);
+                result.next();
+            }
+            sucursal.setProductos(productos);
+            sucursales.add(sucursal);
+        }
         this.disconnect();
-        return sucs;
+        return sucursales;
     }
 
     @Override
