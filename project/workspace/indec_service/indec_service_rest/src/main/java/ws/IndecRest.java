@@ -43,6 +43,54 @@ public class IndecRest {
     }
 
     @GET
+    @Path("/traversalhealth")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String traversalhealth(@QueryParam("identificador") final String identificador) {
+        System.out.println("Rest Traversalhealth identificador ->" + identificador);
+
+        CadenaServiceConfigBean configrest = new CadenaServiceConfigBean();
+        configrest.setNombreCadena("Libertad");
+        configrest.setTecnologia("REST");
+        configrest.setUrl("http://localhost:8001/cadena_rest_one/cadenaRestOne");
+
+        CadenaServiceConfigBean configaxis = new CadenaServiceConfigBean();
+
+        configaxis.setNombreCadena("Walmart");
+        configaxis.setTecnologia("SOAP");
+        configaxis.setUrl("http://localhost:8000/cadena_axis_one/services/CadenaAxisOne?wsdl");
+
+        CadenaServiceConfigBean configcxf = new CadenaServiceConfigBean();
+        configcxf.setNombreCadena("Jumbo");
+        configcxf.setTecnologia("SOAP");
+        configcxf.setUrl("http://localhost:8003/cadena_cxf_one/services/cadena_cxf_one?wsdl");
+
+        final List<CadenaServiceConfigBean> lconfis = new LinkedList<>();
+        lconfis.add(configrest);
+        lconfis.add(configaxis);
+        lconfis.add(configcxf);
+
+        String okAccum = "";
+        for (CadenaServiceConfigBean conf:lconfis){
+            try {
+                final CadenaServiceContract client =
+                        ClientFactory.getInstance()
+                                .clientFor(Enum.valueOf(Tecnologia.class,conf.getTecnologia())
+                                        ,conf.getUrl());
+
+                okAccum = okAccum + conf.getTecnologia() +  client.health("INDEC") + ",";
+
+
+            } catch (Exception e) {
+                System.out.println("error.."+ e.getMessage());
+                okAccum = okAccum + conf.getTecnologia() +  "NOK" + ",";
+            }
+        }
+        return okAccum;
+
+    }
+
+
+    @GET
     @Path("/categorias")
     @Produces(MediaType.APPLICATION_JSON)
     public String categorias (@QueryParam("identificador") final String identificador) {

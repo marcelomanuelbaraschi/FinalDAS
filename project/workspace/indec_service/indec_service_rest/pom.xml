@@ -29,6 +29,12 @@
             <groupId>indec_service</groupId>
             <artifactId>indec_cadenas_sdk</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.ws.commons.schema</groupId>
+                    <artifactId>XmlSchema</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--CORS-->
         <dependency>
@@ -108,7 +114,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-
 
     </dependencies>
 
