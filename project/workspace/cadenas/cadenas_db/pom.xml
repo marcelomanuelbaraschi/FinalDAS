@@ -13,51 +13,5 @@
     <artifactId>cadenas_db</artifactId>
     <packaging>jar</packaging>
 
-    <profiles> <!--
-        <profile>
-            <id>cadena_db_rest_one_profile_id</id>
-            <activation>
-                <property>
-                    <name>env</name>
-                    <value>cadena_db_rest_one_profile_env</value>
-                </property>
-            </activation>
-            <properties>
-                <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-                <urlDB>jdbc:sqlserver://192.168.0.11:1435;databaseName=db_cadena</urlDB>
-                <usernameDB>SA</usernameDB>
-                <passwordDB>Das12345</passwordDB>
-                <contextDB>db_cadena</contextDB>
-            </properties>
-        </profile> -->
-    </profiles>
 
-
-    <build>
-        <plugins>
-            <!-- LIQUIBASE -->
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase.version}</version>
-                <configuration>
-                    <changeLogFile>dbchangelog.xml</changeLogFile>
-                    <driver>${driverDB}</driver>
-                    <url>${urlDB}</url>
-                    <username>${usernameDB}</username>
-                    <password>${passwordDB}</password>
-                    <contexts>${contextDB}</contexts>
-                    <!--<propertyFile>${db.property.file.path}</propertyFile>-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

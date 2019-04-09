@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 
 
 @Path("/cadenaRestOne")
-public class CadenaRestOne {
+public class CadenaRestOne  {
 
     private CadenaEndpoint ce = new CadenaEndpoint();
     private Gson gson = (new GsonBuilder()).setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();

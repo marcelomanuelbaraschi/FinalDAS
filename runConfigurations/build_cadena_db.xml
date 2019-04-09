@@ -12,7 +12,6 @@
             <list>
               <option value="clean" />
               <option value="install" />
-              <option value="-Denv=cadena_db_profile_env" />
             </list>
           </option>
           <option name="pomFileName" />

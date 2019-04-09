@@ -40,7 +40,7 @@
     </dependencies>
    <build>
         <plugins>
-            <!-- <plugin>
+             <plugin>
                  <groupId>org.apache.tomcat.maven</groupId>
                  <artifactId>tomcat7-maven-plugin</artifactId>
                  <version>${tomcat7-maven-plugin.version}</version>
@@ -49,8 +49,8 @@
                          <phase>none</phase>
                      </execution>
                  </executions>
-             </plugin>-->
-             <!--<plugin>
+             </plugin>
+             <plugin>
                  <artifactId>maven-war-plugin</artifactId>
                  <version>${maven-war-plugin.version}</version>
                  <executions>
@@ -58,7 +58,7 @@
                          <phase>none</phase>
                      </execution>
                  </executions>
-             </plugin>-->
+             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -72,6 +72,16 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <executions>
+                    <execution>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

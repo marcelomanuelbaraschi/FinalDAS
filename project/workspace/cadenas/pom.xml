@@ -61,7 +61,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadenas;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.9:1434;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_axis_one</contextDB>
@@ -91,7 +91,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.0.11:1435;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.9:1435;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_one</contextDB>
@@ -120,7 +120,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.0.11:1436;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.9:1436;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_two</contextDB>
@@ -140,7 +140,7 @@
         <properties>
             <!-- SERVER -->
             <tomcat.server>CadenaCXFOneService</tomcat.server>
-            <tomcat.url>http://localhost:8083/manager/text</tomcat.url>
+            <tomcat.url>http://192.168.1.9:8083/manager/text</tomcat.url>
             <tomcat.path>/${project.build.finalName}</tomcat.path>
             <tomcat.port>8003</tomcat.port>
 
@@ -150,7 +150,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1437;databaseName=db_cadenas;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.9:1437;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_cxf_one</contextDB>
@@ -179,7 +179,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1438;databaseName=db_cadenas;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.9:1438;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_cxf_two</contextDB>
@@ -249,6 +249,29 @@
                         </resource>
                     </webResources>
                 </configuration>
+            </plugin>
+            <!-- LIQUIBASE -->
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <changeLogFile>dbchangelog.xml</changeLogFile>
+                    <driver>${driverDB}</driver>
+                    <url>${urlDB}</url>
+                    <username>${usernameDB}</username>
+                    <password>${passwordDB}</password>
+                    <contexts>${contextDB}</contexts>
+                    <!--<propertyFile>${db.property.file.path}</propertyFile>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
