@@ -79,6 +79,20 @@
 		<dropProcedure procedureName="spLocalidades"/>
 	</changeSet>
 
+	<changeSet id="Drop procedure spCadenas" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCadenas'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spCadenas"/>
+	</changeSet>
+
 
 	<!-- ******************************* -->
 	<!--  CREATE PROCEDURES CHANGE-SETS  -->
@@ -172,6 +186,21 @@
 		</preConditions>
 		<sqlFile
 				path="/src/main/resources/liquibase/procedures/spLocalidades.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure spCadenas" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spCadenas'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spCadenas.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

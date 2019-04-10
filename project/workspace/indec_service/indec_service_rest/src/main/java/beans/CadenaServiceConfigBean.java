@@ -8,6 +8,8 @@ public class CadenaServiceConfigBean implements Bean {
 
     @SerializedName("id")
     private Long id;
+    @SerializedName("idCadena")
+    private Long idCadena;
     @SerializedName("nombreCadena")
     private String nombreCadena;
     @SerializedName("tecnologia")
@@ -22,6 +24,10 @@ public class CadenaServiceConfigBean implements Bean {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getIdCadena() {  return idCadena;  }
+
+    public void setIdCadena(Long idCadena) {    this.idCadena = idCadena;   }
 
     public String getNombreCadena() {
         return nombreCadena;

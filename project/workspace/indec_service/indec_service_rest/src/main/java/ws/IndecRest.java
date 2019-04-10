@@ -274,5 +274,22 @@ public class IndecRest {
                         ,@QueryParam("idcadena") final Long idcadena) {
         return null;
     }
+
+
+    @GET
+    @Path("/cadenas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String cadenas (@QueryParam("identificador") final String identificador) {
+        try {
+            CadenaBean cadena = new CadenaBean();
+            Dao dao = DaoFactory.getDao("Cadenas", "");
+            List<Bean> cadenas = dao.select(cadena);
+            return (gson.toJson(cadenas));
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            return "must be a proper error";
+        }
+    }
 }
 

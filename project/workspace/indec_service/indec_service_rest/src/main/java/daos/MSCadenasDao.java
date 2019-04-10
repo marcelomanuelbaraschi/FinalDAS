@@ -1,23 +1,22 @@
 package daos;
-import beans.CadenaServiceConfig;
-import beans.CadenaServiceConfigBean;
+
+import beans.CadenaBean;
 import db.Bean;
 import db.DaoImpl;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
-public class MSCadenasServicesConfigsDao extends DaoImpl {
+public class MSCadenasDao extends DaoImpl {
+
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        CadenaServiceConfigBean config = new CadenaServiceConfigBean();
-        config.setId(result.getLong("id"));
-        config.setTecnologia(result.getString("tecnologia"));
-        config.setIdCadena(result.getLong("idCadena"));
-        config.setNombreCadena(result.getString("nombreCadena"));
-        config.setUrl(result.getString("url"));
-        return config;
+        CadenaBean cadena = new CadenaBean();
+        cadena.setId(result.getLong("id"));
+        cadena.setNombre(result.getString("nombre"));
+        cadena.setImagen(result.getString("imagen"));
+        return cadena;
     }
 
     @Override
@@ -38,15 +37,14 @@ public class MSCadenasServicesConfigsDao extends DaoImpl {
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
         this.connect();
-        this.setProcedure("dbo.spCadenasServicesConfigs");
-        List<Bean> configs = this.executeQuery();
+        this.setProcedure("dbo.spCadenas");
+        List <Bean> cadenas = this.executeQuery();
         this.disconnect();
-        return configs;
+        return cadenas;
     }
 
     @Override
     public boolean valid(Bean bean) throws SQLException {
         return false;
     }
-
 }
