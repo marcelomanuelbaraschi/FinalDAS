@@ -93,6 +93,20 @@
 		<dropProcedure procedureName="spCadenas"/>
 	</changeSet>
 
+	<changeSet id="Drop procedure spProductos" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spProductos'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spProductos"/>
+	</changeSet>
+
 
 	<!-- ******************************* -->
 	<!--  CREATE PROCEDURES CHANGE-SETS  -->

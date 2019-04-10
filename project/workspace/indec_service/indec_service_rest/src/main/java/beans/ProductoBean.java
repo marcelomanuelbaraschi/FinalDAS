@@ -5,27 +5,18 @@ import db.Bean;
 
 public class ProductoBean  implements Bean {
 
-    @SerializedName("id")
-    private long id;
     @SerializedName("nombre")
     private String nombre;
     @SerializedName("idComercial")
     private Long idComercial;
     @SerializedName("idCategoria")
     private Long idCategoria;
+    @SerializedName("nombreCategoria")
+    private String nombreCategoria;
     @SerializedName("nombreMarca")
     private String nombreMarca;
     @SerializedName("imagen")
     private String imagen;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -67,8 +58,7 @@ public class ProductoBean  implements Bean {
         this.imagen = imagen;
     }
 
+    public String getNombreCategoria() {     return nombreCategoria;  }
 
-
-
-
+    public void setNombreCategoria(String nombreCategoria) {     this.nombreCategoria = nombreCategoria;  }
 }
