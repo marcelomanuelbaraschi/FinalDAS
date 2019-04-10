@@ -29,4 +29,4 @@ INSERT INTO categoriaProducto (nombre,urlImagen) VALUES
 ,('Vinagre','./../../assets/img/cat_vinagre.png')
 ,('Café','./../../assets/img/cat_cafe.png')
 ,('Yerba','./../../assets/img/cat_yerba.png')
-GO
+

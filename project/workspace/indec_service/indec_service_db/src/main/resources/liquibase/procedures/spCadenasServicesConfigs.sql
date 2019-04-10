@@ -3,4 +3,3 @@ BEGIN
  SELECT  id, idCadena, nombreCadena ,tecnologia, url
     FROM  cadenaServiceConfig
 END
-GO

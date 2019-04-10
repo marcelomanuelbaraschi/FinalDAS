@@ -14,8 +14,8 @@ public class MSLocalidadesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         LocalidadBean loc = new LocalidadBean();
-        loc.setIdProv(result.getLong("idProvincia"));
-        loc.setNombre(result.getString("nombre"));
+        loc.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
+        loc.setNombreLocalidad(result.getString("nombreLocalidad"));
         return loc;
     }
 
@@ -39,11 +39,11 @@ public class MSLocalidadesDao extends DaoImpl {
         LocalidadBean loc = (LocalidadBean) bean;
         this.connect();
         this.setProcedure("dbo.spLocalidades(?)");
-        if(loc.getIdProv() == null) {
-            this.setNull(1, Types.BIGINT);
+        if(loc.getCodigoEntidadFederal() == null) {
+            this.setNull(1, Types.VARCHAR);
         }
         else {
-            this.setParameter(1, loc.getIdProv());
+            this.setParameter(1, loc.getCodigoEntidadFederal());
         }
         List<Bean> localidades = this.executeQuery();
         this.disconnect();

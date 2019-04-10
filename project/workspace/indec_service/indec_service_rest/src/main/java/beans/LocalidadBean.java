@@ -4,24 +4,24 @@ import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
 public class LocalidadBean implements Bean {
-    @SerializedName("idProvincia")
-    private Long idProv;
-    @SerializedName("nombre")
-    private String nombre;
+    @SerializedName("codigoEntidadFederal")
+    private String codigoEntidadFederal;
+    @SerializedName("nombreLocalidad")
+    private String nombreLocalidad;
 
-    public Long getIdProv() {
-        return idProv;
+    public String getCodigoEntidadFederal() {
+        return codigoEntidadFederal;
     }
 
-    public void setIdProv(Long idProv) {
-        this.idProv = idProv;
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
+        this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreLocalidad() {
+        return nombreLocalidad;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreLocalidad(String nombreLocalidad) {
+        this.nombreLocalidad = nombreLocalidad;
     }
 }

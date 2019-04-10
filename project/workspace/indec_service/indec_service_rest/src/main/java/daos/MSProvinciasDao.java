@@ -15,8 +15,8 @@ public class MSProvinciasDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         ProvinciaBean prov = new ProvinciaBean();
-        prov.setId(result.getLong("id"));
-        prov.setNombre(result.getString("nombre"));
+        prov.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
+        prov.setNombreProvincia(result.getString("nombreProvincia"));
         return prov;
     }
 

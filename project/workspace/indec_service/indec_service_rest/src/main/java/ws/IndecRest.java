@@ -147,10 +147,10 @@ public class IndecRest {
     @Path("/localidades")
     @Produces(MediaType.APPLICATION_JSON)
     public String localidades (@QueryParam("identificador") final String identificador,
-                               @QueryParam("idprovincia") final Long idProvincia) {
+                               @QueryParam("codigoentidadfederal") final String codigoentidadfederal) {
         try {
             LocalidadBean localidad = new LocalidadBean();
-            localidad.setIdProv(idProvincia);
+            localidad.setCodigoEntidadFederal(codigoentidadfederal);
             Dao dao = DaoFactory.getDao("Localidades", "");
             List<Bean> localidades = dao.select(localidad);
             return (gson.toJson(localidades));

@@ -3,4 +3,3 @@ BEGIN
  SELECT id, nombre ,urlImagen
     FROM categoriaProducto
 END
-GO

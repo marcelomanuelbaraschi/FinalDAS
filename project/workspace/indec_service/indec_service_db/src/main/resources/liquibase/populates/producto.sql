@@ -16,7 +16,7 @@ VALUES
  ,(7790040946101,2,'Galletitas Crackers Mas Grande Criollitas 169 Gr','CRIOLLITAS','./../../assets/img/products/7790040946101.jpg')
  ,(7790040999404,2,'Galletitas con Salvado Fibro Active Bagley 214 Gr','BAGLEY','./../../assets/img/products/7790040999404.jpg')
  ,(7790040999503,2,'Galletitas con Salvado Fibro Active Bagley 642 Gr','BAGLEY','./../../assets/img/products/7790040999503.jpg')
-GO
+
 
 
 
@@ -28,7 +28,7 @@ VALUES
 ,(7622300742676,3,'Galletitas Chocolate Lincoln 153 Gr','LINCOLN','./../../assets/img/products/7622300742676.jpg')
 ,(7622300829629,3,'Galletitas Leche Terrabusi Manon 178 Gr','MANÓN','./../../assets/img/products/7622300829629.jpg')
 ,(7622300841461,3,'Galletitas Chocolate con Relleno de Vainilla Oreo Mini 50 Gr','OREO','./../../assets/img/products/7622300841461.jpg')
-GO
+
 
 
 INSERT INTO producto --ok. con imagenes
@@ -39,5 +39,5 @@ VALUES
   ,(7790070411723,4,'Arroz Doble Carolina Gallo 1 Kg','GALLO','./../../assets/img/products/7790070411723.jpg')
   ,(7790070411822,4,'Arroz Parbolizado Lucchetti 500 Gr','LUCCHETTI','./../../assets/img/products/7790070411822.jpg')
   ,(7790070411877,4,'Arroz Largo Fino 00000 Gallo 500 Gr','GALLO','./../../assets/img/products/7790070411877.jpg')
-GO
+
 

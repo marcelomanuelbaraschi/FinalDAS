@@ -1,6 +1,6 @@
 CREATE TABLE provincia (
-    id BIGINT IDENTITY (1,1)
-   ,nombre VARCHAR(255) NOT NULL
-    PRIMARY KEY (id)
-);
+  codigoEntidadFederal VARCHAR (10) NOT NULL,
+  nombreProvincia VARCHAR (50) NOT NULL,
+  PRIMARY KEY (codigoEntidadFederal)
+)
 GO

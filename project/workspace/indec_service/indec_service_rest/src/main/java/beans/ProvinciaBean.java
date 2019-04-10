@@ -5,24 +5,24 @@ import db.Bean;
 
 public class ProvinciaBean implements Bean {
 
-    @SerializedName("id")
-    private Long id;
-    @SerializedName("nombre")
-    private String nombre;
+    @SerializedName("codigoEntidadFederal")
+    private String codigoEntidadFederal;
+    @SerializedName("nombreProvincia")
+    private String nombreProvincia;
 
-    public Long getId() {
-        return id;
+    public String getCodigoEntidadFederal() {
+        return codigoEntidadFederal;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
+        this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreProvincia() {
+        return nombreProvincia;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreProvincia(String nombreProvincia) {
+        this.nombreProvincia = nombreProvincia;
     }
 }

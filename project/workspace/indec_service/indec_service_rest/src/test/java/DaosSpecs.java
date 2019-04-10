@@ -15,7 +15,7 @@ public class DaosSpecs {
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
             .create();
-
+/*
     @Test
     public void MSCadenasServicesConfigsDao_success() {
         try {
@@ -109,5 +109,5 @@ public class DaosSpecs {
             fail();
         }
     }
-
+*/
 }

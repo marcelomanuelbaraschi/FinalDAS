@@ -1,16 +1,16 @@
 CREATE PROCEDURE spLocalidades(
-      @idProvincia BIGINT
+      @codigoEntidadFederal VARCHAR(10)
 ) AS
 BEGIN
-  IF @idProvincia IS NULL
+  IF @codigoEntidadFederal IS NULL
     BEGIN
-         SELECT id, idProvincia, nombre
+         SELECT codigoEntidadFederal, nombreLocalidad
          FROM localidad
     END
   ELSE
     BEGIN
-     SELECT id, idProvincia, nombre
+     SELECT codigoEntidadFederal, nombreLocalidad
       FROM localidad l
-        WHERE l.idProvincia = @idProvincia
+        WHERE l.codigoEntidadFederal = @codigoEntidadFederal
     END
-END;
+END

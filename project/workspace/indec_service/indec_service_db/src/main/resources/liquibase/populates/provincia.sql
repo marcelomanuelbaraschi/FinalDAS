@@ -1,25 +1,26 @@
-INSERT INTO provincia (nombre) VALUES
-('Buenos Aires'),
-('Catamarca'),
-('Chaco'),
-('Chubut'),
-('Córdoba'),
-('Corrientes'),
-('Entre Ríos'),
-('Formosa'),
-('Jujuy'),
-('La Pampa'),
-('La Rioja'),
-('Mendoza'),
-('Misiones'),
-('Neuquén'),
-('Río Negro'),
-('Salta'),
-('San Juan'),
-('San Luis'),
-('Santa Cruz'),
-('Santa Fe'),
-('Santiago del Estero'),
-('Tierra del Fuego'),
-('Tucumán')
-GO
+INSERT INTO  provincia (codigoEntidadFederal,nombreProvincia)
+VALUES
+ ('AR-A','Salta')
+,('AR-B','Provincia de Buenos Aires')
+,('AR-C','Capital Federal')
+,('AR-D','San Luis')
+,('AR-E','Entre Ríos')
+,('AR-F','La Rioja')
+,('AR-G','Santiago del Estero')
+,('AR-H','Chaco')
+,('AR-J','San Juan')
+,('AR-K','Catamarca')
+,('AR-L','La Pampa')
+,('AR-M','Mendoza')
+,('AR-N','Misiones')
+,('AR-P','Formosa')
+,('AR-Q','Neuquén')
+,('AR-R','Río Negro')
+,('AR-S','Santa Fe')
+,('AR-T','Tucumán')
+,('AR-U','Chubut')
+,('AR-V','Tierra del Fuego')
+,('AR-W','Corrientes')
+,('AR-X','Córdoba')
+,('AR-Y','Jujuy')
+,('AR-Z','Santa Cruz')

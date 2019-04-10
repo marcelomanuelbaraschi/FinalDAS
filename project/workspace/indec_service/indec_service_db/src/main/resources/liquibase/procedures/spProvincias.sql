@@ -1,6 +1,6 @@
-CREATE PROCEDURE spProvincias AS
-BEGIN
- SELECT  id, nombre
-    FROM  provincia
-END
-GO
+CREATE PROCEDURE spProvincias
+AS
+  BEGIN
+   SELECT  codigoEntidadFederal, nombreProvincia
+      FROM  provincia
+  END

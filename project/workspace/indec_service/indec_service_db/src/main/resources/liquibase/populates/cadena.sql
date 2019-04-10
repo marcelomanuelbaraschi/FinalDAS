@@ -5,4 +5,3 @@ VALUES
     , (3, 'Carrefour', './../../../assets/img/carrefour_logo.png')
     , (4, 'Libertad', './../../../assets/img/libertad_logo.png')
     , (5, 'Disco', './../../../assets/img/disco_logo.png')
-GO 
