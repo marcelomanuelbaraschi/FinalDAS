@@ -2,26 +2,51 @@
 
 version: '3'
 services:
-#  axis_one:
-#    image: "mssql_supermercados:1.0"
-#    ports:
-#      - "1434:1433"
-#    container_name: "axis_one"
-  rest_one:
-    image: "mssql_cadena:1.0"
-    ports:
-      - "1435:1433"
-    container_name: "rest_one"
-#  cxf_one:
-#    image: "mssql_supermercados:1.0"
+    axis_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1434:1433'
+        container_name: axis_one
+    rest_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1435:1433'
+        container_name: rest_one
+    #rest_one es el 1436
+    cxf_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1437:1433'
+        container_name: cxf_one
+     #cxf_two es el 1438?
+
+
+
+
+
+
+#version: '3'
+#services:
+#   axis_one:
+#     image: "mssql_cadena:1.0"
+#     ports:
+#       - "1434:1433"
+#     container_name: "axis_one"
+#   rest_one:
+#     image: "mssql_cadena:1.0"
+#     ports:
+#       - "1435:1433"
+#     container_name: "rest_one"
+#  rest_two:
+#    image: "mssql_cadena:1.0"
 #    ports:
 #      - "1436:1433"
+#   container_name: "rest_two"
+#  cxf_one:
+#     image: "mssql_cadena:1.0"
+#     ports:
+#        - "1437:1433"
 #    container_name: "cxf_one"
-#  rest_two:
-#    image: "mssql_supermercados:1.0"
-#    ports:
-#      - "1437:1433"
-#    container_name: "rest_two"
 #  cxf_two:
 #    image: "mssql_supermercados:1.0"
 #    ports:
