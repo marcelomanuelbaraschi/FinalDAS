@@ -19,17 +19,17 @@ BEGIN
   END
 
 
-    DECLARE @tcodigos TABLE (id  VARCHAR (100))
-        INSERT INTO @tcodigos (id)
+    DECLARE @tcodigos TABLE (idComercial  VARCHAR (100))
+        INSERT INTO @tcodigos (idComercial)
             SELECT *
                 FROM string_split(@codigos, ',')
 
         SELECT ps.idSucursal
-              ,s.sucursalNombre
+              ,s.nombreSucursal
               ,s.direccion
               ,s.lat
               ,s.lng
-              ,ps.codigoProducto
+              ,ps.idComercial
               ,ps.precio
             FROM productoSucursal ps
                 JOIN sucursal s
@@ -37,7 +37,6 @@ BEGIN
                 AND s.localidad = @localidad
                 AND s.codigoEntidadFederal = @codigoEntidadFederal
             WHERE
-                     ps.codigoProducto IN (SELECT * FROM @tcodigos)
+                     ps.idComercial IN (SELECT * FROM @tcodigos)
                  AND ps.activo = 'S'
 END
-GO

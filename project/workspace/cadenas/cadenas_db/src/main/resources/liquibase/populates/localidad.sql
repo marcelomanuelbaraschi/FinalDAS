@@ -1,433 +1,430 @@
-
-
 INSERT INTO localidad (codigoEntidadFederal,nombreLocalidad) VALUES -- CORDOBA
-('AR-X', 'Adelia Maria'),
-('AR-X', 'Agua de Oro'),
-('AR-X', 'Alcira Gigena'),
-('AR-X', 'Aldea Santa Maria'),
-('AR-X', 'Alejandro Roca'),
-('AR-X', 'Alejo Ledesma'),
-('AR-X', 'Alicia'),
-('AR-X', 'Almafuerte'),
-('AR-X', 'Alpa Corral'),
-('AR-X', 'Alta Gracia'),
-('AR-X', 'Alto Alegre'),
-('AR-X', 'Alto de Los Quebrachos'),
-('AR-X', 'Altos de Chipion'),
-('AR-X', 'Amboy'),
-('AR-X', 'Ambul'),
-('AR-X', 'Ana Zumaran'),
-('AR-X', 'Anisacate'),
-('AR-X', 'Arguello'),
-('AR-X', 'Arias'),
-('AR-X', 'Arroyito'),
-('AR-X', 'Arroyo Algodon'),
-('AR-X', 'Arroyo Cabral'),
-('AR-X', 'Arroyo Los Patos'),
-('AR-X', 'Assunta'),
-('AR-X', 'Atahona'),
-('AR-X', 'Ausonia'),
-('AR-X', 'Avellaneda'),
-('AR-X', 'Ballesteros'),
-('AR-X', 'Ballesteros Sud'),
-('AR-X', 'Balnearia'),
-('AR-X', 'Bañado de Soto'),
-('AR-X', 'Bell Ville'),
-('AR-X', 'Bengolea'),
-('AR-X', 'Benjamin Gould'),
-('AR-X', 'Berrotaran'),
-('AR-X', 'Bialet Masse'),
-('AR-X', 'Bouwer'),
-('AR-X', 'Brinkmann'),
-('AR-X', 'Achiras'),
-('AR-X', 'Buchardo'),
-('AR-X', 'Bulnes'),
-('AR-X', 'Cabalango'),
-('AR-X', 'Calamuchita'),
-('AR-X', 'Calchin'),
-('AR-X', 'Calchin Oeste'),
-('AR-X', 'Calmayo'),
-('AR-X', 'Camilo Aldao'),
-('AR-X', 'Caminiaga'),
-('AR-X', 'Cañada de Luque'),
-('AR-X', 'Cañada de Machado'),
-('AR-X', 'Cañada de Rio Pinto'),
-('AR-X', 'Cañada del Sauce'),
-('AR-X', 'Canals'),
-('AR-X', 'Candelaria Sud'),
-('AR-X', 'Capilla de Remedios'),
-('AR-X', 'Capilla de Siton'),
-('AR-X', 'Capilla del Carmen'),
-('AR-X', 'Capilla del Monte'),
-('AR-X', 'Capital'),
-('AR-X', 'Capitan Gral B. O´Higgins'),
-('AR-X', 'Carnerillo'),
-('AR-X', 'Carrilobo'),
-('AR-X', 'Casa Grande'),
-('AR-X', 'Cavanagh'),
-('AR-X', 'Cerro Colorado'),
-('AR-X', 'Chaján'),
-('AR-X', 'Chalacea'),
-('AR-X', 'Chañar Viejo'),
-('AR-X', 'Chancaní'),
-('AR-X', 'Charbonier'),
-('AR-X', 'Charras'),
-('AR-X', 'Chazón'),
-('AR-X', 'Chilibroste'),
-('AR-X', 'Chucul'),
-('AR-X', 'Chuña'),
-('AR-X', 'Chuña Huasi'),
-('AR-X', 'Churqui Cañada'),
-('AR-X', 'Cienaga Del Coro'),
-('AR-X', 'Cintra'),
-('AR-X', 'Col. Almada'),
-('AR-X', 'Col. Anita'),
-('AR-X', 'Col. Barge'),
-('AR-X', 'Col. Bismark'),
-('AR-X', 'Col. Bremen'),
-('AR-X', 'Col. Caroya'),
-('AR-X', 'Col. Italiana'),
-('AR-X', 'Col. Iturraspe'),
-('AR-X', 'Col. Las Cuatro Esquinas'),
-('AR-X', 'Col. Las Pichanas'),
-('AR-X', 'Col. Marina'),
-('AR-X', 'Col. Prosperidad'),
-('AR-X', 'Col. San Bartolome'),
-('AR-X', 'Col. San Pedro'),
-('AR-X', 'Col. Tirolesa'),
-('AR-X', 'Col. Vicente Aguero'),
-('AR-X', 'Col. Videla'),
-('AR-X', 'Col. Vignaud'),
-('AR-X', 'Col. Waltelina'),
-('AR-X', 'Colazo'),
-('AR-X', 'Comechingones'),
-('AR-X', 'Conlara'),
-('AR-X', 'Copacabana'),
-('AR-X', 'Coronel Baigorria'),
-('AR-X', 'Coronel Moldes'),
-('AR-X', 'Corral de Bustos'),
-('AR-X', 'Corralito'),
-('AR-X', 'Cosquín'),
-('AR-X', 'Costa Sacate'),
-('AR-X', 'Cruz Alta'),
-('AR-X', 'Cruz de Caña'),
-('AR-X', 'Cruz del Eje'),
-('AR-X', 'Cuesta Blanca'),
-('AR-X', 'Dean Funes'),
-('AR-X', 'Del Campillo'),
-('AR-X', 'Despeñaderos'),
-('AR-X', 'Devoto'),
-('AR-X', 'Diego de Rojas'),
-('AR-X', 'Dique Chico'),
-('AR-X', 'El Arañado'),
-('AR-X', 'El Brete'),
-('AR-X', 'El Chacho'),
-('AR-X', 'El Crispín'),
-('AR-X', 'El Fortín'),
-('AR-X', 'El Manzano'),
-('AR-X', 'El Rastreador'),
-('AR-X', 'El Rodeo'),
-('AR-X', 'El Tío'),
-('AR-X', 'Elena'),
-('AR-X', 'Embalse'),
-('AR-X', 'Esquina'),
-('AR-X', 'Estación Gral. Paz'),
-('AR-X', 'Estación Juárez Celman'),
-('AR-X', 'Estancia de Guadalupe'),
-('AR-X', 'Estancia Vieja'),
-('AR-X', 'Etruria'),
-('AR-X', 'Eufrasio Loza'),
-('AR-X', 'Falda del Carmen'),
-('AR-X', 'Freyre'),
-('AR-X', 'Gral. Baldissera'),
-('AR-X', 'Gral. Cabrera'),
-('AR-X', 'Gral. Deheza'),
-('AR-X', 'Gral. Fotheringham'),
-('AR-X', 'Gral. Levalle'),
-('AR-X', 'Gral. Roca'),
-('AR-X', 'Guanaco Muerto'),
-('AR-X', 'Guasapampa'),
-('AR-X', 'Guatimozin'),
-('AR-X', 'Gutenberg'),
-('AR-X', 'Hernando'),
-('AR-X', 'Huanchillas'),
-('AR-X', 'Huerta Grande'),
-('AR-X', 'Huinca Renanco'),
-('AR-X', 'Idiazabal'),
-('AR-X', 'Impira'),
-('AR-X', 'Inriville'),
-('AR-X', 'Isla Verde'),
-('AR-X', 'Italó'),
-('AR-X', 'James Craik'),
-('AR-X', 'Jesús María'),
-('AR-X', 'Jovita'),
-('AR-X', 'Justiniano Posse'),
-('AR-X', 'Km 658'),
-('AR-X', 'L. V. Mansilla'),
-('AR-X', 'La Batea'),
-('AR-X', 'La Calera'),
-('AR-X', 'La Carlota'),
-('AR-X', 'La Carolina'),
-('AR-X', 'La Cautiva'),
-('AR-X', 'La Cesira'),
-('AR-X', 'La Cruz'),
-('AR-X', 'La Cumbre'),
-('AR-X', 'La Cumbrecita'),
-('AR-X', 'La Falda'),
-('AR-X', 'La Francia'),
-('AR-X', 'La Granja'),
-('AR-X', 'La Higuera'),
-('AR-X', 'La Laguna'),
-('AR-X', 'La Paisanita'),
-('AR-X', 'La Palestina'),
-('AR-X', '12'),
-('AR-X', 'La Paquita'),
-('AR-X', 'La Para'),
-('AR-X', 'La Paz'),
-('AR-X', 'La Playa'),
-('AR-X', 'La Playosa'),
-('AR-X', 'La Población'),
-('AR-X', 'La Posta'),
-('AR-X', 'La Puerta'),
-('AR-X', 'La Quinta'),
-('AR-X', 'La Rancherita'),
-('AR-X', 'La Rinconada'),
-('AR-X', 'La Serranita'),
-('AR-X', 'La Tordilla'),
-('AR-X', 'Laborde'),
-('AR-X', 'Laboulaye'),
-('AR-X', 'Laguna Larga'),
-('AR-X', 'Las Acequias'),
-('AR-X', 'Las Albahacas'),
-('AR-X', 'Las Arrias'),
-('AR-X', 'Las Bajadas'),
-('AR-X', 'Las Caleras'),
-('AR-X', 'Las Calles'),
-('AR-X', 'Las Cañadas'),
-('AR-X', 'Las Gramillas'),
-('AR-X', 'Las Higueras'),
-('AR-X', 'Las Isletillas'),
-('AR-X', 'Las Junturas'),
-('AR-X', 'Las Palmas'),
-('AR-X', 'Las Peñas'),
-('AR-X', 'Las Peñas Sud'),
-('AR-X', 'Las Perdices'),
-('AR-X', 'Las Playas'),
-('AR-X', 'Las Rabonas'),
-('AR-X', 'Las Saladas'),
-('AR-X', 'Las Tapias'),
-('AR-X', 'Las Varas'),
-('AR-X', 'Las Varillas'),
-('AR-X', 'Las Vertientes'),
-('AR-X', 'Leguizamón'),
-('AR-X', 'Leones'),
-('AR-X', 'Los Cedros'),
-('AR-X', 'Los Cerrillos'),
-('AR-X', 'Los Chañaritos (C.E)'),
-('AR-X', 'Los Chanaritos (R.S)'),
-('AR-X', 'Los Cisnes'),
-('AR-X', 'Los Cocos'),
-('AR-X', 'Los Cóndores'),
-('AR-X', 'Los Hornillos'),
-('AR-X', 'Los Hoyos'),
-('AR-X', 'Los Mistoles'),
-('AR-X', 'Los Molinos'),
-('AR-X', 'Los Pozos'),
-('AR-X', 'Los Reartes'),
-('AR-X', 'Los Surgentes'),
-('AR-X', 'Los Talares'),
-('AR-X', 'Los Zorros'),
-('AR-X', 'Lozada'),
-('AR-X', 'Luca'),
-('AR-X', 'Luque'),
-('AR-X', 'Luyaba'),
-('AR-X', 'Malagueño'),
-('AR-X', 'Malena'),
-('AR-X', 'Malvinas Argentinas'),
-('AR-X', 'Manfredi'),
-('AR-X', 'Maquinista Gallini'),
-('AR-X', 'Marcos Juárez'),
-('AR-X', 'Marull'),
-('AR-X', 'Matorrales'),
-('AR-X', 'Mattaldi'),
-('AR-X', 'Mayu Sumaj'),
-('AR-X', 'Media Naranja'),
-('AR-X', 'Melo'),
-('AR-X', 'Mendiolaza'),
-('AR-X', 'Mi Granja'),
-('AR-X', 'Mina Clavero'),
-('AR-X', 'Miramar'),
-('AR-X', 'Morrison'),
-('AR-X', 'Morteros'),
-('AR-X', 'Mte. Buey'),
-('AR-X', 'Mte. Cristo'),
-('AR-X', 'Mte. De Los Gauchos'),
-('AR-X', 'Mte. Leña'),
-('AR-X', 'Mte. Maíz'),
-('AR-X', 'Mte. Ralo'),
-('AR-X', 'Nicolás Bruzone'),
-('AR-X', 'Noetinger'),
-('AR-X', 'Nono'),
-('AR-X', 'Nueva 7'),
-('AR-X', 'Obispo Trejo'),
-('AR-X', 'Olaeta'),
-('AR-X', 'Oliva'),
-('AR-X', 'Olivares San Nicolás'),
-('AR-X', 'Onagolty'),
-('AR-X', 'Oncativo'),
-('AR-X', 'Ordoñez'),
-('AR-X', 'Pacheco De Melo'),
-('AR-X', 'Pampayasta N.'),
-('AR-X', 'Pampayasta S.'),
-('AR-X', 'Panaholma'),
-('AR-X', 'Pascanas'),
-('AR-X', 'Pasco'),
-('AR-X', 'Paso del Durazno'),
-('AR-X', 'Paso Viejo'),
-('AR-X', 'Pilar'),
-('AR-X', 'Pincén'),
-('AR-X', 'Piquillín'),
-('AR-X', 'Plaza de Mercedes'),
-('AR-X', 'Plaza Luxardo'),
-('AR-X', 'Porteña'),
-('AR-X', 'Potrero de Garay'),
-('AR-X', 'Pozo del Molle'),
-('AR-X', 'Pozo Nuevo'),
-('AR-X', 'Pueblo Italiano'),
-('AR-X', 'Puesto de Castro'),
-('AR-X', 'Punta del Agua'),
-('AR-X', 'Quebracho Herrado'),
-('AR-X', 'Quilino'),
-('AR-X', 'Rafael García'),
-('AR-X', 'Ranqueles'),
-('AR-X', 'Rayo Cortado'),
-('AR-X', 'Reducción'),
-('AR-X', 'Rincón'),
-('AR-X', 'Río Bamba'),
-('AR-X', 'Río Ceballos'),
-('AR-X', 'Río Cuarto'),
-('AR-X', 'Río de Los Sauces'),
-('AR-X', 'Río Primero'),
-('AR-X', 'Río Segundo'),
-('AR-X', 'Río Tercero'),
-('AR-X', 'Rosales'),
-('AR-X', 'Rosario del Saladillo'),
-('AR-X', 'Sacanta'),
-('AR-X', 'Sagrada Familia'),
-('AR-X', 'Saira'),
-('AR-X', 'Saladillo'),
-('AR-X', 'Saldán'),
-('AR-X', 'Salsacate'),
-('AR-X', 'Salsipuedes'),
-('AR-X', 'Sampacho'),
-('AR-X', 'San Agustín'),
-('AR-X', 'San Antonio de Arredondo'),
-('AR-X', 'San Antonio de Litín'),
-('AR-X', 'San Basilio'),
-('AR-X', 'San Carlos Minas'),
-('AR-X', 'San Clemente'),
-('AR-X', 'San Esteban'),
-('AR-X', 'San Francisco'),
-('AR-X', 'San Ignacio'),
-('AR-X', 'San Javier'),
-('AR-X', 'San Jerónimo'),
-('AR-X', 'San Joaquín'),
-('AR-X', 'San José de La Dormida'),
-('AR-X', 'San José de Las Salinas'),
-('AR-X', 'San Lorenzo'),
-('AR-X', 'San Marcos Sierras'),
-('AR-X', 'San Marcos Sud'),
-('AR-X', 'San Pedro'),
-('AR-X', 'San Pedro N.'),
-('AR-X', 'San Roque'),
-('AR-X', 'San Vicente'),
-('AR-X', 'Santa Catalina'),
-('AR-X', 'Santa Elena'),
-('AR-X', 'Santa Eufemia'),
-('AR-X', 'Santa Maria'),
-('AR-X', 'Sarmiento'),
-('AR-X', 'Saturnino M.Laspiur'),
-('AR-X', 'Sauce Arriba'),
-('AR-X', 'Sebastián Elcano'),
-('AR-X', 'Seeber'),
-('AR-X', 'Segunda Usina'),
-('AR-X', 'Serrano'),
-('AR-X', 'Serrezuela'),
-('AR-X', 'Sgo. Temple'),
-('AR-X', 'Silvio Pellico'),
-('AR-X', 'Simbolar'),
-('AR-X', 'Sinsacate'),
-('AR-X', 'Sta. Rosa de Calamuchita'),
-('AR-X', 'Sta. Rosa de Río Primero'),
-('AR-X', 'Suco'),
-('AR-X', 'Tala Cañada'),
-('AR-X', 'Tala Huasi'),
-('AR-X', 'Talaini'),
-('AR-X', 'Tancacha'),
-('AR-X', 'Tanti'),
-('AR-X', 'Ticino'),
-('AR-X', 'Tinoco'),
-('AR-X', 'Tío Pujio'),
-('AR-X', 'Toledo'),
-('AR-X', 'Toro Pujio'),
-('AR-X', 'Tosno'),
-('AR-X', 'Tosquita'),
-('AR-X', 'Tránsito'),
-('AR-X', 'Tuclame'),
-('AR-X', 'Tutti'),
-('AR-X', 'Ucacha'),
-('AR-X', 'Unquillo'),
-('AR-X', 'Valle de Anisacate'),
-('AR-X', 'Valle Hermoso'),
-('AR-X', 'Vélez Sarfield'),
-('AR-X', 'Viamonte'),
-('AR-X', 'Vicuña Mackenna'),
-('AR-X', 'Villa Allende'),
-('AR-X', 'Villa Amancay'),
-('AR-X', 'Villa Ascasubi'),
-('AR-X', 'Villa Candelaria N.'),
-('AR-X', 'Villa Carlos Paz'),
-('AR-X', 'Villa Cerro Azul'),
-('AR-X', 'Villa Ciudad de América'),
-('AR-X', 'Villa Ciudad Pque Los Reartes'),
-('AR-X', 'Villa Concepción del Tío'),
-('AR-X', 'Villa Cura Brochero'),
-('AR-X', 'Villa de Las Rosas'),
-('AR-X', 'Villa de María'),
-('AR-X', 'Villa de Pocho'),
-('AR-X', 'Villa de Soto'),
-('AR-X', 'Villa del Dique'),
-('AR-X', 'Villa del Prado'),
-('AR-X', 'Villa del Rosario'),
-('AR-X', 'Villa del Totoral'),
-('AR-X', 'Villa Dolores'),
-('AR-X', 'Villa El Chancay'),
-('AR-X', 'Villa Elisa'),
-('AR-X', 'Villa Flor Serrana'),
-('AR-X', 'Villa Fontana'),
-('AR-X', 'Villa Giardino'),
-('AR-X', 'Villa Gral. Belgrano'),
-('AR-X', 'Villa Gutierrez'),
-('AR-X', 'Villa Huidobro'),
-('AR-X', 'Villa La Bolsa'),
-('AR-X', 'Villa Los Aromos'),
-('AR-X', 'Villa Los Patos'),
-('AR-X', 'Villa María'),
-('AR-X', 'Villa Nueva'),
-('AR-X', 'Villa Pque. Santa Ana'),
-('AR-X', 'Villa Pque. Siquiman'),
-('AR-X', 'Villa Quillinzo'),
-('AR-X', 'Villa Rossi'),
-('AR-X', 'Villa Rumipal'),
-('AR-X', 'Villa San Esteban'),
-('AR-X', 'Villa San Isidro'),
-('AR-X', 'Villa 21'),
-('AR-X', 'Villa Sarmiento (G.R)'),
-('AR-X', 'Villa Sarmiento (S.A)'),
-('AR-X', 'Villa Tulumba'),
-('AR-X', 'Villa Valeria'),
-('AR-X', 'Villa Yacanto'),
-('AR-X', 'Washington'),
-('AR-X', 'Wenceslao Escalante'),
-('AR-X', 'Ycho Cruz Sierras')
-GO
+ ('AR-X', 'Adelia Maria')
+,('AR-X', 'Agua de Oro')
+,('AR-X', 'Alcira Gigena')
+,('AR-X', 'Aldea Santa Maria')
+,('AR-X', 'Alejandro Roca')
+,('AR-X', 'Alejo Ledesma')
+,('AR-X', 'Alicia')
+,('AR-X', 'Almafuerte')
+,('AR-X', 'Alpa Corral')
+,('AR-X', 'Alta Gracia')
+,('AR-X', 'Alto Alegre')
+,('AR-X', 'Alto de Los Quebrachos')
+,('AR-X', 'Altos de Chipion')
+,('AR-X', 'Amboy')
+,('AR-X', 'Ambul')
+,('AR-X', 'Ana Zumaran')
+,('AR-X', 'Anisacate')
+,('AR-X', 'Arguello')
+,('AR-X', 'Arias')
+,('AR-X', 'Arroyito')
+,('AR-X', 'Arroyo Algodon')
+,('AR-X', 'Arroyo Cabral')
+,('AR-X', 'Arroyo Los Patos')
+,('AR-X', 'Assunta')
+,('AR-X', 'Atahona')
+,('AR-X', 'Ausonia')
+,('AR-X', 'Avellaneda')
+,('AR-X', 'Ballesteros')
+,('AR-X', 'Ballesteros Sud')
+,('AR-X', 'Balnearia')
+,('AR-X', 'Bañado de Soto')
+,('AR-X', 'Bell Ville')
+,('AR-X', 'Bengolea')
+,('AR-X', 'Benjamin Gould')
+,('AR-X', 'Berrotaran')
+,('AR-X', 'Bialet Masse')
+,('AR-X', 'Bouwer')
+,('AR-X', 'Brinkmann')
+,('AR-X', 'Achiras')
+,('AR-X', 'Buchardo')
+,('AR-X', 'Bulnes')
+,('AR-X', 'Cabalango')
+,('AR-X', 'Calamuchita')
+,('AR-X', 'Calchin')
+,('AR-X', 'Calchin Oeste')
+,('AR-X', 'Calmayo')
+,('AR-X', 'Camilo Aldao')
+,('AR-X', 'Caminiaga')
+,('AR-X', 'Cañada de Luque')
+,('AR-X', 'Cañada de Machado')
+,('AR-X', 'Cañada de Rio Pinto')
+,('AR-X', 'Cañada del Sauce')
+,('AR-X', 'Canals')
+,('AR-X', 'Candelaria Sud')
+,('AR-X', 'Capilla de Remedios')
+,('AR-X', 'Capilla de Siton')
+,('AR-X', 'Capilla del Carmen')
+,('AR-X', 'Capilla del Monte')
+,('AR-X', 'Capital')
+,('AR-X', 'Capitan Gral B. O´Higgins')
+,('AR-X', 'Carnerillo')
+,('AR-X', 'Carrilobo')
+,('AR-X', 'Casa Grande')
+,('AR-X', 'Cavanagh')
+,('AR-X', 'Cerro Colorado')
+,('AR-X', 'Chaján')
+,('AR-X', 'Chalacea')
+,('AR-X', 'Chañar Viejo')
+,('AR-X', 'Chancaní')
+,('AR-X', 'Charbonier')
+,('AR-X', 'Charras')
+,('AR-X', 'Chazón')
+,('AR-X', 'Chilibroste')
+,('AR-X', 'Chucul')
+,('AR-X', 'Chuña')
+,('AR-X', 'Chuña Huasi')
+,('AR-X', 'Churqui Cañada')
+,('AR-X', 'Cienaga Del Coro')
+,('AR-X', 'Cintra')
+,('AR-X', 'Col. Almada')
+,('AR-X', 'Col. Anita')
+,('AR-X', 'Col. Barge')
+,('AR-X', 'Col. Bismark')
+,('AR-X', 'Col. Bremen')
+,('AR-X', 'Col. Caroya')
+,('AR-X', 'Col. Italiana')
+,('AR-X', 'Col. Iturraspe')
+,('AR-X', 'Col. Las Cuatro Esquinas')
+,('AR-X', 'Col. Las Pichanas')
+,('AR-X', 'Col. Marina')
+,('AR-X', 'Col. Prosperidad')
+,('AR-X', 'Col. San Bartolome')
+,('AR-X', 'Col. San Pedro')
+,('AR-X', 'Col. Tirolesa')
+,('AR-X', 'Col. Vicente Aguero')
+,('AR-X', 'Col. Videla')
+,('AR-X', 'Col. Vignaud')
+,('AR-X', 'Col. Waltelina')
+,('AR-X', 'Colazo')
+,('AR-X', 'Comechingones')
+,('AR-X', 'Conlara')
+,('AR-X', 'Copacabana')
+,('AR-X', 'Coronel Baigorria')
+,('AR-X', 'Coronel Moldes')
+,('AR-X', 'Corral de Bustos')
+,('AR-X', 'Corralito')
+,('AR-X', 'Cosquín')
+,('AR-X', 'Costa Sacate')
+,('AR-X', 'Cruz Alta')
+,('AR-X', 'Cruz de Caña')
+,('AR-X', 'Cruz del Eje')
+,('AR-X', 'Cuesta Blanca')
+,('AR-X', 'Dean Funes')
+,('AR-X', 'Del Campillo')
+,('AR-X', 'Despeñaderos')
+,('AR-X', 'Devoto')
+,('AR-X', 'Diego de Rojas')
+,('AR-X', 'Dique Chico')
+,('AR-X', 'El Arañado')
+,('AR-X', 'El Brete')
+,('AR-X', 'El Chacho')
+,('AR-X', 'El Crispín')
+,('AR-X', 'El Fortín')
+,('AR-X', 'El Manzano')
+,('AR-X', 'El Rastreador')
+,('AR-X', 'El Rodeo')
+,('AR-X', 'El Tío')
+,('AR-X', 'Elena')
+,('AR-X', 'Embalse')
+,('AR-X', 'Esquina')
+,('AR-X', 'Estación Gral. Paz')
+,('AR-X', 'Estación Juárez Celman')
+,('AR-X', 'Estancia de Guadalupe')
+,('AR-X', 'Estancia Vieja')
+,('AR-X', 'Etruria')
+,('AR-X', 'Eufrasio Loza')
+,('AR-X', 'Falda del Carmen')
+,('AR-X', 'Freyre')
+,('AR-X', 'Gral. Baldissera')
+,('AR-X', 'Gral. Cabrera')
+,('AR-X', 'Gral. Deheza')
+,('AR-X', 'Gral. Fotheringham')
+,('AR-X', 'Gral. Levalle')
+,('AR-X', 'Gral. Roca')
+,('AR-X', 'Guanaco Muerto')
+,('AR-X', 'Guasapampa')
+,('AR-X', 'Guatimozin')
+,('AR-X', 'Gutenberg')
+,('AR-X', 'Hernando')
+,('AR-X', 'Huanchillas')
+,('AR-X', 'Huerta Grande')
+,('AR-X', 'Huinca Renanco')
+,('AR-X', 'Idiazabal')
+,('AR-X', 'Impira')
+,('AR-X', 'Inriville')
+,('AR-X', 'Isla Verde')
+,('AR-X', 'Italó')
+,('AR-X', 'James Craik')
+,('AR-X', 'Jesús María')
+,('AR-X', 'Jovita')
+,('AR-X', 'Justiniano Posse')
+,('AR-X', 'Km 658')
+,('AR-X', 'L. V. Mansilla')
+,('AR-X', 'La Batea')
+,('AR-X', 'La Calera')
+,('AR-X', 'La Carlota')
+,('AR-X', 'La Carolina')
+,('AR-X', 'La Cautiva')
+,('AR-X', 'La Cesira')
+,('AR-X', 'La Cruz')
+,('AR-X', 'La Cumbre')
+,('AR-X', 'La Cumbrecita')
+,('AR-X', 'La Falda')
+,('AR-X', 'La Francia')
+,('AR-X', 'La Granja')
+,('AR-X', 'La Higuera')
+,('AR-X', 'La Laguna')
+,('AR-X', 'La Paisanita')
+,('AR-X', 'La Palestina')
+,('AR-X', '12')
+,('AR-X', 'La Paquita')
+,('AR-X', 'La Para')
+,('AR-X', 'La Paz')
+,('AR-X', 'La Playa')
+,('AR-X', 'La Playosa')
+,('AR-X', 'La Población')
+,('AR-X', 'La Posta')
+,('AR-X', 'La Puerta')
+,('AR-X', 'La Quinta')
+,('AR-X', 'La Rancherita')
+,('AR-X', 'La Rinconada')
+,('AR-X', 'La Serranita')
+,('AR-X', 'La Tordilla')
+,('AR-X', 'Laborde')
+,('AR-X', 'Laboulaye')
+,('AR-X', 'Laguna Larga')
+,('AR-X', 'Las Acequias')
+,('AR-X', 'Las Albahacas')
+,('AR-X', 'Las Arrias')
+,('AR-X', 'Las Bajadas')
+,('AR-X', 'Las Caleras')
+,('AR-X', 'Las Calles')
+,('AR-X', 'Las Cañadas')
+,('AR-X', 'Las Gramillas')
+,('AR-X', 'Las Higueras')
+,('AR-X', 'Las Isletillas')
+,('AR-X', 'Las Junturas')
+,('AR-X', 'Las Palmas')
+,('AR-X', 'Las Peñas')
+,('AR-X', 'Las Peñas Sud')
+,('AR-X', 'Las Perdices')
+,('AR-X', 'Las Playas')
+,('AR-X', 'Las Rabonas')
+,('AR-X', 'Las Saladas')
+,('AR-X', 'Las Tapias')
+,('AR-X', 'Las Varas')
+,('AR-X', 'Las Varillas')
+,('AR-X', 'Las Vertientes')
+,('AR-X', 'Leguizamón')
+,('AR-X', 'Leones')
+,('AR-X', 'Los Cedros')
+,('AR-X', 'Los Cerrillos')
+,('AR-X', 'Los Chañaritos (C.E)')
+,('AR-X', 'Los Chanaritos (R.S)')
+,('AR-X', 'Los Cisnes')
+,('AR-X', 'Los Cocos')
+,('AR-X', 'Los Cóndores')
+,('AR-X', 'Los Hornillos')
+,('AR-X', 'Los Hoyos')
+,('AR-X', 'Los Mistoles')
+,('AR-X', 'Los Molinos')
+,('AR-X', 'Los Pozos')
+,('AR-X', 'Los Reartes')
+,('AR-X', 'Los Surgentes')
+,('AR-X', 'Los Talares')
+,('AR-X', 'Los Zorros')
+,('AR-X', 'Lozada')
+,('AR-X', 'Luca')
+,('AR-X', 'Luque')
+,('AR-X', 'Luyaba')
+,('AR-X', 'Malagueño')
+,('AR-X', 'Malena')
+,('AR-X', 'Malvinas Argentinas')
+,('AR-X', 'Manfredi')
+,('AR-X', 'Maquinista Gallini')
+,('AR-X', 'Marcos Juárez')
+,('AR-X', 'Marull')
+,('AR-X', 'Matorrales')
+,('AR-X', 'Mattaldi')
+,('AR-X', 'Mayu Sumaj')
+,('AR-X', 'Media Naranja')
+,('AR-X', 'Melo')
+,('AR-X', 'Mendiolaza')
+,('AR-X', 'Mi Granja')
+,('AR-X', 'Mina Clavero')
+,('AR-X', 'Miramar')
+,('AR-X', 'Morrison')
+,('AR-X', 'Morteros')
+,('AR-X', 'Mte. Buey')
+,('AR-X', 'Mte. Cristo')
+,('AR-X', 'Mte. De Los Gauchos')
+,('AR-X', 'Mte. Leña')
+,('AR-X', 'Mte. Maíz')
+,('AR-X', 'Mte. Ralo')
+,('AR-X', 'Nicolás Bruzone')
+,('AR-X', 'Noetinger')
+,('AR-X', 'Nono')
+,('AR-X', 'Nueva 7')
+,('AR-X', 'Obispo Trejo')
+,('AR-X', 'Olaeta')
+,('AR-X', 'Oliva')
+,('AR-X', 'Olivares San Nicolás')
+,('AR-X', 'Onagolty')
+,('AR-X', 'Oncativo')
+,('AR-X', 'Ordoñez')
+,('AR-X', 'Pacheco De Melo')
+,('AR-X', 'Pampayasta N.')
+,('AR-X', 'Pampayasta S.')
+,('AR-X', 'Panaholma')
+,('AR-X', 'Pascanas')
+,('AR-X', 'Pasco')
+,('AR-X', 'Paso del Durazno')
+,('AR-X', 'Paso Viejo')
+,('AR-X', 'Pilar')
+,('AR-X', 'Pincén')
+,('AR-X', 'Piquillín')
+,('AR-X', 'Plaza de Mercedes')
+,('AR-X', 'Plaza Luxardo')
+,('AR-X', 'Porteña')
+,('AR-X', 'Potrero de Garay')
+,('AR-X', 'Pozo del Molle')
+,('AR-X', 'Pozo Nuevo')
+,('AR-X', 'Pueblo Italiano')
+,('AR-X', 'Puesto de Castro')
+,('AR-X', 'Punta del Agua')
+,('AR-X', 'Quebracho Herrado')
+,('AR-X', 'Quilino')
+,('AR-X', 'Rafael García')
+,('AR-X', 'Ranqueles')
+,('AR-X', 'Rayo Cortado')
+,('AR-X', 'Reducción')
+,('AR-X', 'Rincón')
+,('AR-X', 'Río Bamba')
+,('AR-X', 'Río Ceballos')
+,('AR-X', 'Río Cuarto')
+,('AR-X', 'Río de Los Sauces')
+,('AR-X', 'Río Primero')
+,('AR-X', 'Río Segundo')
+,('AR-X', 'Río Tercero')
+,('AR-X', 'Rosales')
+,('AR-X', 'Rosario del Saladillo')
+,('AR-X', 'Sacanta')
+,('AR-X', 'Sagrada Familia')
+,('AR-X', 'Saira')
+,('AR-X', 'Saladillo')
+,('AR-X', 'Saldán')
+,('AR-X', 'Salsacate')
+,('AR-X', 'Salsipuedes')
+,('AR-X', 'Sampacho')
+,('AR-X', 'San Agustín')
+,('AR-X', 'San Antonio de Arredondo')
+,('AR-X', 'San Antonio de Litín')
+,('AR-X', 'San Basilio')
+,('AR-X', 'San Carlos Minas')
+,('AR-X', 'San Clemente')
+,('AR-X', 'San Esteban')
+,('AR-X', 'San Francisco')
+,('AR-X', 'San Ignacio')
+,('AR-X', 'San Javier')
+,('AR-X', 'San Jerónimo')
+,('AR-X', 'San Joaquín')
+,('AR-X', 'San José de La Dormida')
+,('AR-X', 'San José de Las Salinas')
+,('AR-X', 'San Lorenzo')
+,('AR-X', 'San Marcos Sierras')
+,('AR-X', 'San Marcos Sud')
+,('AR-X', 'San Pedro')
+,('AR-X', 'San Pedro N.')
+,('AR-X', 'San Roque')
+,('AR-X', 'San Vicente')
+,('AR-X', 'Santa Catalina')
+,('AR-X', 'Santa Elena')
+,('AR-X', 'Santa Eufemia')
+,('AR-X', 'Santa Maria')
+,('AR-X', 'Sarmiento')
+,('AR-X', 'Saturnino M.Laspiur')
+,('AR-X', 'Sauce Arriba')
+,('AR-X', 'Sebastián Elcano')
+,('AR-X', 'Seeber')
+,('AR-X', 'Segunda Usina')
+,('AR-X', 'Serrano')
+,('AR-X', 'Serrezuela')
+,('AR-X', 'Sgo. Temple')
+,('AR-X', 'Silvio Pellico')
+,('AR-X', 'Simbolar')
+,('AR-X', 'Sinsacate')
+,('AR-X', 'Sta. Rosa de Calamuchita')
+,('AR-X', 'Sta. Rosa de Río Primero')
+,('AR-X', 'Suco')
+,('AR-X', 'Tala Cañada')
+,('AR-X', 'Tala Huasi')
+,('AR-X', 'Talaini')
+,('AR-X', 'Tancacha')
+,('AR-X', 'Tanti')
+,('AR-X', 'Ticino')
+,('AR-X', 'Tinoco')
+,('AR-X', 'Tío Pujio')
+,('AR-X', 'Toledo')
+,('AR-X', 'Toro Pujio')
+,('AR-X', 'Tosno')
+,('AR-X', 'Tosquita')
+,('AR-X', 'Tránsito')
+,('AR-X', 'Tuclame')
+,('AR-X', 'Tutti')
+,('AR-X', 'Ucacha')
+,('AR-X', 'Unquillo')
+,('AR-X', 'Valle de Anisacate')
+,('AR-X', 'Valle Hermoso')
+,('AR-X', 'Vélez Sarfield')
+,('AR-X', 'Viamonte')
+,('AR-X', 'Vicuña Mackenna')
+,('AR-X', 'Villa Allende')
+,('AR-X', 'Villa Amancay')
+,('AR-X', 'Villa Ascasubi')
+,('AR-X', 'Villa Candelaria N.')
+,('AR-X', 'Villa Carlos Paz')
+,('AR-X', 'Villa Cerro Azul')
+,('AR-X', 'Villa Ciudad de América')
+,('AR-X', 'Villa Ciudad Pque Los Reartes')
+,('AR-X', 'Villa Concepción del Tío')
+,('AR-X', 'Villa Cura Brochero')
+,('AR-X', 'Villa de Las Rosas')
+,('AR-X', 'Villa de María')
+,('AR-X', 'Villa de Pocho')
+,('AR-X', 'Villa de Soto')
+,('AR-X', 'Villa del Dique')
+,('AR-X', 'Villa del Prado')
+,('AR-X', 'Villa del Rosario')
+,('AR-X', 'Villa del Totoral')
+,('AR-X', 'Villa Dolores')
+,('AR-X', 'Villa El Chancay')
+,('AR-X', 'Villa Elisa')
+,('AR-X', 'Villa Flor Serrana')
+,('AR-X', 'Villa Fontana')
+,('AR-X', 'Villa Giardino')
+,('AR-X', 'Villa Gral. Belgrano')
+,('AR-X', 'Villa Gutierrez')
+,('AR-X', 'Villa Huidobro')
+,('AR-X', 'Villa La Bolsa')
+,('AR-X', 'Villa Los Aromos')
+,('AR-X', 'Villa Los Patos')
+,('AR-X', 'Villa María')
+,('AR-X', 'Villa Nueva')
+,('AR-X', 'Villa Pque. Santa Ana')
+,('AR-X', 'Villa Pque. Siquiman')
+,('AR-X', 'Villa Quillinzo')
+,('AR-X', 'Villa Rossi')
+,('AR-X', 'Villa Rumipal')
+,('AR-X', 'Villa San Esteban')
+,('AR-X', 'Villa San Isidro')
+,('AR-X', 'Villa 21')
+,('AR-X', 'Villa Sarmiento (G.R)')
+,('AR-X', 'Villa Sarmiento (S.A)')
+,('AR-X', 'Villa Tulumba')
+,('AR-X', 'Villa Valeria')
+,('AR-X', 'Villa Yacanto')
+,('AR-X', 'Washington')
+,('AR-X', 'Wenceslao Escalante')
+,('AR-X', 'Ycho Cruz Sierras')

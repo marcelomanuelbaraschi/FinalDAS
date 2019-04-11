@@ -7,17 +7,29 @@
 	
 	<!-- ******************************** -->
 	<!--   TABLE POPULATION CHANGE-SETS   -->
-	<!-- ********************************
+	<!-- ******************************** -->
 
-	<changeSet id="Populate table provincia" author="DAS-Team" runAlways="true" runOnChange="true">
+
+	<changeSet id="Populate table sucursal" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="provincia"/>
+			<tableExists tableName="sucursal"/>
 			<sqlCheck expectedResult="0">
 				SELECT COUNT(*)
-				FROM provincia
+				FROM sucursal
 			</sqlCheck>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/provincia.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/populates/sucursal.sql"/>
 	</changeSet>
- -->
+
+	<changeSet id="Populate table productoSucursal" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="productoSucursal"/>
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM productoSucursal
+			</sqlCheck>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/productoSucursal.sql"/>
+	</changeSet>
+
 </databaseChangeLog>

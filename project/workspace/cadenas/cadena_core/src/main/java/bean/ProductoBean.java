@@ -6,19 +6,18 @@ import db.Bean;
 
 public class ProductoBean implements Bean {
 
-
-    @SerializedName("codigoProducto")
-    private String codigoProducto;
+    @SerializedName("idComercial")
+    private String idComercial;
 
     @SerializedName("precio")
     private Float precio;
 
-    public String getCodigoProducto() {
-        return codigoProducto;
+    public String getIdComercial() {
+        return idComercial;
     }
 
-    public void setCodigoProducto(String codigoProducto) {
-        this.codigoProducto = codigoProducto;
+    public void setIdComercial(String idComercial) {
+        this.idComercial = idComercial;
     }
 
     public Float getPrecio() {
@@ -28,6 +27,5 @@ public class ProductoBean implements Bean {
     public void setPrecio(Float precio) {
         this.precio = precio;
     }
-
 
 }

@@ -5,6 +5,7 @@ import db.Bean;
 
 public class InfoSucursalBean implements Bean {
 
+
     @SerializedName("direccion")
     private String direccion;
 
@@ -14,19 +15,11 @@ public class InfoSucursalBean implements Bean {
     @SerializedName("lng")
     private String lng;
 
-    @SerializedName("sucursalNombre")
-    private String sucursalNombre;
+    @SerializedName("nombreSucursal")
+    private String nombreSucursal;
 
     @SerializedName("codigoEntidadFederal")
     private String codigoEntidadFederal;
-
-    public String getCodigoEntidadFederal() {
-        return codigoEntidadFederal;
-    }
-
-    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
-        this.codigoEntidadFederal = codigoEntidadFederal;
-    }
 
     public String getDireccion() {
         return direccion;
@@ -52,12 +45,23 @@ public class InfoSucursalBean implements Bean {
         this.lng = lng;
     }
 
-    public String getSucursalNombre() {
-        return sucursalNombre;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
-    public void setSucursalNombre(String sucursalNombre) {
-        this.sucursalNombre = sucursalNombre;
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
+
+    public String getCodigoEntidadFederal() {
+        return codigoEntidadFederal;
+    }
+
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
+        this.codigoEntidadFederal = codigoEntidadFederal;
+    }
+
+
+
 
 }

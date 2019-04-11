@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class Producto {
 
-    @SerializedName("codigoProducto")
-    private String codigoProducto;
+    @SerializedName("idComercial")
+    private String idComercial;
 
     @SerializedName("precio")
     private Float precio;
@@ -13,12 +13,12 @@ public class Producto {
     @SerializedName("mejorPrecio")
     private Boolean mejorPrecio;
 
-    public String getCodigoProducto() {
-        return codigoProducto;
+    public String getIdComercial() {
+        return idComercial;
     }
 
-    public void setCodigoProducto(String codigoProducto) {
-        this.codigoProducto = codigoProducto;
+    public void setIdComercial(String idComercial) {
+        this.idComercial = idComercial;
     }
 
     public Float getPrecio() {
@@ -40,12 +40,11 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto{" +
-                "codigoProducto='" + codigoProducto + '\'' +
+                "idComercial='" + idComercial + '\'' +
                 ", precio=" + precio +
                 ", mejorPrecio=" + mejorPrecio +
                 '}';
     }
-
 
 
 }

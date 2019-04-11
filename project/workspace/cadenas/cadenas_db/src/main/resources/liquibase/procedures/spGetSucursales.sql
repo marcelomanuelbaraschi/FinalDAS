@@ -12,9 +12,8 @@ BEGIN
         RAISERROR('El parametro @localidad es null o vacio', 15, 1)
   END
 
-  SELECT s.direccion, s.idSucursal, s.lat, s.lng, s.sucursalNombre
+  SELECT s.direccion, s.idSucursal, s.lat, s.lng, s.nombreSucursal
     FROM sucursal s
     WHERE s.codigoEntidadFederal = @codigoEntidadFederal
     AND s.localidad = @localidad
 END
-GO

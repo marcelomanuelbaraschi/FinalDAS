@@ -18,7 +18,7 @@ public class MSSucursalesDao extends DaoImpl {
         suc.setIdSucursal(result.getLong("idSucursal"));
         suc.setLat(result.getString("lat"));
         suc.setLng(result.getString("lng"));
-        suc.setSucursalNombre(result.getString("sucursalNombre"));
+        suc.setNombreSucursal(result.getString("nombreSucursal"));
         return suc;
     }
 

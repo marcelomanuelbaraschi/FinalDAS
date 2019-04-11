@@ -67,14 +67,14 @@ public class MSPreciosSucursalesDao extends DaoImpl {
         while(result.getRow()>0){
             SucursalBean sucursal = new SucursalBean();
             sucursal.setIdSucursal(result.getLong("idSucursal"));
-            sucursal.setSucursalNombre(result.getString("sucursalNombre"));
+            sucursal.setNombreSucursal(result.getString("nombreSucursal"));
             sucursal.setDireccion(result.getString("direccion"));
             sucursal.setLat(result.getString("lat"));
             sucursal.setLng(result.getString("lng"));
             productos = new LinkedList<ProductoBean>();
             while (result.getRow()>0 && sucursal.getIdSucursal() == result.getLong("idSucursal")){
                 producto = new ProductoBean();
-                producto.setCodigoProducto(result.getString("codigoProducto"));
+                producto.setIdComercial(result.getString("idComercial"));
                 producto.setPrecio(result.getFloat("precio"));
                 productos.add(producto);
                 result.next();

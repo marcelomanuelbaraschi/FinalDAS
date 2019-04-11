@@ -13,21 +13,23 @@ public class Sucursal {
     @SerializedName("idSucursal")
     private Long idSucursal;
 
+    @SerializedName("idCadena")
+    private Long idCadena;
+
     @SerializedName("lat")
     private String lat;
 
     @SerializedName("lng")
     private String lng;
 
-    @SerializedName("sucursalNombre")
-    private String sucursalNombre;
+    @SerializedName("nombreSucursal")
+    private String nombreSucursal;
 
     @SerializedName("productos")
     private List<Producto> productos;
 
     @SerializedName("mejorOpcion")
     private Boolean mejorOpcion;
-
 
     public String getDireccion() {
         return direccion;
@@ -43,6 +45,14 @@ public class Sucursal {
 
     public void setIdSucursal(Long idSucursal) {
         this.idSucursal = idSucursal;
+    }
+
+    public Long getIdCadena() {
+        return idCadena;
+    }
+
+    public void setIdCadena(Long idCadena) {
+        this.idCadena = idCadena;
     }
 
     public String getLat() {
@@ -61,12 +71,12 @@ public class Sucursal {
         this.lng = lng;
     }
 
-    public String getSucursalNombre() {
-        return sucursalNombre;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
-    public void setSucursalNombre(String sucursalNombre) {
-        this.sucursalNombre = sucursalNombre;
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
     }
 
     public List<Producto> getProductos() {
@@ -77,7 +87,6 @@ public class Sucursal {
         this.productos = productos;
     }
 
-
     public Boolean getMejorOpcion() {
         return mejorOpcion;
     }
@@ -85,4 +94,22 @@ public class Sucursal {
     public void setMejorOpcion(Boolean mejorOpcion) {
         this.mejorOpcion = mejorOpcion;
     }
+
+
+    @Override
+    public String toString() {
+        return "Sucursal{" +
+                "direccion='" + direccion + '\'' +
+                ", idSucursal=" + idSucursal +
+                ", idCadena=" + idCadena +
+                ", lat='" + lat + '\'' +
+                ", lng='" + lng + '\'' +
+                ", nombreSucursal='" + nombreSucursal + '\'' +
+                ", productos=" + productos +
+                ", mejorOpcion=" + mejorOpcion +
+                '}';
+    }
+
+
+
 }

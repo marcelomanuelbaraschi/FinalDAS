@@ -1,5 +1,4 @@
 CREATE TABLE producto (
-      codigoProducto VARCHAR (100) NOT NULL
-    , PRIMARY KEY (codigoProducto)
+      idComercial VARCHAR (100) NOT NULL
+    , PRIMARY KEY (idComercial)
 )
-GO

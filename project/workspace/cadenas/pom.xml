@@ -61,7 +61,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.1.9:1434;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_axis_one</contextDB>
@@ -91,7 +91,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.1.9:1435;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_one</contextDB>
@@ -120,7 +120,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.1.9:1436;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1436;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_two</contextDB>
@@ -140,7 +140,7 @@
         <properties>
             <!-- SERVER -->
             <tomcat.server>CadenaCXFOneService</tomcat.server>
-            <tomcat.url>http://192.168.1.9:8083/manager/text</tomcat.url>
+            <tomcat.url>http://localhost:8083/manager/text</tomcat.url>
             <tomcat.path>/${project.build.finalName}</tomcat.path>
             <tomcat.port>8003</tomcat.port>
 
@@ -150,7 +150,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.1.9:1437;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1437;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_cxf_one</contextDB>
@@ -179,7 +179,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.1.9:1438;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://localhost:1438;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_cxf_two</contextDB>

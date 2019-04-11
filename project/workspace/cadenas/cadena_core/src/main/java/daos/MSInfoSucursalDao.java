@@ -17,7 +17,7 @@ public class MSInfoSucursalDao  extends DaoImpl {
         is.setDireccion(result.getString("direccion"));
         is.setLat(result.getString("lat"));
         is.setLng(result.getString("lng"));
-        is.setSucursalNombre(result.getString("sucursalNombre"));
+        is.setNombreSucursal(result.getString("nombreSucursal"));
         is.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
         return is;
     }

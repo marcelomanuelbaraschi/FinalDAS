@@ -13,20 +13,11 @@ public class InfoSucursal {
     @SerializedName("lng")
     private String lng;
 
-    @SerializedName("sucursalNombre")
-    private String sucursalNombre;
+    @SerializedName("nombreSucursal")
+    private String nombreSucursal;
 
     @SerializedName("codigoEntidadFederal")
     private String codigoEntidadFederal;
-
-    public String getCodigoEntidadFederal() {
-        return codigoEntidadFederal;
-    }
-
-    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
-        this.codigoEntidadFederal = codigoEntidadFederal;
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -51,12 +42,20 @@ public class InfoSucursal {
         this.lng = lng;
     }
 
-    public String getSucursalNombre() {
-        return sucursalNombre;
+    public String getNombreSucursal() {
+        return nombreSucursal;
     }
 
-    public void setSucursalNombre(String sucursalNombre) {
-        this.sucursalNombre = sucursalNombre;
+    public void setNombreSucursal(String nombreSucursal) {
+        this.nombreSucursal = nombreSucursal;
+    }
+
+    public String getCodigoEntidadFederal() {
+        return codigoEntidadFederal;
+    }
+
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
+        this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
     @Override
@@ -65,8 +64,10 @@ public class InfoSucursal {
                 "direccion='" + direccion + '\'' +
                 ", lat='" + lat + '\'' +
                 ", lng='" + lng + '\'' +
-                ", sucursalNombre='" + sucursalNombre + '\'' +
+                ", nombreSucursal='" + nombreSucursal + '\'' +
                 ", codigoEntidadFederal='" + codigoEntidadFederal + '\'' +
                 '}';
     }
+
+
 }
