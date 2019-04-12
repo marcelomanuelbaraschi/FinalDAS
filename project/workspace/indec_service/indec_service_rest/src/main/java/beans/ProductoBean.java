@@ -8,7 +8,7 @@ public class ProductoBean  implements Bean {
     @SerializedName("nombre")
     private String nombre;
     @SerializedName("idComercial")
-    private Long idComercial;
+    private String idComercial;
     @SerializedName("idCategoria")
     private Long idCategoria;
     @SerializedName("nombreCategoria")
@@ -26,11 +26,11 @@ public class ProductoBean  implements Bean {
         this.nombre = nombre;
     }
 
-    public Long getIdComercial() {
+    public String getIdComercial() {
         return idComercial;
     }
 
-    public void setIdComercial(Long idComercial) {
+    public void setIdComercial(String idComercial) {
         this.idComercial = idComercial;
     }
 

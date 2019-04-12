@@ -14,7 +14,7 @@ public class MSProductosDao  extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         ProductoBean producto = new ProductoBean();
-        producto.setIdComercial(result.getLong("idComercial"));
+        producto.setIdComercial(result.getString("idComercial"));
         producto.setIdCategoria(result.getLong("idCategoria"));
         producto.setNombreCategoria(result.getString("nombreCategoria"));
         producto.setNombre(result.getString("nombre"));

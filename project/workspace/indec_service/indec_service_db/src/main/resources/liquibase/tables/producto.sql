@@ -1,6 +1,6 @@
 CREATE TABLE producto (
 	  id BIGINT IDENTITY (1,1)
-    , idComercial BIGINT NOT NULL
+    , idComercial VARCHAR (100) NOT NULL
     , idCategoria BIGINT NOT NULL
 	, nombre VARCHAR(100) NOT NULL
     , nombreMarca VARCHAR(50) NOT NULL
