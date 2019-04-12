@@ -20,20 +20,24 @@ public class CadenaAxisOne {
             .create();
 
     public String health(final String identificador) {
-        System.out.println("Axis health identificador -> " + identificador);
+        //TODO LOG
+        //System.out.println("Axis health identificador -> " + identificador);
         return "OK";
     }
 
     public String sucursales (final String identificador
             ,final String codigoentidadfederal
             ,final String localidad)  {
-        System.out.println("Rest sucursales identificador ->" + identificador);
+
+        //TODO LOG
+        //System.out.println("Rest sucursales identificador ->" + identificador);
         return ce.sucursales(codigoentidadfederal, localidad);
     }
 
 
     public String info ( final String identificador, final Long idsucursal ) {
-        System.out.println("Rest sucursales identificador ->" + identificador);
+        //TODO LOG
+        //System.out.println("Rest sucursales identificador ->" + identificador);
         return ce.infoSucursales(idsucursal);
     }
 
@@ -41,7 +45,8 @@ public class CadenaAxisOne {
                             ,final String codigoentidadfederal
                             ,final String localidad
                             ,final String codigos) {
-        System.out.println("Rest sucursales identificador ->" + identificador);
+        //TODO LOG
+        //System.out.println("Rest sucursales identificador ->" + identificador);
         return ce.preciosSucursales(codigoentidadfederal, localidad, codigos);
     }
 }

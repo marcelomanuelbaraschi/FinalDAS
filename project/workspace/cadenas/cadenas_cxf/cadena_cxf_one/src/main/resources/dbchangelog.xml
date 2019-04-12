@@ -8,7 +8,7 @@
 	
 	<!-- ########################################### -->
 	<!-- Main populate change-sets                   -->
-	<!-- ###########################################
-	<include file="/src/main/resources/liquibase/populates/populate_tables.xml"/>  -->
+	<!-- ########################################### -->
+	<include file="/src/main/resources/liquibase/populates/populate_tables.xml"/>
 
 </databaseChangeLog>

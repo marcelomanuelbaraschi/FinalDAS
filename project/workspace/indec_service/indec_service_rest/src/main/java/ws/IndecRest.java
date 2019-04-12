@@ -169,6 +169,16 @@ public class IndecRest {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos) {
 
+        if(identificador == null || codigoentidadfederal == null || localidad == null ||codigos == null){
+            System.out.println("la gilada");
+            return "la giladaaa";
+        } else {
+            System.out.println(identificador);
+            System.out.println(codigoentidadfederal);
+            System.out.println(localidad);
+            System.out.println(codigos);
+        }
+
         List <Cadena> cadenas = new LinkedList<Cadena>();
 
         try {
@@ -189,9 +199,11 @@ public class IndecRest {
                         final List<Sucursal> sucursales =
                                 client.precios("INDEC",codigoentidadfederal,localidad, Helper.fromCsvToList(codigos));
 
+
                         cadena = new Cadena();
-                        cadena.setId(conf.getId());
+                        cadena.setId(conf.getIdCadena());
                         cadena.setNombre(conf.getNombreCadena());
+                        sucursales.stream().forEach(sucursal -> sucursal.setIdCadena(conf.getIdCadena()));
                         cadena.setSucursales(sucursales);
                         cadenas.add(cadena);
                         cadena.setDisponibilidad("Disponible");
@@ -210,6 +222,8 @@ public class IndecRest {
             System.out.println("Error: "+ex.getMessage());
         }
 
+        System.out.println(cadenas);
+
         //TODO USE UTILS DONDE SEA POJIBLE
         //TODO NEED BETTER WAY
 
@@ -222,7 +236,7 @@ public class IndecRest {
             }
         }
 
-        Map<String, List<Producto>> m = tempProductos.stream().collect(Collectors.groupingBy(producto -> producto.getCodigoProducto()));
+        Map<String, List<Producto>> m = tempProductos.stream().collect(Collectors.groupingBy(producto -> producto.getIdComercial()));
 
         Map <String, Float> cod_min = new HashMap<String, Float>();
         for (Map.Entry<String, List<Producto>> entry : m.entrySet()) {
@@ -233,7 +247,7 @@ public class IndecRest {
         for (Cadena c : cadenas){
             for(Sucursal s :c.getSucursales()){
                 for (Producto p: s.getProductos()){
-                    Float precio =  cod_min.get(p.getCodigoProducto());
+                    Float precio =  cod_min.get(p.getIdComercial());
                     if ( p.getPrecio().equals(precio)) {
                         p.setMejorPrecio(true);
                     } else {
@@ -250,12 +264,13 @@ public class IndecRest {
                 }
         }
 
-         mapa.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
+         //mapa.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
 
         Pair <Long,Long> key = Collections.max(mapa.entrySet(), Map.Entry.comparingByValue()).getKey();
 
         for (Cadena c : cadenas){
             for(Sucursal s :c.getSucursales()){
+
                 if ( c.getId().equals(key.getValue0()) &&  s.getIdSucursal().equals(key.getValue1()) ){
                     s.setMejorOpcion(true);
                 } else s.setMejorOpcion(false);
@@ -263,6 +278,7 @@ public class IndecRest {
         }
 
         return JsonUtils.toJsonString(cadenas);
+       // return "OK";
     }
 
 
