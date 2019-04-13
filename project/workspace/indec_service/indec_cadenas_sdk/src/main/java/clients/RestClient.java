@@ -124,7 +124,6 @@ public class RestClient implements CadenaServiceContract {
         final String url = String.format(query, identificador, codigoentidadfederal,localidad);
         final String responsejson = call(GET, url);
         final Response resp = JsonUtils.toObject(responsejson , Response.class);
-        //TODO log
         if(resp.getCodigo()==0) {
             final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrsucs).collect(Collectors.toList());
@@ -139,7 +138,6 @@ public class RestClient implements CadenaServiceContract {
         final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD, CODIGOS);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
         final String responsejson = call(POST, url);
-        //TODO log
         final Response resp = JsonUtils.toObject(responsejson , Response.class);
         if(resp.getCodigo()==0) {
             final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), Sucursal[].class);
@@ -156,7 +154,6 @@ public class RestClient implements CadenaServiceContract {
         final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
         final String url = String.format(query, identificador, idSucursal);
         final String responsejson = call(GET, url);
-        //TODO log
         final Response resp = JsonUtils.toObject(responsejson , Response.class);
         if(resp.getCodigo()==0) {
             final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), InfoSucursal[].class);

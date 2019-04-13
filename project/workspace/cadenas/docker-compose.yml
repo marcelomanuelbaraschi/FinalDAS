@@ -13,11 +13,11 @@ services:
             - '1435:1433'
         container_name: rest_one
     #rest_one es el 1436
-    #cxf_one:
-    #    image: 'mssql_cadena:1.0'
-    #    ports:
-    #        - '1437:1433'
-    #    container_name: cxf_one
+    cxf_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1437:1433'
+        container_name: cxf_one
      #cxf_two es el 1438?
 
 

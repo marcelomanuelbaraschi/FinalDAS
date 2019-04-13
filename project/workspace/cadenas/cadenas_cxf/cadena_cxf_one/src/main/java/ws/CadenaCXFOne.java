@@ -20,14 +20,13 @@ public class CadenaCXFOne {
 
     @WebMethod(operationName = "health", action = "urn:Health")
     public String health(@WebParam(name = "identificador") final String identificador) {
-        System.out.println("Cxf health identificador -> " + identificador);
         return "OK";
     }
 
     @WebMethod(operationName = "info", action = "urn:Info")
     public String info(@WebParam(name = "identificador") final String identificador,
                        @WebParam(name = "idsucursal") final Long idSucursal) {
-        System.out.println("Cxf info identificador -> " + identificador);
+
         return ce.infoSucursales(idSucursal);
     }
 
@@ -36,7 +35,7 @@ public class CadenaCXFOne {
                           ,@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
                           ,@WebParam(name = "localidad") final String localidad
                           ,@WebParam(name = "codigos") final String codigos) {
-        System.out.println("Cxf info identificador -> " + identificador);
+
         return ce.preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 
@@ -44,7 +43,7 @@ public class CadenaCXFOne {
     public String sucursales(@WebParam(name = "identificador") final String identificador
             ,@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
             ,@WebParam(name = "localidad") final String localidad) {
-        System.out.println("Cxf info identificador -> " + identificador);
+
         return ce.sucursales(codigoEntidadFederal, localidad);
     }
 

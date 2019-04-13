@@ -17,9 +17,6 @@ public class CadenaRestOne  {
     @Produces(MediaType.APPLICATION_JSON)
     public String health(@QueryParam("identificador") final String identificador) {
 
-        //TODO LOG
-        //System.out.println("Rest health identificador ->" + identificador);
-
         return "OK";
     }
 
@@ -39,7 +36,6 @@ public class CadenaRestOne  {
     public String infoSucursales (@QueryParam("identificador") final String identificador
             ,@QueryParam("idsucursal") final Long idSucursal)
     {
-        //TODO log
         return ce.infoSucursales(idSucursal);
     }
 
@@ -51,8 +47,6 @@ public class CadenaRestOne  {
             ,@QueryParam("localidad") final String localidad
             ,@QueryParam("codigos") final String codigos)
     {
-        //TODO log
-       // System.out.println("Rest precios identificador ->" + identificador);
         return ce.preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 }
