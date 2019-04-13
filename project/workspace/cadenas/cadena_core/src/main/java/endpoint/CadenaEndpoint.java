@@ -21,31 +21,47 @@ public class CadenaEndpoint {
 
 
 
-    public String sucursales (final String codigoEntidadFederal,
+    public String sucursales (final String codigoentidadfederal,
                               final String localidad)
     {
-        //TODO log
-        try {
-            CriterioLocalizacionSucursalBean loc = new CriterioLocalizacionSucursalBean();
-            loc.setCodigoEntidadFederal(codigoEntidadFederal);
-            loc.setLocalidad(localidad);
-            Dao dao = DaoFactory.getDao("Sucursales", "");
-            List<Bean> locs = dao.select(loc);
+        if(codigoentidadfederal == null){
 
-            Response resp = new Response();
-            resp.setCodigo(0);
-            resp.setMensaje("success sucursales");
-            resp.setJson(gson.toJson(locs));
-            return (gson.toJson(resp));
-
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
             Response resp = new Response();
             resp.setCodigo(1);
-            resp.setMensaje("db error");
+            resp.setMensaje("El parametro codigoEntidadFederal es null");
             return (gson.toJson(resp));
-        }
 
+        }else if(localidad == null){
+
+            Response resp = new Response();
+            resp.setCodigo(1);
+            resp.setMensaje("El parametro localidad es null");
+            return (gson.toJson(resp));
+
+        } else{
+            //TODO log
+            try {
+                CriterioLocalizacionSucursalBean loc = new CriterioLocalizacionSucursalBean();
+                loc.setCodigoEntidadFederal(codigoentidadfederal);
+                loc.setLocalidad(localidad);
+                Dao dao = DaoFactory.getDao("Sucursales", "");
+                List<Bean> locs = dao.select(loc);
+
+                Response resp = new Response();
+                resp.setCodigo(0);
+                resp.setMensaje("success sucursales");
+                resp.setJson(gson.toJson(locs));
+                return (gson.toJson(resp));
+
+            } catch (SQLException ex) {
+                //System.out.println("Error: " + ex.getMessage());
+                Response resp = new Response();
+                resp.setCodigo(1);
+                resp.setMensaje("db error");
+                return (gson.toJson(resp));
+            }
+
+        }
 
     }
 
