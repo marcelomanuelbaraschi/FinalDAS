@@ -65,28 +65,34 @@ public class CadenaEndpoint {
 
     }
 
-    public String infoSucursales (final Long idSucursal)
+    public String infoSucursales (final Long idsucursal)
     {
-        //TODO log
-        try {
-            CriterioInfoSucursalBean loc = new CriterioInfoSucursalBean();
-            loc.setIdSucursal(idSucursal);
-            Dao dao = DaoFactory.getDao("InfoSucursal", "");
-            List<Bean> info = dao.select(loc);
-
-            Response resp = new Response();
-            resp.setCodigo(0);
-            resp.setMensaje("success info");
-            resp.setJson(gson.toJson(info));
-            return (gson.toJson(resp));
-
-        } catch (SQLException ex) {
-            //TODO log
-            System.out.println("Error: " + ex.getMessage());
+        if(idsucursal == null) {
             Response resp = new Response();
             resp.setCodigo(1);
-            resp.setMensaje("db error");
+            resp.setMensaje("El parametro idsucursal es null");
             return (gson.toJson(resp));
+        }else{
+            try {
+                CriterioInfoSucursalBean loc = new CriterioInfoSucursalBean();
+                loc.setIdSucursal(idsucursal);
+                Dao dao = DaoFactory.getDao("InfoSucursal", "");
+                List<Bean> info = dao.select(loc);
+
+                Response resp = new Response();
+                resp.setCodigo(0);
+                resp.setMensaje("success info");
+                resp.setJson(gson.toJson(info));
+                return (gson.toJson(resp));
+
+            } catch (SQLException ex) {
+                //TODO log
+                System.out.println("Error: " + ex.getMessage());
+                Response resp = new Response();
+                resp.setCodigo(1);
+                resp.setMensaje("db error");
+                return (gson.toJson(resp));
+            }
         }
     }
 
