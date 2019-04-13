@@ -20,7 +20,6 @@ public class CadenaEndpoint {
     private Gson gson = (new GsonBuilder()).setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
 
 
-
     public String sucursales (final String codigoentidadfederal,
                               final String localidad)
     {
