@@ -28,7 +28,7 @@ public class CadenaEndpoint {
 
             Response resp = new Response();
             resp.setCodigo(1);
-            resp.setMensaje("El parametro codigoEntidadFederal es null");
+            resp.setMensaje("El parametro codigoentidadfederal es null");
             return (gson.toJson(resp));
 
         }else if(localidad == null){
@@ -49,7 +49,6 @@ public class CadenaEndpoint {
 
                 Response resp = new Response();
                 resp.setCodigo(0);
-                resp.setMensaje("success sucursales");
                 resp.setJson(gson.toJson(locs));
                 return (gson.toJson(resp));
 
@@ -81,7 +80,6 @@ public class CadenaEndpoint {
 
                 Response resp = new Response();
                 resp.setCodigo(0);
-                resp.setMensaje("success info");
                 resp.setJson(gson.toJson(info));
                 return (gson.toJson(resp));
 
@@ -96,32 +94,56 @@ public class CadenaEndpoint {
         }
     }
 
-    public String preciosSucursales (final String codigoEntidadFederal
+    public String preciosSucursales (final String codigoentidadfederal
                                     ,final String localidad
                                     ,final String codigos)
     {
-        //TODO log
-        try {
-            CriterioBusquedaProductosBean cs = new CriterioBusquedaProductosBean();
-            cs.setCodigoEntidadFederal(codigoEntidadFederal);
-            cs.setLocalidad(localidad);
-            cs.setCodigos(codigos);
-            Dao dao = DaoFactory.getDao("PreciosSucursales", "");
-            List<Bean> ps = dao.select(cs);
+        if(codigoentidadfederal == null){
 
-            Response resp = new Response();
-            resp.setCodigo(0);
-            resp.setMensaje("success info");
-            resp.setJson(gson.toJson(ps));
-            return (gson.toJson(resp));
-
-        } catch (SQLException ex) {
-            //TODO log
-            System.out.println("Error: " + ex.getMessage());
             Response resp = new Response();
             resp.setCodigo(1);
-            resp.setMensaje("db error");
+            resp.setMensaje("El parametro codigoentidadfederal es null");
             return (gson.toJson(resp));
+
+        }else if (localidad ==  null){
+
+            Response resp = new Response();
+            resp.setCodigo(1);
+            resp.setMensaje("El parametro localidad es null");
+            return (gson.toJson(resp));
+
+        }else if (codigos == null){
+
+            Response resp = new Response();
+            resp.setCodigo(1);
+            resp.setMensaje("El parametro codigos es null");
+            return (gson.toJson(resp));
+
         }
+        else{
+            try {
+                CriterioBusquedaProductosBean cs = new CriterioBusquedaProductosBean();
+                cs.setCodigoEntidadFederal(codigoentidadfederal);
+                cs.setLocalidad(localidad);
+                cs.setCodigos(codigos);
+                Dao dao = DaoFactory.getDao("PreciosSucursales", "");
+                List<Bean> ps = dao.select(cs);
+
+                Response resp = new Response();
+                resp.setCodigo(0);
+                resp.setMensaje("success info");
+                resp.setJson(gson.toJson(ps));
+                return (gson.toJson(resp));
+
+            } catch (SQLException ex) {
+                //TODO log
+                System.out.println("Error: " + ex.getMessage());
+                Response resp = new Response();
+                resp.setCodigo(1);
+                resp.setMensaje("db error");
+                return (gson.toJson(resp));
+            }
+        }
+
     }
 }
