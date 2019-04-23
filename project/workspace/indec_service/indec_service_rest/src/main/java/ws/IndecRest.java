@@ -14,10 +14,8 @@ import db.DaoFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import indecObjects.Cadena;
-import indecObjects.Helper;
 import org.javatuples.Pair;
 import utilities.JsonUtils;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
