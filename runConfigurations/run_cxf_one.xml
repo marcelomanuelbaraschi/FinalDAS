@@ -13,6 +13,7 @@
               <option value="clean" />
               <option value="compile" />
               <option value="-Denv=cadena_cxf_one_env" />
+              <option value="-Dorg.apache.cxf.Logger=org.apache.cxf.common.logging.Log4jLogger" />
               <option value="tomcat7:run" />
             </list>
           </option>

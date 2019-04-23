@@ -3,6 +3,7 @@ package clients.factory;
 import clients.RestClient;
 import clients.SoapClient;
 import clients.Tecnologia;
+import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 
 public class ClientFactory implements IClientFactory {
@@ -17,7 +18,7 @@ public class ClientFactory implements IClientFactory {
     }
 
     @Override
-    public CadenaServiceContract clientFor(final Tecnologia tecnologia, final String url)  throws RuntimeException {
+    public CadenaServiceContract clientFor(final Tecnologia tecnologia, final String url)  throws ClientException {
         if (url == null)
             throw new RuntimeException ("Could not create a client, the provided url is null");
         if (tecnologia.equals(Tecnologia.SOAP)) {

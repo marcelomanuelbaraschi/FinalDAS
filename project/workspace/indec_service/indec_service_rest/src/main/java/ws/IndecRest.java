@@ -5,12 +5,12 @@ import beans.*;
 import cadenasObjects.Producto;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
+import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import db.Bean;
 import db.Dao;
 import db.DaoFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import indecObjects.Cadena;
@@ -29,6 +29,10 @@ import java.util.stream.Stream;
 public class IndecRest {
 
     //protected static final Logger log = LoggerFactory.getLogger(IndecRest.class);
+
+    /* IMPLEMENTAR UN ENDPOINT "SUCURSALES" QUE PERMITA,
+     * DADO UNA LISTA DE IDCADENA TRAER  LAS SUCURSALES DE DICHAS CADENAS
+     * EN CASO DE SER UNA SOLA CADENA, TRAERA SOLO DE ESA.*/
 
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
@@ -114,6 +118,10 @@ public class IndecRest {
     public String productos (@QueryParam("identificador") final String identificador,
                              @QueryParam("idcategoria") final Long idCategoria) {
 
+
+        //TODO SI EL idcategoria es null traer todos los productos
+        //TODO PAGINACION ??
+
         try {
             ProductoBean producto = new ProductoBean();
             producto.setIdCategoria(idCategoria);
@@ -169,52 +177,36 @@ public class IndecRest {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos) {
 
-        if(identificador == null || codigoentidadfederal == null || localidad == null ||codigos == null){
-            System.out.println("la gilada");
-            return "la giladaaa";
-        } else {
-            System.out.println(identificador);
-            System.out.println(codigoentidadfederal);
-            System.out.println(localidad);
-            System.out.println(codigos);
-        }
+     //TODO validar parametros
+     //TODO agregar como parametro el criterio con el cual funcionara el comparador.
 
-        List <Cadena> cadenas = new LinkedList<Cadena>();
-
+     List<String> lcodigos = toList(codigos);
+     Response response = new Response();
+     List <Cadena> cadenas = new LinkedList<Cadena>();
+     Cadena cadena;
         try {
-            CadenaServiceConfigBean config = new CadenaServiceConfigBean();
-            Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
-            List<Bean> configs = dao.select(config);
-            final  CadenaServiceConfigBean []  arrconfigs  = JsonUtils.toObject(gson.toJson(configs) ,CadenaServiceConfigBean[].class);
-            final List<CadenaServiceConfigBean> lconfis = Stream.of(arrconfigs).collect(Collectors.toList());
-            Cadena cadena;
-            for (CadenaServiceConfigBean conf:lconfis){
-                    try {
-                        final CadenaServiceContract client =
-                                    ClientFactory.getInstance()
-                                             .clientFor(Enum.valueOf(Tecnologia.class,conf.getTecnologia())
-                                                                      ,conf.getUrl());
+            final List<CadenaServiceConfigBean> configs = getConfigs();
+            for (CadenaServiceConfigBean config:configs){
+                try {
+                    final CadenaServiceContract client = buildClient(config);
 
+                    final List<Sucursal> sucursales = client.precios("INDEC",codigoentidadfederal,localidad, lcodigos);
 
-                        final List<Sucursal> sucursales =
-                                client.precios("INDEC",codigoentidadfederal,localidad, Helper.fromCsvToList(codigos));
+                    cadena = new Cadena();
+                    cadena.setId(config.getIdCadena());
+                    cadena.setNombre(config.getNombreCadena());
+                    sucursales.stream().forEach(sucursal -> sucursal.setIdCadena(config.getIdCadena()));
+                    cadena.setSucursales(sucursales);
+                    cadenas.add(cadena);
+                    cadena.setDisponibilidad("Disponible");
 
-
-                        cadena = new Cadena();
-                        cadena.setId(conf.getIdCadena());
-                        cadena.setNombre(conf.getNombreCadena());
-                        sucursales.stream().forEach(sucursal -> sucursal.setIdCadena(conf.getIdCadena()));
-                        cadena.setSucursales(sucursales);
-                        cadenas.add(cadena);
-                        cadena.setDisponibilidad("Disponible");
-
-                    } catch (Exception e) {
-                        cadena = new Cadena();
-                        cadena.setId(conf.getId());
-                        cadena.setNombre(conf.getNombreCadena());
-                        cadenas.add(cadena);
-                        cadena.setDisponibilidad("No Disponible");
-                    }
+                }catch (Exception e) {
+                    cadena = new Cadena();
+                    cadena.setId(config.getId());
+                    cadena.setNombre(config.getNombreCadena());
+                    cadenas.add(cadena);
+                    cadena.setDisponibilidad("No Disponible");
+                }
             }
         }
 
@@ -224,7 +216,7 @@ public class IndecRest {
 
         System.out.println(cadenas);
 
-        //TODO USE UTILS DONDE SEA POJIBLE
+        //TODO USE UTILS DONDE SEA POSIBLE
         //TODO NEED BETTER WAY
 
         List <Producto >tempProductos = new LinkedList<>();
@@ -264,8 +256,6 @@ public class IndecRest {
                 }
         }
 
-         //mapa.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v));
-
         Pair <Long,Long> key = Collections.max(mapa.entrySet(), Map.Entry.comparingByValue()).getKey();
 
         for (Cadena c : cadenas){
@@ -278,14 +268,13 @@ public class IndecRest {
         }
 
         return JsonUtils.toJsonString(cadenas);
-       // return "OK";
     }
 
 
     @POST
     @Path("/info")
     @Produces(MediaType.APPLICATION_JSON)
-    public String info (@QueryParam("identificador") final String identificador
+    public String info (@QueryParam ("identificador") final String identificador
                         ,@QueryParam("idsucursal") final Long idsucursal
                         ,@QueryParam("idcadena") final Long idcadena) {
         return null;
@@ -307,5 +296,27 @@ public class IndecRest {
             return "must be a proper error";
         }
     }
+
+    //---------------------------------------------
+    private List<CadenaServiceConfigBean> getConfigs() throws SQLException {
+        CadenaServiceConfigBean config = new CadenaServiceConfigBean();
+        Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
+        List<Bean> configs = dao.select(config);
+        final  CadenaServiceConfigBean []  arrconfigs  = JsonUtils.toObject(gson.toJson(configs) ,CadenaServiceConfigBean[].class);
+        return Stream.of(arrconfigs).collect(Collectors.toList());
+    }
+
+    private CadenaServiceContract buildClient(CadenaServiceConfigBean config) throws ClientException {
+          return ClientFactory.getInstance()
+                              .clientFor(Enum.valueOf(Tecnologia.class,config.getTecnologia()),config.getUrl());
+    }
+
+    private List<String> toList (String commaSeparatedStr) {
+        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
+        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
+        return result;
+    }
+
+
 }
 

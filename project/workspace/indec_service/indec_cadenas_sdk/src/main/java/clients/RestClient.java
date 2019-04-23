@@ -3,6 +3,7 @@ package clients;
 import cadenasObjects.InfoSucursal;
 import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
+import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,10 +42,10 @@ public class RestClient implements CadenaServiceContract {
         this.client = HttpClientBuilder.create().build();
     }
 
-    public static CadenaServiceContract create(final String url) throws RuntimeException {
-        if (url == null) throw new RuntimeException ("Could not create RestClient, the provided url is null");
+    public static CadenaServiceContract create(final String url) throws ClientException {
+        if (url == null) throw new ClientException ("Could not create RestClient, the provided url is null");
         final RestClient restClient = new RestClient(url);
-        if (restClient == null) throw new RuntimeException ("Could not create RestClient");
+        if (restClient == null) throw new ClientException ("Could not create RestClient");
         return restClient;
     }
 
@@ -87,7 +88,7 @@ public class RestClient implements CadenaServiceContract {
         return target + arg;
     }
 
-    private String call(final String method, final String callTo) throws RuntimeException {
+    private String call(final String method, final String callTo) throws ClientException {
 
         try {
             final HttpResponse resp = client().execute(HTTPFactory.apply(method, callTo));
@@ -96,71 +97,83 @@ public class RestClient implements CadenaServiceContract {
             final int statusCode = resp.getStatusLine().getStatusCode();
 
             if (statusCode >= 500)
-                throw new RuntimeException("SERVER ERROR = " + resp.toString());
+                throw new ClientException("SERVER ERROR = " + resp.toString());
             if (statusCode >= 400)
-                throw new RuntimeException("CLIENT ERROR = " + resp.toString());
+                throw new ClientException("CLIENT ERROR = " + resp.toString());
 
             final String jsonBean = EntityUtils.toString(responseEntity);
 
             return jsonBean;
-        } catch (final IOException e) {
-            throw new RuntimeException("ENDPOINT IS DOWN = " + e.getMessage());
+        }
+        catch (IllegalArgumentException e){
+            throw new ClientException(e.getMessage());
+        }
+        catch (final IOException e) {
+            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage());
         }
     }
 
 
 
     @Override
-    public String health(final String identificador) throws RuntimeException {
+    public String health(final String identificador) throws ClientException {
         final String url = buildQueryString(HEALTH, IDENTIFICADOR);
         //TODO log
         return call(GET, String.format(url, identificador));
     }
 
     @Override
-    public List<Sucursal> sucursales(final String identificador, final String codigoentidadfederal, final String localidad) throws RuntimeException {
+    public List<Sucursal> sucursales(final String identificador, final String codigoentidadfederal, final String localidad) throws ClientException {
 
         final String query = getQuery(SUCURSALES, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad);
-        final String responsejson = call(GET, url);
-        final Response resp = JsonUtils.toObject(responsejson , Response.class);
+        final String responseJson = call(GET, url);
+        final Response resp = JsonUtils.toObject(responseJson , Response.class);
         if(resp.getCodigo()==0) {
             final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrsucs).collect(Collectors.toList());
         }
         else {
-            throw new RuntimeException(resp.getMensaje());
+            throw new ClientException(resp.getMensaje());
         }
     }
 
     @Override
-    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws RuntimeException {
-        final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD, CODIGOS);
-        final String url = String.format(query, identificador, codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
-        final String responsejson = call(POST, url);
-        final Response resp = JsonUtils.toObject(responsejson , Response.class);
-        if(resp.getCodigo()==0) {
+    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
+
+        String strcodigos;
+        try {
+            strcodigos = codigos.stream().collect(Collectors.joining(","));
+        }catch(NullPointerException e) {
+            throw new ClientException("El parametro codigo es null");
+        }
+
+        final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
+        final String url = String.format(query, identificador, codigoentidadfederal, localidad, strcodigos);
+        final String responseJson = call(POST, url);
+        final Response resp = JsonUtils.toObject(responseJson, Response.class);
+        if (resp.getCodigo() == 0) {
             final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), Sucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
+        } else {
+            throw new ClientException(resp.getMensaje());
         }
-        else {
-            throw new RuntimeException(resp.getMensaje());
-        }
+
 
     }
 
     @Override
-    public List<InfoSucursal> info(String identificador, Long idSucursal) throws RuntimeException {
+    public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
         final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
         final String url = String.format(query, identificador, idSucursal);
-        final String responsejson = call(GET, url);
-        final Response resp = JsonUtils.toObject(responsejson , Response.class);
+        final String responseJson = call(GET, url);
+        final Response resp = JsonUtils.toObject(responseJson , Response.class);
         if(resp.getCodigo()==0) {
             final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), InfoSucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {
-            throw new RuntimeException(resp.getMensaje());
+            throw new ClientException(resp.getMensaje());
         }
     }
 

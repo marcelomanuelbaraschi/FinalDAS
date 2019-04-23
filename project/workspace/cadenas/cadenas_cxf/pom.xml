@@ -18,6 +18,7 @@
     <!-- Dependency properties -->
     <properties>
         <cxf.version>3.2.2</cxf.version>
+
     </properties>
 
     <!-- Dependency definitions -->

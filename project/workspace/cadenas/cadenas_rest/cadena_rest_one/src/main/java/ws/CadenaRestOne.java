@@ -1,8 +1,8 @@
 package ws;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import endpoint.CadenaEndpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -10,13 +10,13 @@ import javax.ws.rs.core.MediaType;
 @Path("/cadenaRestOne")
 public class CadenaRestOne  {
 
-    private CadenaEndpoint ce = new CadenaEndpoint();
-    private Gson gson = (new GsonBuilder()).setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
+    protected static final Logger log = LoggerFactory.getLogger(CadenaRestOne.class);
+
     @GET
     @Path("/health")
     @Produces(MediaType.APPLICATION_JSON)
     public String health(@QueryParam("identificador") final String identificador) {
-
+        //log.debug("ok");
         return "OK";
     }
 
@@ -24,10 +24,10 @@ public class CadenaRestOne  {
     @Path("/sucursales")
     @Produces(MediaType.APPLICATION_JSON)
     public String sucursales (@QueryParam("identificador") final String identificador
-                        ,@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
-                        ,@QueryParam("localidad") final String localidad)
+                             ,@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
+                             ,@QueryParam("localidad") final String localidad)
     {
-        return ce.sucursales(codigoEntidadFederal,localidad);
+        return CadenaEndpoint.getInstance().sucursales(codigoEntidadFederal,localidad);
     }
 
     @GET
@@ -36,7 +36,7 @@ public class CadenaRestOne  {
     public String infoSucursales (@QueryParam("identificador") final String identificador
             ,@QueryParam("idsucursal") final Long idSucursal)
     {
-        return ce.infoSucursales(idSucursal);
+        return CadenaEndpoint.getInstance().infoSucursales(idSucursal);
     }
 
     @POST
@@ -47,7 +47,7 @@ public class CadenaRestOne  {
             ,@QueryParam("localidad") final String localidad
             ,@QueryParam("codigos") final String codigos)
     {
-        return ce.preciosSucursales(codigoEntidadFederal, localidad, codigos);
+        return CadenaEndpoint.getInstance().preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 }
 

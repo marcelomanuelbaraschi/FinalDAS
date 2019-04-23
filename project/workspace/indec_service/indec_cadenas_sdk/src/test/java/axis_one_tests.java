@@ -1,6 +1,7 @@
 import cadenasObjects.InfoSucursal;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
+import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final String confirmation = client.health("INDEC");
             assertEquals(confirmation.toLowerCase(), "ok");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             fail(e.getMessage());
         }
     }
@@ -31,7 +32,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final List<Sucursal> sucursales = client.sucursales("INDEC","AR-X","Capital");
             assertNotNull(sucursales);
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             fail(e.getMessage());
         }
     }
@@ -42,7 +43,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final List<Sucursal> sucursales = client.sucursales("INDEC",null,"Capital");
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }
@@ -53,7 +54,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final List<Sucursal> sucursales = client.sucursales("INDEC","AR-X",null);
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }
@@ -67,7 +68,7 @@ public class axis_one_tests {
             codigos.add("7791708001378");
             final List<Sucursal> preciosSucursales = client.precios("INDEC","AR-X","Capital", codigos);
             assertTrue(true);
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             fail(e.getMessage());
         }
     }
@@ -81,7 +82,7 @@ public class axis_one_tests {
             codigos.add("7791708001378");
             final List<Sucursal> preciosSucursales = client.precios("INDEC",null,"Capital", codigos);
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }
@@ -95,7 +96,7 @@ public class axis_one_tests {
             codigos.add("7791708001378");
             final List<Sucursal> preciosSucursales = client.precios("INDEC","AR-X",null, codigos);
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }
@@ -109,7 +110,7 @@ public class axis_one_tests {
             codigos.add("7791708001378");
             final List<Sucursal> preciosSucursales = client.precios("INDEC","AR-X","Capital", null);
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }
@@ -120,7 +121,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final List<InfoSucursal> sucursal = client.info("INDEC",1L);
             assertFalse(sucursal.isEmpty());
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             fail(e.getMessage());
         }
     }
@@ -131,7 +132,7 @@ public class axis_one_tests {
             final CadenaServiceContract client = ClientFactory.getInstance().clientFor(Tecnologia.SOAP, wsdlUrl);
             final List<InfoSucursal> sucursal = client.info("INDEC",null);
             fail("Deberia haber saltado una ClientException");
-        } catch (RuntimeException e) {
+        } catch (ClientException e) {
             assertTrue(e.getMessage(),true);
         }
     }

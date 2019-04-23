@@ -18,7 +18,7 @@ services:
         ports:
             - '1437:1433'
         container_name: cxf_one
-     #cxf_two es el 1438?
+    #cxf_two es el 1438?
 
 
 

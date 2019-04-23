@@ -1,5 +1,4 @@
 package endpoint;
-
 import bean.CriterioBusquedaProductosBean;
 import bean.CriterioInfoSucursalBean;
 import bean.CriterioLocalizacionSucursalBean;
@@ -9,37 +8,45 @@ import com.google.gson.GsonBuilder;
 import db.Bean;
 import db.Dao;
 import db.DaoFactory;
+import java.sql.SQLException;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.util.List;
-
 public class CadenaEndpoint {
 
-    public CadenaEndpoint() {   }
+    private Gson gson;
+    private static final Logger logger = LoggerFactory.getLogger(CadenaEndpoint.class);
+    private static volatile CadenaEndpoint endpoint;
 
-    private Gson gson = (new GsonBuilder()).setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
+    private CadenaEndpoint(){
 
-    protected static final Logger log = LoggerFactory.getLogger(CadenaEndpoint.class);
+        gson = (new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create());
+
+    }
+
+    public static CadenaEndpoint getInstance(){
+        if (endpoint == null){
+            endpoint = new CadenaEndpoint();
+        }
+
+        return endpoint;
+    }
 
     public String sucursales (final String codigoentidadfederal,
                               final String localidad)
     {
-        if(codigoentidadfederal == null){
+        logger.debug("{} method called..","sucursales");
+       Response resp = new Response();
 
-            Response resp = new Response();
+        if(codigoentidadfederal == null){
             resp.setCodigo(1);
             resp.setMensaje("El parametro codigoentidadfederal es null");
-            log.debug("El parametro codigoentidadfederal es null");
             return (gson.toJson(resp));
 
         }else if(localidad == null){
-
-            Response resp = new Response();
             resp.setCodigo(1);
             resp.setMensaje("El parametro localidad es null");
-            log.debug("El parametro localidad es null");
             return (gson.toJson(resp));
 
         } else{
@@ -49,30 +56,26 @@ public class CadenaEndpoint {
                 loc.setLocalidad(localidad);
                 Dao dao = DaoFactory.getDao("Sucursales", "");
                 List<Bean> locs = dao.select(loc);
-                Response resp = new Response();
                 resp.setCodigo(0);
                 resp.setJson(gson.toJson(locs));
                 return (gson.toJson(resp));
 
             } catch (SQLException ex) {
-                Response resp = new Response();
                 resp.setCodigo(1);
                 resp.setMensaje("db error");
-                log.error("db error:" + ex);
                 return (gson.toJson(resp));
             }
 
         }
-
     }
 
     public String infoSucursales (final Long idsucursal)
     {
+        logger.debug("{} method called..,","infoSucursales");
+       Response resp = new Response();
         if(idsucursal == null) {
-            Response resp = new Response();
             resp.setCodigo(1);
             resp.setMensaje("El parametro idsucursal es null");
-            log.debug("El parametro idsucursal es null");
             return (gson.toJson(resp));
         }else{
             try {
@@ -80,46 +83,40 @@ public class CadenaEndpoint {
                 loc.setIdSucursal(idsucursal);
                 Dao dao = DaoFactory.getDao("InfoSucursal", "");
                 List<Bean> info = dao.select(loc);
-                Response resp = new Response();
                 resp.setCodigo(0);
                 resp.setJson(gson.toJson(info));
                 return (gson.toJson(resp));
 
             } catch (SQLException ex) {
                 System.out.println("Error: " + ex.getMessage());
-                Response resp = new Response();
                 resp.setCodigo(1);
-                log.error("db error:" + ex);
+                resp.setMensaje("db error");
                 return (gson.toJson(resp));
             }
         }
+
     }
 
     public String preciosSucursales (final String codigoentidadfederal
                                     ,final String localidad
                                     ,final String codigos)
     {
+        logger.debug("{} method called..","preciosSucursales");
+        Response resp = new Response();
         if(codigoentidadfederal == null){
 
-            Response resp = new Response();
             resp.setCodigo(1);
             resp.setMensaje("El parametro codigoentidadfederal es null");
-            log.debug("El parametro codigoentidadfederal es null");
             return (gson.toJson(resp));
 
         }else if (localidad ==  null){
-            Response resp = new Response();
             resp.setCodigo(1);
             resp.setMensaje("El parametro localidad es null");
-            log.debug("El parametro localidad es null");
             return (gson.toJson(resp));
 
         }else if (codigos == null){
-
-            Response resp = new Response();
             resp.setCodigo(1);
             resp.setMensaje("El parametro codigos es null");
-            log.debug("El parametro codigos es null");
             return (gson.toJson(resp));
 
         }
@@ -131,18 +128,15 @@ public class CadenaEndpoint {
                 cs.setCodigos(codigos);
                 Dao dao = DaoFactory.getDao("PreciosSucursales", "");
                 List<Bean> ps = dao.select(cs);
-                Response resp = new Response();
                 resp.setCodigo(0);
                 resp.setJson(gson.toJson(ps));
                 return (gson.toJson(resp));
 
             } catch (SQLException ex) {
-                Response resp = new Response();
                 resp.setCodigo(1);
-                log.error("db error:" + ex);
+                resp.setMensaje("db error:" + ex);
                 return (gson.toJson(resp));
             }
         }
-
     }
 }
