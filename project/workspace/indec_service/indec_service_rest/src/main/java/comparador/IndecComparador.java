@@ -13,7 +13,6 @@ import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.IndecRepository;
-import repository.db.Bean;
 import repository.exceptions.RepositoryException;
 import java.util.*;
 import java.util.function.Function;
@@ -36,11 +35,10 @@ public class IndecComparador {
     }
 
 
-    public List<Bean> compararPrecios (final String codigoentidadfederal, final String localidad, final String codigos)
+    public List<Cadena> compararPrecios (final String codigoentidadfederal, final String localidad, final String codigos)
             throws RepositoryException {
 
         List<String> lcodigos = toList.apply(codigos);
-        ComparadorResponse response = new ComparadorResponse();
         final List<Cadena> cadenas;
 
         try{
@@ -73,8 +71,7 @@ public class IndecComparador {
             }
         }
 
-        //return cadenasMarcadas;
-        return null;
+        return cadenasMarcadas;
     }
 
 
@@ -101,7 +98,7 @@ public class IndecComparador {
             try {
                 final CadenaServiceContract client = buildClient(config);
 
-                final List<Sucursal> sucursales = client.precios("INDEC", codigoentidadfederal, localidad, lcodigos);
+                final List<Sucursal> sucursales = client.precios( codigoentidadfederal, localidad, lcodigos);
 
                 for (Sucursal s : sucursales) {
                     s.setIdCadena(config.getIdCadena());
