@@ -53,8 +53,8 @@ public class SoapClient implements CadenaServiceContract {
     }
 
     @Override
-    public String health(final String identificador) throws ClientException {
-        final Object object = executeMethod(HEALTH, identificador);
+    public String health() throws ClientException {
+        final Object object = executeMethod(HEALTH);
         final String jsonBean = object.toString();
         //TODO log
         return jsonBean;
@@ -62,8 +62,8 @@ public class SoapClient implements CadenaServiceContract {
 
     @Override
     //TODO update and test
-    public List<Sucursal> sucursales(String identificador, String codigoentidadfederal, String localidad) throws ClientException {
-        final Object object = executeMethod(SUCURSALES, identificador,codigoentidadfederal,localidad);
+    public List<Sucursal> sucursales(String codigoentidadfederal, String localidad) throws ClientException {
+        final Object object = executeMethod(SUCURSALES,codigoentidadfederal,localidad);
         final String responseJson = object.toString();
         final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         //TODO log
@@ -78,29 +78,13 @@ public class SoapClient implements CadenaServiceContract {
 
     @Override
     //TODO update and test
-    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
-        final Object object = executeMethod(PRECIOS, identificador,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
+    public List<Sucursal> precios(String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
+        final Object object = executeMethod(PRECIOS,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
         final String responseJson = object.toString();
         final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         //TODO log
         if(resp.getCodigo()==0) {
             final Sucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson() , Sucursal[].class);
-            return Stream.of(arrpsucs).collect(Collectors.toList());
-        }
-        else {
-            throw new ClientException(resp.getMensaje());
-        }
-    }
-
-    @Override
-    //TODO update and test
-    public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
-        final Object object = executeMethod(INFO, identificador, idSucursal);
-        final String responseJson = object.toString();
-        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
-        //TODO log
-        if(resp.getCodigo()==0) {
-            final InfoSucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson() , InfoSucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {

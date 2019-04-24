@@ -1,32 +1,26 @@
 package ws;
 
-import endpoint.CadenaEndpoint;
+import api.CadenaApi;
 
 public class CadenaAxisOne {
 
-    public String health(final String identificador) {
+    public String health() {
 
         return "OK";
     }
 
-    public String sucursales (final String identificador
-            ,final String codigoentidadfederal
-            ,final String localidad)  {
+    public String sucursales (final String codigoentidadfederal
+                             ,final String localidad)  {
 
-        return CadenaEndpoint.getInstance().sucursales(codigoentidadfederal, localidad);
+        return CadenaApi.getInstance()
+                        .sucursales(codigoentidadfederal, localidad);
     }
 
+    public String precios(final String codigoentidadfederal
+                         ,final String localidad
+                         ,final String codigos) {
 
-    public String info ( final String identificador, final Long idsucursal ) {
-
-        return  CadenaEndpoint.getInstance().infoSucursales(idsucursal);
-    }
-
-    public String precios ( final String identificador
-                            ,final String codigoentidadfederal
-                            ,final String localidad
-                            ,final String codigos) {
-
-        return  CadenaEndpoint.getInstance().preciosSucursales(codigoentidadfederal, localidad, codigos);
+        return  CadenaApi.getInstance()
+                         .preciosSucursales(codigoentidadfederal, localidad, codigos);
     }
 }

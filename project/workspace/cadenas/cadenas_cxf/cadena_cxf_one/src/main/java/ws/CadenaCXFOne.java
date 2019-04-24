@@ -1,7 +1,7 @@
 package ws;
 
 
-import endpoint.CadenaEndpoint;
+import api.CadenaApi;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -11,32 +11,26 @@ public class CadenaCXFOne {
 
 
     @WebMethod(operationName = "health", action = "urn:Health")
-    public String health(@WebParam(name = "identificador") final String identificador) {
+    public String health() {
         return "OK";
     }
 
-    @WebMethod(operationName = "info", action = "urn:Info")
-    public String info(@WebParam(name = "identificador") final String identificador,
-                       @WebParam(name = "idsucursal") final Long idSucursal) {
-
-        return CadenaEndpoint.getInstance().infoSucursales(idSucursal);
-    }
 
     @WebMethod(operationName = "precios", action = "urn:Precios")
-    public String precios(@WebParam(name = "identificador") final String identificador
-                          ,@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
-                          ,@WebParam(name = "localidad") final String localidad
-                          ,@WebParam(name = "codigos") final String codigos) {
+    public String precios(@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
+                         ,@WebParam(name = "localidad") final String localidad
+                         ,@WebParam(name = "codigos") final String codigos) {
 
-        return CadenaEndpoint.getInstance().preciosSucursales(codigoEntidadFederal, localidad, codigos);
+        return CadenaApi.getInstance()
+                        .preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 
     @WebMethod(operationName = "sucursales", action = "urn:Sucursales")
-    public String sucursales(@WebParam(name = "identificador") final String identificador
-            ,@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
-            ,@WebParam(name = "localidad") final String localidad) {
+    public String sucursales(@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
+                            ,@WebParam(name = "localidad") final String localidad) {
 
-        return CadenaEndpoint.getInstance().sucursales(codigoEntidadFederal, localidad);
+        return CadenaApi.getInstance()
+                        .sucursales(codigoEntidadFederal, localidad);
     }
 
 }

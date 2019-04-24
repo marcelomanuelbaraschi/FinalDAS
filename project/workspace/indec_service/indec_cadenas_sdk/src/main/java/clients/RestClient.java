@@ -1,6 +1,4 @@
 package clients;
-
-import cadenasObjects.InfoSucursal;
 import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
@@ -113,19 +111,18 @@ public class RestClient implements CadenaServiceContract {
     }
 
 
-
     @Override
-    public String health(final String identificador) throws ClientException {
-        final String url = buildQueryString(HEALTH, IDENTIFICADOR);
+    public String health() throws ClientException {
+        final String url = buildQueryString(HEALTH);
         //TODO log
-        return call(GET, String.format(url, identificador));
+        return call(GET, String.format(url));
     }
 
     @Override
-    public List<Sucursal> sucursales(final String identificador, final String codigoentidadfederal, final String localidad) throws ClientException {
+    public List<Sucursal> sucursales(final String codigoentidadfederal, final String localidad) throws ClientException {
 
-        final String query = getQuery(SUCURSALES, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD);
-        final String url = String.format(query, identificador, codigoentidadfederal,localidad);
+        final String query = getQuery(SUCURSALES,CODIGO_ENTIDAD_FEDERAL,LOCALIDAD);
+        final String url = String.format(query,codigoentidadfederal,localidad);
         final String responseJson = call(GET, url);
         final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         if(resp.getCodigo()==0) {
@@ -138,7 +135,7 @@ public class RestClient implements CadenaServiceContract {
     }
 
     @Override
-    public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
+    public List<Sucursal> precios(String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
 
         String strcodigos;
         try {
@@ -147,8 +144,8 @@ public class RestClient implements CadenaServiceContract {
             throw new ClientException("El parametro codigo es null");
         }
 
-        final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
-        final String url = String.format(query, identificador, codigoentidadfederal, localidad, strcodigos);
+        final String query = getQuery(PRECIOS,CODIGO_ENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
+        final String url = String.format(query,codigoentidadfederal, localidad, strcodigos);
         final String responseJson = call(POST, url);
         final Response resp = JsonMarshaller.toObject(responseJson, Response.class);
         if (resp.getCodigo() == 0) {
@@ -160,38 +157,4 @@ public class RestClient implements CadenaServiceContract {
 
 
     }
-
-    @Override
-    public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
-        final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
-        final String url = String.format(query, identificador, idSucursal);
-        final String responseJson = call(GET, url);
-        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
-        if(resp.getCodigo()==0) {
-            final InfoSucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson(), InfoSucursal[].class);
-            return Stream.of(arrpsucs).collect(Collectors.toList());
-        }
-        else {
-            throw new ClientException(resp.getMensaje());
-        }
-    }
-
-
-
-   /* private void fireAndForget(final String method, final String callTo) throws ClientException {
-        try {
-            final HttpResponse resp = client().execute(HTTPFactory.apply(method, callTo));
-
-            final int statusCode = resp.getStatusLine().getStatusCode();
-
-            if (statusCode >= 500)
-                throw new ClientException("ENDPOINT IS DOWN = " + resp.toString());
-            if (statusCode >= 400)
-                throw new ClientException("BAD REQUEST = " + resp.toString());
-
-        } catch (final IOException e) {
-            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
-        }
-    }*/
-
 }

@@ -28,12 +28,13 @@ public class IndecRepository {
         return repositoryInstance;
     }
 
-    public List<Bean> categorias () throws RepositoryException {
+    public List<CategoriaProductoBean> categorias() throws RepositoryException {
         try {
         CategoriaProductoBean categoria = new CategoriaProductoBean();
         Dao dao = DaoFactory.getDao("CategoriasProducto", "");
         List<Bean> categorias = dao.select(categoria);
-        return categorias;
+        final  CategoriaProductoBean [] arrcategorias  = JsonMarshaller.toObject(JsonMarshaller.toJson(categorias),CategoriaProductoBean[].class);
+        return Stream.of(arrcategorias).collect(Collectors.toList());
         }
         catch(SQLException ex) {
         logger.error("Error en el metodo categorias:{}",ex.getMessage());
@@ -49,7 +50,8 @@ public class IndecRepository {
             producto.setIdCategoria(idCategoria);
             Dao dao = DaoFactory.getDao("Productos", "");
             List<Bean> productos = dao.select(producto);
-            return productos;
+            final  ProductoBean [] arrproductos  = JsonMarshaller.toObject(JsonMarshaller.toJson(productos) ,ProductoBean[].class);
+            return Stream.of(arrproductos).collect(Collectors.toList());
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo productos:{}",ex.getMessage());
@@ -57,12 +59,13 @@ public class IndecRepository {
         }
     }
 
-    public List<Bean> provincias() throws RepositoryException{
+    public List<ProvinciaBean> provincias() throws RepositoryException{
         try {
             ProvinciaBean provincia = new ProvinciaBean();
             Dao dao = DaoFactory.getDao("Provincias", "");
             List<Bean> provincias = dao.select(provincia);
-            return provincias;
+            final  ProvinciaBean []  arrprovincias  = JsonMarshaller.toObject(JsonMarshaller.toJson(provincias) ,ProvinciaBean[].class);
+            return Stream.of(arrprovincias).collect(Collectors.toList());
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo provincias:{}",ex.getMessage());
@@ -70,13 +73,14 @@ public class IndecRepository {
         }
     }
 
-    public List<Bean> localidades(final String codigoentidadfederal) throws RepositoryException{
+    public List<LocalidadBean> localidades(final String codigoentidadfederal) throws RepositoryException{
         try {
             LocalidadBean localidad = new LocalidadBean();
             localidad.setCodigoEntidadFederal(codigoentidadfederal);
             Dao dao = DaoFactory.getDao("Localidades", "");
             List<Bean> localidades = dao.select(localidad);
-            return localidades;
+            final  LocalidadBean []  arrlocalidades  = JsonMarshaller.toObject(JsonMarshaller.toJson(localidades) ,LocalidadBean[].class);
+            return Stream.of(arrlocalidades).collect(Collectors.toList());
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo localidades:{}",ex.getMessage());
@@ -84,12 +88,13 @@ public class IndecRepository {
         }
     }
 
-    public List<Bean> cadenas () throws RepositoryException{
+    public List<CadenaBean> cadenas() throws RepositoryException{
         try {
             CadenaBean cadena = new CadenaBean();
             Dao dao = DaoFactory.getDao("Cadenas", "");
             List<Bean> cadenas = dao.select(cadena);
-            return cadenas;
+            final  CadenaBean []  arrcadenas  = JsonMarshaller.toObject(JsonMarshaller.toJson(cadenas) ,CadenaBean[].class);
+            return Stream.of(arrcadenas).collect(Collectors.toList());
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo cadenas:{}",ex.getMessage());
