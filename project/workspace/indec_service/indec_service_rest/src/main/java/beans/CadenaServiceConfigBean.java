@@ -1,8 +1,7 @@
 package beans;
 
-import activerecord.annotations.Column;
 import com.google.gson.annotations.SerializedName;
-import db.Bean;
+import repository.db.Bean;
 
 public class CadenaServiceConfigBean implements Bean {
 

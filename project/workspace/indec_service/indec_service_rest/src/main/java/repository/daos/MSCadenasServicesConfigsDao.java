@@ -1,11 +1,9 @@
-package daos;
-import beans.CadenaServiceConfig;
+package repository.daos;
 import beans.CadenaServiceConfigBean;
-import db.Bean;
-import db.DaoImpl;
+import repository.db.Bean;
+import repository.db.DaoImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MSCadenasServicesConfigsDao extends DaoImpl {

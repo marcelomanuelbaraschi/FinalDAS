@@ -2,11 +2,12 @@ package indecObjects;
 
 import cadenasObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;
+import repository.db.Bean;
 
 
 import java.util.List;
 
-public class Cadena {
+public class Cadena  implements Bean {
 
     @SerializedName("id")
     private Long id;

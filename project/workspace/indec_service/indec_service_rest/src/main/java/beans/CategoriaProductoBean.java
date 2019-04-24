@@ -2,7 +2,7 @@ package beans;
 
 
 import com.google.gson.annotations.SerializedName;
-import db.Bean;
+import repository.db.Bean;
 
 public class CategoriaProductoBean  implements Bean {
 

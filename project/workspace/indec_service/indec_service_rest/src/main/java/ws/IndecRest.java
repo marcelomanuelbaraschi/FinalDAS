@@ -1,320 +1,129 @@
 package ws;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import repository.IndecRepository;
+import repository.exceptions.RepositoryException;
+import utilities.JsonMarshaller;
+import comparador.IndecComparador;
 
-import beans.*;
-import cadenasObjects.Producto;
-import cadenasObjects.Sucursal;
-import clients.Tecnologia;
-import clients.exceptions.ClientException;
-import clients.factory.ClientFactory;
-import contract.CadenaServiceContract;
-import db.Bean;
-import db.Dao;
-import db.DaoFactory;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import indecObjects.Cadena;
-import org.javatuples.Pair;
-import utilities.JsonUtils;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import javax.ws.rs.core.Response;
 
 @Path("/app")
 public class IndecRest {
 
-    //protected static final Logger log = LoggerFactory.getLogger(IndecRest.class);
-
-    /* IMPLEMENTAR UN ENDPOINT "SUCURSALES" QUE PERMITA,
-     * DADO UNA LISTA DE IDCADENA TRAER  LAS SUCURSALES DE DICHAS CADENAS
-     * EN CASO DE SER UNA SOLA CADENA, TRAERA SOLO DE ESA.*/
-
-    private Gson gson = new GsonBuilder()
-            .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-            .create();
-
-    @GET
-    @Path("/health")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String health(@QueryParam("identificador") final String identificador) {
-        System.out.println("Rest health identificador ->" + identificador);
-        return "OK";
-    }
-
-    @GET
-    @Path("/traversalhealth")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String traversalhealth(@QueryParam("identificador") final String identificador) {
-        System.out.println("Rest Traversalhealth identificador ->" + identificador);
-
-        CadenaServiceConfigBean configrest = new CadenaServiceConfigBean();
-        configrest.setNombreCadena("Libertad");
-        configrest.setTecnologia("REST");
-        configrest.setUrl("http://localhost:8001/cadena_rest_one/cadenaRestOne");
-
-        CadenaServiceConfigBean configaxis = new CadenaServiceConfigBean();
-
-        configaxis.setNombreCadena("Walmart");
-        configaxis.setTecnologia("SOAP");
-        configaxis.setUrl("http://localhost:8000/cadena_axis_one/services/CadenaAxisOne?wsdl");
-
-        CadenaServiceConfigBean configcxf = new CadenaServiceConfigBean();
-        configcxf.setNombreCadena("Jumbo");
-        configcxf.setTecnologia("SOAP");
-        configcxf.setUrl("http://localhost:8003/cadena_cxf_one/services/cadena_cxf_one?wsdl");
-
-        final List<CadenaServiceConfigBean> lconfis = new LinkedList<>();
-        lconfis.add(configrest);
-        lconfis.add(configaxis);
-        lconfis.add(configcxf);
-
-        String okAccum = "";
-        for (CadenaServiceConfigBean conf:lconfis){
-            try {
-                final CadenaServiceContract client =
-                        ClientFactory.getInstance()
-                                .clientFor(Enum.valueOf(Tecnologia.class,conf.getTecnologia())
-                                        ,conf.getUrl());
-
-                okAccum = okAccum + conf.getTecnologia() +  client.health("INDEC") + ",";
-
-
-            } catch (Exception e) {
-                System.out.println("error.."+ e.getMessage());
-                okAccum = okAccum + conf.getTecnologia() +  "NOK" + ",";
-            }
-        }
-        return okAccum;
-
-    }
-
+    protected static final Logger logger = LoggerFactory.getLogger(IndecRest.class);
 
     @GET
     @Path("/categorias")
     @Produces(MediaType.APPLICATION_JSON)
-    public String categorias (@QueryParam("identificador") final String identificador) {
-
-        System.out.println("Rest categorias identificador ->" + identificador);
-        try {
-            CategoriaProductoBean categoria = new CategoriaProductoBean();
-            Dao dao = DaoFactory.getDao("CategoriasProducto", "");
-            List<Bean> categorias = dao.select(categoria);
-            return gson.toJson(categorias);
+    public Response categorias () {
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                                                         .categorias())
+            ).build();
         }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return "must be a proper error";
+        catch (RepositoryException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Path("/productos")
     @Produces(MediaType.APPLICATION_JSON)
-    public String productos (@QueryParam("identificador") final String identificador,
-                             @QueryParam("idcategoria") final Long idCategoria) {
-
-
-        //TODO SI EL idcategoria es null traer todos los productos
-        //TODO PAGINACION ??
-
-        try {
-            ProductoBean producto = new ProductoBean();
-            producto.setIdCategoria(idCategoria);
-            Dao dao = DaoFactory.getDao("Productos", "");
-            List<Bean> productos = dao.select(producto);
-            return gson.toJson(productos);
+    public Response productos (@QueryParam("idcategoria") final Long idCategoria) {
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                                                         .productos(idCategoria))
+            ).build();
         }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return "must be a proper error";
+        catch (RepositoryException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Path("/provincias")
     @Produces(MediaType.APPLICATION_JSON)
-    public String provincias (@QueryParam("identificador") final String identificador) {
-        try {
-            ProvinciaBean provincia = new ProvinciaBean();
-            Dao dao = DaoFactory.getDao("Provincias", "");
-            List<Bean> provincias = dao.select(provincia);
-            return (gson.toJson(provincias));
+    public Response provincias () {
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                                                         .provincias())
+            ).build();
         }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return "must be a proper error";
+        catch (RepositoryException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GET
     @Path("/localidades")
     @Produces(MediaType.APPLICATION_JSON)
-    public String localidades (@QueryParam("identificador") final String identificador,
-                               @QueryParam("codigoentidadfederal") final String codigoentidadfederal) {
-        try {
-            LocalidadBean localidad = new LocalidadBean();
-            localidad.setCodigoEntidadFederal(codigoentidadfederal);
-            Dao dao = DaoFactory.getDao("Localidades", "");
-            List<Bean> localidades = dao.select(localidad);
-            return (gson.toJson(localidades));
+    public Response localidades (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                                                         .localidades(codigoEntidadFederal))
+            ).build();
         }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return "must be a proper error";
+        catch (RepositoryException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @POST
-    @Path("/precios")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String precios (@QueryParam("identificador") final String identificador
-                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-                          ,@QueryParam("localidad") final String localidad
-                          ,@QueryParam("codigos") final String codigos) {
-
-     //TODO validar parametros
-     //TODO agregar como parametro el criterio con el cual funcionara el comparador.
-
-     List<String> lcodigos = toList(codigos);
-     Response response = new Response();
-     List <Cadena> cadenas = new LinkedList<Cadena>();
-     Cadena cadena;
-        try {
-            final List<CadenaServiceConfigBean> configs = getConfigs();
-            for (CadenaServiceConfigBean config:configs){
-                try {
-                    final CadenaServiceContract client = buildClient(config);
-
-                    final List<Sucursal> sucursales = client.precios("INDEC",codigoentidadfederal,localidad, lcodigos);
-
-                    cadena = new Cadena();
-                    cadena.setId(config.getIdCadena());
-                    cadena.setNombre(config.getNombreCadena());
-                    sucursales.stream().forEach(sucursal -> sucursal.setIdCadena(config.getIdCadena()));
-                    cadena.setSucursales(sucursales);
-                    cadenas.add(cadena);
-                    cadena.setDisponibilidad("Disponible");
-
-                }catch (Exception e) {
-                    cadena = new Cadena();
-                    cadena.setId(config.getId());
-                    cadena.setNombre(config.getNombreCadena());
-                    cadenas.add(cadena);
-                    cadena.setDisponibilidad("No Disponible");
-                }
-            }
-        }
-
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-        }
-
-        System.out.println(cadenas);
-
-        //TODO USE UTILS DONDE SEA POSIBLE
-        //TODO NEED BETTER WAY
-
-        List <Producto >tempProductos = new LinkedList<>();
-        for (Cadena c : cadenas){
-            for(Sucursal s :c.getSucursales()){
-                for (Producto p: s.getProductos()){
-                    tempProductos.add(p);
-                }
-            }
-        }
-
-        Map<String, List<Producto>> m = tempProductos.stream().collect(Collectors.groupingBy(producto -> producto.getIdComercial()));
-
-        Map <String, Float> cod_min = new HashMap<String, Float>();
-        for (Map.Entry<String, List<Producto>> entry : m.entrySet()) {
-            Producto a =  entry.getValue().stream().min( Comparator.comparing(producto -> producto.getPrecio()) ).get();
-            cod_min.put(entry.getKey(),a.getPrecio());
-        }
-
-        for (Cadena c : cadenas){
-            for(Sucursal s :c.getSucursales()){
-                for (Producto p: s.getProductos()){
-                    Float precio =  cod_min.get(p.getIdComercial());
-                    if ( p.getPrecio().equals(precio)) {
-                        p.setMejorPrecio(true);
-                    } else {
-                        p.setMejorPrecio(false);
-                    }
-                }
-            }
-        }
-
-        Map<Pair <Long,Long>,Long> mapa = new HashMap<>();
-        for (Cadena c : cadenas){
-            for(Sucursal s :c.getSucursales()){
-                  mapa.put(Pair.with(c.getId(),s.getIdSucursal()),s.getProductos().stream().filter(p -> p.getMejorPrecio() ).count());
-                }
-        }
-
-        Pair <Long,Long> key = Collections.max(mapa.entrySet(), Map.Entry.comparingByValue()).getKey();
-
-        for (Cadena c : cadenas){
-            for(Sucursal s :c.getSucursales()){
-
-                if ( c.getId().equals(key.getValue0()) &&  s.getIdSucursal().equals(key.getValue1()) ){
-                    s.setMejorOpcion(true);
-                } else s.setMejorOpcion(false);
-            }
-        }
-
-        return JsonUtils.toJsonString(cadenas);
-    }
-
-
-    @POST
-    @Path("/info")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String info (@QueryParam ("identificador") final String identificador
-                        ,@QueryParam("idsucursal") final Long idsucursal
-                        ,@QueryParam("idcadena") final Long idcadena) {
-        return null;
-    }
-
 
     @GET
     @Path("/cadenas")
     @Produces(MediaType.APPLICATION_JSON)
-    public String cadenas (@QueryParam("identificador") final String identificador) {
-        try {
-            CadenaBean cadena = new CadenaBean();
-            Dao dao = DaoFactory.getDao("Cadenas", "");
-            List<Bean> cadenas = dao.select(cadena);
-            return (gson.toJson(cadenas));
+    public Response cadenas () {
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                                                         .cadenas())
+            ).build();
         }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            return "must be a proper error";
+        catch (RepositoryException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    //---------------------------------------------
-    private List<CadenaServiceConfigBean> getConfigs() throws SQLException {
-        CadenaServiceConfigBean config = new CadenaServiceConfigBean();
-        Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
-        List<Bean> configs = dao.select(config);
-        final  CadenaServiceConfigBean []  arrconfigs  = JsonUtils.toObject(gson.toJson(configs) ,CadenaServiceConfigBean[].class);
-        return Stream.of(arrconfigs).collect(Collectors.toList());
+    @POST
+    @Path("/comparador")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response comparador (@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                               ,@QueryParam("localidad") final String localidad
+                               ,@QueryParam("codigos") final String codigos) {
+
+     //TODO validar parametros
+     //TODO agregar como parametro el criterio con el cual funcionara el comparador.
+     //TODO utilizar el identificador
+
+        try{
+            return Response.status(Response.Status.OK).entity(
+                    JsonMarshaller.toJson(IndecComparador.getInstance()
+                                                         .compararPrecios(codigoentidadfederal,localidad,codigos))
+            ).build();
+        }
+        catch (RepositoryException ex){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 
-    private CadenaServiceContract buildClient(CadenaServiceConfigBean config) throws ClientException {
-          return ClientFactory.getInstance()
-                              .clientFor(Enum.valueOf(Tecnologia.class,config.getTecnologia()),config.getUrl());
-    }
 
-    private List<String> toList (String commaSeparatedStr) {
-        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
-        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
-        return result;
-    }
+    /* TODO : IMPLEMENTAR UN ENDPOINT "SUCURSALES" QUE PERMITA,DADO UNA LISTA DE CADENAS TRAER LA INFO DE LAS MISMAS*/
 
+    @GET
+    @Path("/health")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String health() {
+        logger.debug("Healthy");
+        return "OK";
+    }
 
 }
 

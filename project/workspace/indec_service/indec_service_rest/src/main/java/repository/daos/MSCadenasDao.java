@@ -1,23 +1,22 @@
-package daos;
+package repository.daos;
 
-import beans.ProductoBean;
-import beans.ProvinciaBean;
-import db.Bean;
-import db.DaoImpl;
+import beans.CadenaBean;
+import repository.db.Bean;
+import repository.db.DaoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
-public class MSProvinciasDao extends DaoImpl {
+public class MSCadenasDao extends DaoImpl {
 
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        ProvinciaBean prov = new ProvinciaBean();
-        prov.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
-        prov.setNombreProvincia(result.getString("nombreProvincia"));
-        return prov;
+        CadenaBean cadena = new CadenaBean();
+        cadena.setId(result.getLong("id"));
+        cadena.setNombre(result.getString("nombre"));
+        cadena.setImagen(result.getString("imagen"));
+        return cadena;
     }
 
     @Override
@@ -38,10 +37,10 @@ public class MSProvinciasDao extends DaoImpl {
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
         this.connect();
-        this.setProcedure("dbo.spProvincias");
-        List<Bean> provincias = this.executeQuery();
+        this.setProcedure("dbo.spCadenas");
+        List <Bean> cadenas = this.executeQuery();
         this.disconnect();
-        return provincias;
+        return cadenas;
     }
 
     @Override

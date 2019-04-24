@@ -1,7 +1,7 @@
-package daos;
+package repository.daos;
 import beans.CategoriaProductoBean;
-import db.Bean;
-import db.DaoImpl;
+import repository.db.Bean;
+import repository.db.DaoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

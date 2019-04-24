@@ -1,8 +1,11 @@
 package beans;
 
 import com.google.gson.annotations.SerializedName;
+import indecObjects.Cadena;
 
-public class Response {
+import java.util.List;
+
+public class ComparadorResponse {
 
     @SerializedName("codigo")
     private Integer codigo;
@@ -10,13 +13,12 @@ public class Response {
     @SerializedName("mensaje")
     private String  mensaje;
 
-    @SerializedName("json")
-    private String  json;
+    @SerializedName("cadenas")
+    private List<Cadena> cadenas;
 
     public Integer getCodigo() {
         return codigo;
     }
-
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
@@ -29,13 +31,15 @@ public class Response {
         this.mensaje = mensaje;
     }
 
-    public String getJson() {
-        return json;
+    public List<Cadena> getCadenas() {
+        return cadenas;
     }
 
-    public void setJson(String json) {
-        this.json = json;
+    public void setCadenas(List<Cadena> cadenas) {
+        this.cadenas = cadenas;
     }
+
+
 
 
 }

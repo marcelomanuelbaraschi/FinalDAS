@@ -1,4 +1,4 @@
-package db;
+package repository.db;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -1,14 +1,5 @@
-import beans.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import db.Bean;
-import db.Dao;
-import db.DaoFactory;
-import org.junit.Test;
-import java.sql.SQLException;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class DaosSpecs {
 

@@ -14,8 +14,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import utils.JsonUtils;
-
+import utils.JsonMarshaller;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
@@ -128,9 +127,9 @@ public class RestClient implements CadenaServiceContract {
         final String query = getQuery(SUCURSALES, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL,LOCALIDAD);
         final String url = String.format(query, identificador, codigoentidadfederal,localidad);
         final String responseJson = call(GET, url);
-        final Response resp = JsonUtils.toObject(responseJson , Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         if(resp.getCodigo()==0) {
-            final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
+            final Sucursal[] arrsucs = JsonMarshaller.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrsucs).collect(Collectors.toList());
         }
         else {
@@ -151,9 +150,9 @@ public class RestClient implements CadenaServiceContract {
         final String query = getQuery(PRECIOS, IDENTIFICADOR, CODIGO_IDENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
         final String url = String.format(query, identificador, codigoentidadfederal, localidad, strcodigos);
         final String responseJson = call(POST, url);
-        final Response resp = JsonUtils.toObject(responseJson, Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson, Response.class);
         if (resp.getCodigo() == 0) {
-            final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), Sucursal[].class);
+            final Sucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson(), Sucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         } else {
             throw new ClientException(resp.getMensaje());
@@ -167,9 +166,9 @@ public class RestClient implements CadenaServiceContract {
         final String query = getQuery(INFO, IDENTIFICADOR, IDSUCURSAL);
         final String url = String.format(query, identificador, idSucursal);
         final String responseJson = call(GET, url);
-        final Response resp = JsonUtils.toObject(responseJson , Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         if(resp.getCodigo()==0) {
-            final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson(), InfoSucursal[].class);
+            final InfoSucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson(), InfoSucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {

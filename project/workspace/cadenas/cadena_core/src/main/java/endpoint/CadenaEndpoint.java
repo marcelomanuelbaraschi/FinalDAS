@@ -35,6 +35,7 @@ public class CadenaEndpoint {
 
     public String sucursales (final String codigoentidadfederal,
                               final String localidad)
+            //TODO AGREGAR UN PARAMETRO OPCIONAL LIST(IDCADENAS) PARA TRAER SOLO DE ESAS CADENAS.
     {
         logger.debug("{} method called..","sucursales");
        Response resp = new Response();
@@ -68,7 +69,7 @@ public class CadenaEndpoint {
 
         }
     }
-
+/*
     public String infoSucursales (final Long idsucursal)
     {
         logger.debug("{} method called..,","infoSucursales");
@@ -95,7 +96,7 @@ public class CadenaEndpoint {
             }
         }
 
-    }
+    }*/
 
     public String preciosSucursales (final String codigoentidadfederal
                                     ,final String localidad

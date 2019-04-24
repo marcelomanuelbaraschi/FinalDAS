@@ -7,8 +7,7 @@ import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
-import utils.JsonUtils;
-
+import utils.JsonMarshaller;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,10 +65,10 @@ public class SoapClient implements CadenaServiceContract {
     public List<Sucursal> sucursales(String identificador, String codigoentidadfederal, String localidad) throws ClientException {
         final Object object = executeMethod(SUCURSALES, identificador,codigoentidadfederal,localidad);
         final String responseJson = object.toString();
-        final Response resp = JsonUtils.toObject(responseJson , Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         //TODO log
         if(resp.getCodigo()==0) {
-            final Sucursal[] arrsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
+            final Sucursal[] arrsucs = JsonMarshaller.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrsucs).collect(Collectors.toList());
         }
         else {
@@ -82,10 +81,10 @@ public class SoapClient implements CadenaServiceContract {
     public List<Sucursal> precios(String identificador, String codigoentidadfederal, String localidad, List <String> codigos) throws ClientException {
         final Object object = executeMethod(PRECIOS, identificador,codigoentidadfederal,localidad, codigos.stream().collect(Collectors.joining(",")));
         final String responseJson = object.toString();
-        final Response resp = JsonUtils.toObject(responseJson , Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         //TODO log
         if(resp.getCodigo()==0) {
-            final Sucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , Sucursal[].class);
+            final Sucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson() , Sucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {
@@ -98,10 +97,10 @@ public class SoapClient implements CadenaServiceContract {
     public List<InfoSucursal> info(String identificador, Long idSucursal) throws ClientException {
         final Object object = executeMethod(INFO, identificador, idSucursal);
         final String responseJson = object.toString();
-        final Response resp = JsonUtils.toObject(responseJson , Response.class);
+        final Response resp = JsonMarshaller.toObject(responseJson , Response.class);
         //TODO log
         if(resp.getCodigo()==0) {
-            final InfoSucursal[] arrpsucs = JsonUtils.toObject(resp.getJson() , InfoSucursal[].class);
+            final InfoSucursal[] arrpsucs = JsonMarshaller.toObject(resp.getJson() , InfoSucursal[].class);
             return Stream.of(arrpsucs).collect(Collectors.toList());
         }
         else {
