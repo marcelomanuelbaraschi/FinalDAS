@@ -1,4 +1,4 @@
-package repository.db;
+package db;
 
         import java.io.IOException;
         import java.io.InputStream;

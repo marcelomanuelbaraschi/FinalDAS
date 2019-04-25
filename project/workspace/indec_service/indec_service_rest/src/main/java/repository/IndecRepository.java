@@ -2,9 +2,9 @@ package repository;
 
 import repository.exceptions.RepositoryException;
 import beans.*;
-import repository.db.Bean;
-import repository.db.Dao;
-import repository.db.DaoFactory;
+import db.Bean;
+import db.Dao;
+import db.DaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.JsonMarshaller;

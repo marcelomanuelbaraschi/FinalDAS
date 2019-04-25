@@ -1,4 +1,4 @@
-package repository.db;
+package db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

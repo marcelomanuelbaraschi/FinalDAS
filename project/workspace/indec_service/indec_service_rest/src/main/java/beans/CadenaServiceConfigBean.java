@@ -1,7 +1,7 @@
 package beans;
 
 import com.google.gson.annotations.SerializedName;
-import repository.db.Bean;
+import db.Bean;
 
 public class CadenaServiceConfigBean implements Bean {
 

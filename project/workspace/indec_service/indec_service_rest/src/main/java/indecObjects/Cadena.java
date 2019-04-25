@@ -2,7 +2,7 @@ package indecObjects;
 
 import cadenasObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;
-import repository.db.Bean;
+import db.Bean;
 
 
 import java.util.List;

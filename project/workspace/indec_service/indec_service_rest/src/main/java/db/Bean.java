@@ -1,4 +1,4 @@
-package repository.db;
+package db;
 
 public interface Bean {
 }

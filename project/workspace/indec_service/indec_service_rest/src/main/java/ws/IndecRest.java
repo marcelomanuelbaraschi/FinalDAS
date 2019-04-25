@@ -12,28 +12,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/app")
+@Produces(MediaType.APPLICATION_JSON)
 public class IndecRest {
 
     protected static final Logger logger = LoggerFactory.getLogger(IndecRest.class);
 
     @GET
     @Path("/categorias")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response categorias () {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance()
-                                                         .categorias())
+                    JsonMarshaller.toJson(IndecRepository.getInstance().categorias())
             ).build();
         }
         catch (RepositoryException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR) .build();
         }
     }
 
     @GET
     @Path("/productos")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response productos (@QueryParam("idcategoria") final Long idCategoria) {
         try{
             return Response.status(Response.Status.OK).entity(
@@ -48,7 +46,6 @@ public class IndecRest {
 
     @GET
     @Path("/provincias")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response provincias () {
         try{
             return Response.status(Response.Status.OK).entity(
@@ -63,7 +60,6 @@ public class IndecRest {
 
     @GET
     @Path("/localidades")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response localidades (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
         try{
             return Response.status(Response.Status.OK).entity(
@@ -78,7 +74,6 @@ public class IndecRest {
 
     @GET
     @Path("/cadenas")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response cadenas () {
         try{
             return Response.status(Response.Status.OK).entity(
@@ -93,7 +88,6 @@ public class IndecRest {
 
     @POST
     @Path("/comparador")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response comparador (@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                                ,@QueryParam("localidad") final String localidad
                                ,@QueryParam("codigos") final String codigos) {
@@ -119,7 +113,6 @@ public class IndecRest {
 
     @GET
     @Path("/health")
-    @Produces(MediaType.APPLICATION_JSON)
     public String health() {
         logger.debug("Healthy");
         return "OK";
