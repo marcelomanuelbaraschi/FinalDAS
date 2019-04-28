@@ -1,16 +1,12 @@
 package ws;
-import beans.CadenaServiceConfigBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.IndecServiceException;
 import service.IndecServiceImpl;
 import utilities.JsonMarshaller;
-import comparador.IndecComparador;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,8 +18,8 @@ public class IndecRest {
     @Path("/categorias")
     public Response categorias () {
         try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().categorias())
+            return Response.status(Response.Status.OK)
+                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().categorias())
             ).build();
         }
         catch (IndecServiceException e){
@@ -35,8 +31,8 @@ public class IndecRest {
     @Path("/productos")
     public Response productos (@QueryParam("idcategoria") final Long idCategoria) {
         try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().productos(idCategoria))
+            return Response.status(Response.Status.OK)
+                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().productos(idCategoria))
             ).build();
         }
         catch (IndecServiceException e){
@@ -49,8 +45,7 @@ public class IndecRest {
     public Response provincias () {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
-                                                         .provincias())
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().provincias())
             ).build();
         }
         catch (IndecServiceException e){
@@ -63,8 +58,7 @@ public class IndecRest {
     public Response localidades (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
-                                                         .localidades(codigoEntidadFederal))
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().localidades(codigoEntidadFederal))
             ).build();
         }
         catch (IndecServiceException e){
@@ -76,9 +70,8 @@ public class IndecRest {
     @Path("/cadenas")
     public Response cadenas () {
         try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
-                                                         .cadenas())
+            return Response.status(Response.Status.OK)
+                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().cadenas())
             ).build();
         }
         catch (IndecServiceException ex){
@@ -96,7 +89,7 @@ public class IndecRest {
      //TODO agregar como parametro el criterio con el cual funcionara el comparador.
         try{
             return Response.status(Response.Status.OK)
-                           .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().compararPrecios(codigoentidadfederal,localidad,codigos))
+                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().compararPrecios(codigoentidadfederal,localidad,codigos))
             ).build();
         }
         catch (IndecServiceException ex){
@@ -112,9 +105,7 @@ public class IndecRest {
 
         try{
             return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(
-                                    IndecServiceImpl.getInstance().sucursales(codigoentidadfederal,localidad))
-
+                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().sucursales(codigoentidadfederal,localidad))
                     ).build();
         }
         catch (IndecServiceException ex){
