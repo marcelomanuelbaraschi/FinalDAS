@@ -95,10 +95,8 @@ public class IndecRest {
      //TODO validar parametros
      //TODO agregar como parametro el criterio con el cual funcionara el comparador.
         try{
-            List<CadenaServiceConfigBean> configs = IndecServiceImpl.getInstance().configs();
             return Response.status(Response.Status.OK)
-                           .entity(JsonMarshaller.toJson(new IndecComparador(configs)
-                                                         .compararPrecios(codigoentidadfederal,localidad,codigos))
+                           .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().compararPrecios(codigoentidadfederal,localidad,codigos))
             ).build();
         }
         catch (IndecServiceException ex){
@@ -107,19 +105,16 @@ public class IndecRest {
 
     }
 
-
-    /* TODO : IMPLEMENTAR UN ENDPOINT "SUCURSALES" QUE PERMITA,DADO UNA LISTA DE CADENAS TRAER LA INFO DE LAS MISMAS*/
-
     @GET
     @Path("/sucursales")
     public Response sucursales (@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                                ,@QueryParam("localidad") final String localidad) {
 
         try{
-            List<CadenaServiceConfigBean> configs = IndecServiceImpl.getInstance().configs();
             return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(new IndecComparador(configs)
-                            .consultarSucursales(codigoentidadfederal,localidad))
+                    .entity(JsonMarshaller.toJson(
+                                    IndecServiceImpl.getInstance().sucursales(codigoentidadfederal,localidad))
+
                     ).build();
         }
         catch (IndecServiceException ex){
