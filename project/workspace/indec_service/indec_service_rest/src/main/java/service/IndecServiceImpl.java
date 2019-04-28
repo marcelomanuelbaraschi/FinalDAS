@@ -1,50 +1,71 @@
-package repository;
+package service;
 
-import repository.exceptions.RepositoryException;
 import beans.*;
+import comparador.IndecComparador;
 import db.Bean;
 import db.Dao;
 import db.DaoFactory;
+import indecObjects.Cadena;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.JsonMarshaller;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+public class IndecServiceImpl implements IndecService{
+    private static final Logger logger = LoggerFactory.getLogger(IndecServiceImpl.class);
+    private static volatile IndecServiceImpl serviceInstance;
 
-public class IndecRepository {
-    private static final Logger logger = LoggerFactory.getLogger(IndecRepository.class);
-    private static volatile IndecRepository repositoryInstance;
+    private IndecServiceImpl(){}
 
-    private IndecRepository(){}
-
-    public static IndecRepository getInstance(){
-        if (repositoryInstance == null){
-            repositoryInstance = new IndecRepository();
+    public static IndecServiceImpl getInstance(){
+        if (serviceInstance == null){
+            serviceInstance = new IndecServiceImpl();
         }
 
-        return repositoryInstance;
+        return serviceInstance;
     }
 
-    public List<CategoriaProductoBean> categorias() throws RepositoryException {
+
+    @Override
+    public List<CategoriaProductoBean> categorias() throws IndecServiceException {
         try {
-        CategoriaProductoBean categoria = new CategoriaProductoBean();
-        Dao dao = DaoFactory.getDao("CategoriasProducto", "");
-        List<Bean> categorias = dao.select(categoria);
-        final  CategoriaProductoBean [] arrcategorias  = JsonMarshaller.toObject(JsonMarshaller.toJson(categorias),CategoriaProductoBean[].class);
-        return Stream.of(arrcategorias).collect(Collectors.toList());
+            CategoriaProductoBean categoria = new CategoriaProductoBean();
+            Dao dao = DaoFactory.getDao("CategoriasProducto", "");
+            List<Bean> categorias = dao.select(categoria);
+            final  CategoriaProductoBean [] arrcategorias  = JsonMarshaller.toObject(JsonMarshaller.toJson(categorias),CategoriaProductoBean[].class);
+            return Stream.of(arrcategorias).collect(Collectors.toList());
         }
         catch(SQLException ex) {
-        logger.error("Error en el metodo categorias:{}",ex.getMessage());
-        throw new RepositoryException(ex.getMessage());
-       }
+            logger.error("Error en el metodo categorias:{}",ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
+        }
     }
 
-    public List<Bean> productos(final Long idCategoria) throws RepositoryException{
-        //TODO SI EL idcategoria es null traer todos los productos
-        //TODO PAGINACION ??
+    @Override
+    public List<Cadena> compararPrecios(String codigoentidadfederal, String localidad, String codigos) throws IndecServiceException {
+        try {
+           return (new IndecComparador(this.configs()).compararPrecios(codigoentidadfederal,localidad,codigos));
+        } catch (IndecServiceException ex) {
+            logger.error("Error en el metodo compararPrecios:{}",ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<Cadena> sucursales(String codigoentidadfederal, String localidad) throws IndecServiceException {
+        try {
+            return (new IndecComparador(this.configs()).consultarSucursales(codigoentidadfederal,localidad));
+        } catch (IndecServiceException ex) {
+            logger.error("Error en el metodo sucursales:{}",ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<ProductoBean> productos(Long idCategoria) throws IndecServiceException {
         try {
             ProductoBean producto = new ProductoBean();
             producto.setIdCategoria(idCategoria);
@@ -54,12 +75,14 @@ public class IndecRepository {
             return Stream.of(arrproductos).collect(Collectors.toList());
         }
         catch(SQLException ex) {
-            logger.error("Error en el metodo productos:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
+           logger.error("Error en el metodo productos:{}",ex.getMessage());
+           throw new IndecServiceException(ex.getMessage());
         }
+
     }
 
-    public List<ProvinciaBean> provincias() throws RepositoryException{
+    @Override
+    public List<ProvinciaBean> provincias() throws IndecServiceException {
         try {
             ProvinciaBean provincia = new ProvinciaBean();
             Dao dao = DaoFactory.getDao("Provincias", "");
@@ -69,11 +92,12 @@ public class IndecRepository {
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo provincias:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
         }
     }
 
-    public List<LocalidadBean> localidades(final String codigoentidadfederal) throws RepositoryException{
+    @Override
+    public List<LocalidadBean> localidades(String codigoentidadfederal) throws IndecServiceException {
         try {
             LocalidadBean localidad = new LocalidadBean();
             localidad.setCodigoEntidadFederal(codigoentidadfederal);
@@ -84,11 +108,12 @@ public class IndecRepository {
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo localidades:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
         }
     }
 
-    public List<CadenaBean> cadenas() throws RepositoryException{
+    @Override
+    public List<CadenaBean> cadenas() throws IndecServiceException {
         try {
             CadenaBean cadena = new CadenaBean();
             Dao dao = DaoFactory.getDao("Cadenas", "");
@@ -98,11 +123,12 @@ public class IndecRepository {
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo cadenas:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
         }
     }
 
-    public List<CadenaServiceConfigBean> configs() throws RepositoryException {
+    @Override
+    public List<CadenaServiceConfigBean> configs() throws IndecServiceException {
         try {
             CadenaServiceConfigBean config = new CadenaServiceConfigBean();
             Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
@@ -112,8 +138,10 @@ public class IndecRepository {
         }
         catch(SQLException ex) {
             logger.error("Error en el metodo cadenas:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
+            throw new IndecServiceException(ex.getMessage());
         }
     }
+
+
 
 }

@@ -62,34 +62,6 @@ public class CadenaApi {
 
         }
     }
-/*
-    public String infoSucursales (final Long idsucursal)
-    {
-        logger.debug("{} method called..,","infoSucursales");
-       Response resp = new Response();
-        if(idsucursal == null) {
-            resp.setCodigo(1);
-            resp.setMensaje("El parametro idsucursal es null");
-            return (gson.toJson(resp));
-        }else{
-            try {
-                CriterioInfoSucursalBean loc = new CriterioInfoSucursalBean();
-                loc.setIdSucursal(idsucursal);
-                Dao dao = DaoFactory.getDao("InfoSucursal", "");
-                List<Bean> info = dao.select(loc);
-                resp.setCodigo(0);
-                resp.setJson(gson.toJson(info));
-                return (gson.toJson(resp));
-
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                resp.setCodigo(1);
-                resp.setMensaje("db error");
-                return (gson.toJson(resp));
-            }
-        }
-
-    }*/
 
     public String preciosSucursales (final String codigoentidadfederal
                                     ,final String localidad

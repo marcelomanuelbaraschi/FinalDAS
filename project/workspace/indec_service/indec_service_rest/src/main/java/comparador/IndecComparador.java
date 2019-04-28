@@ -1,7 +1,6 @@
 package comparador;
 
 import beans.CadenaServiceConfigBean;
-import beans.ComparadorResponse;
 import cadenasObjects.Producto;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
@@ -12,8 +11,6 @@ import indecObjects.Cadena;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import repository.IndecRepository;
-import repository.exceptions.RepositoryException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,57 +18,42 @@ import java.util.stream.Stream;
 
 public class IndecComparador {
 
-    private static final Logger logger = LoggerFactory.getLogger(IndecRepository.class);
-    private static volatile IndecComparador comparadorInstance;
+    private static final Logger logger = LoggerFactory.getLogger(IndecComparador.class);
+    private List<Cadena> cadenasDisponibles;
+    private List<Cadena> cadenasNoDisponibles;
+    private Map<String, Float> preciosMasBajos;
+    private Map<Pair<Long,Long>,Long> preciosMasBajosPorSucursal;
+    private Pair <Long,Long> sucursalesPorCadena;
+    private List<CadenaServiceConfigBean> configs;
 
-    private IndecComparador(){}
-
-    public static IndecComparador getInstance(){
-        if (comparadorInstance == null){
-            comparadorInstance = new IndecComparador();
-        }
-
-        return comparadorInstance;
+    public IndecComparador(List<CadenaServiceConfigBean> configs){
+        this.cadenasDisponibles =  new LinkedList<Cadena>();
+        this.cadenasNoDisponibles =  new LinkedList<Cadena>();
+        this.preciosMasBajos = new HashMap <String, Float>();
+        this.preciosMasBajosPorSucursal = new HashMap<Pair<Long,Long>,Long>();
+        this.configs = configs;
     }
 
-
-    public List<Cadena> compararPrecios (final String codigoentidadfederal, final String localidad, final String codigos)
-            throws RepositoryException {
+    //TODO IMPROVE PERFORMANCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    public List<Cadena> compararPrecios (final String codigoentidadfederal,
+                                         final String localidad,
+                                         final String codigos) {
 
         List<String> lcodigos = toList.apply(codigos);
-        final List<Cadena> cadenas;
-
-        try{
-            cadenas = consultarCadenas(codigoentidadfederal, localidad, lcodigos);
+        consultarCadenas(codigoentidadfederal, localidad, lcodigos);
+        if(!cadenasDisponibles.isEmpty()){
+            buscarPreciosMasBajos();
+            marcarProductos();
+            buscarMejorSucursal();
+            marcarSucursales();
         }
-        catch(RepositoryException ex){
-            logger.error("Error en el metodo compararPrecios:{}",ex.getMessage());
-            throw new RepositoryException(ex.getMessage());
-        }
+        return Stream.concat(cadenasNoDisponibles.stream(), cadenasDisponibles.stream()).collect(Collectors.toList());
+    }
 
-        Map<String, Float> preciosMasBajos = buscarPreciosMasBajos(cadenas);
-        List<Cadena> cadenasMarcadas = marcarProductosMasBaratos(cadenas,preciosMasBajos);
-
-
-        Map<Pair<Long,Long>,Long> mapa = new HashMap<>();
-        for (Cadena c : cadenasMarcadas){
-            for(Sucursal s :c.getSucursales()){
-                mapa.put(Pair.with(c.getId(),s.getIdSucursal()),s.getProductos().stream().filter(p -> p.getMejorPrecio() ).count());
-            }
-        }
-
-        Pair <Long,Long> key = Collections.max(mapa.entrySet(), Map.Entry.comparingByValue()).getKey();
-
-        for (Cadena c : cadenasMarcadas){
-            for(Sucursal s :c.getSucursales()){
-
-                if ( c.getId().equals(key.getValue0()) &&  s.getIdSucursal().equals(key.getValue1()) ){
-                    s.setMejorOpcion(true);
-                } else s.setMejorOpcion(false);
-            }
-        }
-
-        return cadenasMarcadas;
+    public List<Cadena> consultarSucursales (final String codigoentidadfederal,
+                                             final String localidad) {
+        consultarCadenas(codigoentidadfederal, localidad);
+        return Stream.concat(cadenasNoDisponibles.stream(), cadenasDisponibles.stream()).collect(Collectors.toList());
     }
 
 
@@ -86,12 +68,9 @@ public class IndecComparador {
         return result;
     };
 
-    private List <Cadena> consultarCadenas(final String codigoentidadfederal,final String localidad,final List<String> lcodigos) throws RepositoryException {
-
-        List<Cadena> cadenasDisponibles = new LinkedList<Cadena>();
-        List<Cadena> cadenasNoDisponibles = new LinkedList<Cadena>();
+    private void consultarCadenas(final String codigoentidadfederal,final String localidad,final List<String> lcodigos) {
         Cadena cadena;
-        final List<CadenaServiceConfigBean> configs = IndecRepository.getInstance().configs();
+
         for (CadenaServiceConfigBean config : configs) {
 
             cadena = new Cadena();
@@ -108,27 +87,53 @@ public class IndecComparador {
                 cadena.setNombre(config.getNombreCadena());
                 cadena.setSucursales(sucursales);
                 cadena.setDisponibilidad("Disponible");
-                cadenasDisponibles.add(cadena);
+                this.cadenasDisponibles.add(cadena);
 
             } catch (ClientException e) {
                 cadena.setId(config.getId());
                 cadena.setNombre(config.getNombreCadena());
                 cadena.setDisponibilidad("No Disponible");
-                cadenasNoDisponibles.add(cadena);
+                this.cadenasNoDisponibles.add(cadena);
             }
         }
-        return Stream.concat(cadenasNoDisponibles.stream(), cadenasDisponibles.stream()).collect(Collectors.toList());
     }
 
-    private Map <String, Float> buscarPreciosMasBajos(List<Cadena> cadenas){
+    private void consultarCadenas (final String codigoentidadfederal,final String localidad) {
+        Cadena cadena;
+        for (CadenaServiceConfigBean config : configs) {
 
-        Map<String, List<Producto>> productos = cadenas.stream()
-                .filter(cad->cad.getDisponibilidad().equals("Disponible"))
+            cadena = new Cadena();
+            try {
+                final CadenaServiceContract client = buildClient(config);
+
+                final List<Sucursal> sucursales = client.sucursales(codigoentidadfederal, localidad);
+
+                for (Sucursal s : sucursales) {
+                    s.setIdCadena(config.getIdCadena());
+                }
+
+                cadena.setId(config.getIdCadena());
+                cadena.setNombre(config.getNombreCadena());
+                cadena.setSucursales(sucursales);
+                cadena.setDisponibilidad("Disponible");
+                this.cadenasDisponibles.add(cadena);
+
+            } catch (ClientException e) {
+                cadena.setId(config.getId());
+                cadena.setNombre(config.getNombreCadena());
+                cadena.setDisponibilidad("No Disponible");
+                this.cadenasNoDisponibles.add(cadena);
+            }
+        }
+    }
+
+    private void buscarPreciosMasBajos(){
+
+        Map<String, List<Producto>> productos = this.cadenasDisponibles.stream()
                 .flatMap(cad -> cad.getSucursales().stream())
                 .flatMap(suc -> suc.getProductos().stream())
                 .collect(Collectors.groupingBy(Producto::getIdComercial));
 
-        Map <String, Float> preciosMasBajos = new HashMap<String, Float>();
         for (Map.Entry<String, List<Producto>> entry : productos.entrySet()) {
             String idComercial = entry.getKey();
             Float mejorPrecio =  entry.getValue()
@@ -136,28 +141,42 @@ public class IndecComparador {
                     .min(Comparator.comparing(producto -> producto.getPrecio()))
                     .get()
                     .getPrecio();
-            preciosMasBajos.put(idComercial,mejorPrecio);
+            this.preciosMasBajos.put(idComercial,mejorPrecio);
         }
-        return preciosMasBajos;
-
     }
 
-    //TODO BUSCAR MANERA DE NO MODIFICAR EL PARAMETRO CADENAS
-    private List<Cadena> marcarProductosMasBaratos (List<Cadena> cadenas , final  Map <String, Float> preciosMasBajos){
+    private void marcarProductos(){
 
-        cadenas.stream()
-                .filter(c -> c.getDisponibilidad().equals("Disponible"))
-                .flatMap(c -> c.getSucursales().stream())
-                .flatMap(s -> s.getProductos().stream())
-                .forEach(p -> {
-                    Float precio = preciosMasBajos.get(p.getIdComercial());
-                    if (p.getPrecio().equals(precio)) {
-                        p.setMejorPrecio(true);
-                    } else {
-                        p.setMejorPrecio(false);
-                    }
-                });
-        return cadenas;
+        this.cadenasDisponibles.stream()
+                    .flatMap(c -> c.getSucursales().stream())
+                    .flatMap(s -> s.getProductos().stream())
+                    .forEach(p -> {
+                        Float precio = preciosMasBajos.get(p.getIdComercial());
+                        if (p.getPrecio().equals(precio)) {
+                            p.setMejorPrecio(true);
+                        } else {
+                            p.setMejorPrecio(false);
+                        }
+                    });
     }
 
+    private void buscarMejorSucursal(){
+        for (Cadena c : this.cadenasDisponibles){
+            for(Sucursal s :c.getSucursales()){
+                this.preciosMasBajosPorSucursal.put(Pair.with(c.getId(),s.getIdSucursal()),s.getProductos().stream().filter(p -> p.getMejorPrecio() ).count());
+            }
+        }
+    }
+
+    private void marcarSucursales() {
+        sucursalesPorCadena = Collections.max(this.preciosMasBajosPorSucursal.entrySet(), Map.Entry.comparingByValue()).getKey();
+        for (Cadena c : this.cadenasDisponibles){
+            for(Sucursal s :c.getSucursales()){
+                if ( c.getId().equals(sucursalesPorCadena.getValue0()) &&
+                    s.getIdSucursal().equals(sucursalesPorCadena.getValue1()) ){
+                         s.setMejorOpcion(true);
+                } else s.setMejorOpcion(false);
+            }
+        }
+    }
 }

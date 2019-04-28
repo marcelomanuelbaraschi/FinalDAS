@@ -1,4 +1,3 @@
-import cadenasObjects.InfoSucursal;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
 import clients.exceptions.ClientException;

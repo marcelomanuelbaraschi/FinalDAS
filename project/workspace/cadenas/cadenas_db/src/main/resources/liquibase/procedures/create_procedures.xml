@@ -37,20 +37,6 @@
 		<dropProcedure procedureName="SP_GETSUCURSALES"/>
 	</changeSet>
 
-	<changeSet id="Drop procedure spGetInfoSucursal" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="1">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_cadena'
-				AND ROUTINE_NAME = 'SP_GETINFOSUCURSAL'
-			</sqlCheck>
-		</preConditions>
-		<dropProcedure procedureName="SP_GETINFOSUCURSAL"/>
-	</changeSet>
-
 	<changeSet id="Drop procedure spGetPreciosSucursales" author="DAS-Team" runAlways="true"
 			   runOnChange="true">
 		<preConditions onFail="MARK_RAN">
@@ -98,21 +84,6 @@
 		</preConditions>
 		<sqlFile
 				path="/src/main/resources/liquibase/procedures/spGetSucursales.sql"/>
-	</changeSet>
-
-	<changeSet id="Create procedure spGetInfoSucursal" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="0">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_cadena'
-				AND ROUTINE_NAME = 'SP_GETINFOSUCURSAL'
-			</sqlCheck>
-		</preConditions>
-		<sqlFile
-				path="/src/main/resources/liquibase/procedures/spGetInfoSucursal.sql"/>
 	</changeSet>
 
 	<changeSet id="Create procedure spGetPreciosSucursales" author="DAS-Team" runAlways="true"

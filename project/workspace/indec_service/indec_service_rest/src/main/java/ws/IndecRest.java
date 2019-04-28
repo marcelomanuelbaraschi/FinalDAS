@@ -1,15 +1,16 @@
 package ws;
+import beans.CadenaServiceConfigBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import repository.IndecRepository;
-import repository.exceptions.RepositoryException;
+import service.IndecServiceException;
+import service.IndecServiceImpl;
 import utilities.JsonMarshaller;
 import comparador.IndecComparador;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,10 +23,10 @@ public class IndecRest {
     public Response categorias () {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance().categorias())
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().categorias())
             ).build();
         }
-        catch (RepositoryException e){
+        catch (IndecServiceException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR) .build();
         }
     }
@@ -35,11 +36,10 @@ public class IndecRest {
     public Response productos (@QueryParam("idcategoria") final Long idCategoria) {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance()
-                                                         .productos(idCategoria))
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().productos(idCategoria))
             ).build();
         }
-        catch (RepositoryException e){
+        catch (IndecServiceException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -49,11 +49,11 @@ public class IndecRest {
     public Response provincias () {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
                                                          .provincias())
             ).build();
         }
-        catch (RepositoryException e){
+        catch (IndecServiceException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -63,11 +63,11 @@ public class IndecRest {
     public Response localidades (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
                                                          .localidades(codigoEntidadFederal))
             ).build();
         }
-        catch (RepositoryException e){
+        catch (IndecServiceException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -77,11 +77,11 @@ public class IndecRest {
     public Response cadenas () {
         try{
             return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecRepository.getInstance()
+                    JsonMarshaller.toJson(IndecServiceImpl.getInstance()
                                                          .cadenas())
             ).build();
         }
-        catch (RepositoryException e){
+        catch (IndecServiceException ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -94,15 +94,14 @@ public class IndecRest {
 
      //TODO validar parametros
      //TODO agregar como parametro el criterio con el cual funcionara el comparador.
-     //TODO utilizar el identificador
-
         try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecComparador.getInstance()
+            List<CadenaServiceConfigBean> configs = IndecServiceImpl.getInstance().configs();
+            return Response.status(Response.Status.OK)
+                           .entity(JsonMarshaller.toJson(new IndecComparador(configs)
                                                          .compararPrecios(codigoentidadfederal,localidad,codigos))
             ).build();
         }
-        catch (RepositoryException ex){
+        catch (IndecServiceException ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
@@ -110,6 +109,24 @@ public class IndecRest {
 
 
     /* TODO : IMPLEMENTAR UN ENDPOINT "SUCURSALES" QUE PERMITA,DADO UNA LISTA DE CADENAS TRAER LA INFO DE LAS MISMAS*/
+
+    @GET
+    @Path("/sucursales")
+    public Response sucursales (@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                               ,@QueryParam("localidad") final String localidad) {
+
+        try{
+            List<CadenaServiceConfigBean> configs = IndecServiceImpl.getInstance().configs();
+            return Response.status(Response.Status.OK)
+                    .entity(JsonMarshaller.toJson(new IndecComparador(configs)
+                            .consultarSucursales(codigoentidadfederal,localidad))
+                    ).build();
+        }
+        catch (IndecServiceException ex){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
     @GET
     @Path("/health")

@@ -1,6 +1,5 @@
 package clients;
 
-import cadenasObjects.InfoSucursal;
 import cadenasObjects.Response;
 import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
