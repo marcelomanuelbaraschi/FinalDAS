@@ -1,0 +1,11 @@
+INSERT INTO marca (idMarca,nombre) VALUES
+ (1,'Veneziana')
+,(2,'Fargo')
+,(3,'Mediatarde')
+,(4,'Criollitas')
+,(5,'Bagley')
+,(6,'Terrabusi')
+,(7,'Lincoln')
+,(8,'Oreo')
+,(9,'Lucchetti')
+,(10,'Gallo')

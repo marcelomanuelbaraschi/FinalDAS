@@ -9,6 +9,19 @@
 	<!--   TABLE POPULATION CHANGE-SETS   -->
 	<!-- ******************************** -->
 
+	<changeSet id="Populate table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="marca"/>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/marca.sql"/>
+	</changeSet>
+
+	<changeSet id="Populate table producto" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="producto"/>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/producto.sql"/>
+	</changeSet>
 
 	<changeSet id="Populate table provincia" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
@@ -22,13 +35,6 @@
 			<tableExists tableName="localidad"/>
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/populates/localidad.sql"/>
-	</changeSet>
-
-	<changeSet id="Populate table producto" author="DAS-Team" runAlways="true" runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="producto"/>
-		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/producto.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

@@ -95,7 +95,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.99.100:1435;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_one</contextDB>

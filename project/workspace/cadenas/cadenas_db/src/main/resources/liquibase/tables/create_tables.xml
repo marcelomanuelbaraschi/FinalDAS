@@ -8,11 +8,21 @@
 
 	<!--   TABLE CREATION CHANGE-SETS  -->
 
+	<changeSet id="Create table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="marca"/>
+			</not>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/tables/marca.sql"/>
+	</changeSet>
+
 	<changeSet id="Create table producto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<not>
 				<tableExists tableName="producto"/>
 			</not>
+
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/tables/producto.sql"/>
 	</changeSet>
@@ -51,6 +61,15 @@
 			</not>
 		</preConditions>
 		<sqlFile path="/src/main/resources/liquibase/tables/productoSucursal.sql"/>
+	</changeSet>
+
+	<changeSet id="Create table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="precio"/>
+			</not>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/tables/precio.sql"/>
 	</changeSet>
 
 </databaseChangeLog>
