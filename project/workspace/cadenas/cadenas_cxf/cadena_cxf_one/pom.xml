@@ -40,6 +40,7 @@
                             <genClient>false</genClient>
                             <genWrapperbean>true</genWrapperbean>
                             <frontend>jaxws</frontend>
+                            <serviceName>NombreDeCadena</serviceName>
                             <databinding>jaxb</databinding>
                             <soap12>true</soap12>
                             <quiet>false</quiet>

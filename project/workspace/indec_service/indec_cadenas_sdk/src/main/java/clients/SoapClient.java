@@ -47,7 +47,7 @@ public class SoapClient implements CadenaServiceContract {
             return res[0];
 
         } catch (final Exception e) {
-            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage()); // reached if docker is not running
+            throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage());
         }
     }
 

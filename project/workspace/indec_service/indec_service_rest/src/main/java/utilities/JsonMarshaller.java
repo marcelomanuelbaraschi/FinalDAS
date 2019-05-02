@@ -19,7 +19,7 @@ public class JsonMarshaller {
         return jsonObj;
     }
 
-    public static <A, B> B transformer(final A update, final Class<B> clazz) {
+    public static <A, B> B transform(final A update, final Class<B> clazz) {
         return JsonMarshaller.toObject(JsonMarshaller.toJson(update), clazz);
     }
 

@@ -25,4 +25,5 @@ public class ProvinciaBean implements Bean {
     public void setNombreProvincia(String nombreProvincia) {
         this.nombreProvincia = nombreProvincia;
     }
+
 }

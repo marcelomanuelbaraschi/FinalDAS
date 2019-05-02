@@ -1,84 +1,152 @@
 package ws;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import service.IndecServiceException;
-import service.IndecServiceImpl;
+import org.glassfish.jersey.server.ManagedAsync;
+import service.IndecService;
 import utilities.JsonMarshaller;
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import java.util.concurrent.*;
+
+import static java.util.concurrent.CompletableFuture.supplyAsync;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import static javax.ws.rs.core.Response.status;
+
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
-public class IndecRest {
+public class IndecRest extends IndecService {
 
-    protected static final Logger logger = LoggerFactory.getLogger(IndecRest.class);
+    ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @GET
     @Path("/categorias")
-    public Response categorias () {
-        try{
-            return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().categorias())
-            ).build();
-        }
-        catch (IndecServiceException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR) .build();
-        }
+    @ManagedAsync
+    public void categorias (@Suspended final AsyncResponse asyncResponse) {
+
+
+        supplyAsync(getCategorias,executorService)
+            .thenApply((categorias) ->
+                asyncResponse.resume(JsonMarshaller.toJson(categorias))
+            ).exceptionally(e -> {
+                System.out.println(e.getMessage()); //Todo: need propper logging
+                return asyncResponse.resume(status(INTERNAL_SERVER_ERROR).entity(e).build());
+            });
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler((ar) -> ar.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
     }
 
     @GET
     @Path("/productos")
-    public Response productos (@QueryParam("idcategoria") final Long idCategoria) {
-        try{
-            return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().productos(idCategoria))
-            ).build();
-        }
-        catch (IndecServiceException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+    @ManagedAsync
+    public void productos (@Suspended final AsyncResponse asyncResponse
+                          ,@QueryParam("idcategoria") final Long idCategoria) {
+
+        supplyAsync(() -> getProductos.apply(idCategoria),executorService)
+                .thenApply((productos) -> asyncResponse.resume(JsonMarshaller.toJson(productos)))
+                .exceptionally(e -> {
+                    System.out.println(e.getMessage()); //Todo: need propper logging
+                    return asyncResponse.resume(status(INTERNAL_SERVER_ERROR).entity(e).build());
+                });
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler(ar -> ar.resume(
+                status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
     }
 
     @GET
     @Path("/provincias")
-    public Response provincias () {
-        try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().provincias())
-            ).build();
-        }
-        catch (IndecServiceException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+    @ManagedAsync
+    public void provincias (@Suspended final AsyncResponse asyncResponse) {
+
+        supplyAsync(getProvincias,executorService)
+                .thenApply((provincias) -> asyncResponse.resume(JsonMarshaller.toJson(provincias)))
+                .exceptionally(e -> {
+                    System.out.println(e.getMessage()); //Todo: need propper logging
+                    return asyncResponse.resume(status(INTERNAL_SERVER_ERROR).entity(e).build());
+                });
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler(ar -> ar.resume(
+                status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
     }
 
     @GET
     @Path("/localidades")
-    public Response localidades (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
-        try{
-            return Response.status(Response.Status.OK).entity(
-                    JsonMarshaller.toJson(IndecServiceImpl.getInstance().localidades(codigoEntidadFederal))
-            ).build();
-        }
-        catch (IndecServiceException e){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+    @ManagedAsync
+    public void localidades (@Suspended final AsyncResponse asyncResponse
+                            ,@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
+
+        supplyAsync(()-> getLocalidades.apply(codigoEntidadFederal),executorService)
+                .thenApply((localidades) -> asyncResponse.resume(JsonMarshaller.toJson(localidades)))
+                .exceptionally(e -> {
+                    System.out.println(e.getMessage()); //Todo: need propper logging
+                    return asyncResponse.resume(status(INTERNAL_SERVER_ERROR).entity(e).build());
+                });
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler(ar -> ar.resume(
+                status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
     }
+
 
     @GET
     @Path("/cadenas")
-    public Response cadenas () {
-        try{
-            return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().cadenas())
-            ).build();
-        }
-        catch (IndecServiceException ex){
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+    @ManagedAsync
+    public void cadenas (@Suspended final AsyncResponse asyncResponse) {
+
+        supplyAsync(getCadenas,executorService)
+                .thenApply((cadenas) -> asyncResponse.resume(JsonMarshaller.toJson(cadenas)))
+                .exceptionally(e -> {
+                    System.out.println(e.getMessage()); //Todo: need propper logging
+                    return asyncResponse.resume(status(INTERNAL_SERVER_ERROR).entity(e).build());
+                });
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler(ar -> ar.resume(
+                status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     @POST
     @Path("/comparador")
     public Response comparador (@QueryParam("codigoentidadfederal") final String codigoentidadfederal
@@ -87,14 +155,38 @@ public class IndecRest {
 
      //TODO validar parametros
      //TODO agregar como parametro el criterio con el cual funcionara el comparador.
+
         try{
             return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().compararPrecios(codigoentidadfederal,localidad,codigos))
+                    .entity(JsonMarshaller.toJson(IndecServiceFunctions.getInstance().compararPrecios(codigoentidadfederal,localidad,codigos))
             ).build();
         }
         catch (IndecServiceException ex){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+
+    }
+
+    @POST
+    @ManagedAsync
+    public void asynccomparador (
+             @QueryParam("codigoentidadfederal") final String codigoentidadfederal
+            ,@QueryParam("localidad") final String localidad
+            ,@QueryParam("codigos") final String codigos
+            ,@Suspended final AsyncResponse asyncResponse) {
+
+        CompletableFuture<List<Cadena>> precios =
+                supplyAsync(()->asyncompararPrecios(codigoentidadfederal,localidad,codigos));
+
+        precios.thenApply((result) -> asyncResponse.resume(result))
+               .exceptionally(e -> asyncResponse.resume(Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build()));
+
+        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+        asyncResponse.setTimeoutHandler(ar -> ar.resume(
+                Response.status(Response.Status.SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
 
     }
 
@@ -105,7 +197,7 @@ public class IndecRest {
 
         try{
             return Response.status(Response.Status.OK)
-                    .entity(JsonMarshaller.toJson(IndecServiceImpl.getInstance().sucursales(codigoentidadfederal,localidad))
+                    .entity(JsonMarshaller.toJson(IndecServiceFunctions.getInstance().sucursales(codigoentidadfederal,localidad))
                     ).build();
         }
         catch (IndecServiceException ex){
@@ -119,7 +211,13 @@ public class IndecRest {
     public String health() {
         logger.debug("Healthy");
         return "OK";
-    }
+    }*/
+
 
 }
+
+
+
+
+
 

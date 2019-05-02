@@ -26,6 +26,7 @@ public class IndecComparador {
     private Pair <Long,Long> sucursalesPorCadena;
     private List<CadenaServiceConfigBean> configs;
 
+
     public IndecComparador(List<CadenaServiceConfigBean> configs){
         this.cadenasDisponibles =  new LinkedList<Cadena>();
         this.cadenasNoDisponibles =  new LinkedList<Cadena>();
