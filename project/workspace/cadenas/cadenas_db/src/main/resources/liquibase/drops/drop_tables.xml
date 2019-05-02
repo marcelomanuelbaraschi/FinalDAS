@@ -7,6 +7,13 @@
 
 	<!--   TABLE DROP CHANGE-SETS      -->
 
+	<changeSet id="Drop table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="precio"/>
+		</preConditions>
+		<dropTable tableName="precio"/>
+	</changeSet>
+
 	<changeSet id="Drop table productoSucursal" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<tableExists tableName="productoSucursal"/>
@@ -40,6 +47,13 @@
 			<tableExists tableName="producto"/>
 		</preConditions>
 		<dropTable tableName="producto"/>
+	</changeSet>
+
+	<changeSet id="Drop table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="marca"/>
+		</preConditions>
+		<dropTable tableName="marca"/>
 	</changeSet>
 
 </databaseChangeLog>
