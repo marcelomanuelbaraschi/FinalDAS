@@ -71,7 +71,7 @@ public class IndecService {
         }
     };
 
-    protected List<CadenaServiceConfigBean> configs() throws IndecServiceException {
+    public Supplier<List<CadenaServiceConfigBean>> configs = () -> {
         try {
             CadenaServiceConfigBean config = new CadenaServiceConfigBean();
             Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
@@ -80,7 +80,7 @@ public class IndecService {
         } catch (SQLException ex) {
             throw new IndecServiceException(ex);
         }
-    }
+    };
 
     /*
     protected List<Cadena> asyncompararPrecios(String codigoentidadfederal, String localidad, String codigos) throws IndecServiceException {

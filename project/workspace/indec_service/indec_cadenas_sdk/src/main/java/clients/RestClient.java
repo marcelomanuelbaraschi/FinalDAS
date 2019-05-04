@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 import static constants.Constants.*;
 
-public class RestClient implements CadenaServiceContract {
+public class RestClient implements CadenaServiceContract  {
 
     private final String url;
     private final HttpClient client;
@@ -157,6 +157,7 @@ public class RestClient implements CadenaServiceContract {
 
 
     }
+
 }
 
 

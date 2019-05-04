@@ -1,5 +1,4 @@
 package ws;
-import org.glassfish.jersey.server.ManagedAsync;
 import service.IndecService;
 import utilities.JsonMarshaller;
 import javax.ws.rs.*;
@@ -7,7 +6,6 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.*;
-
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
@@ -18,15 +16,13 @@ import static javax.ws.rs.core.Response.status;
 @Produces(MediaType.APPLICATION_JSON)
 public class IndecRest extends IndecService {
 
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executor = Executors.newWorkStealingPool(4);
 
     @GET
     @Path("/categorias")
-    @ManagedAsync
     public void categorias (@Suspended final AsyncResponse asyncResponse) {
 
-
-        supplyAsync(getCategorias,executorService)
+        supplyAsync(getCategorias,executor)
             .thenApply((categorias) ->
                 asyncResponse.resume(JsonMarshaller.toJson(categorias))
             ).exceptionally(e -> {
@@ -42,11 +38,10 @@ public class IndecRest extends IndecService {
 
     @GET
     @Path("/productos")
-    @ManagedAsync
     public void productos (@Suspended final AsyncResponse asyncResponse
                           ,@QueryParam("idcategoria") final Long idCategoria) {
 
-        supplyAsync(() -> getProductos.apply(idCategoria),executorService)
+        supplyAsync(() -> getProductos.apply(idCategoria),executor)
                 .thenApply((productos) -> asyncResponse.resume(JsonMarshaller.toJson(productos)))
                 .exceptionally(e -> {
                     System.out.println(e.getMessage()); //Todo: need propper logging
@@ -62,10 +57,9 @@ public class IndecRest extends IndecService {
 
     @GET
     @Path("/provincias")
-    @ManagedAsync
     public void provincias (@Suspended final AsyncResponse asyncResponse) {
 
-        supplyAsync(getProvincias,executorService)
+        supplyAsync(getProvincias,executor)
                 .thenApply((provincias) -> asyncResponse.resume(JsonMarshaller.toJson(provincias)))
                 .exceptionally(e -> {
                     System.out.println(e.getMessage()); //Todo: need propper logging
@@ -81,11 +75,10 @@ public class IndecRest extends IndecService {
 
     @GET
     @Path("/localidades")
-    @ManagedAsync
     public void localidades (@Suspended final AsyncResponse asyncResponse
                             ,@QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
 
-        supplyAsync(()-> getLocalidades.apply(codigoEntidadFederal),executorService)
+        supplyAsync(()-> getLocalidades.apply(codigoEntidadFederal),executor)
                 .thenApply((localidades) -> asyncResponse.resume(JsonMarshaller.toJson(localidades)))
                 .exceptionally(e -> {
                     System.out.println(e.getMessage()); //Todo: need propper logging
@@ -102,10 +95,9 @@ public class IndecRest extends IndecService {
 
     @GET
     @Path("/cadenas")
-    @ManagedAsync
     public void cadenas (@Suspended final AsyncResponse asyncResponse) {
 
-        supplyAsync(getCadenas,executorService)
+        supplyAsync(getCadenas,executor)
                 .thenApply((cadenas) -> asyncResponse.resume(JsonMarshaller.toJson(cadenas)))
                 .exceptionally(e -> {
                     System.out.println(e.getMessage()); //Todo: need propper logging
@@ -118,10 +110,6 @@ public class IndecRest extends IndecService {
                         .entity("Operation timed out")
                         .build()));
     }
-
-
-
-
 
 
 

@@ -31,6 +31,7 @@ public class SoapClient implements CadenaServiceContract {
     private <A> Object executeMethod(final String methodName, final A... params) throws ClientException {
         final JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
 
+
         try (final Client client = dcf.createClient(wsdlUrl)) {
 
             final Object[] res = client.invoke(methodName, params);

@@ -76,8 +76,8 @@ public class IndecComparador {
 
             cadena = new Cadena();
             try {
-                final CadenaServiceContract client = buildClient(config);
 
+                final CadenaServiceContract client = buildClient(config);
                 final List<Sucursal> sucursales = client.precios( codigoentidadfederal, localidad, lcodigos);
 
                 for (Sucursal s : sucursales) {
@@ -90,7 +90,7 @@ public class IndecComparador {
                 cadena.setDisponibilidad("Disponible");
                 this.cadenasDisponibles.add(cadena);
 
-            } catch (ClientException e) {
+            } catch ( Exception e) {
                 cadena.setId(config.getId());
                 cadena.setNombre(config.getNombreCadena());
                 cadena.setDisponibilidad("No Disponible");
