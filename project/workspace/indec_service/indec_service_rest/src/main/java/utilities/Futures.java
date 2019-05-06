@@ -1,4 +1,4 @@
-package service;
+package utilities;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -32,4 +32,6 @@ public class Futures {
         return allDoneFuture.thenApply(v ->
                 futureList.stream().map(future -> future.join()));
     }
+
+
 }

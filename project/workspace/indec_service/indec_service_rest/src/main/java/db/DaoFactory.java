@@ -7,14 +7,20 @@ public class DaoFactory {
 
     private DaoFactory() {}
 
-    public static Dao getDaoSimple(String daoName) throws SQLException {
-        return getDao(daoName, "");
+    public static Dao getDao(String daoName) throws SQLException {
+        try {
+        	DaoImpl dao = DaoImpl.class.cast(Class.forName(DaoFactory.getDaoClassName(daoName, "")).newInstance());
+            return dao;
+        }
+        catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | SecurityException ex) {
+            throw new SQLException(ex.getMessage());
+        }
     }
 
     public static Dao getDao(String daoName, String daoPackage) throws SQLException {
         try {
-        	DaoImpl dao = DaoImpl.class.cast(Class.forName(DaoFactory.getDaoClassName(daoName, daoPackage)).newInstance());
-            return dao;            
+            DaoImpl dao = DaoImpl.class.cast(Class.forName(DaoFactory.getDaoClassName(daoName, daoPackage)).newInstance());
+            return dao;
         }
         catch(InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException | SecurityException ex) {
             throw new SQLException(ex.getMessage());

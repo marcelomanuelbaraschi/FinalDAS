@@ -1,15 +1,15 @@
 package daos;
-import beans.CadenaServiceConfigBean;
+import beans.Configuracion;
 import db.Bean;
 import db.DaoImpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MSCadenasServicesConfigsDao extends DaoImpl {
+public class MSConfiguracionesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        CadenaServiceConfigBean config = new CadenaServiceConfigBean();
+        Configuracion config = new Configuracion();
         config.setId(result.getLong("id"));
         config.setTecnologia(result.getString("tecnologia"));
         config.setIdCadena(result.getLong("idCadena"));

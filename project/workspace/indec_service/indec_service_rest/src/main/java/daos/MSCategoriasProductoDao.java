@@ -1,5 +1,5 @@
 package daos;
-import beans.CategoriaProductoBean;
+import beans.CategoriaProducto;
 import db.Bean;
 import db.DaoImpl;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class MSCategoriasProductoDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        CategoriaProductoBean categoria = new CategoriaProductoBean();
+        CategoriaProducto categoria = new CategoriaProducto();
         categoria.setId(result.getLong("id"));
         categoria.setNombre(result.getString("nombre"));
         categoria.setUrlImagen(result.getString("urlImagen"));

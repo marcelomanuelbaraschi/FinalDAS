@@ -1,6 +1,6 @@
 package comparador;
 
-import beans.CadenaServiceConfigBean;
+import beans.Configuracion;
 import cadenasObjects.Producto;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
@@ -24,10 +24,10 @@ public class IndecComparador {
     private Map<String, Float> preciosMasBajos;
     private Map<Pair<Long,Long>,Long> preciosMasBajosPorSucursal;
     private Pair <Long,Long> sucursalesPorCadena;
-    private List<CadenaServiceConfigBean> configs;
+    private List<Configuracion> configs;
 
 
-    public IndecComparador(List<CadenaServiceConfigBean> configs){
+    public IndecComparador(List<Configuracion> configs){
         this.cadenasDisponibles =  new LinkedList<Cadena>();
         this.cadenasNoDisponibles =  new LinkedList<Cadena>();
         this.preciosMasBajos = new HashMap <String, Float>();
@@ -58,7 +58,7 @@ public class IndecComparador {
     }
 
 
-    private CadenaServiceContract buildClient(CadenaServiceConfigBean config) throws ClientException {
+    private CadenaServiceContract buildClient(Configuracion config) throws ClientException {
         return ClientFactory.getInstance()
                 .clientFor(Enum.valueOf(Tecnologia.class,config.getTecnologia()),config.getUrl());
     }
@@ -72,7 +72,7 @@ public class IndecComparador {
     private void consultarCadenas(final String codigoentidadfederal,final String localidad,final List<String> lcodigos) {
         Cadena cadena;
 
-        for (CadenaServiceConfigBean config : configs) {
+        for (Configuracion config : configs) {
 
             cadena = new Cadena();
             try {
@@ -101,7 +101,7 @@ public class IndecComparador {
 
     private void consultarCadenas (final String codigoentidadfederal,final String localidad) {
         Cadena cadena;
-        for (CadenaServiceConfigBean config : configs) {
+        for (Configuracion config : configs) {
 
             cadena = new Cadena();
             try {

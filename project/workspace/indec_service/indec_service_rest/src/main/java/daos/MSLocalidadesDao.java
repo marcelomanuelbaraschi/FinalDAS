@@ -1,6 +1,8 @@
 package daos;
 
-import beans.LocalidadBean;
+import beans.CriterioBusquedaLocalidad;
+import beans.CriterioBusquedaProducto;
+import beans.Localidad;
 import db.Bean;
 import db.DaoImpl;
 
@@ -12,7 +14,7 @@ import java.util.List;
 public class MSLocalidadesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        LocalidadBean loc = new LocalidadBean();
+        Localidad loc = new Localidad();
         loc.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
         loc.setNombreLocalidad(result.getString("nombreLocalidad"));
         return loc;
@@ -35,14 +37,14 @@ public class MSLocalidadesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        LocalidadBean loc = (LocalidadBean) bean;
+        CriterioBusquedaLocalidad criterio = (CriterioBusquedaLocalidad) bean;
         this.connect();
         this.setProcedure("dbo.spLocalidades(?)");
-        if(loc.getCodigoEntidadFederal() == null) {
+        if(criterio.getCodigoEntidadFederal() == null) {
             this.setNull(1, Types.VARCHAR);
         }
         else {
-            this.setParameter(1, loc.getCodigoEntidadFederal());
+            this.setParameter(1, criterio.getCodigoEntidadFederal());
         }
         List<Bean> localidades = this.executeQuery();
         this.disconnect();

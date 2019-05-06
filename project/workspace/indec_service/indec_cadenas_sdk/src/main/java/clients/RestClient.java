@@ -27,6 +27,7 @@ public class RestClient implements CadenaServiceContract  {
     private final String url;
     private final HttpClient client;
 
+
     private String url() {
         return this.url;
     }

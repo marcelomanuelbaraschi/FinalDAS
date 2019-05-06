@@ -1,6 +1,6 @@
 package daos;
 
-import beans.ProvinciaBean;
+import beans.Provincia;
 import db.Bean;
 import db.DaoImpl;
 
@@ -12,7 +12,7 @@ public class MSProvinciasDao extends DaoImpl {
 
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        ProvinciaBean prov = new ProvinciaBean();
+        Provincia prov = new Provincia();
         prov.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
         prov.setNombreProvincia(result.getString("nombreProvincia"));
         return prov;

@@ -4,7 +4,7 @@ package beans;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class CategoriaProductoBean  implements Bean {
+public class CategoriaProducto implements Bean {
 
     @SerializedName("id")
     private Long id;

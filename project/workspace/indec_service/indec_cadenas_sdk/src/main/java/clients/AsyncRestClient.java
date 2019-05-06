@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static constants.Constants.*;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class AsyncRestClient implements AsyncCadenaServiceContract {
 
@@ -76,7 +77,6 @@ public class AsyncRestClient implements AsyncCadenaServiceContract {
     }
 
     private HttpEntity extractHttpEntity (HttpResponse httpResponse) throws ClientException {
-        filterBadResponse (httpResponse);
         return httpResponse.getEntity();
     }
 
@@ -88,10 +88,11 @@ public class AsyncRestClient implements AsyncCadenaServiceContract {
         }
     }
 
-    private void filterBadResponse(HttpResponse response) throws ClientException {
+    private HttpResponse filterBadResponse(HttpResponse response) throws ClientException {
         final int statusCode = response.getStatusLine().getStatusCode();
         if (statusCode >= 500) throw new ClientException("SERVER ERROR = " + response.toString());
         if (statusCode >= 400) throw new ClientException("CLIENT ERROR = " + response.toString());
+        return response;
 
     }
 
@@ -105,11 +106,12 @@ public class AsyncRestClient implements AsyncCadenaServiceContract {
 
     private CompletableFuture<String> callAsync(final String method, final String callTo) throws ClientException  {
 
-        return CompletableFuture.supplyAsync(() -> constructURI(method, callTo))
-                                .thenApply(this::execute)
-                                .thenApply(this::extractHttpEntity)
-                                .thenApply(this::httpEntityToString);
-    }
+        return supplyAsync(() -> constructURI(method, callTo))
+                .thenApply(this::execute)
+                .thenApply(this::filterBadResponse)
+                .thenApply(this::extractHttpEntity)
+                .thenApply(this::httpEntityToString);
+        }
 
 
     public CompletableFuture<String> health() {

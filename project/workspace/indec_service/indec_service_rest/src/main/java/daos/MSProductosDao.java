@@ -1,6 +1,7 @@
 package daos;
 
-import beans.ProductoBean;
+import beans.CriterioBusquedaProducto;
+import beans.Producto;
 import db.Bean;
 import db.DaoImpl;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class MSProductosDao  extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        ProductoBean producto = new ProductoBean();
+        Producto producto = new Producto();
         producto.setIdComercial(result.getString("idComercial"));
         producto.setIdCategoria(result.getLong("idCategoria"));
         producto.setNombreCategoria(result.getString("nombreCategoria"));
@@ -39,14 +40,14 @@ public class MSProductosDao  extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        ProductoBean  producto = (ProductoBean) bean;
+        CriterioBusquedaProducto criterio = (CriterioBusquedaProducto) bean;
         this.connect();
         this.setProcedure("dbo.spProductos(?)");
-        if(producto.getIdCategoria() == null) {
+        if(criterio.getIdCategoria() == null) {
             this.setNull(1, Types.BIGINT);
         }
         else {
-            this.setParameter(1, producto.getIdCategoria());
+            this.setParameter(1, criterio.getIdCategoria());
         }
         List<Bean> productos = this.executeQuery();
         this.disconnect();

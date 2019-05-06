@@ -10,7 +10,7 @@ public class DaosSpecs {
     @Test
     public void MSCadenasServicesConfigsDao_success() {
         try {
-            CadenaServiceConfigBean config = new CadenaServiceConfigBean();
+            Configuracion config = new Configuracion();
             Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
             List<Bean> configs = dao.select(config);
             assertEquals(configs.size(),5);
@@ -26,7 +26,7 @@ public class DaosSpecs {
     @Test
     public void MSCategoriasProductoDao_success() {
         try {
-            CategoriaProductoBean categoria = new CategoriaProductoBean();
+            CategoriaProducto categoria = new CategoriaProducto();
             Dao dao = DaoFactory.getDao("CategoriasProducto", "");
             List<Bean> configs = dao.select(categoria);
             assertEquals(configs.size(),30);
@@ -58,7 +58,7 @@ public class DaosSpecs {
     @Test
     public void MSProvinciasDao_success() {
         try {
-            ProvinciaBean provincia = new ProvinciaBean();
+            Provincia provincia = new Provincia();
             Dao dao = DaoFactory.getDao("Provincias", "");
             List<Bean> provincias = dao.select(provincia);
             System.out.println(gson.toJson(provincias));
@@ -73,7 +73,7 @@ public class DaosSpecs {
     @Test
     public void MSLocalidadesDao_success() {
         try {
-            LocalidadBean localidad = new LocalidadBean();
+            Localidad localidad = new Localidad();
             localidad.setIdProv(2L);
             Dao dao = DaoFactory.getDao("Localidades", "");
             List<Bean> localidades = dao.select(localidad);
@@ -89,7 +89,7 @@ public class DaosSpecs {
     @Test
     public void MSLocalidadesDao_success_null_case() {
         try {
-            LocalidadBean localidad = new LocalidadBean();
+            Localidad localidad = new Localidad();
             Dao dao = DaoFactory.getDao("Localidades", "");
             List<Bean> localidades = dao.select(localidad);
             System.out.println(gson.toJson(localidades));

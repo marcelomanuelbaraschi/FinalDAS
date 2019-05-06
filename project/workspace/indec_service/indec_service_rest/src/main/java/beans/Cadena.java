@@ -3,7 +3,7 @@ package beans;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class CadenaBean  implements Bean {
+public class Cadena implements Bean {
 
     @SerializedName("id")
     private Long id;
@@ -26,7 +26,7 @@ public class CadenaBean  implements Bean {
 
     @Override
     public String toString() {
-        return "CadenaBean{" +
+        return "Cadena{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", imagen='" + imagen + '\'' +

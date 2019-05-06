@@ -3,11 +3,12 @@ package beans;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class LocalidadBean implements Bean {
+public class Provincia implements Bean {
+
     @SerializedName("codigoEntidadFederal")
     private String codigoEntidadFederal;
-    @SerializedName("nombreLocalidad")
-    private String nombreLocalidad;
+    @SerializedName("nombreProvincia")
+    private String nombreProvincia;
 
     public String getCodigoEntidadFederal() {
         return codigoEntidadFederal;
@@ -17,11 +18,12 @@ public class LocalidadBean implements Bean {
         this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
-    public String getNombreLocalidad() {
-        return nombreLocalidad;
+    public String getNombreProvincia() {
+        return nombreProvincia;
     }
 
-    public void setNombreLocalidad(String nombreLocalidad) {
-        this.nombreLocalidad = nombreLocalidad;
+    public void setNombreProvincia(String nombreProvincia) {
+        this.nombreProvincia = nombreProvincia;
     }
+
 }

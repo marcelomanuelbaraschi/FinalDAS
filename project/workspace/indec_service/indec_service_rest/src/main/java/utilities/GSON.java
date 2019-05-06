@@ -3,10 +3,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.apache.axiom.om.OMElement;
-
 import java.util.Iterator;
 
-public class JsonMarshaller {
+public class GSON {
 
     static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss.SSS").create();
 
@@ -20,7 +19,7 @@ public class JsonMarshaller {
     }
 
     public static <A, B> B transform(final A update, final Class<B> clazz) {
-        return JsonMarshaller.toObject(JsonMarshaller.toJson(update), clazz);
+        return GSON.toObject(GSON.toJson(update), clazz);
     }
 
     public static JsonObject deserializeXML(final Iterator<OMElement> it, final JsonObject bag) {
