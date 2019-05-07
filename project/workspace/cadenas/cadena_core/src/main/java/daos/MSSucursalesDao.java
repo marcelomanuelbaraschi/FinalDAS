@@ -1,7 +1,7 @@
 package daos;
 
-import bean.CriterioLocalizacionSucursalBean;
-import bean.SucursalBean;
+import bean.CriterioLocalizacionSucursal;
+import bean.Sucursal;
 import db.Bean;
 import db.DaoImpl;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class MSSucursalesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        SucursalBean suc = new SucursalBean();
+        Sucursal suc = new Sucursal();
         suc.setDireccion(result.getString("direccion"));
         suc.setIdSucursal(result.getLong("idSucursal"));
         suc.setLat(result.getString("lat"));
@@ -39,7 +39,7 @@ public class MSSucursalesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        final CriterioLocalizacionSucursalBean criterio = (CriterioLocalizacionSucursalBean) bean;
+        final CriterioLocalizacionSucursal criterio = (CriterioLocalizacionSucursal) bean;
         List<Bean>  sucs;
         this.connect();
         this.setProcedure("dbo.SP_GETSUCURSALES(?,?)");

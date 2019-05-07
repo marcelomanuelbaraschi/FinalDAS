@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class rest_one_tests {
 
-    final String url = "http://localhost:8001/cadena_rest_one/cadenaRestOne";
+    /*final String url = "http://localhost:8001/cadena_rest_one/cadenaRestOne";
 
     @Test
     public void health_should_success() {
@@ -110,5 +110,5 @@ public class rest_one_tests {
             assertTrue(e.getMessage(),true);
         }
     }
-
+*/
 }

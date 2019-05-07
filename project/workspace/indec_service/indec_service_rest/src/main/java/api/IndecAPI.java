@@ -55,11 +55,15 @@ public class IndecAPI {
             throws APIException
     {
         try {
+
             CriterioBusquedaLocalidad criterio = new CriterioBusquedaLocalidad();
             criterio.setCodigoEntidadFederal(codigoentidadfederal);
+
             List<Bean> localidades = DaoFactory.getDao("Localidades")
                                                .select(criterio);
+
             return Arrays.asList(GSON.transform(localidades, Localidad[].class));
+
         } catch (SQLException ex) {
             throw new APIException(ex);
         }
@@ -69,9 +73,12 @@ public class IndecAPI {
             throws APIException
     {
         try {
+
             List<Bean> cadenas = DaoFactory.getDao("Cadenas")
                                            .select(null);
+
             return Arrays.asList(GSON.transform(cadenas, Cadena[].class));
+
         } catch (SQLException ex) {
             throw new APIException(ex);
         }
@@ -81,9 +88,12 @@ public class IndecAPI {
             throws APIException
     {
         try {
-            Dao dao = DaoFactory.getDao("Configuraciones");
-            List<Bean> configs = dao.select(null);
+
+            List<Bean> configs = DaoFactory.getDao("Configuraciones")
+                                           .select(null);
+
             return Arrays.asList(GSON.transform(configs, Configuracion[].class));
+
         } catch (SQLException ex) {
             throw new APIException(ex);
         }

@@ -1,10 +1,6 @@
 
 package clients;
-import cadenasObjects.Response;
-import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
-import contract.AsyncCadenaServiceContract;
-import contract.CadenaServiceContract;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,9 +18,9 @@ import java.util.stream.Stream;
 import static constants.Constants.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
-public class AsyncRestClient implements AsyncCadenaServiceContract {
+public class AsyncRestClient  {
 
-    private final String url;
+    /*private final String url;
     private final HttpClient client;
 
     private String url() {
@@ -117,7 +113,7 @@ public class AsyncRestClient implements AsyncCadenaServiceContract {
     public CompletableFuture<String> health() {
         final String url = buildQueryString(HEALTH);
         return callAsync(GET, String.format(url));
-    }
+    }*/
 
 
 }

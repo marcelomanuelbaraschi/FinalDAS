@@ -1,7 +1,7 @@
 package utilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-public class JsonMarshaller {
+public class GSON {
 
     static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss.SSS").create();
 
@@ -14,7 +14,7 @@ public class JsonMarshaller {
         return jsonObj;
     }
 
-    public static <A, B> B transformer(final A update, final Class<B> clazz) {
-        return JsonMarshaller.toObject(JsonMarshaller.toJson(update), clazz);
+    public static <A, B> B transform(final A update, final Class<B> clazz) {
+        return GSON.toObject(GSON.toJson(update), clazz);
     }
 }

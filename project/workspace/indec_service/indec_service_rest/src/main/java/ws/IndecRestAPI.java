@@ -1,5 +1,9 @@
 package ws;
 import api.IndecAPI;
+import clients.CadenaSoapClient;
+import clients.Tecnologia;
+import clients.factory.ClientFactory;
+import contract.CadenaServiceContract;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -107,8 +111,8 @@ public class IndecRestAPI {
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
+                           .entity(exception)
+                           .build());
         });
     }
 
@@ -172,17 +176,48 @@ public class IndecRestAPI {
         });
 
     }
+    @GET
+    @Path("/sucursales")
+    public void sucursales(@Suspended final AsyncResponse response) {
 
+        response.setTimeout(3, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                              .entity("Operation timed out")
+                              .build())
+        );
+        final String wsdlUrl = "http://localhost:8003/cadena_cxf_one/services/cadena_cxf_one?wsdl";
+        final CadenaServiceContract client = new CadenaSoapClient(wsdlUrl);
+
+        within(3, SECONDS,
+                supplyAsync(() ->  client.sucursales("AR-X","Capital"))
+        )
+        .thenApply(
+                GSON::toJson
+        )
+        .thenApply(
+                response::resume
+        )
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                           .entity(exception)
+                           .build());
+        });
+}
 
 
     //----------------------Private Methods----------------------------
     private static <T> CompletableFuture<T> within
-            (long duration, TimeUnit unit, CompletableFuture<T> future) {
+            (long duration, TimeUnit unit, CompletableFuture<T> future)
+    {
         final CompletableFuture<T> timeout = failAfter(duration, unit);
         return future.applyToEither(timeout, Function.identity());
     }
 
-    private static <T> CompletableFuture<T> failAfter(long duration, TimeUnit unit) {
+    private static <T> CompletableFuture<T> failAfter
+            (long duration, TimeUnit unit)
+    {
         final CompletableFuture<T> future = new CompletableFuture<>();
         scheduler.schedule(() -> {
             final TimeoutException ex = new TimeoutException("Timeout after " + duration);

@@ -59,8 +59,7 @@ public class IndecComparador {
 
 
     private CadenaServiceContract buildClient(Configuracion config) throws ClientException {
-        return ClientFactory.getInstance()
-                .clientFor(Enum.valueOf(Tecnologia.class,config.getTecnologia()),config.getUrl());
+        return ClientFactory.clientFor(config.getUrl(),Enum.valueOf(Tecnologia.class,config.getTecnologia()));
     }
 
     Function<String, List<String>> toList = commaSeparatedStr -> {

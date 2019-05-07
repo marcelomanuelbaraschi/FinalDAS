@@ -4,7 +4,7 @@ package bean;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class ProductoBean implements Bean {
+public class Producto implements Bean {
 
     @SerializedName("idComercial")
     private String idComercial;

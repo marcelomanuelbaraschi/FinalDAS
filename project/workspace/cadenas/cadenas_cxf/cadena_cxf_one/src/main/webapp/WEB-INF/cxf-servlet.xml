@@ -11,7 +11,6 @@
 	<jaxws:endpoint
 			id="cadena_cxf_one"
 			implementor="ws.CadenaCXFOne"
-			endpointName="e:HelloEndpointCustomized"
 			address="/cadena_cxf_one">
 	</jaxws:endpoint>
 </beans>

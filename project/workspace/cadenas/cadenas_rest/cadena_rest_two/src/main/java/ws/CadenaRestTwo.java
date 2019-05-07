@@ -1,6 +1,6 @@
 package ws;
 
-import api.CadenaApi;
+import api.CadenaAPI;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +21,7 @@ public class CadenaRestTwo {
     public String sucursales (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
                              ,@QueryParam("localidad") final String localidad)
     {
-        return CadenaApi.getInstance()
+        return CadenaAPI.getInstance()
                         .sucursales(codigoEntidadFederal,localidad);
     }
 
@@ -32,7 +32,7 @@ public class CadenaRestTwo {
                                     ,@QueryParam("localidad") final String localidad
                                     ,@QueryParam("codigos") final String codigos)
     {
-        return CadenaApi.getInstance()
+        return CadenaAPI.getInstance()
                         .preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 }

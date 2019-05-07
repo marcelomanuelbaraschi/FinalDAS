@@ -1,8 +1,8 @@
 package daos;
 
-import bean.CriterioBusquedaProductosBean;
-import bean.ProductoBean;
-import bean.SucursalBean;
+import bean.CriterioBusquedaProductos;
+import bean.Producto;
+import bean.Sucursal;
 import db.Bean;
 import db.DaoImpl;
 
@@ -35,10 +35,10 @@ public class MSPreciosSucursalesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        final CriterioBusquedaProductosBean cs =  (CriterioBusquedaProductosBean) bean;
+        final CriterioBusquedaProductos cs =  (CriterioBusquedaProductos) bean;
         List<Bean>  sucursales = new LinkedList<Bean>(); //prestar atencion a esto
-        List <ProductoBean> productos;
-        ProductoBean producto;
+        List <Producto> productos;
+        Producto producto;
         this.connect();
         this.setProcedure("dbo.SP_GETPRECIOSSUCURSALES(?,?,?)",ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 
@@ -65,15 +65,15 @@ public class MSPreciosSucursalesDao extends DaoImpl {
         result.next();
 
         while(result.getRow()>0){
-            SucursalBean sucursal = new SucursalBean();
+            Sucursal sucursal = new Sucursal();
             sucursal.setIdSucursal(result.getLong("idSucursal"));
             sucursal.setNombreSucursal(result.getString("nombreSucursal"));
             sucursal.setDireccion(result.getString("direccion"));
             sucursal.setLat(result.getString("lat"));
             sucursal.setLng(result.getString("lng"));
-            productos = new LinkedList<ProductoBean>();
+            productos = new LinkedList<Producto>();
             while (result.getRow()>0 && sucursal.getIdSucursal() == result.getLong("idSucursal")){
-                producto = new ProductoBean();
+                producto = new Producto();
                 producto.setIdComercial(result.getString("idComercial"));
                 producto.setPrecio(result.getFloat("precio"));
                 productos.add(producto);

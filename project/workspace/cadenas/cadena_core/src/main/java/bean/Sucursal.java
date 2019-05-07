@@ -5,7 +5,7 @@ import db.Bean;
 
 import java.util.List;
 
-public class SucursalBean implements Bean {
+public class Sucursal implements Bean {
 
     @SerializedName("direccion")
     private String direccion;
@@ -23,7 +23,7 @@ public class SucursalBean implements Bean {
     private String nombreSucursal;
 
     @SerializedName("productos")
-    private List<ProductoBean> productos;
+    private List<Producto> productos;
 
 
     public String getDireccion() {
@@ -66,11 +66,11 @@ public class SucursalBean implements Bean {
         this.nombreSucursal = nombreSucursal;
     }
 
-    public List<ProductoBean> getProductos() {
+    public List<Producto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<ProductoBean> productos) {
+    public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
 
