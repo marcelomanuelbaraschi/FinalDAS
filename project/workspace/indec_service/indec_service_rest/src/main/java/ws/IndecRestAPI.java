@@ -1,6 +1,7 @@
 package ws;
-import api.IndecAPI;
-import clients.CadenaSoapClient;
+import beans.common_models.Cadena;
+import beans.config_models.Configuracion;
+import cadenasObjects.Sucursal;
 import clients.Tecnologia;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
@@ -9,10 +10,16 @@ import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import static api.IndecAPI.*;
+import static java.lang.Enum.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import static javax.ws.rs.core.Response.status;
@@ -27,8 +34,8 @@ public class IndecRestAPI {
     private static final Logger logger =
             LoggerFactory.getLogger(IndecRestAPI.class);
 
-    private static final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(4);
+    private static final ScheduledExecutorService executor =
+            Executors.newScheduledThreadPool(3);
 
     @GET
     @Path("/categorias")
@@ -42,7 +49,7 @@ public class IndecRestAPI {
         );
 
         within(3, SECONDS,
-                supplyAsync(() -> IndecAPI.obtenerCategorias())
+                supplyAsync(() -> obtenerCategorias(),executor)
         )
         .thenApply(
                 GSON::toJson
@@ -71,7 +78,7 @@ public class IndecRestAPI {
         );
 
         within(3, SECONDS,
-                supplyAsync(() -> IndecAPI.obtenerProductos(idCategoria))
+                supplyAsync(() -> obtenerProductos(idCategoria),executor)
         )
         .thenApply(
                 GSON::toJson
@@ -100,7 +107,7 @@ public class IndecRestAPI {
         );
 
         within(3, SECONDS,
-                supplyAsync(() -> IndecAPI.obtenerProvincias())
+                supplyAsync(() -> obtenerProvincias())
         )
         .thenApply(
                 GSON::toJson
@@ -130,7 +137,7 @@ public class IndecRestAPI {
         );
 
         within(3, SECONDS,
-                supplyAsync(() -> IndecAPI.obtenerLocalidades(codigoEntidadFederal))
+                supplyAsync(() -> obtenerLocalidades(codigoEntidadFederal))
         )
         .thenApply(
                 GSON::toJson
@@ -146,7 +153,6 @@ public class IndecRestAPI {
         });
 
     }
-
 
     @GET
     @Path("/cadenas")
@@ -160,7 +166,7 @@ public class IndecRestAPI {
         );
 
         within(3, SECONDS,
-                supplyAsync(() -> IndecAPI.obtenerCadenas())
+                supplyAsync(() -> obtenerCadenas())
         )
         .thenApply(
                 GSON::toJson
@@ -176,36 +182,37 @@ public class IndecRestAPI {
         });
 
     }
+
     @GET
     @Path("/sucursales")
-    public void sucursales(@Suspended final AsyncResponse response) {
+    public void sucursales(@Suspended final AsyncResponse response
+            , @QueryParam("codigoentidadfederal") final String codigoentidadfederal
+            , @QueryParam("localidad") final String localidad){
 
-        response.setTimeout(3, SECONDS);
+        response.setTimeout(4, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                              .entity("Operation timed out")
-                              .build())
+                        .entity("Operation timed out")
+                        .build())
         );
-        final String wsdlUrl = "http://localhost:8003/cadena_cxf_one/services/cadena_cxf_one?wsdl";
-        final CadenaServiceContract client = new CadenaSoapClient(wsdlUrl);
 
-        within(3, SECONDS,
-                supplyAsync(() ->  client.sucursales("AR-X","Capital"))
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
-        .exceptionally(exception -> {
+        try{
+            List<Cadena>  cadenas = obtenerConfiguraciones()
+                    .stream()
+                    .parallel()
+                    .map((config) -> {
+                        return obtenerSucursales(codigoentidadfederal, localidad, config);
+                    }).collect(toList());
+            response.resume(GSON.toJson(cadenas));
+        }catch (Exception exception){
             logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
-        });
-}
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        }
 
+
+    }
 
     //----------------------Private Methods----------------------------
     private static <T> CompletableFuture<T> within
@@ -219,10 +226,11 @@ public class IndecRestAPI {
             (long duration, TimeUnit unit)
     {
         final CompletableFuture<T> future = new CompletableFuture<>();
-        scheduler.schedule(() -> {
+        executor.schedule(() -> {
             final TimeoutException ex = new TimeoutException("Timeout after " + duration);
             return future.completeExceptionally(ex);
         }, duration, unit);
         return future;
     }
+
 }

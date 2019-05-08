@@ -1,13 +1,13 @@
 package comparador;
 
-import beans.Configuracion;
+import beans.config_models.Configuracion;
 import cadenasObjects.Producto;
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
 import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
-import indecObjects.Cadena;
+import beans.common_models.Cadena;
 import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IndecComparador {
-
+/*
     private static final Logger logger = LoggerFactory.getLogger(IndecComparador.class);
     private List<Cadena> cadenasDisponibles;
     private List<Cadena> cadenasNoDisponibles;
@@ -179,4 +179,5 @@ public class IndecComparador {
             }
         }
     }
+    */
 }

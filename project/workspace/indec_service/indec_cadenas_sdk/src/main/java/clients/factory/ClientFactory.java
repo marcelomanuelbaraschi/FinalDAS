@@ -13,13 +13,14 @@ public class ClientFactory {
         return instance;
     }
 
-    public static CadenaServiceContract clientFor(final String url,final Tecnologia tecnologia)
-        throws ClientException
+    public CadenaServiceContract
+    clientFor(final String url,final Tecnologia tecnologia,final Long idCadena)
+            throws ClientException
     {
         if (tecnologia.equals(Tecnologia.REST)) {
-            return new CadenaRestClient(url);
+            return new CadenaRestClient(url,idCadena);
         }else if (tecnologia.equals(Tecnologia.SOAP)) {
-            return new CadenaSoapClient(url);
-        } else  throw new ClientException ("Could not create a client, check the provided parameters");
+            return new CadenaSoapClient(url,idCadena);
+        } else  throw new ClientException ("No se pudo crear el cliente, verifique los parametros..");
     }
 }

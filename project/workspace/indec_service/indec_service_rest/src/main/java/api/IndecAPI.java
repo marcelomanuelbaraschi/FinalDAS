@@ -1,13 +1,23 @@
 package api;
 
-import beans.*;
-import db.Bean;
-import db.Dao;
-import db.DaoFactory;
-import utilities.GSON;
+import beans.common_models.Cadena;
+import beans.config_models.Configuracion;
+import beans.in_models.*;
+import beans.out_models.*;
+import cadenasObjects.Sucursal;
+import clients.*;
+import clients.exceptions.ClientException;
+import clients.factory.ClientFactory;
+import contract.*;
+import db.*;
+import utilities.*;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.lang.Enum.valueOf;
 
 public class IndecAPI {
 
@@ -99,6 +109,50 @@ public class IndecAPI {
         }
     }
 
+
+    public static Cadena obtenerSucursales (final String codigoentidadfederal
+                                           ,final String localidad
+                                           ,final Configuracion configuracion)
+    {
+        final String url = configuracion.getUrl();
+        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
+        final Long idCadena = configuracion.getIdCadena();
+        final String nombreCadena = configuracion.getNombreCadena();
+        Cadena cadena = new Cadena();
+        try {
+
+            //Construimos un cliente dado una tecnologia y un id
+            CadenaServiceContract client;
+            if (tecnologia.equals(Tecnologia.REST)) {
+                client = new CadenaRestClient(url,idCadena);
+            }else if (tecnologia.equals(Tecnologia.SOAP)) {
+                client= new CadenaSoapClient(url,idCadena);
+            } else  throw new Exception("No se pudo crear el cliente, verifique los parametros..");
+
+
+            //Llamamos al servicio
+            List<Sucursal> sucursales = client.sucursales(codigoentidadfederal, localidad);
+            if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
+
+            cadena.setDisponibilidad("Disponible");
+            cadena.setId(idCadena);
+            cadena.setNombre(nombreCadena);
+            //Asignamos las sucursales
+            cadena.setSucursales(sucursales);
+            return cadena;
+
+        } catch (Exception e) {
+
+            cadena.setDisponibilidad("No Disponible");
+            cadena.setId(idCadena);
+            cadena.setNombre(nombreCadena);
+            //Asignamos las sucursales null
+            cadena.setSucursales(null);
+            return cadena;
+        }
+    }
+
+
     static class APIException extends RuntimeException {
 
         public APIException(final Exception ex) {
@@ -106,6 +160,8 @@ public class IndecAPI {
         }
 
     }
+
+
 }
 
 

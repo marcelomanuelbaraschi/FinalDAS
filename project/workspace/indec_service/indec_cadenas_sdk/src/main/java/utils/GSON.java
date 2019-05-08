@@ -6,7 +6,7 @@ import org.apache.axiom.om.OMElement;
 
 import java.util.Iterator;
 
-public class JsonMarshaller {
+public class GSON {
 
     static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss.SSS").create();
 
@@ -19,8 +19,8 @@ public class JsonMarshaller {
         return jsonObj;
     }
 
-    public static <A, B> B transformer(final A update, final Class<B> clazz) {
-        return JsonMarshaller.toObject(JsonMarshaller.toJsonString(update), clazz);
+    public static <A, B> B transform(final A update, final Class<B> clazz) {
+        return GSON.toObject(GSON.toJsonString(update), clazz);
     }
 
     public static JsonObject deserializeXML(final Iterator<OMElement> it, final JsonObject bag) {

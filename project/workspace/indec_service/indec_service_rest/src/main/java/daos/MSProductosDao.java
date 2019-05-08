@@ -1,7 +1,7 @@
 package daos;
 
-import beans.CriterioBusquedaProducto;
-import beans.Producto;
+import beans.in_models.CriterioBusquedaProducto;
+import beans.out_models.Producto;
 import db.Bean;
 import db.DaoImpl;
 

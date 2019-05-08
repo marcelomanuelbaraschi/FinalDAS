@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class cxf_one_tests {
 
-
+/*
     private static final ScheduledExecutorService scheduler =
             Executors.newScheduledThreadPool(8);
 
@@ -43,7 +43,7 @@ public class cxf_one_tests {
     @Test
     public void health_should_success() {
 
-         final CadenaServiceContract client = ClientFactory.clientFor(wsdlUrl,Tecnologia.SOAP);
+         final CadenaServiceContract client = ClientFactory.clientFor(wsdlUrl,Tecnologia.SOAP,1L);
 
          CompletableFuture<Void> future =
          within(1, SECONDS,
@@ -58,7 +58,7 @@ public class cxf_one_tests {
    @Test
     public void call_to_sucursales_endpoint_should_success() {
 
-        final CadenaServiceContract client = ClientFactory.clientFor(wsdlUrl,Tecnologia.SOAP);
+        final CadenaServiceContract client = ClientFactory.clientFor(wsdlUrl,Tecnologia.SOAP,1L);
         CompletableFuture<Void> future =
                within(1, SECONDS,
                        supplyAsync(() -> client.sucursales("AR-X","Capital"))

@@ -1,4 +1,4 @@
-package beans;
+package beans.in_models;
 
 
 import com.google.gson.annotations.SerializedName;

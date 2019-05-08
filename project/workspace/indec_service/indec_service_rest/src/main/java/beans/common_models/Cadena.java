@@ -1,4 +1,4 @@
-package indecObjects;
+package beans.common_models;
 
 import cadenasObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;
@@ -21,7 +21,12 @@ public class Cadena  implements Bean {
     @SerializedName("disponibilidad")
     private String disponibilidad;
 
+    @SerializedName("imagen")
+    private String imagen;
 
+    public String getImagen() {return imagen; }
+
+    public void setImagen(String imagen) { this.imagen = imagen; }
 
     public String getDisponibilidad() {
         return disponibilidad;
