@@ -196,20 +196,42 @@ public class IndecRestAPI {
                         .build())
         );
 
-        try{
+       /* try{
             List<Cadena>  cadenas = obtenerConfiguraciones()
                     .stream()
                     .parallel()
                     .map((config) -> {
                         return obtenerSucursales(codigoentidadfederal, localidad, config);
-                    }).collect(toList());
+                    })
+                    .collect(toList());
             response.resume(GSON.toJson(cadenas));
         }catch (Exception exception){
             logger.error("Endpoint Failure: {}", exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .entity(exception)
                     .build());
-        }
+        }*/
+
+
+        within(3, SECONDS,
+                supplyAsync(() -> {
+                    return obtenerConfiguraciones()
+                            .stream()
+                            .parallel()
+                            .map((config) ->
+                                  {return obtenerSucursales(codigoentidadfederal, localidad, config);})
+                            .collect(toList());
+                })
+        ).thenApply(
+                GSON::toJson
+        ).thenApply(
+                response::resume
+        ).exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+        });
 
 
     }

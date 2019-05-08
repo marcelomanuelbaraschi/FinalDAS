@@ -2,6 +2,7 @@ package clients;
 import clients.exceptions.ClientException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -14,12 +15,16 @@ import java.net.URI;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 import static constants.Constants.*;
 public class RestClient  {
     private final String url;
+    private final HttpClient client;
+
 
     protected RestClient(final String url) {
         this.url = url;
+        this.client = HttpClientBuilder.create().build();
     }
 
     protected String getQuery(final String base, final String... params) {
@@ -57,18 +62,10 @@ public class RestClient  {
     }
 
     private HttpResponse execute (HttpUriRequest uri) throws ClientException {
-        CloseableHttpClient client = null;
-        try {
-            client = HttpClientBuilder.create().build();
-            return client.execute(uri);
+      try{
+          return client.execute(uri);
         } catch (IOException e) {
             throw new ClientException(e);
-        } finally {
-            try {
-                client.close();
-            } catch (IOException e) {
-               throw new ClientException("HttpClient could not close successfully");
-            }
         }
     }
 
