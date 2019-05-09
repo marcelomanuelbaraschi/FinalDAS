@@ -1,4 +1,4 @@
-package clients;
+package clients.genericClients;
 import clients.exceptions.ClientException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

@@ -6,16 +6,13 @@ import beans.in_models.*;
 import beans.out_models.*;
 import cadenasObjects.Sucursal;
 import clients.*;
-import clients.exceptions.ClientException;
 import clients.factory.ClientFactory;
 import contract.*;
 import db.*;
 import utilities.*;
-
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.lang.Enum.valueOf;
 
@@ -122,13 +119,7 @@ public class IndecAPI {
         try {
 
             //Construimos un cliente dado una tecnologia y un id
-            CadenaServiceContract client;
-            if (tecnologia.equals(Tecnologia.REST)) {
-                client = new CadenaRestClient(url,idCadena);
-            }else if (tecnologia.equals(Tecnologia.SOAP)) {
-                client= new CadenaSoapClient(url,idCadena);
-            } else  throw new Exception("No se pudo crear el cliente, verifique los parametros..");
-
+            CadenaServiceContract client = ClientFactory.clientFor(url,tecnologia,idCadena);
 
             //Llamamos al servicio
             List<Sucursal> sucursales = client.sucursales(codigoentidadfederal, localidad);

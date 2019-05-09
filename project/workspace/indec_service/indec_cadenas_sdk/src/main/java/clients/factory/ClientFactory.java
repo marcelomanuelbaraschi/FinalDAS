@@ -8,13 +8,8 @@ import contract.CadenaServiceContract;
 
 public class ClientFactory {
 
-    private static ClientFactory instance = new ClientFactory();
-    public ClientFactory getInstance(){
-        return instance;
-    }
-
-    public CadenaServiceContract
-    clientFor(final String url,final Tecnologia tecnologia,final Long idCadena)
+    public static CadenaServiceContract  clientFor
+            (final String url,final Tecnologia tecnologia,final Long idCadena)
             throws ClientException
     {
         if (tecnologia.equals(Tecnologia.REST)) {

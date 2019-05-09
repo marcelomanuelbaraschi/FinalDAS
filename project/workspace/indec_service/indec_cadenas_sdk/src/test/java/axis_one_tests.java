@@ -1,14 +1,9 @@
 import cadenasObjects.Sucursal;
 import clients.CadenaSoapClient;
-import clients.SoapClient;
-import clients.Tecnologia;
 import clients.exceptions.ClientException;
-import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import org.junit.Test;
-import utils.GSON;
 
-import java.util.LinkedList;
 import java.util.List;
 import static org.junit.Assert.*;
 

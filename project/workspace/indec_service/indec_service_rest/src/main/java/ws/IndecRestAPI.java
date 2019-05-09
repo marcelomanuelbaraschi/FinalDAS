@@ -1,22 +1,14 @@
 package ws;
 import beans.common_models.Cadena;
-import beans.config_models.Configuracion;
-import cadenasObjects.Sucursal;
-import clients.Tecnologia;
-import clients.factory.ClientFactory;
-import contract.CadenaServiceContract;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import static api.IndecAPI.*;
-import static java.lang.Enum.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toList;
@@ -44,24 +36,19 @@ public class IndecRestAPI {
         response.setTimeout(3, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                              .entity("Operation timed out")
-                              .build())
+                        .entity("Operation timed out")
+                        .build())
         );
 
-        within(3, SECONDS,
-                supplyAsync(() -> obtenerCategorias(),executor)
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
+        within(3, SECONDS
+        ,supplyAsync(() -> obtenerCategorias()))
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
+                    .entity(exception)
+                    .build());
         });
     }
 
@@ -77,20 +64,15 @@ public class IndecRestAPI {
                               .build())
         );
 
-        within(3, SECONDS,
-                supplyAsync(() -> obtenerProductos(idCategoria),executor)
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
+        within(3,SECONDS
+        ,supplyAsync(() -> obtenerProductos(idCategoria)))
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
+                    .entity(exception)
+                    .build());
         });
 
     }
@@ -106,20 +88,15 @@ public class IndecRestAPI {
                               .build())
         );
 
-        within(3, SECONDS,
-                supplyAsync(() -> obtenerProvincias())
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
+        within(3,SECONDS
+        ,supplyAsync(() -> obtenerProvincias()))
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
+                    .entity(exception)
+                    .build());
         });
     }
 
@@ -136,20 +113,15 @@ public class IndecRestAPI {
                               .build())
         );
 
-        within(3, SECONDS,
-                supplyAsync(() -> obtenerLocalidades(codigoEntidadFederal))
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
+        within(3,SECONDS
+        ,supplyAsync(() -> obtenerLocalidades(codigoEntidadFederal)))
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
+                    .entity(exception)
+                    .build());
         });
 
     }
@@ -165,20 +137,15 @@ public class IndecRestAPI {
                         .build())
         );
 
-        within(3, SECONDS,
-                supplyAsync(() -> obtenerCadenas())
-        )
-        .thenApply(
-                GSON::toJson
-        )
-        .thenApply(
-                response::resume
-        )
+        within(3,SECONDS
+        ,supplyAsync(() -> obtenerCadenas()))
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
+                    .entity(exception)
+                    .build());
         });
 
     }
@@ -196,41 +163,23 @@ public class IndecRestAPI {
                         .build())
         );
 
-       /* try{
-            List<Cadena>  cadenas = obtenerConfiguraciones()
-                    .stream()
-                    .parallel()
-                    .map((config) -> {
-                        return obtenerSucursales(codigoentidadfederal, localidad, config);
-                    })
+        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadenaConfigurada =
+            supplyAsync(() -> { return
+            obtenerConfiguraciones()
+                    .parallelStream()
+                    .map((config) -> obtenerSucursales(codigoentidadfederal, localidad, config))
                     .collect(toList());
-            response.resume(GSON.toJson(cadenas));
-        }catch (Exception exception){
+            });
+
+        within(3,SECONDS
+        ,obtenerSucursalesPorCadenaConfigurada)
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
-            response.resume(status(INTERNAL_SERVER_ERROR)
+            return response.resume(status(INTERNAL_SERVER_ERROR)
                     .entity(exception)
                     .build());
-        }*/
-
-
-        within(3, SECONDS,
-                supplyAsync(() -> {
-                    return obtenerConfiguraciones()
-                            .stream()
-                            .parallel()
-                            .map((config) ->
-                                  {return obtenerSucursales(codigoentidadfederal, localidad, config);})
-                            .collect(toList());
-                })
-        ).thenApply(
-                GSON::toJson
-        ).thenApply(
-                response::resume
-        ).exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
         });
 
 

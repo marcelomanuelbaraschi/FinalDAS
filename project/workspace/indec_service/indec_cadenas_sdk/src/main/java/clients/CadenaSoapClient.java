@@ -2,6 +2,7 @@ package clients;
 
 import cadenasObjects.Sucursal;
 import clients.exceptions.ClientException;
+import clients.genericClients.SoapClient;
 import contract.CadenaServiceContract;
 import utils.GSON;
 import java.util.Arrays;

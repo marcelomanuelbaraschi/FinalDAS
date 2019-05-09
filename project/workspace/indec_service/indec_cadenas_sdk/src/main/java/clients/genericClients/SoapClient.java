@@ -1,4 +1,4 @@
-package clients;
+package clients.genericClients;
 
 import clients.exceptions.ClientException;
 import org.apache.cxf.endpoint.Client;
