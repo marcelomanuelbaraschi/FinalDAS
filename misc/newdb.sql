@@ -79,6 +79,7 @@ CREATE TABLE productoSucursal (
    ,FOREIGN KEY (codigoDeBarras) REFERENCES producto (codigoDeBarras)
    ,FOREIGN KEY (idSucursal) REFERENCES sucursal (idSucursal)
  )
+
 TRUNCATE table precio
 CREATE TABLE precio (
     idPrecio BIGINT IDENTITY (1,1)
@@ -153,10 +154,11 @@ BEGIN
 
 
     DECLARE @tcodigos TABLE (idComercial  VARCHAR (100))
-        INSERT INTO @tcodigos (idComercial)
-            SELECT *
-                FROM string_split(@codigos, ',')
+    INSERT INTO @tcodigos (idComercial)
+        SELECT *
+            FROM string_split(@codigos, ',')
 
+    ;WITH prodt AS (
         SELECT suc.idSucursal AS idSucursal
               ,suc.nombre AS nombreSucursal
               ,suc.direccion AS direccion
@@ -167,9 +169,10 @@ BEGIN
               ,suc.cuit AS cuit
               ,loc.nombre AS localidad
               ,prov.nombre AS provincia
-              ,MAX(pre.precio) AS precio
+              ,prov.codigoEntidadFederal as codigoEntidadFederal
               ,prod.codigoDeBarras AS codigoDeBarras
               ,prod.nombre AS nombreProducto
+              ,MAX(pre.idPrecio) AS idPrecio
             FROM productoSucursal ps
                 JOIN sucursal suc
                     ON ps.idSucursal = suc.idSucursal
@@ -199,9 +202,15 @@ BEGIN
                     ,suc.cuit 
                     ,loc.nombre 
                     ,prov.nombre 
-                    ,pre.precio
                     ,prod.codigoDeBarras 
                     ,prod.nombre
+                    ,marc.nombre
+    )
+    SELECT prodt.*,precio.precio,precio.validoDesde 
+    FROM prodt 
+        JOIN precio 
+            ON precio.idPrecio = prodt.idPrecio
+
 END
 
 
@@ -362,8 +371,74 @@ INSERT INTO precio (precio, idSucursal, codigoDeBarras) VALUES
 ,(44.22,2,'7790070411877')
 
 
+
+INSERT INTO precio (precio, idSucursal, codigoDeBarras) VALUES 
+ (447.00,1,'7791708001231')
+,(448.00,1,'7791708001248')
+,(493.00,1,'7791708001378')
+,(4101.0,1,'7793890001020')
+,(478.00,1,'7791708611652')
+,(456.00,1,'7790040887909')
+,(459.00,1,'7790040946101')
+,(4488.00,1,'7790040999404')
+,(447.58,1,'7790040999503')
+,(143.25,1,'7622210649225')
+,(487.66,1,'7622300742676')
+,(486.66,1,'7622300829629')
+,(4487.77,1,'7622300841461')
+,(488.89,1,'7790070410610')
+,(450.22,1,'7790070411716')
+,(479.50,1,'7790070411723')
+,(32.89,1,'7790070411822')
+,(44.22,1,'7790070411877')
+
+SELECT * FROM precio
+
+INSERT INTO precio (precio, idSucursal, codigoDeBarras) VALUES 
+ (41.00,2,'7791708001231')
+,(57.00,2,'7791708001248')
+,(95.00,2,'7791708001378')
+,(99.00,2,'7793890001020')
+,(49.00,2,'7791708611652')
+,(57.00,2,'7790040887909')
+,(48.00,2,'7790040946101')
+,(55.00,2,'7790040999404')
+,(47.58,2,'7790040999503')
+,(78.45,2,'7622210649225')
+,(19.66,2,'7622300742676')
+,(56.66,2,'7622300829629')
+,(77.47,2,'7622300841461')
+,(87.89,2,'7790070410610')
+,(40.22,2,'7790070411716')
+,(99.50,2,'7790070411723')
+,(22.89,2,'7790070411822')
+,(44.22,2,'7790070411877')
+
+INSERT INTO precio (precio, idSucursal, codigoDeBarras) VALUES 
+ (741.00,2,'7791708001231')
+,(457.00,2,'7791708001248')
+,(895.00,2,'7791708001378')
+,(899.00,2,'7793890001020')
+,(849.00,2,'7791708611652')
+,(557.00,2,'7790040887909')
+,(148.00,2,'7790040946101')
+,(55.00,2,'7790040999404')
+,(147.58,2,'7790040999503')
+,(718.45,2,'7622210649225')
+,(119.66,2,'7622300742676')
+,(156.66,2,'7622300829629')
+,(177.47,2,'7622300841461')
+,(187.89,2,'7790070410610')
+,(140.22,2,'7790070411716')
+,(1199.50,2,'7790070411723')
+,(122.89,2,'7790070411822')
+,(144.22,2,'7790070411877')
+
+
+
+
 CREATE PROCEDURE SP_GETPRECIOSSUCURSALES (@codigoEntidadFederal VARCHAR(10), @localidad  VARCHAR (100) ,@codigos VARCHAR(MAX))
-EXECUTE SP_GETPRECIOSSUCURSALES @codigoEntidadFederal = 'AR-X', @localidad = 'Capital', @codigos = '7790070411877,7790070411822'
+EXECUTE SP_GETPRECIOSSUCURSALES @codigoEntidadFederal = 'AR-X', @localidad = 'Capital', @codigos = '7790070411822,7622210649225'
 
 EXECUTE SP_GETSUCURSALES @codigoEntidadFederal = 'AR-X', @localidad = 'Capital'
 

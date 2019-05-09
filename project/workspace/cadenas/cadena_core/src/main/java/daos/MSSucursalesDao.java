@@ -9,17 +9,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-
 public class MSSucursalesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        Sucursal suc = new Sucursal();
-        suc.setDireccion(result.getString("direccion"));
-        suc.setIdSucursal(result.getLong("idSucursal"));
-        suc.setLat(result.getString("lat"));
-        suc.setLng(result.getString("lng"));
-        suc.setNombreSucursal(result.getString("nombreSucursal"));
-        return suc;
+        Sucursal sucursal = new Sucursal();
+        sucursal.setIdSucursal(result.getLong("idSucursal"));
+        sucursal.setNombreSucursal(result.getString("nombreSucursal"));
+        sucursal.setCuit(result.getString("cuit"));
+        sucursal.setEmail(result.getString("email"));
+        sucursal.setTelefono(result.getString("telefono"));
+        sucursal.setDireccion(result.getString("direccion"));
+        sucursal.setLongitud(result.getString("latitud"));
+        sucursal.setLatitud(result.getString("longitud"));
+        sucursal.setProvincia(result.getString("provincia"));
+        sucursal.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
+        sucursal.setLocalidad(result.getString("localidad"));
+        return sucursal;
     }
 
     @Override

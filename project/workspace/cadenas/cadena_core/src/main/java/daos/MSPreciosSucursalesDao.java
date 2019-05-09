@@ -69,13 +69,23 @@ public class MSPreciosSucursalesDao extends DaoImpl {
             sucursal.setIdSucursal(result.getLong("idSucursal"));
             sucursal.setNombreSucursal(result.getString("nombreSucursal"));
             sucursal.setDireccion(result.getString("direccion"));
-            sucursal.setLat(result.getString("lat"));
-            sucursal.setLng(result.getString("lng"));
+            sucursal.setLongitud(result.getString("latitud"));
+            sucursal.setLatitud(result.getString("longitud"));
+            sucursal.setEmail(result.getString("email"));
+            sucursal.setTelefono(result.getString("telefono"));
+            sucursal.setCuit(result.getString("cuit"));
+            sucursal.setLocalidad(result.getString("localidad"));
+            sucursal.setProvincia(result.getString("provincia"));
+            sucursal.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
+
             productos = new LinkedList<Producto>();
             while (result.getRow()>0 && sucursal.getIdSucursal() == result.getLong("idSucursal")){
                 producto = new Producto();
-                producto.setIdComercial(result.getString("idComercial"));
+                producto.setCodigoDeBarras(result.getString("codigoDeBarras"));
+                producto.setNombre(result.getString("nombreProducto"));
+                producto.setMarca(result.getString("marca"));
                 producto.setPrecio(result.getFloat("precio"));
+                producto.setValidoDesde(result.getString("validoDesde"));
                 productos.add(producto);
                 result.next();
             }
