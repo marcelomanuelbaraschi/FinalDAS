@@ -30,7 +30,7 @@ public class DaoFactory {
 
     private static String getDaoClassName(String daoName, String daoPackage) throws SQLException {
         try {
-            return daoPackage + "daos." + DaoProp.getProperty("CurrentDaoFactory") + daoName + "Dao";
+            return daoPackage + "db.daos." + DaoProp.getProperty("CurrentDaoFactory") + daoName + "Dao";
         }
         catch(IOException ex) {
             throw new SQLException(ex.getMessage());

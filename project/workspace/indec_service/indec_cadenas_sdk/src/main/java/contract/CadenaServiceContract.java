@@ -6,15 +6,13 @@ import clients.exceptions.ClientException;
 import java.util.List;
 
 public  interface  CadenaServiceContract{
-     String health
-            ()
-            throws ClientException;
+     String health() throws ClientException;
 
     List<Sucursal> sucursales
             (String codigoentidadfederal, String localidad)
             throws ClientException;
 
     List<Sucursal> precios
-            (String codigoentidadfederal, String localidad, List<String> codigos)
+            (String codigoentidadfederal, String localidad, String codigos)
             throws ClientException;
 }

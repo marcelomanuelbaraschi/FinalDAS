@@ -1,4 +1,4 @@
-package daos;
+package db.daos;
 
 import bean.CriterioLocalizacionSucursal;
 import bean.Sucursal;

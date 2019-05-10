@@ -4,21 +4,32 @@ import com.google.gson.annotations.SerializedName;
 
 public class Producto {
 
-    @SerializedName("idComercial")
-    private String idComercial;
+
+    @SerializedName("codigoDeBarras")
+    private String codigoDeBarras;
 
     @SerializedName("precio")
     private Float precio;
 
-    @SerializedName("mejorPrecio")
-    private Boolean mejorPrecio;
+    @SerializedName("validoDesde")
+    private String validoDesde;
 
-    public String getIdComercial() {
-        return idComercial;
+    @SerializedName("nombre")
+    private String nombre;
+
+    @SerializedName("marca")
+    private String marca;
+
+
+    @SerializedName("mejorPrecio")
+    private boolean mejorPrecio;
+
+    public String getCodigoDeBarras() {
+        return codigoDeBarras;
     }
 
-    public void setIdComercial(String idComercial) {
-        this.idComercial = idComercial;
+    public void setCodigoDeBarras(String codigoDeBarras) {
+        this.codigoDeBarras = codigoDeBarras;
     }
 
     public Float getPrecio() {
@@ -29,23 +40,37 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Boolean getMejorPrecio() {
+    public String getValidoDesde() {
+        return validoDesde;
+    }
+
+    public void setValidoDesde(String validoDesde) {
+        this.validoDesde = validoDesde;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public boolean getMejorPrecio() {
         return mejorPrecio;
     }
 
-    public void setMejorPrecio(Boolean mejorPrecio) {
+
+    public void setMejorPrecio(boolean mejorPrecio) {
         this.mejorPrecio = mejorPrecio;
     }
 
-    @Override
-    public String toString() {
-        return "Producto{" +
-                "idComercial='" + idComercial + '\'' +
-                ", precio=" + precio +
-                ", mejorPrecio=" + mejorPrecio +
-                '}';
-    }
-
-
 }
-

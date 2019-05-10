@@ -1,12 +1,9 @@
-package api;
+package service;
 
-import beans.common_models.Cadena;
-import beans.config_models.Configuracion;
-import beans.in_models.*;
-import beans.out_models.*;
+import beans.*;
 import cadenasObjects.Sucursal;
 import clients.*;
-import clients.factory.ClientFactory;
+import clients.factory.CadenaClientFactory;
 import contract.*;
 import db.*;
 import utilities.*;
@@ -16,10 +13,9 @@ import java.util.List;
 
 import static java.lang.Enum.valueOf;
 
-public class IndecAPI {
+public class Actions {
 
-
-    public static List<CategoriaProducto> obtenerCategorias ()
+    public static List<CategoriaProducto> obtenerCategorias()
             throws APIException
     {
         try {
@@ -31,7 +27,7 @@ public class IndecAPI {
         }
     }
 
-    public static List<Producto> obtenerProductos (Long idCategoria)
+    public static List<Producto> obtenerProductos(Long idCategoria)
             throws APIException
     {
         try {
@@ -46,8 +42,7 @@ public class IndecAPI {
 
     }
 
-    public static List<Provincia> obtenerProvincias()
-            throws APIException
+    public static List<Provincia> obtenerProvincias() throws APIException
     {
         try {
             List<Bean> provincias = DaoFactory.getDao("Provincias")
@@ -58,8 +53,7 @@ public class IndecAPI {
         }
     }
 
-    public static List<Localidad> obtenerLocalidades(final String codigoentidadfederal)
-            throws APIException
+    public static List<Localidad> obtenerLocalidades(final String codigoentidadfederal) throws APIException
     {
         try {
 
@@ -76,8 +70,7 @@ public class IndecAPI {
         }
     }
 
-    public static List<Cadena> obtenerCadenas ()
-            throws APIException
+    public static List<Cadena> obtenerCadenas() throws APIException
     {
         try {
 
@@ -91,8 +84,7 @@ public class IndecAPI {
         }
     }
 
-    public static List<Configuracion> obtenerConfiguraciones ()
-            throws APIException
+    public static List<Configuracion> obtenerConfiguraciones() throws APIException
     {
         try {
 
@@ -107,9 +99,10 @@ public class IndecAPI {
     }
 
 
-    public static Cadena obtenerSucursales (final String codigoentidadfederal
-                                           ,final String localidad
-                                           ,final Configuracion configuracion)
+    public static Cadena obtenerSucursalesDeCadena
+            (final String codigoentidadfederal
+            ,final String localidad
+            ,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
@@ -118,11 +111,10 @@ public class IndecAPI {
         Cadena cadena = new Cadena();
         try {
 
-            //Construimos un cliente dado una tecnologia y un id
-            CadenaServiceContract client = ClientFactory.clientFor(url,tecnologia,idCadena);
+            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia,idCadena);
 
-            //Llamamos al servicio
             List<Sucursal> sucursales = client.sucursales(codigoentidadfederal, localidad);
+
             if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
             cadena.setDisponibilidad("Disponible");
@@ -143,6 +135,42 @@ public class IndecAPI {
         }
     }
 
+    public static Cadena obtenerPreciosDeCadena
+            (final String codigoentidadfederal,
+             final String localidad,
+             final String codigos,
+             final Configuracion configuracion)
+    {
+        final String url = configuracion.getUrl();
+        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
+        final Long idCadena = configuracion.getIdCadena();
+        final String nombreCadena = configuracion.getNombreCadena();
+        Cadena cadena = new Cadena();
+        try {
+
+            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia,idCadena);
+
+            List<Sucursal> sucursales = client.precios(codigoentidadfederal,localidad,codigos);
+
+            if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
+
+            cadena.setDisponibilidad("Disponible");
+            cadena.setId(idCadena);
+            cadena.setNombre(nombreCadena);
+            //Asignamos las sucursales
+            cadena.setSucursales(sucursales);
+            return cadena;
+
+        } catch (Exception e) {
+
+            cadena.setDisponibilidad("No Disponible");
+            cadena.setId(idCadena);
+            cadena.setNombre(nombreCadena);
+            //Asignamos las sucursales null
+            cadena.setSucursales(null);
+            return cadena;
+        }
+    }
 
     static class APIException extends RuntimeException {
 

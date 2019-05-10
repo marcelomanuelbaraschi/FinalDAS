@@ -1,7 +1,6 @@
 import cadenasObjects.Sucursal;
 import clients.Tecnologia;
 import clients.exceptions.ClientException;
-import clients.factory.ClientFactory;
 import contract.CadenaServiceContract;
 import org.junit.Test;
 

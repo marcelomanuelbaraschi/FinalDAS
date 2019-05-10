@@ -1,5 +1,5 @@
-package daos;
-import beans.out_models.CategoriaProducto;
+package db.daos;
+import beans.CategoriaProducto;
 import db.Bean;
 import db.DaoImpl;
 

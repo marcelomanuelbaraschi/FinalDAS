@@ -56,21 +56,19 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
     }
 
     @Override
-    public List<Sucursal> precios(String codigoentidadfederal, String localidad, List<String> codigos)
+    public List<Sucursal> precios(String codigoentidadfederal, String localidad, String codigos)
             throws ClientException
     {
 
         //Validamos parametros.
         if(codigos == null) throw new ClientException("El parametro codigos es null.");
 
-        //Pasamos de una lista a una string separado por coma.
-        String strcodigos = codigos.stream().collect(Collectors.joining(","));
 
         //Contruimos el formato de la query string
         final String query = getQuery(PRECIOS,CODIGO_ENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
 
         //Injectamos los parametros a la query string.
-        final String url = String.format(query,codigoentidadfederal, localidad, strcodigos);
+        final String url = String.format(query,codigoentidadfederal, localidad, codigos);
 
         //Hacemos la llamada http
         final String preciosJson = call(POST, url);

@@ -1,4 +1,4 @@
-package daos;
+package db.daos;
 
 import bean.CriterioBusquedaProductos;
 import bean.Producto;

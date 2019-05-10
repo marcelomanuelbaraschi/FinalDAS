@@ -1,6 +1,6 @@
-package daos;
+package db.daos;
 
-import beans.out_models.Provincia;
+import beans.Provincia;
 import db.Bean;
 import db.DaoImpl;
 

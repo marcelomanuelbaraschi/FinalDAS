@@ -39,7 +39,7 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
 
         //Obtenemos el json de respuesta
         final String sucursalesJson = object.toString();
-       ;
+
 
         //Pasamos de un json a una Lista de Sucursales
         List<Sucursal> sucursales = Arrays.asList(GSON.toObject(sucursalesJson,Sucursal[].class));
@@ -58,14 +58,12 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
 
     public List<Sucursal> precios
             (final String codigoentidadfederal,
-             final String localidad, List<String> codigos)
+             final String localidad, String codigos)
             throws ClientException
     {
-        //Pasamos de una lista a una string separado por coma.
-        final String strCodigos = codigos.stream().collect(joining(","));
 
         //Ejecutamos el metodo en el servicio con el cual mantenemos conexion
-        final Object object = executeMethod(PRECIOS,codigoentidadfederal,localidad,strCodigos);
+        final Object object = executeMethod(PRECIOS,codigoentidadfederal,localidad,codigos);
 
         //Obtenemos el json de respuesta
         final String preciosJson = object.toString();

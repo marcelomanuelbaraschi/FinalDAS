@@ -1,6 +1,6 @@
 package ws;
 
-import api.CadenaAPI;
+import service.CadenaAPI;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

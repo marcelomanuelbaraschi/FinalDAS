@@ -1,5 +1,6 @@
 package ws;
-import beans.common_models.Cadena;
+import beans.Cadena;
+import use_cases.IndecComparador;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -8,13 +9,15 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
-import static api.IndecAPI.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import static javax.ws.rs.core.Response.status;
+import static service.Actions.*;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -154,9 +157,9 @@ public class IndecRestAPI {
     @Path("/sucursales")
     public void sucursales(@Suspended final AsyncResponse response
             , @QueryParam("codigoentidadfederal") final String codigoentidadfederal
-            , @QueryParam("localidad") final String localidad){
+            , @QueryParam("localidad") final String localidad) {
 
-        response.setTimeout(4, SECONDS);
+        response.setTimeout(5, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
@@ -164,24 +167,62 @@ public class IndecRestAPI {
         );
 
         CompletableFuture<List<Cadena>> obtenerSucursalesPorCadenaConfigurada =
-            supplyAsync(() -> { return
-            obtenerConfiguraciones()
-                    .parallelStream()
-                    .map((config) -> obtenerSucursales(codigoentidadfederal, localidad, config))
-                    .collect(toList());
-            });
+                supplyAsync(() -> {
+                    return
+                            obtenerConfiguraciones()
+                                    .parallelStream()
+                                    .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal, localidad, config))
+                                    .collect(toList());
+                });
+
+        within(3, SECONDS
+                , obtenerSucursalesPorCadenaConfigurada)
+                .thenApply(GSON::toJson)
+                .thenApply(response::resume)
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
+    }
+
+    @POST
+    @Path("/comparador")
+    public void comparador(@Suspended final AsyncResponse response
+        ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+        ,@QueryParam("localidad") final String localidad
+        ,@QueryParam("codigos") final String codigos){
+
+        response.setTimeout(5, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build())
+        );
+
+        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadenaConfigurada =
+                supplyAsync(() -> { return
+                        obtenerConfiguraciones()
+                                .parallelStream()
+                                .map((config) -> obtenerPreciosDeCadena(codigoentidadfederal,localidad,codigos, config))
+                                .collect(toList());
+                });
 
         within(3,SECONDS
-        ,obtenerSucursalesPorCadenaConfigurada)
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
-        });
-
+                ,obtenerSucursalesPorCadenaConfigurada)
+                .thenApply((cadenas) -> {
+                    IndecComparador comparador = new IndecComparador(cadenas);
+                    return comparador.compararPrecios();
+                })
+                .thenApply(GSON::toJson)
+                .thenApply(response::resume)
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
 
     }
 

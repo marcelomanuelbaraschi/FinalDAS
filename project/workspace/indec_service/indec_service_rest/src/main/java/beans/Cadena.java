@@ -1,4 +1,4 @@
-package beans.common_models;
+package beans;
 
 import cadenasObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;

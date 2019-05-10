@@ -1,7 +1,7 @@
-package daos;
+package db.daos;
 
-import beans.in_models.CriterioBusquedaLocalidad;
-import beans.out_models.Localidad;
+import beans.CriterioBusquedaLocalidad;
+import beans.Localidad;
 import db.Bean;
 import db.DaoImpl;
 

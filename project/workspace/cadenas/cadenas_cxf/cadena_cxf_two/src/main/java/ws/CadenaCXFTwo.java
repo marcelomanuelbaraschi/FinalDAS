@@ -1,6 +1,6 @@
 package ws;
 
-import api.CadenaAPI;
+import service.CadenaAPI;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

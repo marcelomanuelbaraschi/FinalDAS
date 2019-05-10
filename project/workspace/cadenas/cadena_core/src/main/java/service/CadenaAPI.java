@@ -1,4 +1,4 @@
-package api;
+package service;
 import bean.CriterioBusquedaProductos;
 import bean.CriterioLocalizacionSucursal;
 import bean.Sucursal;
@@ -7,6 +7,8 @@ import db.DaoFactory;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
+
 import utilities.GSON;
 
 public class CadenaAPI {
@@ -47,6 +49,9 @@ public class CadenaAPI {
         if(codigoentidadfederal == null) throw new Exception("El parametro codigos es null.");
         if(localidad == null) throw new Exception("El parametro codigos es null.");
         if(codigos == null) throw new Exception("El parametro codigos es null.");
+
+        Pattern p = Pattern.compile("[0-9]+(,[0-9]+)+");
+        if(!p.matcher(codigos).find()) throw new Exception("El parametro codigos no tiene el formato correcto.");
 
         try {
 

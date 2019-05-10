@@ -1,6 +1,6 @@
 package ws;
 
-import api.CadenaAPI;
+import service.CadenaAPI;
 import bean.Sucursal;
 import utilities.GSON;
 

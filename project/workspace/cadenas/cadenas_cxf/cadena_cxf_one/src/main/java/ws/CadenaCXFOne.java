@@ -1,7 +1,7 @@
 package ws;
 
 
-import api.CadenaAPI;
+import service.CadenaAPI;
 import bean.Sucursal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

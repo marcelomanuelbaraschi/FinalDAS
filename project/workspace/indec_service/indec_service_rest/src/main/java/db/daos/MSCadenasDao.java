@@ -1,6 +1,6 @@
-package daos;
+package db.daos;
 
-import beans.common_models.Cadena;
+import beans.Cadena;
 import db.Bean;
 import db.DaoImpl;
 

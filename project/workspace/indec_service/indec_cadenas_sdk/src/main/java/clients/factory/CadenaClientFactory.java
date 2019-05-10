@@ -6,7 +6,7 @@ import clients.Tecnologia;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;
 
-public class ClientFactory {
+public class CadenaClientFactory {
 
     public static CadenaServiceContract  clientFor
             (final String url,final Tecnologia tecnologia,final Long idCadena)
