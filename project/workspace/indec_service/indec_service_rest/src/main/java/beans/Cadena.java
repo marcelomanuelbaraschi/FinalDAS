@@ -1,8 +1,9 @@
 package beans;
 
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
+
 
 
 import java.util.List;
@@ -23,18 +24,6 @@ public class Cadena  implements Bean {
 
     @SerializedName("imagen")
     private String imagen;
-
-    public String getImagen() {return imagen; }
-
-    public void setImagen(String imagen) { this.imagen = imagen; }
-
-    public String getDisponibilidad() {
-        return disponibilidad;
-    }
-
-    public void setDisponibilidad(String disponibilidad) {
-        this.disponibilidad = disponibilidad;
-    }
 
     public Long getId() {
         return id;
@@ -60,5 +49,19 @@ public class Cadena  implements Bean {
         this.sucursales = sucursales;
     }
 
+    public String getDisponibilidad() {
+        return disponibilidad;
+    }
 
+    public void setDisponibilidad(String disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }

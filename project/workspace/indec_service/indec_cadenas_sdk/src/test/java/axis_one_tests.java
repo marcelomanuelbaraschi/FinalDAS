@@ -1,4 +1,4 @@
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import clients.CadenaSoapClient;
 import clients.exceptions.ClientException;
 import contract.CadenaServiceContract;

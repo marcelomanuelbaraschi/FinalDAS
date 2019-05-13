@@ -1,17 +1,4 @@
-import cadenasObjects.Sucursal;
-import clients.Tecnologia;
-import clients.exceptions.ClientException;
-import contract.CadenaServiceContract;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.*;
-import java.util.function.Function;
-
 import static java.util.concurrent.CompletableFuture.supplyAsync;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.*;
 
 public class cxf_one_tests {
 

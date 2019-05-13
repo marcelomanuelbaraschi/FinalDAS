@@ -1,7 +1,7 @@
 package service;
 
 import beans.*;
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import clients.*;
 import clients.factory.CadenaClientFactory;
 import contract.*;
@@ -15,8 +15,7 @@ import static java.lang.Enum.valueOf;
 
 public class Actions {
 
-    public static List<CategoriaProducto> obtenerCategorias()
-            throws APIException
+    public static List<CategoriaProducto> obtenerCategorias() throws APIException
     {
         try {
             List<Bean> categorias = DaoFactory.getDao("CategoriasProducto")
@@ -100,9 +99,7 @@ public class Actions {
 
 
     public static Cadena obtenerSucursalesDeCadena
-            (final String codigoentidadfederal
-            ,final String localidad
-            ,final Configuracion configuracion)
+            (final String codigoentidadfederal,final String localidad,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
@@ -136,10 +133,8 @@ public class Actions {
     }
 
     public static Cadena obtenerPreciosDeCadena
-            (final String codigoentidadfederal,
-             final String localidad,
-             final String codigos,
-             final Configuracion configuracion)
+            (final String codigoentidadfederal,final String localidad
+            ,final String codigos,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());

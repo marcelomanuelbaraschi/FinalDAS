@@ -1,4 +1,4 @@
-package cadenasObjects;
+package sdkObjects;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -46,8 +46,27 @@ public class Sucursal {
     @SerializedName("productos")
     private List<Producto> productos;
 
+    @SerializedName("CantidadDeProductosConPrecioMasBajo")
+    private Long CantidadDeProductosConPrecioMasBajo;
+
     @SerializedName("mejorOpcion")
     private boolean mejorOpcion;
+
+    public Long getCantidadDeProductosConPrecioMasBajo() {
+        return CantidadDeProductosConPrecioMasBajo;
+    }
+
+    public void setCantidadDeProductosConPrecioMasBajo(Long cantidadDeProductosConPrecioMasBajo) {
+        CantidadDeProductosConPrecioMasBajo = cantidadDeProductosConPrecioMasBajo;
+    }
+
+    public boolean isMejorOpcion() {
+        return mejorOpcion;
+    }
+
+    public void setMejorOpcion(boolean mejorOpcion) {
+        this.mejorOpcion = mejorOpcion;
+    }
 
     public Long getIdSucursal() {
         return idSucursal;
@@ -137,14 +156,6 @@ public class Sucursal {
         this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
-
     public Long getIdCadena() {
         return idCadena;
     }
@@ -153,11 +164,11 @@ public class Sucursal {
         this.idCadena = idCadena;
     }
 
-    public boolean isMejorOpcion() {
-        return mejorOpcion;
+    public List<Producto> getProductos() {
+        return productos;
     }
 
-    public void setMejorOpcion(boolean mejorOpcion) {
-        this.mejorOpcion = mejorOpcion;
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }

@@ -1,4 +1,4 @@
-package cadenasObjects;
+package sdkObjects;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -20,9 +20,17 @@ public class Producto {
     @SerializedName("marca")
     private String marca;
 
+    @SerializedName("mejorOpcion")
+    private boolean mejorOpcion;
 
-    @SerializedName("mejorPrecio")
-    private boolean mejorPrecio;
+
+    public boolean isMejorOpcion() {
+        return mejorOpcion;
+    }
+
+    public void setMejorOpcion(boolean mejorOpcion) {
+        this.mejorOpcion = mejorOpcion;
+    }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;
@@ -62,15 +70,6 @@ public class Producto {
 
     public void setMarca(String marca) {
         this.marca = marca;
-    }
-
-    public boolean getMejorPrecio() {
-        return mejorPrecio;
-    }
-
-
-    public void setMejorPrecio(boolean mejorPrecio) {
-        this.mejorPrecio = mejorPrecio;
     }
 
 }

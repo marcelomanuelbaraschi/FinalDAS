@@ -1,6 +1,6 @@
 package ws;
+
 import beans.Cadena;
-import use_cases.IndecComparador;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -16,18 +16,18 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import static javax.ws.rs.core.Response.status;
 import static service.Actions.*;
-
+import service.comparador.ComparadorDePrecios;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
-public class IndecRestAPI {
+public class ComparadorService {
 
 
     private static final Logger logger =
-            LoggerFactory.getLogger(IndecRestAPI.class);
+            LoggerFactory.getLogger(ComparadorService.class);
 
     private static final ScheduledExecutorService executor =
             Executors.newScheduledThreadPool(3);
@@ -166,25 +166,25 @@ public class IndecRestAPI {
                         .build())
         );
 
-        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadenaConfigurada =
-                supplyAsync(() -> {
-                    return
-                            obtenerConfiguraciones()
-                                    .parallelStream()
-                                    .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal, localidad, config))
-                                    .collect(toList());
-                });
+        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadena =
+            supplyAsync(() -> {
+                return
+                        obtenerConfiguraciones()
+                                .parallelStream()
+                                .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal, localidad, config))
+                                .collect(toList());
+            });
 
         within(3, SECONDS
-                , obtenerSucursalesPorCadenaConfigurada)
-                .thenApply(GSON::toJson)
-                .thenApply(response::resume)
-                .exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                });
+        ,obtenerSucursalesPorCadena)
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        });
     }
 
     @POST
@@ -201,28 +201,27 @@ public class IndecRestAPI {
                         .build())
         );
 
-        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadenaConfigurada =
-                supplyAsync(() -> { return
-                        obtenerConfiguraciones()
-                                .parallelStream()
-                                .map((config) -> obtenerPreciosDeCadena(codigoentidadfederal,localidad,codigos, config))
-                                .collect(toList());
-                });
+        CompletableFuture<List<Cadena>> obtenerPreciosDeSucursalesPorCadena =
+            supplyAsync(() -> { return
+                    obtenerConfiguraciones()
+                            .parallelStream()
+                            .map((config) -> obtenerPreciosDeCadena(codigoentidadfederal,localidad,codigos, config))
+                            .collect(toList());
+            });
 
         within(3,SECONDS
-                ,obtenerSucursalesPorCadenaConfigurada)
-                .thenApply((cadenas) -> {
-                    IndecComparador comparador = new IndecComparador(cadenas);
-                    return comparador.compararPrecios();
-                })
-                .thenApply(GSON::toJson)
-                .thenApply(response::resume)
-                .exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                });
+        ,obtenerPreciosDeSucursalesPorCadena)
+        .thenApply((cadenas) -> {
+            return ComparadorDePrecios.compararPrecios(cadenas);
+        })
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        });
 
     }
 

@@ -1,6 +1,6 @@
 package clients;
 
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import clients.exceptions.ClientException;
 import clients.genericClients.SoapClient;
 import contract.CadenaServiceContract;

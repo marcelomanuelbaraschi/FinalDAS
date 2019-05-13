@@ -1,13 +1,12 @@
 package clients;
 
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import clients.exceptions.ClientException;
 import clients.genericClients.RestClient;
 import contract.CadenaServiceContract;
 import utils.GSON;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static constants.Constants.*;
 

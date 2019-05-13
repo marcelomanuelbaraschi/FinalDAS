@@ -1,14 +1,3 @@
-import cadenasObjects.Sucursal;
-import clients.Tecnologia;
-import clients.exceptions.ClientException;
-import contract.CadenaServiceContract;
-import org.junit.Test;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 public class rest_one_tests {
 
     /*final String url = "http://localhost:8001/cadena_rest_one/cadenaRestOne";

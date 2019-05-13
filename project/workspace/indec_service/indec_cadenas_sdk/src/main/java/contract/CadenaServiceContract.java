@@ -1,6 +1,6 @@
 package contract;
 
-import cadenasObjects.Sucursal;
+import sdkObjects.Sucursal;
 import clients.exceptions.ClientException;
 
 import java.util.List;
