@@ -50,15 +50,11 @@ public class Actions {
         }
     }
 
-    public static List<Localidad> obtenerLocalidades(final String codigoentidadfederal) throws APIException
+    public static List<Localidad> obtenerLocalidades() throws APIException
     {
         try {
-
-            CriterioBusquedaLocalidad criterio = new CriterioBusquedaLocalidad();
-            criterio.setCodigoEntidadFederal(codigoentidadfederal);
-
             List<Bean> localidades = DaoFactory.getDao("Localidades")
-                                               .select(criterio);
+                                               .select(null);
 
             return Arrays.asList(GSON.transform(localidades, Localidad[].class));
 

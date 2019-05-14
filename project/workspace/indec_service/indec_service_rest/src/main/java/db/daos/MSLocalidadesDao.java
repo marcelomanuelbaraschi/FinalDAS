@@ -1,6 +1,5 @@
 package db.daos;
 
-import beans.CriterioBusquedaLocalidad;
 import beans.Localidad;
 import db.Bean;
 import db.DaoImpl;
@@ -36,15 +35,8 @@ public class MSLocalidadesDao extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        CriterioBusquedaLocalidad criterio = (CriterioBusquedaLocalidad) bean;
         this.connect();
-        this.setProcedure("dbo.spLocalidades(?)");
-        if(criterio.getCodigoEntidadFederal() == null) {
-            this.setNull(1, Types.VARCHAR);
-        }
-        else {
-            this.setParameter(1, criterio.getCodigoEntidadFederal());
-        }
+        this.setProcedure("dbo.spLocalidades");
         List<Bean> localidades = this.executeQuery();
         this.disconnect();
         return localidades;

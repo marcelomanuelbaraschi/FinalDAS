@@ -31,7 +31,7 @@ public class ComparadorService {
             LoggerFactory.getLogger(ComparadorService.class);
 
     private static final ScheduledExecutorService executor =
-            Executors.newScheduledThreadPool(2);
+            Executors.newScheduledThreadPool(4);
 
     @GET
     @Path("/categorias")
@@ -105,9 +105,7 @@ public class ComparadorService {
 
     @GET
     @Path("/localidades")
-    public void localidades(@Suspended final AsyncResponse response
-            , @QueryParam("codigoentidadfederal") final String codigoEntidadFederal) {
-
+    public void localidades(@Suspended final AsyncResponse response) {
 
         response.setTimeout(3, SECONDS);
         response.setTimeoutHandler(
@@ -117,7 +115,7 @@ public class ComparadorService {
         );
 
         within(3,SECONDS
-        ,supplyAsync(() -> obtenerLocalidades(codigoEntidadFederal)))
+        ,supplyAsync(Actions::obtenerLocalidades))
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -156,9 +154,8 @@ public class ComparadorService {
     @GET
     @Path("/sucursales")
     public void sucursales(@Suspended final AsyncResponse response
-            , @QueryParam("codigoentidadfederal") final String codigoentidadfederal
-            , @QueryParam("localidad") final String localidad) {
-
+                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                          ,@QueryParam("localidad") final String localidad) {
         response.setTimeout(50, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
@@ -169,8 +166,7 @@ public class ComparadorService {
         CompletableFuture<List<Cadena>> obtenerSucursalesPorCadena =
             supplyAsync(() -> {
                 return
-                        obtenerConfiguraciones()
-                                .parallelStream()
+                        obtenerConfiguraciones().stream().parallel()
                                 .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal, localidad, config))
                                 .collect(toList());
             });
@@ -190,9 +186,10 @@ public class ComparadorService {
     @POST
     @Path("/comparador")
     public void comparador(@Suspended final AsyncResponse response
-        ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-        ,@QueryParam("localidad") final String localidad
-        ,@QueryParam("codigos") final String codigos){
+                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                          ,@QueryParam("localidad") final String localidad
+                          ,@QueryParam("codigos") final String codigos)
+    {
 
         response.setTimeout(50, SECONDS);
         response.setTimeoutHandler(
