@@ -64,7 +64,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1437;databaseName=db_cadena;</urlDB><!-- local -->
+            <urlDB>jdbc:sqlserver://192.168.99.100:1434;databaseName=db_cadena;</urlDB><!-- local -->
             <!-- <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadena;</urlDB>  manu -->
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>

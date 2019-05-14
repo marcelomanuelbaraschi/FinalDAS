@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Cadena  implements Bean {
 
-    @SerializedName("id")
-    private Long id;
+    @SerializedName("idCadena")
+    private Integer idCadena;
 
-    @SerializedName("nombre")
-    private String nombre;
+    @SerializedName("nombreCadena")
+    private String nombreCadena;
 
     @SerializedName("sucursales")
     private List<Sucursal> sucursales;
@@ -22,24 +22,16 @@ public class Cadena  implements Bean {
     @SerializedName("disponibilidad")
     private String disponibilidad;
 
-    @SerializedName("imagen")
-    private String imagen;
+    @SerializedName("imagenCadena")
+    private String imagenCadena;
 
-    public Long getId() {
-        return id;
-    }
+    public Integer getIdCadena() {      return idCadena;   }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setIdCadena(Integer idCadena) {       this.idCadena = idCadena;   }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombreCadena() {       return nombreCadena;   }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void setNombreCadena(String nombreCadena) {       this.nombreCadena = nombreCadena;   }
 
     public List<Sucursal> getSucursales() {
         return sucursales;
@@ -57,11 +49,7 @@ public class Cadena  implements Bean {
         this.disponibilidad = disponibilidad;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
+    public String getImagenCadena() {      return imagenCadena;   }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
+    public void setImagenCadena(String imagenCadena) {      this.imagenCadena = imagenCadena;   }
 }

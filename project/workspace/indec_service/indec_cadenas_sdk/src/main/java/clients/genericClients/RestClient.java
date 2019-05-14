@@ -1,8 +1,12 @@
 package clients.genericClients;
 import clients.exceptions.ClientException;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -24,7 +28,11 @@ public class RestClient  {
 
     protected RestClient(final String url) {
         this.url = url;
-        this.client = HttpClientBuilder.create().build();
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(1 * 1000)
+                .setConnectionRequestTimeout(1 * 1000)
+                .setSocketTimeout(1 * 1000).build();
+        this.client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     }
 
     protected String getQuery(final String base, final String... params) {
@@ -64,8 +72,10 @@ public class RestClient  {
     private HttpResponse execute (HttpUriRequest uri) throws ClientException {
       try{
           return client.execute(uri);
-        } catch (IOException e) {
-            throw new ClientException(e);
+        } catch (ClientProtocolException ce) {
+            throw new ClientException(ce);
+        } catch (IOException ioe) {
+            throw new ClientException(ioe);
         }
     }
 

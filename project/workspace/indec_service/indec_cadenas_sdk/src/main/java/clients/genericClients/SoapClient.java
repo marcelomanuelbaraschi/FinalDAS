@@ -3,6 +3,8 @@ package clients.genericClients;
 import clients.exceptions.ClientException;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
 public class SoapClient {
 
@@ -18,12 +20,21 @@ public class SoapClient {
         final JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
         try (final Client client = dcf.createClient(wsdlUrl)) {
 
+            HTTPConduit http = (HTTPConduit)client.getConduit();
+            HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+            httpClientPolicy.setConnectionTimeout(1 * 1000);
+            httpClientPolicy.setReceiveTimeout(1 * 1000);
+            http.setClient(httpClientPolicy);
+
+
             final Object[] res = client.invoke(methodName, params);
             if(res == null || res.length == 0) throw new ClientException("Failed Invoking Client");
             handleError(client);
             return res[0];
 
-        } catch (final Exception e) {
+        } catch (final java.net.SocketTimeoutException te) {
+            throw new ClientException("ENDPOINT IS DOWN = " + te.getMessage());
+        } catch (Exception e) {
             throw new ClientException("ENDPOINT IS DOWN = " + e.getMessage());
         }
     }

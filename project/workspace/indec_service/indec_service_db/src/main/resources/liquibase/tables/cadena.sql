@@ -1,8 +1,8 @@
 CREATE TABLE cadena (
-	  id BIGINT NOT NULL
-	, nombre VARCHAR(50) NOT NULL
-	, imagen VARCHAR(100) NULL
-	, PRIMARY KEY(id)
-    , UNIQUE (nombre)
-);
+	  idCadena SMALLINT NOT NULL
+	, nombreCadena VARCHAR(50) NOT NULL
+	, imagenCadena VARCHAR(100) NULL
+	, PRIMARY KEY(idCadena)
+    , UNIQUE (nombreCadena)
+)
 GO

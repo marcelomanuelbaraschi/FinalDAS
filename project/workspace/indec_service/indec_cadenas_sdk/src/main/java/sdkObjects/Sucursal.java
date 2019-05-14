@@ -41,7 +41,7 @@ public class Sucursal {
     private String codigoEntidadFederal;
 
     @SerializedName("idCadena")
-    private Long idCadena;
+    private Integer idCadena;
 
     @SerializedName("productos")
     private List<Producto> productos;
@@ -156,11 +156,11 @@ public class Sucursal {
         this.codigoEntidadFederal = codigoEntidadFederal;
     }
 
-    public Long getIdCadena() {
+    public Integer getIdCadena() {
         return idCadena;
     }
 
-    public void setIdCadena(Long idCadena) {
+    public void setIdCadena(Integer idCadena) {
         this.idCadena = idCadena;
     }
 

@@ -1,4 +1,4 @@
-INSERT INTO cadena (id, nombre, imagen)
+INSERT INTO cadena (idCadena, nombreCadena, imagenCadena)
 VALUES
       (1, 'Walmart', './../../../assets/img/walmart_logo.png')
     , (2, 'Jumbo', './../../../assets/img/jumbo_logo.png')

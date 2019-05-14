@@ -1,6 +1,7 @@
 package ws;
 
 import beans.Cadena;
+import service.Actions;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -30,7 +31,7 @@ public class ComparadorService {
             LoggerFactory.getLogger(ComparadorService.class);
 
     private static final ScheduledExecutorService executor =
-            Executors.newScheduledThreadPool(3);
+            Executors.newScheduledThreadPool(2);
 
     @GET
     @Path("/categorias")
@@ -57,8 +58,7 @@ public class ComparadorService {
 
     @GET
     @Path("/productos")
-    public void productos(@Suspended final AsyncResponse response
-                         ,@QueryParam("idcategoria") final Long idCategoria) {
+    public void productos(@Suspended final AsyncResponse response) {
 
         response.setTimeout(3, SECONDS);
         response.setTimeoutHandler(
@@ -68,7 +68,7 @@ public class ComparadorService {
         );
 
         within(3,SECONDS
-        ,supplyAsync(() -> obtenerProductos(idCategoria)))
+        ,supplyAsync(Actions::obtenerProductos))
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -159,7 +159,7 @@ public class ComparadorService {
             , @QueryParam("codigoentidadfederal") final String codigoentidadfederal
             , @QueryParam("localidad") final String localidad) {
 
-        response.setTimeout(5, SECONDS);
+        response.setTimeout(50, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
@@ -175,7 +175,7 @@ public class ComparadorService {
                                 .collect(toList());
             });
 
-        within(3, SECONDS
+        within(50, SECONDS
         ,obtenerSucursalesPorCadena)
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
@@ -194,7 +194,7 @@ public class ComparadorService {
         ,@QueryParam("localidad") final String localidad
         ,@QueryParam("codigos") final String codigos){
 
-        response.setTimeout(5, SECONDS);
+        response.setTimeout(50, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
@@ -209,7 +209,7 @@ public class ComparadorService {
                             .collect(toList());
             });
 
-        within(3,SECONDS
+        within(50,SECONDS
         ,obtenerPreciosDeSucursalesPorCadena)
         .thenApply((cadenas) -> {
             return ComparadorDePrecios.compararPrecios(cadenas);
@@ -222,6 +222,31 @@ public class ComparadorService {
                     .entity(exception)
                     .build());
         });
+
+    }
+
+
+    @GET
+    @Path("/menu")
+    public void menu (@Suspended final AsyncResponse response) {
+
+        response.setTimeout(3, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build())
+        );
+
+        within(3,SECONDS
+                ,supplyAsync(Actions::obtenerMenuSemanal))
+                .thenApply(GSON::toJson)
+                .thenApply(response::resume)
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
 
     }
 

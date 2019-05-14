@@ -1,20 +1,9 @@
-CREATE PROCEDURE spProductos(
-      @idCategoria BIGINT
-) AS
+CREATE PROCEDURE spProductos AS
 BEGIN
-  IF @idCategoria IS NULL
-    BEGIN
-      SELECT p.idComercial, p.idCategoria, c.nombre AS nombreCategoria, p.nombre, p.nombreMarca, p.imagen
-         FROM producto p
-         JOIN categoriaProducto c
-         ON p.idCategoria = c.id
-    END
-  ELSE
-    BEGIN
-     SELECT p.idComercial, p.idCategoria, c.nombre AS nombreCategoria, p.nombre, p.nombreMarca, p.imagen
-        FROM producto p
-        JOIN categoriaProducto c
-        ON p.idCategoria = c.id
-        WHERE p.idCategoria = @idCategoria
-    END
+ SELECT p.codigoDeBarras, p.idCategoria, c.nombreCategoria, p.nombreProducto, m.nombreMarca, p.imagenProducto
+    FROM producto p
+    JOIN categoriaProducto c
+    ON p.idCategoria = c.idCategoria
+    JOIN marcaProducto m
+    ON p.idMarca = m.idMarca
 END

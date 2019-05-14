@@ -1,7 +1,9 @@
-CREATE TABLE localidad(
-     nombreLocalidad  VARCHAR (100) NOT NULL
-    ,codigoEntidadFederal VARCHAR(10) NOT NULL
-    ,PRIMARY KEY (codigoEntidadFederal,nombreLocalidad)
-    , FOREIGN KEY (codigoEntidadFederal) REFERENCES provincia (codigoEntidadFederal)
+CREATE TABLE localidad (
+      idLocalidad SMALLINT IDENTITY NOT NULL
+    , nombreLocalidad  VARCHAR (100) NOT NULL
+    , idProvincia SMALLINT NOT NULL
+    , PRIMARY KEY (idProvincia, idLocalidad)
+    , UNIQUE ( idProvincia, nombreLocalidad)
+    , FOREIGN KEY (idProvincia) REFERENCES provincia (idProvincia)
 )
 GO

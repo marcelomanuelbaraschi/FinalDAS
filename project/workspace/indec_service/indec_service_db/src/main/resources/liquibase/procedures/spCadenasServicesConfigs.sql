@@ -1,5 +1,7 @@
 CREATE PROCEDURE spCadenasServicesConfigs AS
 BEGIN
- SELECT  id, idCadena, nombreCadena ,tecnologia, url
-    FROM  cadenaServiceConfig
+ SELECT  idConfig, config.idCadena, cad.nombreCadena, nombreTecnologia, url
+    FROM  cadenaServiceConfig config
+    JOIN cadena cad
+    ON config.idCadena = cad.idCadena
 END

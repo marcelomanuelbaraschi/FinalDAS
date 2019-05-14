@@ -25,7 +25,7 @@ public class axis_one_tests {
    @Test
     public  void call_to_sucursales_endpoint_should_success() {
         try {
-            final CadenaServiceContract client = new CadenaSoapClient (wsdlUrl,1L);
+            final CadenaServiceContract client = new CadenaSoapClient (wsdlUrl,1);
             final List<Sucursal> sucursales =
                     client.sucursales("AR-X","Capital");
             System.out.println(sucursales);

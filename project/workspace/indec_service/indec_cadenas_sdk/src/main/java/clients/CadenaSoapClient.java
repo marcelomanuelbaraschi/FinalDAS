@@ -13,9 +13,9 @@ import static java.util.stream.Collectors.joining;
 
 public class CadenaSoapClient extends SoapClient implements CadenaServiceContract {
 
-    private final Long idCadena;
+    private final Integer idCadena;
 
-    public CadenaSoapClient(final String wsdlUrl,final Long idCadena){
+    public CadenaSoapClient(final String wsdlUrl,final Integer idCadena){
         super(wsdlUrl);
         this.idCadena = idCadena;
      }

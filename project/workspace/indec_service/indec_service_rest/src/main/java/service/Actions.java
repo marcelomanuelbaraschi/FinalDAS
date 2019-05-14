@@ -26,14 +26,12 @@ public class Actions {
         }
     }
 
-    public static List<Producto> obtenerProductos(Long idCategoria)
+    public static List<Producto> obtenerProductos()
             throws APIException
     {
         try {
-            CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
-            criterio.setIdCategoria(idCategoria);
             List<Bean> productos = DaoFactory.getDao("Productos")
-                                             .select(criterio);
+                                             .select(null);
             return Arrays.asList(GSON.transform(productos, Producto[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);
@@ -102,8 +100,8 @@ public class Actions {
             (final String codigoentidadfederal,final String localidad,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
-        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
-        final Long idCadena = configuracion.getIdCadena();
+        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
+        final Integer idCadena = configuracion.getIdCadena();
         final String nombreCadena = configuracion.getNombreCadena();
         Cadena cadena = new Cadena();
         try {
@@ -115,8 +113,8 @@ public class Actions {
             if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
             cadena.setDisponibilidad("Disponible");
-            cadena.setId(idCadena);
-            cadena.setNombre(nombreCadena);
+            cadena.setIdCadena(idCadena);
+            cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales
             cadena.setSucursales(sucursales);
             return cadena;
@@ -124,8 +122,8 @@ public class Actions {
         } catch (Exception e) {
 
             cadena.setDisponibilidad("No Disponible");
-            cadena.setId(idCadena);
-            cadena.setNombre(nombreCadena);
+            cadena.setIdCadena(idCadena);
+            cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales null
             cadena.setSucursales(null);
             return cadena;
@@ -137,8 +135,8 @@ public class Actions {
             ,final String codigos,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
-        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getTecnologia());
-        final Long idCadena = configuracion.getIdCadena();
+        final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
+        final Integer idCadena = configuracion.getIdCadena();
         final String nombreCadena = configuracion.getNombreCadena();
         Cadena cadena = new Cadena();
         try {
@@ -150,8 +148,8 @@ public class Actions {
             if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
             cadena.setDisponibilidad("Disponible");
-            cadena.setId(idCadena);
-            cadena.setNombre(nombreCadena);
+            cadena.setIdCadena(idCadena);
+            cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales
             cadena.setSucursales(sucursales);
             return cadena;
@@ -159,13 +157,28 @@ public class Actions {
         } catch (Exception e) {
 
             cadena.setDisponibilidad("No Disponible");
-            cadena.setId(idCadena);
-            cadena.setNombre(nombreCadena);
+            cadena.setIdCadena(idCadena);
+            cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales null
             cadena.setSucursales(null);
             return cadena;
         }
     }
+
+
+    public static List<Menu> obtenerMenuSemanal()
+            throws APIException
+    {
+        try {
+            List<Bean> menuSemanal = DaoFactory.getDao("MenuSemanal")
+                                             .select(null);
+            return Arrays.asList(GSON.transform(menuSemanal, Menu[].class));
+        } catch (SQLException ex) {
+            throw new APIException(ex);
+        }
+
+    }
+
 
     static class APIException extends RuntimeException {
 
@@ -174,7 +187,6 @@ public class Actions {
         }
 
     }
-
 
 }
 

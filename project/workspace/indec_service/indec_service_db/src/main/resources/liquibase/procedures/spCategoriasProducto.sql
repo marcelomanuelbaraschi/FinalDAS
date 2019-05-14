@@ -1,5 +1,5 @@
 CREATE PROCEDURE spCategoriasProducto AS
 BEGIN
- SELECT id, nombre ,urlImagen
+ SELECT idCategoria, nombreCategoria ,urlImagenCategoria
     FROM categoriaProducto
 END

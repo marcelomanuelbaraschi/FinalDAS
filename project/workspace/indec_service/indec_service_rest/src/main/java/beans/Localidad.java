@@ -13,9 +13,7 @@ public class Localidad implements Bean {
         return codigoEntidadFederal;
     }
 
-    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
-        this.codigoEntidadFederal = codigoEntidadFederal;
-    }
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {        this.codigoEntidadFederal = codigoEntidadFederal;    }
 
     public String getNombreLocalidad() {
         return nombreLocalidad;

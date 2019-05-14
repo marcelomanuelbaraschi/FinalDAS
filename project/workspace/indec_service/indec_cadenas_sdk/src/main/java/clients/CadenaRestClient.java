@@ -12,9 +12,9 @@ import static constants.Constants.*;
 
 public class CadenaRestClient extends RestClient implements CadenaServiceContract {
 
-    private final Long idCadena;
+    private final Integer idCadena;
 
-    public CadenaRestClient(final String url,final Long idCadena){
+    public CadenaRestClient(final String url,final Integer idCadena){
         super(url);
         this.idCadena = idCadena;
     }

@@ -1,7 +1,7 @@
 CREATE TABLE marcaProducto (
-	  id BIGINT IDENTITY (1,1)
-	, nombre VARCHAR(50) NOT NULL
-	, PRIMARY KEY(id)
-    , UNIQUE (nombre)
-);
+	  idMarca SMALLINT
+	, nombreMarca VARCHAR(50) NOT NULL
+	, PRIMARY KEY(idMarca)
+    , UNIQUE (nombreMarca)
+)
 GO

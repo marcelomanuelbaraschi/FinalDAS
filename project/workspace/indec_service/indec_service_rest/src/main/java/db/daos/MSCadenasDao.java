@@ -13,9 +13,9 @@ public class MSCadenasDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         Cadena cadena = new Cadena();
-        cadena.setId(result.getLong("id"));
-        cadena.setNombre(result.getString("nombre"));
-        cadena.setImagen(result.getString("imagen"));
+        cadena.setIdCadena(result.getInt("idCadena"));
+        cadena.setNombreCadena(result.getString("nombreCadena"));
+        cadena.setImagenCadena(result.getString("imagenCadena"));
         return cadena;
     }
 

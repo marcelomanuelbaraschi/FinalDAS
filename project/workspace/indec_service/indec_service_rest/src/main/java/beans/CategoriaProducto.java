@@ -1,37 +1,27 @@
 package beans;
 
-
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
 public class CategoriaProducto implements Bean {
 
-    @SerializedName("id")
-    private Long id;
-    @SerializedName("nombre")
-    private String nombre;
-    @SerializedName("urlImagen")
-    private String urlImagen;
+    @SerializedName("idCategoria")
+    private Integer idCategoria;
+    @SerializedName("nombreCategoria")
+    private String nombreCategoria;
+    @SerializedName("urlImagenCategoria")
+    private String urlImagenCategoria;
 
 
-    public Long getId() {
-        return id;
-    }
+    public Integer getIdCategoria() {      return idCategoria;   }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setIdCategoria(Integer idCategoria) {      this.idCategoria = idCategoria;   }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombreCategoria() {       return nombreCategoria;   }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void setNombreCategoria(String nombreCategoria) {      this.nombreCategoria = nombreCategoria;   }
 
-    public String getUrlImagen() { return urlImagen; }
+    public String getUrlImagenCategoria() {       return urlImagenCategoria;   }
 
-    public void setUrlImagen(String urlImagen) { this.urlImagen = urlImagen; }
-
+    public void setUrlImagenCategoria(String urlImagenCategoria) {     this.urlImagenCategoria = urlImagenCategoria;   }
 }

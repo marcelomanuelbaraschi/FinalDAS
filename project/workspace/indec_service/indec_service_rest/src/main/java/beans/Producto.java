@@ -5,34 +5,30 @@ import db.Bean;
 
 public class Producto  implements Bean {
 
-    @SerializedName("nombre")
-    private String nombre;
-    @SerializedName("idComercial")
-    private String idComercial;
+    @SerializedName("nombreProducto")
+    private String nombreProducto;
+    @SerializedName("codigoDeBarras")
+    private String codigoDeBarras;
     @SerializedName("idCategoria")
     private Long idCategoria;
     @SerializedName("nombreCategoria")
     private String nombreCategoria;
     @SerializedName("nombreMarca")
     private String nombreMarca;
-    @SerializedName("imagen")
-    private String imagen;
+    @SerializedName("imagenProducto")
+    private String imagenProducto;
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombreProducto() {       return nombreProducto;   }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void setNombreProducto(String nombreProducto) {       this.nombreProducto = nombreProducto;   }
 
-    public String getIdComercial() {
-        return idComercial;
-    }
+    public String getCodigoDeBarras() {       return codigoDeBarras;   }
 
-    public void setIdComercial(String idComercial) {
-        this.idComercial = idComercial;
-    }
+    public void setCodigoDeBarras(String codigoDeBarras) {       this.codigoDeBarras = codigoDeBarras;   }
+
+    public String getImagenProducto() {       return imagenProducto;   }
+
+    public void setImagenProducto(String imagenProducto) {       this.imagenProducto = imagenProducto;   }
 
     public Long getIdCategoria() {
         return idCategoria;
@@ -50,13 +46,6 @@ public class Producto  implements Bean {
         this.nombreMarca = nombreMarca;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
 
     public String getNombreCategoria() {     return nombreCategoria;  }
 

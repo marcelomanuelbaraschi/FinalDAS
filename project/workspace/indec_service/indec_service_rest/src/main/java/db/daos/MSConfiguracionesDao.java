@@ -10,9 +10,9 @@ public class MSConfiguracionesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         Configuracion config = new Configuracion();
-        config.setId(result.getLong("id"));
-        config.setTecnologia(result.getString("tecnologia"));
-        config.setIdCadena(result.getLong("idCadena"));
+        config.setIdConfig(result.getInt("idConfig"));
+        config.setNombreTecnologia(result.getString("nombreTecnologia"));
+        config.setIdCadena(result.getInt("idCadena"));
         config.setNombreCadena(result.getString("nombreCadena"));
         config.setUrl(result.getString("url"));
         return config;

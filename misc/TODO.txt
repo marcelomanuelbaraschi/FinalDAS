@@ -3,3 +3,7 @@
 pedir una vez, y se almacenan en el ls.
 - eliminar atrib precioDesde precioHasta de tabla producto
 -poner como delimitador el go en liquibase procedures <sqlFile splitStatements="true" endDelimiter="GO" stripComments="false">
+
+
+------------------------------- -            - -- - - - -
+ACOMODAR NOMBRES DE SP EN CADENAS

@@ -14,9 +14,7 @@ public class Provincia implements Bean {
         return codigoEntidadFederal;
     }
 
-    public void setCodigoEntidadFederal(String codigoEntidadFederal) {
-        this.codigoEntidadFederal = codigoEntidadFederal;
-    }
+    public void setCodigoEntidadFederal(String codigoEntidadFederal) {     this.codigoEntidadFederal = codigoEntidadFederal;    }
 
     public String getNombreProvincia() {
         return nombreProvincia;

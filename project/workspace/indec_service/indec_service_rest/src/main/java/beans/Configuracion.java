@@ -5,44 +5,32 @@ import db.Bean;
 
 public class Configuracion implements Bean {
 
-    @SerializedName("id")
-    private Long id;
+    @SerializedName("idConfig")
+    private Integer idConfig;
     @SerializedName("idCadena")
-    private Long idCadena;
+    private Integer idCadena;
     @SerializedName("nombreCadena")
     private String nombreCadena;
-    @SerializedName("tecnologia")
-    private String tecnologia;
+    @SerializedName("nombreTecnologia")
+    private String nombreTecnologia;
     @SerializedName("url")
     private String url ;
 
-    public Long getId() {
-        return id;
-    }
+    public Integer getIdConfig() {       return idConfig;   }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setIdConfig(Integer idConfig) {       this.idConfig = idConfig;   }
 
-    public Long getIdCadena() {  return idCadena;  }
+    public String getNombreTecnologia() {       return nombreTecnologia;   }
 
-    public void setIdCadena(Long idCadena) {    this.idCadena = idCadena;   }
+    public void setNombreTecnologia(String nombreTecnologia) {       this.nombreTecnologia = nombreTecnologia;   }
 
-    public String getNombreCadena() {
-        return nombreCadena;
-    }
+    public Integer getIdCadena() {  return idCadena;  }
 
-    public void setNombreCadena(String nombreCadena) {
-        this.nombreCadena = nombreCadena;
-    }
+    public void setIdCadena(Integer idCadena) {    this.idCadena = idCadena;   }
 
-    public String getTecnologia() {
-        return tecnologia;
-    }
+    public String getNombreCadena() {        return nombreCadena;   }
 
-    public void setTecnologia(String tecnologia) {
-        this.tecnologia = tecnologia;
-    }
+    public void setNombreCadena(String nombreCadena) {       this.nombreCadena = nombreCadena;   }
 
     public String getUrl() {
         return url;

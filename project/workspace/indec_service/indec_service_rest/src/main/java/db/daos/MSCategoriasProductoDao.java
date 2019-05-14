@@ -11,9 +11,9 @@ public class MSCategoriasProductoDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         CategoriaProducto categoria = new CategoriaProducto();
-        categoria.setId(result.getLong("id"));
-        categoria.setNombre(result.getString("nombre"));
-        categoria.setUrlImagen(result.getString("urlImagen"));
+        categoria.setIdCategoria(result.getInt("idCategoria"));
+        categoria.setNombreCategoria(result.getString("nombreCategoria"));
+        categoria.setUrlImagenCategoria(result.getString("urlImagenCategoria"));
         return categoria;
     }
 

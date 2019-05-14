@@ -1,14 +1,15 @@
 CREATE TABLE producto (
-	  id BIGINT IDENTITY (1,1)
-    , idComercial VARCHAR (100) NOT NULL
-    , idCategoria BIGINT NOT NULL
-	, nombre VARCHAR(100) NOT NULL
-    , nombreMarca VARCHAR(50) NOT NULL
-    , imagen VARCHAR(200) NULL
-    , FOREIGN KEY(idCategoria) REFERENCES categoriaProducto(id)
-    , FOREIGN KEY(nombreMarca) REFERENCES marcaProducto(nombre)
-    , UNIQUE (idComercial)
-	, PRIMARY KEY(id)
-);
+	  idProducto SMALLINT IDENTITY (1,1)
+    , codigoDeBarras VARCHAR (100) NOT NULL
+    , idCategoria SMALLINT NOT NULL
+	, nombreProducto VARCHAR(100) NOT NULL
+    , idMarca SMALLINT NOT NULL
+    , imagenProducto VARCHAR(200) NULL
+    , idIngrediente SMALLINT NOT NULL
+    , FOREIGN KEY (idCategoria) REFERENCES categoriaProducto(idCategoria)
+    , FOREIGN KEY (idMarca) REFERENCES marcaProducto(idMarca)
+    , FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente)
+    , UNIQUE (codigoDeBarras)
+	, PRIMARY KEY(idProducto)
+)
 GO
-

@@ -1,3 +1,3 @@
-INSERT INTO tecnologia (nombre)
+INSERT INTO tecnologia (nombreTecnologia)
     VALUES ('SOAP')
          , ('REST')

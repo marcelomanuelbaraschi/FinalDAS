@@ -1,0 +1,12 @@
+INSERT INTO ingredientes_plato (idIngrediente, idPlato,descripcion)
+VALUES
+(6,2,'700 gr')
+,(7,2,'200 cc')
+,(8,2,'1 kg')
+,(9,2,'6 un')
+,(10,2,'200 cc')
+,(11,2,'50 gr')
+,(12,2,'2 cucharadas')
+,(13,2,'1/2 cucharada')
+,(14,2,'1/2 cucharada')
+,(15,2,'1 cucharadita')

@@ -1,5 +1,5 @@
 CREATE PROCEDURE spCadenas AS
 BEGIN
- SELECT  id, nombre, imagen
+ SELECT  idCadena, nombreCadena, imagenCadena
     FROM  cadena
 END
