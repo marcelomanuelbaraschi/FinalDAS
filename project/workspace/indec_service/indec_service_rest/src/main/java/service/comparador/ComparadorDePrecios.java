@@ -19,22 +19,23 @@ public class ComparadorDePrecios {
 
         if (cadenas==null) throw new IllegalArgumentException("El parametro cadenas is null");
 
-
-
         List<Cadena> cadenasDisponibles = new LinkedList<>();
         List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
         for(Cadena cad : cadenas){
-            if(cad.getDisponibilidad().equals("Disponible") && cad.getSucursales()!= null)
+            if(cad.getSucursales()!= null)
                 cadenasDisponibles.add(cad);
-            if(cad.getDisponibilidad().equals("No Disponible") && cad.getSucursales()== null)
+            if(cad.getSucursales()== null)
                 cadenasNoDisponibles.add(cad);
             else throw new IllegalArgumentException("ComparadorDePrecios : El parametro no tiene el formato correcto..");
         }
 
 
-        if(cadenasDisponibles.isEmpty()){
-            List<Cadena> cadenasDisponiblesMarcadas = marcarSucursales(marcarProductosMasBajos(cadenasDisponibles));
+        if(!cadenasDisponibles.isEmpty()){
+            List<Cadena> cadenasDisponiblesMarcadas =
+                    marcarSucursales(
+                            marcarProductosMasBajos(cadenasDisponibles)
+                    );
 
             return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasDisponibles.stream()).collect(toList());
         }
@@ -84,7 +85,7 @@ public class ComparadorDePrecios {
             for (Sucursal s : c.getSucursales()) {
                 if(cantidad_max.equals(s.getCantidadDeProductosConPrecioMasBajo()))
                      s.setMejorOpcion(true);
-                else s.setMejorOpcion(true);
+                else s.setMejorOpcion(false);
 
             }
         }
