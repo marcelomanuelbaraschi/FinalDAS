@@ -16,7 +16,7 @@ public class ObtenerCadenas {
         try {
 
             List<Bean> cadenas = DaoFactory.getDao("Cadenas")
-                    .select(null);
+                                            .select(null);
 
             return Arrays.asList(GSON.transform(cadenas, Cadena[].class));
 

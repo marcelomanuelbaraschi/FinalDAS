@@ -21,6 +21,7 @@ public class ObtenerSucursalesDeCadena {
         final Integer idCadena = configuracion.getIdCadena();
         final String nombreCadena = configuracion.getNombreCadena();
         Cadena cadena = new Cadena();
+
         try {
 
             CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia,idCadena);

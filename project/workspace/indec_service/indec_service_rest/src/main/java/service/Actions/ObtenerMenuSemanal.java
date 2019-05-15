@@ -16,7 +16,7 @@ public class ObtenerMenuSemanal {
     {
         try {
             List<Bean> menuSemanal = DaoFactory.getDao("MenuSemanal")
-                    .select(null);
+                                               .select(null);
             return Arrays.asList(GSON.transform(menuSemanal, Menu[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);

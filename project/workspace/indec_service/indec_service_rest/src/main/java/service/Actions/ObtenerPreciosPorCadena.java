@@ -8,7 +8,8 @@ import static java.util.stream.Collectors.toList;
 
 public class ObtenerPreciosPorCadena {
 
-    public static List<Cadena> execute (final String codigoentidadfederal, final String localidad, final String codigos){
+    public static List<Cadena> execute (final String codigoentidadfederal, final String localidad, final String codigos)
+            throws APIException {
 
         return ObtenerConfiguraciones.execute()
         .parallelStream()
