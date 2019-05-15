@@ -1,5 +1,5 @@
 package clients;
-import constants.Constants;
+import clients.constants.Constants;
 
 public enum Tecnologia {
     REST(Constants.REST),

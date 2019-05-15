@@ -8,7 +8,7 @@ import utils.GSON;
 import java.util.Arrays;
 import java.util.List;
 
-import static constants.Constants.*;
+import static clients.constants.Constants.*;
 
 public class CadenaRestClient extends RestClient implements CadenaServiceContract {
 

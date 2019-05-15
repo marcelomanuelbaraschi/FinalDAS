@@ -7,7 +7,7 @@ import contract.CadenaServiceContract;
 import utils.GSON;
 import java.util.Arrays;
 import java.util.List;
-import static constants.Constants.*;
+import static clients.constants.Constants.*;
 import static java.util.stream.Collectors.joining;
 
 

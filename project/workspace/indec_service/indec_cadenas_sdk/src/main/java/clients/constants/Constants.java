@@ -1,4 +1,4 @@
-package constants;
+package clients.constants;
 
 public class Constants {
 
@@ -15,7 +15,6 @@ public class Constants {
     public static final String SUCURSALES = "sucursales";
     public static final String PRECIOS = "precios";
 
-    public static final String HEALTH = "health";
     public static final String CODIGO_ENTIDAD_FEDERAL = "codigoentidadfederal";
     public static final String LOCALIDAD = "localidad";
     public static final String CODIGOS = "codigos";

@@ -1,22 +1,19 @@
 package ws;
 
-import beans.Cadena;
-import service.Actions;
+import service.Actions.*;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import static javax.ws.rs.core.Response.status;
-import static service.Actions.*;
+
 import service.comparador.ComparadorDePrecios;
 
 import org.slf4j.Logger;
@@ -24,11 +21,11 @@ import org.slf4j.LoggerFactory;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
-public class ComparadorService {
+public class WebService {
 
 
     private static final Logger logger =
-            LoggerFactory.getLogger(ComparadorService.class);
+            LoggerFactory.getLogger(WebService.class);
 
     private static final ScheduledExecutorService executor =
             Executors.newScheduledThreadPool(4);
@@ -45,7 +42,7 @@ public class ComparadorService {
         );
 
         within(3, SECONDS
-        ,supplyAsync(() -> obtenerCategorias()))
+        ,supplyAsync(() -> ObtenerCategorias.execute()))
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -68,7 +65,7 @@ public class ComparadorService {
         );
 
         within(3,SECONDS
-        ,supplyAsync(Actions::obtenerProductos))
+        ,supplyAsync(()-> ObtenerProductos.execute()))
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -91,8 +88,9 @@ public class ComparadorService {
                               .build())
         );
 
-        within(3,SECONDS
-        ,supplyAsync(() -> obtenerProvincias()))
+        within(3,SECONDS,supplyAsync(() ->
+                ObtenerProvincias.execute())
+        )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -114,8 +112,9 @@ public class ComparadorService {
                               .build())
         );
 
-        within(3,SECONDS
-        ,supplyAsync(Actions::obtenerLocalidades))
+        within(3,SECONDS,supplyAsync(() ->
+                ObtenerLocalidades.execute())
+        )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -138,8 +137,9 @@ public class ComparadorService {
                         .build())
         );
 
-        within(3,SECONDS
-        ,supplyAsync(() -> obtenerCadenas()))
+        within(3,SECONDS,supplyAsync(() ->
+                        ObtenerCadenas.execute())
+        )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -156,6 +156,7 @@ public class ComparadorService {
     public void sucursales(@Suspended final AsyncResponse response
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad) {
+
         response.setTimeout(50, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
@@ -163,16 +164,9 @@ public class ComparadorService {
                         .build())
         );
 
-        CompletableFuture<List<Cadena>> obtenerSucursalesPorCadena =
-            supplyAsync(() -> {
-                return
-                        obtenerConfiguraciones().stream().parallel()
-                                .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal, localidad, config))
-                                .collect(toList());
-            });
-
-        within(50, SECONDS
-        ,obtenerSucursalesPorCadena)
+        within(50, SECONDS,supplyAsync(() ->
+                ObtenerSucursalesPorCadena.execute(codigoentidadfederal,localidad))
+        )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
         .exceptionally(exception -> {
@@ -198,16 +192,9 @@ public class ComparadorService {
                         .build())
         );
 
-        CompletableFuture<List<Cadena>> obtenerPreciosDeSucursalesPorCadena =
-            supplyAsync(() -> { return
-                    obtenerConfiguraciones()
-                            .parallelStream()
-                            .map((config) -> obtenerPreciosDeCadena(codigoentidadfederal,localidad,codigos, config))
-                            .collect(toList());
-            });
-
-        within(50,SECONDS
-        ,obtenerPreciosDeSucursalesPorCadena)
+        within(50,SECONDS,supplyAsync(() ->
+                ObtenerPreciosPorCadena.execute(codigoentidadfederal,localidad,codigos))
+        )
         .thenApply((cadenas) -> {
             return ComparadorDePrecios.compararPrecios(cadenas);
         })
@@ -234,16 +221,17 @@ public class ComparadorService {
                         .build())
         );
 
-        within(3,SECONDS
-                ,supplyAsync(Actions::obtenerMenuSemanal))
-                .thenApply(GSON::toJson)
-                .thenApply(response::resume)
-                .exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                });
+        within(3,SECONDS,supplyAsync(() ->
+                ObtenerMenuSemanal.execute())
+        )
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        });
 
     }
 

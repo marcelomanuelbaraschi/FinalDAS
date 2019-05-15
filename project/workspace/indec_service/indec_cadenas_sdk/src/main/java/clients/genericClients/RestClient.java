@@ -1,7 +1,5 @@
 package clients.genericClients;
 import clients.exceptions.ClientException;
-import org.apache.cxf.transport.http.HTTPConduit;
-import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -12,7 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-import static constants.Constants.*;
+import static clients.constants.Constants.*;
 public class RestClient  {
     private final String url;
     private final HttpClient client;
