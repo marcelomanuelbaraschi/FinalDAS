@@ -191,12 +191,12 @@ public class WebService {
                         .entity("Operation timed out")
                         .build())
         );
-
+        ComparadorDePrecios comparador = new ComparadorDePrecios();
         within(50,SECONDS,supplyAsync(() ->
                 ObtenerPreciosPorCadena.execute(codigoentidadfederal,localidad,codigos))
         )
         .thenApply((cadenas) -> {
-            return ComparadorDePrecios.compararPrecios(cadenas);
+            return comparador.compararPrecios(cadenas);
         })
         .thenApply(GSON::toJson)
         .thenApply(response::resume)

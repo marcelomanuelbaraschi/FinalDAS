@@ -14,7 +14,7 @@ public class ComparadorDePrecios {
 
     private static final Logger logger = LoggerFactory.getLogger(ComparadorDePrecios.class);
 
-    public static List<Cadena> compararPrecios (final List<Cadena> cadenas) throws IllegalArgumentException {
+    public List<Cadena> compararPrecios (final List<Cadena> cadenas) throws IllegalArgumentException {
 
 
         if (cadenas==null) throw new IllegalArgumentException("El parametro cadenas is null");
@@ -37,13 +37,13 @@ public class ComparadorDePrecios {
                             marcarProductosMasBajos(cadenasDisponibles)
                     );
 
-            return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasDisponibles.stream()).collect(toList());
+            return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream()).collect(toList());
         }
         else return cadenasNoDisponibles;
 
     }
 
-    private static  List<Cadena> marcarProductosMasBajos(final List<Cadena> cadenas){
+    private   List<Cadena> marcarProductosMasBajos(final List<Cadena> cadenas){
 
         final List<Cadena> cadenasConProductosMarcados = cadenas;
 
@@ -66,7 +66,7 @@ public class ComparadorDePrecios {
         return cadenasConProductosMarcados;
     }
 
-    private static  List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
+    private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
 
         final List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
 
@@ -93,7 +93,7 @@ public class ComparadorDePrecios {
         return cadenasConSucursalesMarcadas;
     }
 
-    private static  Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
+    private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
         final Map<String, List<Producto>> productosPorCodigoDeBarra =
                 cadenasDisponibles.stream()
                         .flatMap(cad -> cad.getSucursales().stream())

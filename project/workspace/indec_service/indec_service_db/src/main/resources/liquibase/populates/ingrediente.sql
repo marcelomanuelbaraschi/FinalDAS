@@ -33,3 +33,6 @@ VALUES
 ,(31, 'Tallarines')
 ,(32, 'Jamon Cocido')
 ,(33, 'Margarina')
+,(34, 'Bistec')
+,(35, 'Atun En Lomitos')
+,(36, 'Pan Rallado')

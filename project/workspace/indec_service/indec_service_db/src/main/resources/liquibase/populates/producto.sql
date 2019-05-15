@@ -6,8 +6,7 @@ VALUES
 ,('7791708001378',1,'Pan para Panchos Veneziana 210 Gr',59,'./../../assets/img/products/7791708001378.jpg',2)
 ,('7793890001020',1,'Pan para Panchos Fargo 210 Gr',25,'./../../assets/img/products/7793890001020.jpg',2)
 ,('7791708611652',1,'Pan para Panchos Super Veneziana 6 Un 350 Gr',59,'./../../assets/img/products/7791708611652.jpg',2)
-
-
+,('00483293',1,'Pan Rallado Lucchetti Paq 500 gr',38,'./../../assets/img/products/00483293.jpg',36)
 
 INSERT INTO producto --ok. con imagenes
 (codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente)
@@ -78,6 +77,10 @@ INSERT INTO producto --ok. con imagenes
 (codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Carnes
 VALUES
  ('0021016900000',15,'Pechuga de Pollo 1 Kg',0,'./../../assets/img/products/0021016900000.jpg',6)
+,('00042316',15,'Bife Angosto 1 kg',0,'./../../assets/img/products/00042316.jpg',34)
+,('7793360005084',15,'Atun en Lomitos al Natural La Campagnola 170 gr',33,'./../../assets/img/products/7793360005084.jpg',35)
+
+
 
 INSERT INTO producto --ok. con imagenes
 (codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Fiambres
@@ -138,4 +141,6 @@ VALUES
  ,('7790150564806',27,'Pimenton Seleccionado Extra Dulce Alicante 25 Gr',64,'./../../assets/img/products/7790150564806.jpg',30)
 
 ---------------------------------------------
+
+
 

@@ -2,6 +2,7 @@ package clients.constants;
 
 public class Constants {
 
+
     public static final String GET = "GET";
     public static final String POST = "POST";
     public static final String PUT = "PUT";
@@ -12,6 +13,8 @@ public class Constants {
 
 
     public static final String IDENTIFICADOR    = "identificador";
+    public static final String HEALTH = "health";
+
     public static final String SUCURSALES = "sucursales";
     public static final String PRECIOS = "precios";
 

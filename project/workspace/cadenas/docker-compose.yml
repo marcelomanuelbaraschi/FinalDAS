@@ -2,17 +2,17 @@
 
 version: '3'
 services:
-    #axis_one:
-    #    image: 'mssql_cadena:1.0'
-    #    ports:
-    #        - '1434:1433'
-    #    container_name: axis_one
-    #rest_one:
-    #    image: 'mssql_cadena:1.0'
-    #    ports:
-    #        - '1435:1433'
-    #    container_name: rest_one
-    #rest_one es el 1436
+    axis_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1434:1433'
+        container_name: axis_one
+    rest_one:
+        image: 'mssql_cadena:1.0'
+        ports:
+            - '1435:1433'
+        container_name: rest_one
+#    rest_one es el 1436
     cxf_one:
         image: 'mssql_cadena:1.0'
         ports:
