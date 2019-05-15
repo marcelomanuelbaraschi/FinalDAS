@@ -47,11 +47,42 @@ INSERT INTO producto --ok. con imagenes
 VALUES
  ('7790070507235',5,'Harina de Trigo 000 con Vita Zinc Favorita 1 Kg',26,'./../../assets/img/products/7790070507235.jpg',8)
 
+INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Fideos
+VALUES
+ ('7791664000163',7,'Tallarines Al Huevo La Italiana 500 Gr',65,'./../../assets/img/products/7791664000163.jpg',31)
+
+
+INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) -- Legumbres secas
+VALUES
+ ('7790580980900',12,'Porotos Alubia Remojados Arcor 300 Gr',3,'./../../assets/img/products/7790580980900.jpg',21)
+,('7790580982102',12,'Arvejas Secas Remojadas en Lata Arcor 320 Gr',3,'./../../assets/img/products/7790580982102.jpg',22)
+,('7790580981907',12,'Garbanzos Secos Remojados Arcor 300 Gr',3,'./../../assets/img/products/7790580981907.jpg',25)
+
+
+INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) -- Hortalizas
+VALUES
+ ('0024003300000',13,'Cebolla común 1 Kg',0,'./../../assets/img/products/0024003300000.jpg',16)
+,('0024014300000',13,'Zanahoria 1 Kg',0,'./../../assets/img/products/0024014300000.jpg',17)
+
+INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Frutas
+VALUES
+ ('7795184003901',14,'Tomate Pelado Entero Comun Noel 400 Gr',47,'./../../assets/img/products/7795184003901.jpg',24)
+,('0024120000000',14,'Limon 1kg',0,'./../../assets/img/products/0024120000000.jpg',26)
+
 
 INSERT INTO producto --ok. con imagenes
 (codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Carnes
 VALUES
  ('0021016900000',15,'Pechuga de Pollo 1 Kg',0,'./../../assets/img/products/0021016900000.jpg',6)
+
+INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Fiambres
+VALUES
+ ('00067154',17,'Jamon Cocido PALADINI Feteado Bli 200 Gr',66,'./../../assets/img/products/00067154.jpg',32)
 
 
 INSERT INTO producto --ok. con imagenes
@@ -75,6 +106,12 @@ VALUES
 
 
 INSERT INTO producto --ok. con imagenes
+(codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Manteca
+VALUES
+ ('7791620009858',22,'Margarina Danica Soft Light 200 Gr',67,'./../../assets/img/products/7791620009858.jpg',33)
+
+
+INSERT INTO producto --ok. con imagenes
 (codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto,idIngrediente) --Aceite
 VALUES
  ('7790070012050',23,'Aceite de Girasol Cocinero 900 Ml',61,'./../../assets/img/products/7790070012050.jpg',12)
@@ -91,4 +128,14 @@ INSERT INTO producto --ok. con imagenes
 VALUES
  ('7794980901251',27,'Aji Molido Yuspe 25 Gr',62,'./../../assets/img/products/7794980901251.jpg',13)
  ,('7790150555392',27,'Pimienta Negra Molida Alicante 25 Gr',64,'./../../assets/img/products/7790150555392.jpg',15)
+ ,('7790150545256',27,'Perejil Deshidratado Naturalidad Intacta Alicante 25 Gr',64,'./../../assets/img/products/7790150545256.jpg',18)
+ ,('7792900009025',27,'Pimienta Blanca Molida Dos Anclas 25 Gr',20,'./../../assets/img/products/7792900009025.jpg',19)
+ ,('7790150540152',27,'Oregano Naturalidad Intacta Alicante 25 Gr',64,'./../../assets/img/products/7790150540152.jpg',20)
+ ,('7792900009292',27,'Ajo Deshidratado Dos Anclas 25 Gr',20,'./../../assets/img/products/7792900009292.jpg',23)
+ ,('7798109282160',27,'Semillas de Sesamo Integral Sobre 1854 50 Gr',0,'./../../assets/img/products/7798109282160.jpg',27)
+ ,('7794000554726',27,'Caldo Para Saborizar Verduras Knorr 30 Gr',32,'./../../assets/img/products/7794000554726.jpg',28)
+ ,('7790150465400',27,'Comino Molido Naturalidad Intacta Alicante 25 Gr',64,'./../../assets/img/products/7790150465400.jpg',29)
+ ,('7790150564806',27,'Pimenton Seleccionado Extra Dulce Alicante 25 Gr',64,'./../../assets/img/products/7790150564806.jpg',30)
+
+---------------------------------------------
 

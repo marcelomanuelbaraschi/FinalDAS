@@ -65,6 +65,8 @@ VALUES
 ,(62,'YUSPE')
 ,(63,'CELUSAL')
 ,(64,'ALICANTE')
-
+,(65,'LA ITALIANA')
+,(66,'PALADINI')
+,(67,'DANICA')
 
 
