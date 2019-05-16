@@ -8,7 +8,7 @@ import db.Bean;
 
 import java.util.List;
 
-public class Cadena  implements Bean {
+public class CadenaBean implements Bean {
 
     @SerializedName("idCadena")
     private Integer idCadena;

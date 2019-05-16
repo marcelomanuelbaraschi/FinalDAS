@@ -5,7 +5,7 @@ CREATE TABLE producto (
 	, nombreProducto VARCHAR(100) NOT NULL
     , idMarca SMALLINT NOT NULL
     , imagenProducto VARCHAR(200) NULL
-    , idIngrediente SMALLINT NOT NULL
+    , idIngrediente SMALLINT NOT NULL -- fixxx
     , FOREIGN KEY (idCategoria) REFERENCES categoriaProducto(idCategoria)
     , FOREIGN KEY (idMarca) REFERENCES marcaProducto(idMarca)
     , FOREIGN KEY (idIngrediente) REFERENCES ingrediente(idIngrediente)

@@ -50,9 +50,6 @@ public class CadenaAPI {
         if(localidad == null) throw new Exception("El parametro codigos es null.");
         if(codigos == null) throw new Exception("El parametro codigos es null.");
 
-        Pattern p = Pattern.compile("[0-9]+(,[0-9]+)+");
-        if(!p.matcher(codigos).find()) throw new Exception("El parametro codigos no tiene el formato correcto.");
-
         try {
 
             CriterioBusquedaProductos criterio = new CriterioBusquedaProductos();

@@ -1,5 +1,5 @@
-package service.comparador;
-import beans.Cadena;
+package service;
+import beans.CadenaBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sdkObjects.Sucursal;
@@ -10,29 +10,28 @@ import java.util.stream.Stream;
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 
-public class ComparadorDePrecios {
+public class Comparador {
 
-    private static final Logger logger = LoggerFactory.getLogger(ComparadorDePrecios.class);
+    private static final Logger logger = LoggerFactory.getLogger(Comparador.class);
 
-    public List<Cadena> compararPrecios (final List<Cadena> cadenas) throws IllegalArgumentException {
+    public List<CadenaBean> compararPrecios (final List<CadenaBean> cadenas) throws IllegalArgumentException {
 
 
         if (cadenas==null) throw new IllegalArgumentException("El parametro cadenas is null");
 
-        List<Cadena> cadenasDisponibles = new LinkedList<>();
-        List<Cadena> cadenasNoDisponibles = new LinkedList<>();
+        List<CadenaBean> cadenasDisponibles = new LinkedList<>();
+        List<CadenaBean> cadenasNoDisponibles = new LinkedList<>();
 
-        for(Cadena cad : cadenas){
+        for(CadenaBean cad : cadenas){
             if(cad.getSucursales()!= null)
                 cadenasDisponibles.add(cad);
             if(cad.getSucursales()== null)
                 cadenasNoDisponibles.add(cad);
-            else throw new IllegalArgumentException("ComparadorDePrecios : El parametro no tiene el formato correcto..");
         }
 
 
         if(!cadenasDisponibles.isEmpty()){
-            List<Cadena> cadenasDisponiblesMarcadas =
+            List<CadenaBean> cadenasDisponiblesMarcadas =
                     marcarSucursales(
                             marcarProductosMasBajos(cadenasDisponibles)
                     );
@@ -43,13 +42,13 @@ public class ComparadorDePrecios {
 
     }
 
-    private   List<Cadena> marcarProductosMasBajos(final List<Cadena> cadenas){
+    private   List<CadenaBean> marcarProductosMasBajos(final List<CadenaBean> cadenas){
 
-        final List<Cadena> cadenasConProductosMarcados = cadenas;
+        final List<CadenaBean> cadenasConProductosMarcados = cadenas;
 
         final Map<String,Float> preciosMasBajos  = buscarPreciosMasBajos(cadenas);
 
-        for (Cadena c : cadenasConProductosMarcados) {
+        for (CadenaBean c : cadenasConProductosMarcados) {
             for (Sucursal s :  c.getSucursales()) {
                 for (Producto p : s.getProductos()) {
 
@@ -66,13 +65,13 @@ public class ComparadorDePrecios {
         return cadenasConProductosMarcados;
     }
 
-    private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
+    private   List<CadenaBean>  marcarSucursales (final List<CadenaBean> cadenas) {
 
-        final List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
+        final List<CadenaBean> cadenasConSucursalesMarcadas =  cadenas;
 
         List <Long> cantidades = new LinkedList<>();
 
-        for (Cadena c : cadenasConSucursalesMarcadas) {
+        for (CadenaBean c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
                 s.setCantidadDeProductosConPrecioMasBajo((s.getProductos().stream().filter(p -> p.isMejorOpcion()).count()));
                 cantidades.add(s.getCantidadDeProductosConPrecioMasBajo());
@@ -81,7 +80,7 @@ public class ComparadorDePrecios {
 
         final Long cantidad_max = cantidades.stream().max(naturalOrder()).get();
 
-        for (Cadena c : cadenasConSucursalesMarcadas) {
+        for (CadenaBean c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
                 if(cantidad_max.equals(s.getCantidadDeProductosConPrecioMasBajo()))
                      s.setMejorOpcion(true);
@@ -93,7 +92,7 @@ public class ComparadorDePrecios {
         return cadenasConSucursalesMarcadas;
     }
 
-    private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
+    private   Map<String,Float> buscarPreciosMasBajos(final List<CadenaBean> cadenasDisponibles){
         final Map<String, List<Producto>> productosPorCodigoDeBarra =
                 cadenasDisponibles.stream()
                         .flatMap(cad -> cad.getSucursales().stream())

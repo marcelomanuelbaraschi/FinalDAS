@@ -1,4 +1,4 @@
-package service.Actions;
+package service;
 
 
 public class APIException extends RuntimeException {
