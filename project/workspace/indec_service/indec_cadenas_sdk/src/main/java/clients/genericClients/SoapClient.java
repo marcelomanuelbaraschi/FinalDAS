@@ -22,8 +22,8 @@ public class SoapClient {
 
             HTTPConduit http = (HTTPConduit)client.getConduit();
             HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-            httpClientPolicy.setConnectionTimeout(1 * 1000);
-            httpClientPolicy.setReceiveTimeout(1 * 1000);
+            httpClientPolicy.setConnectionTimeout(60 * 1000);
+            httpClientPolicy.setReceiveTimeout(60 * 1000);
             http.setClient(httpClientPolicy);
 
 

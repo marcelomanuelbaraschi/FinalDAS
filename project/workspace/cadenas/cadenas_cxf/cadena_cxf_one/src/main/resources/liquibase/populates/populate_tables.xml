@@ -31,4 +31,15 @@
 		<sqlFile path="/src/main/resources/liquibase/populates/productoSucursal.sql"/>
 	</changeSet>
 
+	<changeSet id="Populate table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="precio"/>
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM precio
+			</sqlCheck>
+		</preConditions>
+		<sqlFile path="/src/main/resources/liquibase/populates/precio.sql"/>
+	</changeSet>
+
 </databaseChangeLog>

@@ -27,7 +27,6 @@ public class ComparadorDePrecios {
                 cadenasDisponibles.add(cad);
             if(cad.getSucursales()== null)
                 cadenasNoDisponibles.add(cad);
-            else throw new IllegalArgumentException("ComparadorDePrecios : El parametro no tiene el formato correcto..");
         }
 
 
