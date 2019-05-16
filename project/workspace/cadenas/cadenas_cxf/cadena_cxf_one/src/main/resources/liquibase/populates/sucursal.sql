@@ -1,4 +1,4 @@
-  INSERT INTO sucursal (idSucursal,nombreSucursal,codigoEntidadFederal,localidad,direccion,lat,lng)
-  VALUES
-  (1,'Walmart Córdoba Oeste Colón','AR-X','Capital','Av. Colón 6051','-31.395604', '-64.259764')
- ,(2,'Walmart Córdoba Sur' ,'AR-X','Capital','Horacio Juárez 4443','-31.467022', '-64.162502')
+INSERT INTO sucursal(idSucursal,nombre,cuit,idProvincia,idLocalidad,direccion,telefono,email,lat,lng)
+VALUES
+  (1,'Disco Velez I','30-53707910-6',22,1,'Av. Velez Sarsfield 132','0810-777-8888','disco1email@gmail.com','-31.416599','-64.187568')
+ ,(2,'Disco Estrada','30-53707910-6',22,1,'Jose Manuel Estrada 66','0351 433-3004','disco2email@gmail.com','-31.427744','-64.187982')
