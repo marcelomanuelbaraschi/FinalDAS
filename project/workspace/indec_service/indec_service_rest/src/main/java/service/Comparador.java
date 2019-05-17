@@ -14,21 +14,28 @@ public class Comparador {
 
     public Comparador(){}
 
-    private static final Logger logger = LoggerFactory.getLogger(Comparador.class);
+    private  final Logger logger = LoggerFactory.getLogger(Comparador.class);
 
-    public static List<Cadena> compararPrecios (final List<Cadena> cadenas) throws IllegalArgumentException {
+    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final List<Producto> productos) throws IllegalArgumentException {
+        if (cadenas == null)
+            throw new IllegalArgumentException("El parametro cadenas is null");
 
         List<Cadena> cadenasDisponibles = new LinkedList<>();
 
         List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
-        if (cadenas == null)
-            throw new IllegalArgumentException("El parametro cadenas is null");
+
+        for(Cadena cad : cadenas){
+            if(cad.getDisponible())
+                cadenasDisponibles.add(cad);
+            if(!cad.getDisponible())
+                cadenasNoDisponibles.add(cad);
+        }
 
         if(!cadenasDisponibles.isEmpty()){
             List<Cadena> cadenasDisponiblesMarcadas =
                     marcarSucursales(
-                            marcarProductosMasBajos(cadenasDisponibles)
+                            marcarProductosMasBajosYNoDisponibles(cadenasDisponibles,productos)
                     );
 
             return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream()).collect(toList());
@@ -37,7 +44,7 @@ public class Comparador {
 
     }
 
-    private static  List<Cadena> marcarProductosMasBajos(final List<Cadena> cadenas){
+    private   List<Cadena> marcarProductosMasBajosYNoDisponibles(final List<Cadena> cadenas,final List<Producto> productos){
 
         final List<Cadena> cadenasConProductosMarcados = cadenas;
 
@@ -45,6 +52,7 @@ public class Comparador {
 
         for (Cadena c : cadenasConProductosMarcados) {
             for (Sucursal s :  c.getSucursales()) {
+
                 for (ProductoSucursal p : s.getProductos()) {
 
                     Float precioMasBajo = preciosMasBajos.get(p.getCodigoDeBarras());
@@ -55,12 +63,30 @@ public class Comparador {
                         p.setMejorPrecio(false);
                     }
                 }
+
+                List<ProductoSucursal> productosAusentes = new LinkedList<>();
+                for (Producto p : productos) {
+                    boolean existe = exists(p.getCodigoDeBarras(),s.getProductos());
+                    if(!existe){
+                        ProductoSucursal newProduct = new ProductoSucursal();
+                        newProduct.setMejorPrecio(false);
+                        newProduct.setPrecio((float) 0);
+                        newProduct.setCodigoDeBarras(p.getCodigoDeBarras());
+                        newProduct.setNombre(p.getNombreProducto());
+                        newProduct.setMarca(p.getNombreMarca());
+                        productosAusentes.add(newProduct);
+                    }
+                }
+                List<ProductoSucursal> allProducts =
+                        Stream.concat(s.getProductos().stream(), productosAusentes.stream()).collect(toList());
+                s.setProductos(allProducts);
+
             }
         }
         return cadenasConProductosMarcados;
     }
 
-    private static  List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
+    private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
 
         final List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
 
@@ -91,7 +117,7 @@ public class Comparador {
         return cadenasConSucursalesMarcadas;
     }
 
-    private static  Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
+    private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
 
 
         final Map<String, List<ProductoSucursal>> productosPorCodigoDeBarra =
@@ -117,36 +143,8 @@ public class Comparador {
 
     }
 
-    public static List<Cadena> completarProductosFaltantes(final List<Cadena> cadenas, final List<Producto> productos) {
 
-        List<Cadena> cadenasConProductosFaltantes = cadenas;
-
-        for (Cadena c : cadenasConProductosFaltantes) {
-            if(c.getDisponible()){
-                for (Sucursal s : c.getSucursales()) {
-                    List<ProductoSucursal> productosAusentes = new LinkedList<>();
-                    for (Producto p : productos) {
-                        boolean existe = exists(p.getCodigoDeBarras(),s.getProductos());
-                        if(!existe){
-                            ProductoSucursal newProduct = new ProductoSucursal();
-                            newProduct.setDisponible(false);
-                            newProduct.setCodigoDeBarras(p.getCodigoDeBarras());
-                            newProduct.setNombre(p.getNombreProducto());
-                            newProduct.setMarca(p.getNombreMarca());
-                            productosAusentes.add(newProduct);
-                        }
-                    }
-                    List<ProductoSucursal> allProducts =
-                            Stream.concat(s.getProductos().stream(), productosAusentes.stream()).collect(toList());
-                    s.setProductos(allProducts);
-                }
-            }
-        }
-
-        return cadenasConProductosFaltantes;
-    }
-
-    private static boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
+    private  boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
         for (ProductoSucursal producto : productos) {
             if(producto.getCodigoDeBarras().equals(codigoDeBarras)){
                 return true;

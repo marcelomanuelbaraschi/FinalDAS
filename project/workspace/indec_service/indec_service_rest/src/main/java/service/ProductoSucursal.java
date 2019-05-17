@@ -22,16 +22,6 @@ public class ProductoSucursal {
     @SerializedName("mejorPrecio")
     private boolean mejorPrecio;
 
-    @SerializedName("disponible")
-    private boolean disponible;
-
-    public boolean getDisponible() {
-        return disponible;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;

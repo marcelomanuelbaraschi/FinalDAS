@@ -205,19 +205,15 @@ public class WebService {
         .thenApply((configuraciones) ->{
                 final List<Cadena> cadenas =
                         Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones);
+                final List<String> codigosDeBarra = asList(codigos);
 
-                return Comparador.compararPrecios(cadenas);
-        }).thenApply((cadenas)->{
+                List<Producto> productos =
+                        CanastaBasica.obtenerProductos()
+                                .stream()
+                                .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
+                                .collect(Collectors.toList());
 
-            final List<String> codigosDeBarra = asList(codigos);
-
-            List<Producto> productos =
-                    CanastaBasica.obtenerProductos()
-                            .stream()
-                            .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
-                            .collect(Collectors.toList());
-
-            return Comparador.completarProductosFaltantes(cadenas,productos);
+                return (new Comparador()).compararPrecios(cadenas,productos);
         })
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
