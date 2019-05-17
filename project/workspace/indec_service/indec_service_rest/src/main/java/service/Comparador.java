@@ -94,9 +94,13 @@ public class Comparador {
     }
 
     private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
+
+
         final Map<String, List<Producto>> productosPorCodigoDeBarra =
-                cadenasDisponibles.stream()
+
+                    cadenasDisponibles.stream()
                         .flatMap(cad -> cad.getSucursales().stream())
+                        .filter(suc -> !suc.getProductos().isEmpty())
                         .flatMap(suc -> suc.getProductos().stream())
                         .collect(groupingBy(Producto::getCodigoDeBarras));
 
