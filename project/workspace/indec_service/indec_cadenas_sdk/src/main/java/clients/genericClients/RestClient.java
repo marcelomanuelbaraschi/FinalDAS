@@ -28,7 +28,7 @@ public class RestClient  {
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(60 * 1000)
                 .setConnectionRequestTimeout(60* 1000)
-                .setSocketTimeout(1 * 1000).build();
+                .setSocketTimeout(60 * 1000).build();
         this.client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
     }
 

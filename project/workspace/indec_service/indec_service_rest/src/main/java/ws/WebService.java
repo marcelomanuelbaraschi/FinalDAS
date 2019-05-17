@@ -194,11 +194,12 @@ public class WebService {
                         .build())
         );
         Comparador comparador = new Comparador();
+
         FutureOps.within(50, SECONDS,executor,supplyAsync(() ->
                 Cadenas.obtenerConfiguraciones())
         )
         .thenApply((configuraciones) ->
-                Cadenas.obtenerSucursales(codigoentidadfederal,localidad,configuraciones)
+                Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones)
         )
         .thenApply((cadenas) -> {
             return comparador.compararPrecios(cadenas);

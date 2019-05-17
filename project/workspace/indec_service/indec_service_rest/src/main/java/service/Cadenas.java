@@ -129,13 +129,13 @@ public class Cadenas {
                     Arrays.asList(
                             GSON.toObject(client.precios(codigoentidadfederal,localidad,codigos)
                                           ,Sucursal[].class)
-                    );;
+                    );
+
+            if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
             for (Sucursal s : sucursales){
                 s.setIdCadena(idCadena);
             }
-
-            if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
             cadena.setDisponible(true);
             cadena.setIdCadena(idCadena);
@@ -149,6 +149,7 @@ public class Cadenas {
             cadena.setDisponible(false);
             cadena.setIdCadena(idCadena);
             cadena.setNombreCadena(nombreCadena);
+            //lista vacia
             LinkedList<Sucursal> sucs = new LinkedList<Sucursal>();
             cadena.setSucursales(sucs);
             return cadena;
