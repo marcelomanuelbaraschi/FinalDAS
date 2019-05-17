@@ -1,12 +1,11 @@
 package db.daos;
 
-import beans.Producto;
+import db.beans.Producto;
 import db.Bean;
 import db.DaoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
 public class MSProductosDao  extends DaoImpl {

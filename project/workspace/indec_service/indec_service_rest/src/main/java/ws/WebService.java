@@ -88,7 +88,7 @@ public class WebService {
         );
 
         FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
-                Geo.obtenerProvincias())
+                Localizacion.obtenerProvincias())
         )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
@@ -112,7 +112,7 @@ public class WebService {
         );
 
         FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
-                Geo.obtenerLocalidades())
+                Localizacion.obtenerLocalidades())
         )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)

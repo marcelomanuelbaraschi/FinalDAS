@@ -1,5 +1,5 @@
 package db.daos;
-import beans.Configuracion;
+import db.beans.Configuracion;
 import db.Bean;
 import db.DaoImpl;
 import java.sql.ResultSet;

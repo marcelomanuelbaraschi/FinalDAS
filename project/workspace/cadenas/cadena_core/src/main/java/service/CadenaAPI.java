@@ -17,7 +17,7 @@ public class CadenaAPI {
 
     private CadenaAPI(){ }
 
-    public static List<Sucursal> sucursales (final String codigoentidadfederal
+    public static String sucursales (final String codigoentidadfederal
                                             ,final String localidad) throws Exception
     {
 
@@ -33,15 +33,14 @@ public class CadenaAPI {
             List<Bean> sucs = DaoFactory.getDao("Sucursales")
                                         .select(criterio);
 
-
-            return Arrays.asList(GSON.transform(sucs, Sucursal[].class));
+            return GSON.toJson(sucs);
 
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());
         }
     }
 
-    public static List<Sucursal> preciosSucursales(final String codigoentidadfederal
+    public static String preciosSucursales(final String codigoentidadfederal
                                                   ,final String localidad
                                                   ,final String codigos) throws Exception
     {
@@ -60,7 +59,7 @@ public class CadenaAPI {
             List<Bean> ps = DaoFactory.getDao("PreciosSucursales")
                                       .select(criterio);
 
-            return Arrays.asList(GSON.transform(ps, Sucursal[].class));
+            return GSON.toJson(ps);
 
         } catch (SQLException ex) {
             throw new Exception(ex.getMessage());

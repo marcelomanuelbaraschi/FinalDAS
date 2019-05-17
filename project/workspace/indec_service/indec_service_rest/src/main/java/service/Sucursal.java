@@ -1,4 +1,4 @@
-package sdkObjects;
+package service;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -67,7 +67,6 @@ public class Sucursal {
     public void setMejorOpcion(boolean mejorOpcion) {
         this.mejorOpcion = mejorOpcion;
     }
-
     public Long getIdSucursal() {
         return idSucursal;
     }

@@ -26,11 +26,9 @@ public class CadenaRestOne  {
                                ,@QueryParam("localidad") final String localidad)
     {
         try{
-            final List<Sucursal> sucs =
-                    CadenaAPI.sucursales(codigoentidadfederal, localidad);
 
             return Response.status(Response.Status.OK).entity(
-                    GSON.toJson(sucs)
+                    CadenaAPI.sucursales(codigoentidadfederal, localidad)
             ).build();
         }
         catch (Exception e){
@@ -46,11 +44,9 @@ public class CadenaRestOne  {
     {
     
         try{
-            final List<Sucursal> ps =
-                    CadenaAPI.preciosSucursales(codigoEntidadFederal, localidad, codigos);
 
             return Response.status(Response.Status.OK).entity(
-                    GSON.toJson(ps)
+                    CadenaAPI.preciosSucursales(codigoEntidadFederal, localidad, codigos)
             ).build();
         }
         catch (Exception e){

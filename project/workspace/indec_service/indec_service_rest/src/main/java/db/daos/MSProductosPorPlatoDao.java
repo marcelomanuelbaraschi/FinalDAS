@@ -1,8 +1,7 @@
 package db.daos;
 
-import beans.Localidad;
-import beans.Plato;
-import beans.Producto;
+import db.beans.Plato;
+import db.beans.Producto;
 import db.Bean;
 import db.DaoImpl;
 

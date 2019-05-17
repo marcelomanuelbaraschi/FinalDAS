@@ -1,33 +1,25 @@
 package clients;
 
-import sdkObjects.Sucursal;
 import clients.exceptions.ClientException;
 import clients.genericClients.RestClient;
 import contract.CadenaServiceContract;
-import utils.GSON;
-import java.util.Arrays;
-import java.util.List;
 
 import static clients.constants.Constants.*;
 
 public class CadenaRestClient extends RestClient implements CadenaServiceContract {
 
-    private final Integer idCadena;
-
-    public CadenaRestClient(final String url,final Integer idCadena){
+    public CadenaRestClient(final String url){
         super(url);
-        this.idCadena = idCadena;
     }
 
-    @Override
     public String health() throws ClientException {
         final String url = getQuery(HEALTH);
         //TODO log
         return call(GET, String.format(url));
     }
 
-    @Override
-    public List<Sucursal> sucursales(final String codigoentidadfederal, final String localidad)
+
+    public String sucursales(final String codigoentidadfederal, final String localidad)
             throws ClientException
     {
 
@@ -40,10 +32,13 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
         //Hacemos la llamada http
         final String sucursalesJson = call(GET, url);
 
-        //Pasamos de un json a una Lista de Sucursales
-        List<Sucursal> sucursales = Arrays.asList(GSON.toObject(sucursalesJson, Sucursal[].class));
+        return sucursalesJson;
 
-        //Le asignamos a las sucursales un idCadena
+
+        //Pasamos de un json a una Lista de Sucursales
+        //List<Sucursal> sucursales = Arrays.asList(GSON.toObject(sucursalesJson, Sucursal[].class));
+
+        /*//Le asignamos a las sucursales un idCadena
         if (!sucursales.isEmpty()) {
 
             for (Sucursal sucursal : sucursales) {
@@ -52,10 +47,10 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
             return sucursales;
         }
         else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
+        */
     }
 
-    @Override
-    public List<Sucursal> precios(String codigoentidadfederal, String localidad, String codigos)
+    public String precios(String codigoentidadfederal, String localidad, String codigos)
             throws ClientException
     {
 
@@ -72,11 +67,12 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
         //Hacemos la llamada http
         final String preciosJson = call(POST, url);
 
+        return preciosJson;
         //Pasamos de un json a una Lista de Sucursales
-        List<Sucursal> sucursales = Arrays.asList(GSON.toObject(preciosJson, Sucursal[].class));
+        //List<Sucursal> sucursales = Arrays.asList(GSON.toObject(preciosJson, Sucursal[].class));
 
         //Le asignamos a las sucursales un  idCadena
-        if (!sucursales.isEmpty()) {
+        /*if (!sucursales.isEmpty()) {
 
             for (Sucursal sucursal : sucursales) {
                 sucursal.setIdCadena(this.idCadena);
@@ -84,6 +80,6 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
             return sucursales;
         }
         else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
-
+        */
     }
 }

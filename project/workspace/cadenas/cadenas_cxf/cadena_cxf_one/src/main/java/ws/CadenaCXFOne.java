@@ -30,12 +30,8 @@ public class CadenaCXFOne {
     public String sucursales(@WebParam(name = "codigoentidadfederal") final String codigoentidadfederal
                             ,@WebParam(name = "localidad") final String localidad) throws Exception {
 
-        if(codigoentidadfederal == null) throw new Exception("El codigoentidadfederal codigos es null.");
-        if(localidad == null) throw new Exception("El parametro localidad es null.");
 
-        final List<Sucursal> sucs =
-                CadenaAPI.sucursales(codigoentidadfederal, localidad);
-        return GSON.toJson(sucs);
+        return CadenaAPI.sucursales(codigoentidadfederal, localidad);
     }
 
     @WebMethod(operationName = "precios", action = "urn:Precios")
@@ -43,13 +39,7 @@ public class CadenaCXFOne {
                          ,@WebParam(name = "localidad") final String localidad
                          ,@WebParam(name = "codigos") final String codigos) throws Exception{
 
-        if(codigoentidadfederal == null) throw new Exception("El codigoentidadfederal codigos es null.");
-        if(localidad == null) throw new Exception("El parametro localidad es null.");
-        if(codigos == null) throw new Exception("El parametro codigos es null.");
-
-        final List<Sucursal> ps =
-                CadenaAPI.preciosSucursales(codigoentidadfederal,localidad,codigos);
-        return GSON.toJson(ps);
+        return CadenaAPI.preciosSucursales(codigoentidadfederal,localidad,codigos);
     }
 
 }

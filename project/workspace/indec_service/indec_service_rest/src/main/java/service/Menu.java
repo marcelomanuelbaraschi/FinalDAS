@@ -1,8 +1,8 @@
 package service;
 
-import beans.CadenaBean;
-import beans.Plato;
-import beans.Producto;
+import db.beans.Cadena;
+import db.beans.Plato;
+import db.beans.Producto;
 import db.Bean;
 import db.DaoFactory;
 import utilities.GSON;
@@ -14,12 +14,12 @@ import java.util.List;
 public class Menu {
 
 
-    public static List<beans.Menu> obtenerMenuSemanal() throws APIException
+    public static List<Menu> obtenerMenuSemanal() throws APIException
     {
         try {
             List<Bean> menuSemanal = DaoFactory.getDao("MenuSemanal")
                     .select(null);
-            return Arrays.asList(GSON.transform(menuSemanal, beans.Menu[].class));
+            return Arrays.asList(GSON.transform(menuSemanal, Menu[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);
         }
@@ -41,7 +41,7 @@ public class Menu {
 
     }
 
-    public List<CadenaBean> armarPlato
+    public List<Cadena> armarPlato
             (final  String codigoentidadfederal
                     ,final  String localidad
                     ,final  Integer idPlato) throws APIException {
@@ -50,7 +50,7 @@ public class Menu {
         String codigos = listaDeProductos.stream()
                 .map(p -> p.getCodigoDeBarras())
                 .collect(Collectors.joining(","));
-        List<CadenaBean> cadenas = ObtenerPreciosPorCadena.execute(codigoentidadfederal, localidad, codigos);
+        List<Cadena> cadenas = ObtenerPreciosPorCadena.execute(codigoentidadfederal, localidad, codigos);
         */return null;
     }
 }

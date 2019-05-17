@@ -9,13 +9,13 @@ import contract.CadenaServiceContract;
 public class CadenaClientFactory {
 
     public static CadenaServiceContract  clientFor
-            (final String url,final Tecnologia tecnologia,final Integer idCadena)
+            (final String url,final Tecnologia tecnologia)
             throws ClientException
     {
         if (tecnologia.equals(Tecnologia.REST)) {
-            return new CadenaRestClient(url,idCadena);
+            return new CadenaRestClient(url);
         }else if (tecnologia.equals(Tecnologia.SOAP)) {
-            return new CadenaSoapClient(url,idCadena);
+            return new CadenaSoapClient(url);
         } else  throw new ClientException ("No se pudo crear el cliente, verifique los parametros..");
     }
 }

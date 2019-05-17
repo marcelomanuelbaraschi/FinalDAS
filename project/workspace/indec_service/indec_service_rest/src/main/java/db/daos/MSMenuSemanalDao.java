@@ -1,16 +1,14 @@
 package db.daos;
 
 
-import beans.Ingrediente;
-import beans.Menu;
-import beans.Plato;
+import db.beans.Ingrediente;
+import db.beans.Menu;
+import db.beans.Plato;
 import db.Bean;
 import db.DaoImpl;
-import sdkObjects.Sucursal;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 

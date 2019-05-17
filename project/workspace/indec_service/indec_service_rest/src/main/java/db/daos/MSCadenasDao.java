@@ -1,6 +1,6 @@
 package db.daos;
 
-import beans.CadenaBean;
+import db.beans.Cadena;
 import db.Bean;
 import db.DaoImpl;
 
@@ -12,7 +12,7 @@ public class MSCadenasDao extends DaoImpl {
 
     @Override
     public Bean make(ResultSet result) throws SQLException {
-        CadenaBean cadena = new CadenaBean();
+        Cadena cadena = new Cadena();
         cadena.setIdCadena(result.getInt("idCadena"));
         cadena.setNombreCadena(result.getString("nombreCadena"));
         cadena.setImagenCadena(result.getString("imagenCadena"));

@@ -1,4 +1,4 @@
-- cambiar nombres de atributos en tablas, beans e interfaces de angular.
+- cambiar nombres de atributos en tablas, db.beans e interfaces de angular.
 - controlar llamada a servicion INDEC para datos estaticos (provincias, localidades, cadenas), ya que solo se necesitan 
 pedir una vez, y se almacenan en el ls.
 - eliminar atrib precioDesde precioHasta de tabla producto

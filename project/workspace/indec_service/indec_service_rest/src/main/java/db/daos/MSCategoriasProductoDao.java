@@ -1,5 +1,5 @@
 package db.daos;
-import beans.CategoriaProducto;
+import db.beans.CategoriaProducto;
 import db.Bean;
 import db.DaoImpl;
 

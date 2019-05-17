@@ -1,9 +1,9 @@
-package beans;
+package db.beans;
 
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
-public class Producto  implements Bean {
+public class Producto implements Bean {
 
     @SerializedName("nombreProducto")
     private String nombreProducto;

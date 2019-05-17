@@ -1,6 +1,6 @@
-package beans;
+package db.beans;
 
-import sdkObjects.Sucursal;
+import service.Sucursal;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
@@ -8,7 +8,7 @@ import db.Bean;
 
 import java.util.List;
 
-public class CadenaBean implements Bean {
+public class Cadena implements Bean {
 
     @SerializedName("idCadena")
     private Integer idCadena;
@@ -19,11 +19,22 @@ public class CadenaBean implements Bean {
     @SerializedName("sucursales")
     private List<Sucursal> sucursales;
 
-    @SerializedName("disponibilidad")
-    private String disponibilidad;
-
     @SerializedName("imagenCadena")
     private String imagenCadena;
+
+    @SerializedName("disponible")
+    private Boolean disponible;
+
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
+
 
     public Integer getIdCadena() {      return idCadena;   }
 
@@ -39,14 +50,6 @@ public class CadenaBean implements Bean {
 
     public void setSucursales(List<Sucursal> sucursales) {
         this.sucursales = sucursales;
-    }
-
-    public String getDisponibilidad() {
-        return disponibilidad;
-    }
-
-    public void setDisponibilidad(String disponibilidad) {
-        this.disponibilidad = disponibilidad;
     }
 
     public String getImagenCadena() {      return imagenCadena;   }

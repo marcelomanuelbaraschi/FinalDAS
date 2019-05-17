@@ -1,16 +1,16 @@
 package service;
 
-import beans.CadenaBean;
-import beans.Configuracion;
+import db.beans.Cadena;
+import db.beans.Configuracion;
 import clients.Tecnologia;
 import clients.factory.CadenaClientFactory;
 import contract.CadenaServiceContract;
 import db.Bean;
 import db.DaoFactory;
-import sdkObjects.Sucursal;
 import utilities.GSON;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.lang.Enum.valueOf;
@@ -18,21 +18,21 @@ import static java.util.stream.Collectors.toList;
 
 public class Cadenas {
 
-    public static List<CadenaBean> obtenerCadenas() throws APIException
+    public static List<Cadena> obtenerCadenas() throws APIException
     {
         try {
 
             List<Bean> cadenas = DaoFactory.getDao("Cadenas")
                     .select(null);
 
-            return Arrays.asList(GSON.transform(cadenas, CadenaBean[].class));
+            return Arrays.asList(GSON.transform(cadenas, Cadena[].class));
 
         } catch (SQLException ex) {
             throw new APIException(ex);
         }
     }
 
-    public static List<CadenaBean> obtenerSucursales
+    public static List<Cadena> obtenerSucursales
         (final String codigoentidadfederal
         ,final String localidad
         ,final List<Configuracion> configuraciones)
@@ -42,7 +42,7 @@ public class Cadenas {
                 .collect(toList());
     }
 
-    public static CadenaBean obtenerSucursales
+    public static Cadena obtenerSucursales
         (final String codigoentidadfederal
         ,final String localidad
         ,final Configuracion configuracion)
@@ -51,17 +51,30 @@ public class Cadenas {
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
         final Integer idCadena = configuracion.getIdCadena();
         final String nombreCadena = configuracion.getNombreCadena();
-        CadenaBean cadena = new CadenaBean();
+        Cadena cadena = new Cadena();
 
         try {
 
-            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia,idCadena);
+            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia);
 
-            List<Sucursal> sucursales = client.sucursales(codigoentidadfederal, localidad);
+            String sucursalesJson = client.sucursales(codigoentidadfederal, localidad);
+
+            List<Sucursal> sucursales =
+                    Arrays.asList(
+                            GSON.toObject(sucursalesJson
+                                    ,Sucursal[].class)
+                    );;
+
+
 
             if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
 
-            cadena.setDisponibilidad("Disponible");
+
+            for (Sucursal s : sucursales){
+                s.setIdCadena(idCadena);
+            }
+
+            cadena.setDisponible(true);
             cadena.setIdCadena(idCadena);
             cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales
@@ -70,16 +83,16 @@ public class Cadenas {
 
         } catch (Exception e) {
 
-                cadena.setDisponibilidad("No Disponible");
+                cadena.setDisponible(false);
                 cadena.setIdCadena(idCadena);
                 cadena.setNombreCadena(nombreCadena);
-                //Asignamos las sucursales null
-                cadena.setSucursales(null);
+                LinkedList<Sucursal> sucs = new LinkedList<Sucursal>();
+                cadena.setSucursales(sucs);
                 return cadena;
             }
         }
 
-    public static List<CadenaBean> obtenerPrecios
+    public static List<Cadena> obtenerPrecios
         (final String codigoentidadfederal
         ,final String localidad
         ,final String codigos
@@ -96,7 +109,7 @@ public class Cadenas {
 
     }
 
-    public static CadenaBean obtenerPrecios
+    public static Cadena obtenerPrecios
         (final String codigoentidadfederal
         ,final String localidad
         ,final String codigos
@@ -106,40 +119,42 @@ public class Cadenas {
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
         final Integer idCadena = configuracion.getIdCadena();
         final String nombreCadena = configuracion.getNombreCadena();
+        Cadena cadena = new Cadena();
 
-        List<Sucursal> sucursales;
         try {
 
-            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia,idCadena);
+            CadenaServiceContract client = CadenaClientFactory.clientFor(url,tecnologia);
 
-            sucursales = client.precios(codigoentidadfederal,localidad,codigos);
+            List<Sucursal> sucursales =
+                    Arrays.asList(
+                            GSON.toObject(client.precios(codigoentidadfederal,localidad,codigos)
+                                          ,Sucursal[].class)
+                    );;
 
-            if (sucursales.isEmpty()) {
-                CadenaBean cadena = new CadenaBean();
-                cadena.setDisponibilidad("No Hay Sucursales en esta zona");
-                cadena.setIdCadena(idCadena);
-                cadena.setNombreCadena(nombreCadena);
-                //Asignamos las sucursales null
-                cadena.setSucursales(null);
-                return cadena;
+            for (Sucursal s : sucursales){
+                s.setIdCadena(idCadena);
             }
-        } catch (Exception e) {
-            CadenaBean cadena = new CadenaBean();
-            cadena.setDisponibilidad("No Disponible");
-            cadena.setIdCadena(idCadena);
-            cadena.setNombreCadena(nombreCadena);
-            //Asignamos las sucursales null
-            cadena.setSucursales(null);
-            return cadena;
-        }
-            CadenaBean cadena = new CadenaBean();
-            cadena.setDisponibilidad("Disponible");
+
+            if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");
+
+            cadena.setDisponible(true);
             cadena.setIdCadena(idCadena);
             cadena.setNombreCadena(nombreCadena);
             //Asignamos las sucursales
             cadena.setSucursales(sucursales);
             return cadena;
+
+        } catch (Exception e) {
+
+            cadena.setDisponible(false);
+            cadena.setIdCadena(idCadena);
+            cadena.setNombreCadena(nombreCadena);
+            LinkedList<Sucursal> sucs = new LinkedList<Sucursal>();
+            cadena.setSucursales(sucs);
+            return cadena;
+        }
     }
+
 
 
     public static List<Configuracion> obtenerConfiguraciones() throws APIException

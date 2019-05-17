@@ -1,9 +1,9 @@
 package service;
-import beans.CadenaBean;
+import db.beans.Cadena;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sdkObjects.Sucursal;
-import sdkObjects.Producto;
+import utilities.GSON;
+
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -14,15 +14,16 @@ public class Comparador {
 
     private static final Logger logger = LoggerFactory.getLogger(Comparador.class);
 
-    public List<CadenaBean> compararPrecios (final List<CadenaBean> cadenas) throws IllegalArgumentException {
+    public List<Cadena> compararPrecios (final List<Cadena> cadenas) throws IllegalArgumentException {
 
+        List<Cadena> c = Arrays.asList(GSON.transform(cadenas, Cadena[].class));
 
         if (cadenas==null) throw new IllegalArgumentException("El parametro cadenas is null");
 
-        List<CadenaBean> cadenasDisponibles = new LinkedList<>();
-        List<CadenaBean> cadenasNoDisponibles = new LinkedList<>();
+        List<Cadena> cadenasDisponibles = new LinkedList<>();
+        List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
-        for(CadenaBean cad : cadenas){
+        for(Cadena cad : cadenas){
             if(cad.getSucursales()!= null)
                 cadenasDisponibles.add(cad);
             if(cad.getSucursales()== null)
@@ -31,7 +32,7 @@ public class Comparador {
 
 
         if(!cadenasDisponibles.isEmpty()){
-            List<CadenaBean> cadenasDisponiblesMarcadas =
+            List<Cadena> cadenasDisponiblesMarcadas =
                     marcarSucursales(
                             marcarProductosMasBajos(cadenasDisponibles)
                     );
@@ -42,13 +43,13 @@ public class Comparador {
 
     }
 
-    private   List<CadenaBean> marcarProductosMasBajos(final List<CadenaBean> cadenas){
+    private   List<Cadena> marcarProductosMasBajos(final List<Cadena> cadenas){
 
-        final List<CadenaBean> cadenasConProductosMarcados = cadenas;
+        final List<Cadena> cadenasConProductosMarcados = cadenas;
 
         final Map<String,Float> preciosMasBajos  = buscarPreciosMasBajos(cadenas);
 
-        for (CadenaBean c : cadenasConProductosMarcados) {
+        for (Cadena c : cadenasConProductosMarcados) {
             for (Sucursal s :  c.getSucursales()) {
                 for (Producto p : s.getProductos()) {
 
@@ -65,13 +66,13 @@ public class Comparador {
         return cadenasConProductosMarcados;
     }
 
-    private   List<CadenaBean>  marcarSucursales (final List<CadenaBean> cadenas) {
+    private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
 
-        final List<CadenaBean> cadenasConSucursalesMarcadas =  cadenas;
+        final List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
 
         List <Long> cantidades = new LinkedList<>();
 
-        for (CadenaBean c : cadenasConSucursalesMarcadas) {
+        for (Cadena c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
                 s.setCantidadDeProductosConPrecioMasBajo((s.getProductos().stream().filter(p -> p.isMejorOpcion()).count()));
                 cantidades.add(s.getCantidadDeProductosConPrecioMasBajo());
@@ -80,7 +81,7 @@ public class Comparador {
 
         final Long cantidad_max = cantidades.stream().max(naturalOrder()).get();
 
-        for (CadenaBean c : cadenasConSucursalesMarcadas) {
+        for (Cadena c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
                 if(cantidad_max.equals(s.getCantidadDeProductosConPrecioMasBajo()))
                      s.setMejorOpcion(true);
@@ -92,7 +93,7 @@ public class Comparador {
         return cadenasConSucursalesMarcadas;
     }
 
-    private   Map<String,Float> buscarPreciosMasBajos(final List<CadenaBean> cadenasDisponibles){
+    private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
         final Map<String, List<Producto>> productosPorCodigoDeBarra =
                 cadenasDisponibles.stream()
                         .flatMap(cad -> cad.getSucursales().stream())
@@ -103,7 +104,8 @@ public class Comparador {
         final Map<String,Float> preciosMasBajosPorCodigoDeBarra = new HashMap<>();
 
         productosPorCodigoDeBarra.forEach((codigoDeBarras,productos)-> {
-                    final Float precioMasBajo = productos.stream().min(comparing(p -> p.getPrecio())).get().getPrecio();
+                    final Float precioMasBajo =
+                            productos.stream().min(comparing(p -> p.getPrecio())).get().getPrecio();
                     preciosMasBajosPorCodigoDeBarra.put(codigoDeBarras,precioMasBajo);
 
                 }
