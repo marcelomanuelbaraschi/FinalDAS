@@ -46,7 +46,7 @@ public class Menu {
                     ,final  String localidad
                     ,final  Integer idPlato) throws APIException {
 
-        /*List<Producto> listaDeProductos = ObtenerProductosPorPlato.execute(idPlato);
+        /*List<ProductoSucursal> listaDeProductos = ObtenerProductosPorPlato.execute(idPlato);
         String codigos = listaDeProductos.stream()
                 .map(p -> p.getCodigoDeBarras())
                 .collect(Collectors.joining(","));

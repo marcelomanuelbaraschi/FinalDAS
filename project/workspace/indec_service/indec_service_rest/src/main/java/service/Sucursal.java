@@ -44,7 +44,7 @@ public class Sucursal {
     private Integer idCadena;
 
     @SerializedName("productos")
-    private List<Producto> productos;
+    private List<ProductoSucursal> productos;
 
     @SerializedName("CantidadDeProductosConPrecioMasBajo")
     private Long CantidadDeProductosConPrecioMasBajo;
@@ -163,11 +163,11 @@ public class Sucursal {
         this.idCadena = idCadena;
     }
 
-    public List<Producto> getProductos() {
+    public List<ProductoSucursal> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(List<ProductoSucursal> productos) {
         this.productos = productos;
     }
 }

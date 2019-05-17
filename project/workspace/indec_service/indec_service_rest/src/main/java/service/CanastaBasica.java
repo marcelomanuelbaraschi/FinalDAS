@@ -39,7 +39,7 @@ public class CanastaBasica {
     {
         try {
             List<Bean> productos = DaoFactory.getDao("Productos")
-                    .select(null);
+                                             .select(null);
             return Arrays.asList(GSON.transform(productos, Producto[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);

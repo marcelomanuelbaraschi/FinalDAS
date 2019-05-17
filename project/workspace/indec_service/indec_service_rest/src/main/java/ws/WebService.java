@@ -1,13 +1,18 @@
 package ws;
 
+import db.beans.Cadena;
+import db.beans.Producto;
 import service.*;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -193,16 +198,26 @@ public class WebService {
                         .entity("Operation timed out")
                         .build())
         );
-        Comparador comparador = new Comparador();
 
         FutureOps.within(50, SECONDS,executor,supplyAsync(() ->
                 Cadenas.obtenerConfiguraciones())
         )
-        .thenApply((configuraciones) ->
-                Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones)
-        )
-        .thenApply((cadenas) -> {
-            return comparador.compararPrecios(cadenas);
+        .thenApply((configuraciones) ->{
+                final List<Cadena> cadenas =
+                        Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones);
+
+                return Comparador.compararPrecios(cadenas);
+        }).thenApply((cadenas)->{
+
+            final List<String> codigosDeBarra = asList(codigos);
+
+            List<Producto> productos =
+                    CanastaBasica.obtenerProductos()
+                            .stream()
+                            .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
+                            .collect(Collectors.toList());
+
+            return Comparador.completarProductosFaltantes(cadenas,productos);
         })
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
@@ -257,6 +272,14 @@ public class WebService {
             return future.completeExceptionally(ex);
         }, duration, unit);
         return future;
+    }
+
+
+    public static List<String> asList(String commaSeparatedStr)
+    {
+        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
+        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
+        return result;
     }
 
 }

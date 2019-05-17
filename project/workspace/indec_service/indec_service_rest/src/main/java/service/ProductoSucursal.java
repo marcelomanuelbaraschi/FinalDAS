@@ -2,7 +2,7 @@ package service;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Producto {
+public class ProductoSucursal {
 
     @SerializedName("codigoDeBarras")
     private String codigoDeBarras;
@@ -19,9 +19,19 @@ public class Producto {
     @SerializedName("marca")
     private String marca;
 
-    @SerializedName("mejorOpcion")
-    private boolean mejorOpcion;
+    @SerializedName("mejorPrecio")
+    private boolean mejorPrecio;
 
+    @SerializedName("disponible")
+    private boolean disponible;
+
+    public boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;
@@ -63,11 +73,11 @@ public class Producto {
         this.marca = marca;
     }
 
-    public boolean isMejorOpcion() {
-        return mejorOpcion;
+    public boolean isMejorPrecio() {
+        return mejorPrecio;
     }
 
-    public void setMejorOpcion(boolean mejorOpcion) {
-        this.mejorOpcion = mejorOpcion;
+    public void setMejorPrecio(boolean mejorOpcion) {
+        this.mejorPrecio = mejorOpcion;
     }
 }
