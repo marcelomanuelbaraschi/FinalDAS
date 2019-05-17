@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;

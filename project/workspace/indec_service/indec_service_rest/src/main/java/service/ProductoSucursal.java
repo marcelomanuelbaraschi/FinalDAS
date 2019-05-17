@@ -10,7 +10,6 @@ public class ProductoSucursal {
     @SerializedName("precio")
     private Float precio;
 
-    @SerializedName("validoDesde")
     private String validoDesde;
 
     @SerializedName("nombre")

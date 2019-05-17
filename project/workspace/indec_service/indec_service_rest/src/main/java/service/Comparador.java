@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.*;
@@ -35,7 +36,7 @@ public class Comparador {
         if(!cadenasDisponibles.isEmpty()){
             List<Cadena> cadenasDisponiblesMarcadas =
                     marcarSucursales(
-                            marcarProductosMasBajosYNoDisponibles(cadenasDisponibles,productos)
+                            marcarProductos(cadenasDisponibles,productos)
                     );
 
             return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream()).collect(toList());
@@ -44,16 +45,23 @@ public class Comparador {
 
     }
 
-    private   List<Cadena> marcarProductosMasBajosYNoDisponibles(final List<Cadena> cadenas,final List<Producto> productos){
+    private   List<Cadena> marcarProductos(final List<Cadena> cadenas,final List<Producto> productos){
 
         final List<Cadena> cadenasConProductosMarcados = cadenas;
 
         final Map<String,Float> preciosMasBajos  = buscarPreciosMasBajos(cadenas);
 
+        float precioTotal = 0;
+
         for (Cadena c : cadenasConProductosMarcados) {
             for (Sucursal s :  c.getSucursales()) {
 
                 for (ProductoSucursal p : s.getProductos()) {
+
+                    precioTotal = 0;
+                    for (ProductoSucursal producto : s.getProductos()) {
+                        precioTotal = precioTotal + producto.getPrecio();
+                    }
 
                     Float precioMasBajo = preciosMasBajos.get(p.getCodigoDeBarras());
 
