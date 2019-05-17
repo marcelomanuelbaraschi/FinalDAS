@@ -24,9 +24,9 @@ public class Comparador {
         List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
         for(Cadena cad : cadenas){
-            if(cad.getSucursales()!= null)
+            if(!cad.getSucursales().isEmpty())
                 cadenasDisponibles.add(cad);
-            if(cad.getSucursales()== null)
+            if(cad.getSucursales().isEmpty())
                 cadenasNoDisponibles.add(cad);
         }
 
