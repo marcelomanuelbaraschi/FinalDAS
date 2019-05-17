@@ -21,6 +21,7 @@ import static javax.ws.rs.core.Response.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utilities.ListUtils;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
@@ -160,14 +161,14 @@ public class WebService {
             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
             ,@QueryParam("localidad") final String localidad) {
 
-        response.setTimeout(50, SECONDS);
+        response.setTimeout(6, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(50, SECONDS,executor,supplyAsync(() ->
+        FutureOps.within(6, SECONDS,executor,supplyAsync(() ->
                 Cadenas.obtenerConfiguraciones())
         )
         .thenApply((configuraciones) ->
@@ -191,28 +192,20 @@ public class WebService {
             ,@QueryParam("codigos") final String codigos)
     {
 
-        response.setTimeout(50, SECONDS);
+        response.setTimeout(6, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(50, SECONDS,executor,supplyAsync(() ->
+        FutureOps.within(6, SECONDS,executor,supplyAsync(() ->
                 Cadenas.obtenerConfiguraciones())
         )
         .thenApply((configuraciones) ->{
                 final List<Cadena> cadenas =
                         Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones);
-                final List<String> codigosDeBarra = asList(codigos);
-
-                List<Producto> productos =
-                        CanastaBasica.obtenerProductos()
-                                .stream()
-                                .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
-                                .collect(Collectors.toList());
-
-                return (new Comparador()).compararPrecios(cadenas,productos);
+                return (new Comparador()).compararPrecios(cadenas,codigos);
         })
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
@@ -269,13 +262,6 @@ public class WebService {
         return future;
     }
 
-
-    public static List<String> asList(String commaSeparatedStr)
-    {
-        String[] commaSeparatedArr = commaSeparatedStr.split("\\s*,\\s*");
-        List<String> result = Arrays.stream(commaSeparatedArr).collect(Collectors.toList());
-        return result;
-    }
 
 }
 

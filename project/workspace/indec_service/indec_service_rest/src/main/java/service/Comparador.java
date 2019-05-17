@@ -3,6 +3,7 @@ import db.beans.Cadena;
 import db.beans.Producto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utilities.ListUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,10 +18,17 @@ public class Comparador {
 
     private  final Logger logger = LoggerFactory.getLogger(Comparador.class);
 
-    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final List<Producto> productos) throws IllegalArgumentException {
+    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final String codigos) throws IllegalArgumentException,APIException{
         if (cadenas == null)
             throw new IllegalArgumentException("El parametro cadenas is null");
 
+        final List<String> codigosDeBarra = ListUtils.asList(codigos);
+
+        List<Producto> productos =
+                CanastaBasica.obtenerProductos()
+                        .stream()
+                        .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
+                        .collect(Collectors.toList());
         List<Cadena> cadenasDisponibles = new LinkedList<>();
 
         List<Cadena> cadenasNoDisponibles = new LinkedList<>();
@@ -102,7 +110,7 @@ public class Comparador {
 
         for (Cadena c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
-                long cantidadDeProductosConPrecioMasBajo =
+                Long cantidadDeProductosConPrecioMasBajo =
                         (s.getProductos().stream().filter(p -> p.isMejorPrecio()).count());
 
                 s.setCantidadDeProductosConPrecioMasBajo(cantidadDeProductosConPrecioMasBajo);
@@ -150,7 +158,6 @@ public class Comparador {
         return preciosMasBajosPorCodigoDeBarra;
 
     }
-
 
     private  boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
         for (ProductoSucursal producto : productos) {
