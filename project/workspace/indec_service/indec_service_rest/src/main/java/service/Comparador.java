@@ -2,6 +2,7 @@ package service;
 import db.beans.Cadena;
 import db.beans.Producto;
 import utilities.ListUtils;
+import utilities.NumberUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -83,7 +84,7 @@ public class Comparador {
                         p.setMejorPrecio(false);
                     }
                 }
-                s.setTotal(precioTotal);
+                s.setTotal(NumberUtils.round(precioTotal,2));
 
                 List<ProductoSucursal> productosAusentes = new LinkedList<>();
                 for (Producto p : productos) {
