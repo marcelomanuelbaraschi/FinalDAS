@@ -1,8 +1,6 @@
 package service;
 import db.beans.Cadena;
 import db.beans.Producto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import utilities.ListUtils;
 
 import java.util.*;
@@ -14,26 +12,30 @@ import static java.util.stream.Collectors.*;
 
 public class Comparador {
 
-    public Comparador(){}
-
-    private  final Logger logger = LoggerFactory.getLogger(Comparador.class);
-
-    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final String codigos) throws IllegalArgumentException,APIException{
+    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final String codigos) throws IllegalArgumentException, APIException{
         if (cadenas == null)
             throw new IllegalArgumentException("El parametro cadenas is null");
+        if (codigos == null)
+            throw new IllegalArgumentException("El parametro codigos is null");
 
+
+        //Pasamos el string de codigos a una lista de string
         final List<String> codigosDeBarra = ListUtils.asList(codigos);
 
+        //Utilizamos la lista codigosDeBarra para traer de la base de datos
+        //el listado de productos que eligio el usuario.
         List<Producto> productos =
                 CanastaBasica.obtenerProductos()
                         .stream()
                         .filter(p -> codigosDeBarra.contains(p.getCodigoDeBarras()))
                         .collect(Collectors.toList());
-        List<Cadena> cadenasDisponibles = new LinkedList<>();
 
+        //Inicializamos dos listas para separar las cadenas disponibles
+        //de las no disponibles.
+        List<Cadena> cadenasDisponibles = new LinkedList<>();
         List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
-
+        //Separamos las cadenasDisponibles de las cadenasNoDisponibles
         for(Cadena cad : cadenas){
             if(cad.getDisponible())
                 cadenasDisponibles.add(cad);
@@ -41,7 +43,10 @@ public class Comparador {
                 cadenasNoDisponibles.add(cad);
         }
 
+        //Si existen cadenasDisponibles
         if(!cadenasDisponibles.isEmpty()){
+            //Primero marcamos los productos
+            //Luego marcamos las cadenas.
             List<Cadena> cadenasDisponiblesMarcadas =
                     marcarSucursales(
                             marcarProductos(cadenasDisponibles,productos)
@@ -55,30 +60,31 @@ public class Comparador {
 
     private   List<Cadena> marcarProductos(final List<Cadena> cadenas,final List<Producto> productos){
 
-        final List<Cadena> cadenasConProductosMarcados = cadenas;
+        //Asignamos el parametro para no mutarlo.
+        List<Cadena> cadenasConProductosMarcados = cadenas;
 
+        //Buscamos los mejores precios por codigo de barras.
         final Map<String,Float> preciosMasBajos  = buscarPreciosMasBajos(cadenas);
 
         float precioTotal = 0;
 
         for (Cadena c : cadenasConProductosMarcados) {
             for (Sucursal s :  c.getSucursales()) {
-
+                precioTotal = 0;
                 for (ProductoSucursal p : s.getProductos()) {
 
-                    precioTotal = 0;
-                    for (ProductoSucursal producto : s.getProductos()) {
-                        precioTotal = precioTotal + producto.getPrecio();
-                    }
+                    precioTotal = precioTotal + p.getPrecio();
+
                     Float precioMasBajo = preciosMasBajos.get(p.getCodigoDeBarras());
 
-                    if (p.getPrecio().equals(precioMasBajo)) {
+                    if (p.getPrecio() == precioMasBajo) {
                         p.setMejorPrecio(true);
                     } else {
                         p.setMejorPrecio(false);
                     }
                 }
                 s.setTotal(precioTotal);
+
                 List<ProductoSucursal> productosAusentes = new LinkedList<>();
                 for (Producto p : productos) {
                     boolean existe = exists(p.getCodigoDeBarras(),s.getProductos());
@@ -103,27 +109,30 @@ public class Comparador {
 
     private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
 
-        final List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
+        List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
 
         List <Long> cantidades = new LinkedList<>();
 
         for (Cadena c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
-                Long cantidadDeProductosConPrecioMasBajo =
-                        (s.getProductos().stream().filter(p -> p.isMejorPrecio()).count());
-
+                long cantidadDeProductosConPrecioMasBajo = 0L;
+                for(ProductoSucursal p : s.getProductos()){
+                    if(p.isMejorPrecio())
+                        cantidadDeProductosConPrecioMasBajo = cantidadDeProductosConPrecioMasBajo + 1L;
+                }
+                System.out.println(cantidadDeProductosConPrecioMasBajo);
                 s.setCantidadDeProductosConPrecioMasBajo(cantidadDeProductosConPrecioMasBajo);
 
                 cantidades.add(cantidadDeProductosConPrecioMasBajo);
             }
         }
 
-        final Long cantidad_max = cantidades.stream().max(naturalOrder()).get();
+        final long cantidad_max = cantidades.stream().max(naturalOrder()).get().longValue();
 
         for (Cadena c : cadenasConSucursalesMarcadas) {
             for (Sucursal s : c.getSucursales()) {
-                if(cantidad_max.equals(s.getCantidadDeProductosConPrecioMasBajo()))
-                     s.setMejorOpcion(true);
+                if(cantidad_max == s.getCantidadDeProductosConPrecioMasBajo())
+                    s.setMejorOpcion(true);
                 else s.setMejorOpcion(false);
 
             }
@@ -137,7 +146,7 @@ public class Comparador {
 
         final Map<String, List<ProductoSucursal>> productosPorCodigoDeBarra =
 
-                    cadenasDisponibles.stream()
+                cadenasDisponibles.stream()
                         .flatMap(cad -> cad.getSucursales().stream())
                         .filter(suc -> !suc.getProductos().isEmpty())
                         .flatMap(suc -> suc.getProductos().stream())

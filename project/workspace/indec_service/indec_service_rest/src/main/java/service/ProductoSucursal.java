@@ -8,7 +8,7 @@ public class ProductoSucursal {
     private String codigoDeBarras;
 
     @SerializedName("precio")
-    private Float precio;
+    private float precio;
 
     private String validoDesde;
 
@@ -21,6 +21,9 @@ public class ProductoSucursal {
     @SerializedName("mejorPrecio")
     private boolean mejorPrecio;
 
+    public float getPrecio() { return precio; }
+
+    public void setPrecio(float precio) { this.precio = precio; }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;
@@ -28,14 +31,6 @@ public class ProductoSucursal {
 
     public void setCodigoDeBarras(String codigoDeBarras) {
         this.codigoDeBarras = codigoDeBarras;
-    }
-
-    public Float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Float precio) {
-        this.precio = precio;
     }
 
     public String getValidoDesde() {
