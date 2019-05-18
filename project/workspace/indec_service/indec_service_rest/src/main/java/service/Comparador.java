@@ -70,7 +70,6 @@ public class Comparador {
                     for (ProductoSucursal producto : s.getProductos()) {
                         precioTotal = precioTotal + producto.getPrecio();
                     }
-
                     Float precioMasBajo = preciosMasBajos.get(p.getCodigoDeBarras());
 
                     if (p.getPrecio().equals(precioMasBajo)) {
@@ -79,7 +78,7 @@ public class Comparador {
                         p.setMejorPrecio(false);
                     }
                 }
-
+                s.setTotal(precioTotal);
                 List<ProductoSucursal> productosAusentes = new LinkedList<>();
                 for (Producto p : productos) {
                     boolean existe = exists(p.getCodigoDeBarras(),s.getProductos());
