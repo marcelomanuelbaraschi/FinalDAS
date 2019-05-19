@@ -21,6 +21,13 @@ public class ProductoSucursal {
     @SerializedName("mejorPrecio")
     private boolean mejorPrecio;
 
+    @SerializedName("idIngrediente")
+    private int idIngrediente;
+
+    public int getIdIngrediente() {       return idIngrediente;    }
+
+    public void setIdIngrediente(int idIngrediente) {        this.idIngrediente = idIngrediente;    }
+
     public float getPrecio() { return precio; }
 
     public void setPrecio(float precio) { this.precio = precio; }

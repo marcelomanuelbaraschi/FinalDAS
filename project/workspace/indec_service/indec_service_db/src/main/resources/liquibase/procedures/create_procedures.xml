@@ -9,6 +9,20 @@
 	<!--  DROP PROCEDURES CHANGE-SETS  -->
 	<!-- ***************************** -->
 
+	<changeSet id="Drop procedure spProductosPorPlato" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spProductosPorPlato'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spProductosPorPlato"/>
+	</changeSet>
+
 	<changeSet id="Drop procedure cleanDB" author="DAS-Team" runAlways="true"
 			   runOnChange="true">
 		<preConditions onFail="MARK_RAN">
@@ -244,6 +258,36 @@
 		</preConditions>
 		<sqlFile
 				path="/src/main/resources/liquibase/procedures/spCadenas.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure cleanDB" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'cleanDB'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/cleanDB.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure spProductosPorPlato" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spProductosPorPlato'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				path="/src/main/resources/liquibase/procedures/spProductosPorPlato.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

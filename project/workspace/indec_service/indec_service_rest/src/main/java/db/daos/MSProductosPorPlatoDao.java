@@ -1,9 +1,9 @@
 package db.daos;
 
 import db.beans.Plato;
-import db.beans.Producto;
 import db.Bean;
 import db.DaoImpl;
+import db.beans.Producto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +14,7 @@ public class MSProductosPorPlatoDao extends DaoImpl {
     public Bean make(ResultSet result) throws SQLException {
         Producto producto = new Producto();
         producto.setCodigoDeBarras(result.getString("codigoDeBarras"));
+        producto.setIdIngrediente(result.getInt("idIngrediente"));
         return producto;
     }
 
@@ -36,7 +37,7 @@ public class MSProductosPorPlatoDao extends DaoImpl {
     public List<Bean> select(Bean bean) throws SQLException {
         Plato plato = (Plato) bean;
         this.connect();
-        this.setProcedure("dbo.spGetProductosPorPlato(?)");
+        this.setProcedure("dbo.spProductosPorPlato(?)");
         this.setParameter(1,plato.getIdPlato());
         List<Bean> productos = this.executeQuery();
         this.disconnect();
