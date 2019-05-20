@@ -1,4 +1,4 @@
-CREATE TABLE ingredientes_plato (
+CREATE TABLE ingrediente_plato (
     idIngrediente SMALLINT NOT NULL,
     idPlato SMALLINT NOT NULL,
     descripcion VARCHAR (500) NULL,

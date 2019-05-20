@@ -33,7 +33,7 @@ public class Menu {
         plato.setIdPlato(idPlato);
         try {
             List<Bean> productos = DaoFactory.getDao("ProductosPorPlato")
-                    .select(plato);
+                                             .select(plato);
             return Arrays.asList(GSON.transform(productos, Producto[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);

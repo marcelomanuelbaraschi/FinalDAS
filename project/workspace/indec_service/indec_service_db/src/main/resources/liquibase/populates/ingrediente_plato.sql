@@ -1,4 +1,4 @@
-INSERT INTO ingredientes_plato (idIngrediente, idPlato,descripcion)
+INSERT INTO ingrediente_plato (idIngrediente, idPlato,descripcion)
 VALUES
 (6,2,'700 gr')
 ,(7,2,'200 cc')

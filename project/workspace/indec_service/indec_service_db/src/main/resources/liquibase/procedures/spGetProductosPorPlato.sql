@@ -13,6 +13,8 @@ BEGIN
         AND @idPlato = P.idPlato
         JOIN ingrediente I
         ON IP.idIngrediente = I.idIngrediente
-        JOIN ṕroducto PR
-        ON PR.idIngrediente = I.idIngrediente
+        JOIN ingrediente_producto INGP
+        ON INGP.idIngrediente = I.idIngrediente
+        JOIN producto PR
+        ON PR.idProducto = ING.idProducto
 END
