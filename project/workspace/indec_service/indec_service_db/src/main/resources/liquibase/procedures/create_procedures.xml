@@ -9,19 +9,6 @@
 	<!--  DROP PROCEDURES CHANGE-SETS  -->
 	<!-- ***************************** -->
 
-	<changeSet id="Drop procedure spProductosPorPlato" author="DAS-Team" runAlways="true"
-			   runOnChange="true">
-		<preConditions onFail="MARK_RAN">
-			<sqlCheck expectedResult="1">
-				SELECT COUNT(*)
-				FROM information_schema.routines
-				WHERE ROUTINE_TYPE = 'PROCEDURE'
-				AND SPECIFIC_CATALOG = 'db_indec_service'
-				AND ROUTINE_NAME = 'spProductosPorPlato'
-			</sqlCheck>
-		</preConditions>
-		<dropProcedure procedureName="spProductosPorPlato"/>
-	</changeSet>
 
 	<changeSet id="Drop procedure cleanDB" author="DAS-Team" runAlways="true"
 			   runOnChange="true">
@@ -133,6 +120,20 @@
 			</sqlCheck>
 		</preConditions>
 		<dropProcedure procedureName="spProductos"/>
+	</changeSet>
+
+	<changeSet id="Drop procedure spProductosPorPlato" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_indec_service'
+				AND ROUTINE_NAME = 'spProductosPorPlato'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="spProductosPorPlato"/>
 	</changeSet>
 
 

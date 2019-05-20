@@ -31,8 +31,6 @@
 		<sqlFile path="/src/main/resources/liquibase/populates/producto.sql"/>
 	</changeSet>
 
-	<!--Menu-->
-
 
 	<changeSet id="Populate table menu" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">

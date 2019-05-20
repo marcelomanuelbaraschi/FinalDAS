@@ -16,5 +16,5 @@ BEGIN
         JOIN ingrediente_producto INGP
         ON INGP.idIngrediente = I.idIngrediente
         JOIN producto PR
-        ON PR.idProducto = ING.idProducto
+        ON PR.idProducto = INGP.idProducto
 END
