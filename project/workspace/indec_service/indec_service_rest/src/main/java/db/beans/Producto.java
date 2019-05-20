@@ -17,6 +17,16 @@ public class Producto implements Bean {
     private String nombreMarca;
     @SerializedName("imagenProducto")
     private String imagenProducto;
+    @SerializedName("idIngrediente")
+    private int idIngrediente;
+
+    public int getIdIngrediente() {
+        return idIngrediente;
+    }
+
+    public void setIdIngrediente(int idIngrediente) {
+        this.idIngrediente = idIngrediente;
+    }
 
     public String getNombreProducto() {       return nombreProducto;   }
 

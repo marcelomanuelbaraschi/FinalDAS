@@ -232,14 +232,42 @@ public class WebService {
         FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
                 Menu.obtenerMenuSemanal())
         )
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
-        });
+                .thenApply(GSON::toJson)
+                .thenApply(response::resume)
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
+
+    }
+//---------------------------Experimental---------------------
+    @GET
+    @Path("/armarplato")
+    public void armarplato (@Suspended final AsyncResponse response
+                             ,@QueryParam("idplato") final Integer idplato
+                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                             ,@QueryParam("localidad") final String localidad) {
+
+        response.setTimeout(3, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build())
+        );
+
+        FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
+                Menu.armarPlato(codigoentidadfederal,localidad,idplato))
+        )
+                .thenApply(GSON::toJson)
+                .thenApply(response::resume)
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
 
     }
 

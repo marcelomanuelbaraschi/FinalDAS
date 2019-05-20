@@ -121,7 +121,6 @@ public class Comparador {
                     if(p.isMejorPrecio())
                         cantidadDeProductosConPrecioMasBajo = cantidadDeProductosConPrecioMasBajo + 1L;
                 }
-                System.out.println(cantidadDeProductosConPrecioMasBajo);
                 s.setCantidadDeProductosConPrecioMasBajo(cantidadDeProductosConPrecioMasBajo);
 
                 cantidades.add(cantidadDeProductosConPrecioMasBajo);
