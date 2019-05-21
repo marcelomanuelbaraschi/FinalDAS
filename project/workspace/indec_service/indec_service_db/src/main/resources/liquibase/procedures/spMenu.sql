@@ -9,5 +9,5 @@ BEGIN
         ON P.idPlato = IP.idPlato
         JOIN ingrediente I
         ON IP.idIngrediente = I.idIngrediente
-    ORDER BY P.idPlato
+    ORDER BY M.idMenu,P.idPlato
 END
