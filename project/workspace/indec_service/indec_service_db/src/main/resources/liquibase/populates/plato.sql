@@ -71,3 +71,8 @@ VALUES
                                                                                                           se salpimienta la preparación y se mezcla muy bien.
                                                                                                           Se agrega harina a la mezcla, hasta crear consistencia.
                                                                                                            Se arman las croquetas y se fríen.', 7)
+,(8, 'Espinacas Gratinadas', './../../../assets/img/menu/lunes/espinacas_gratinadas.jpg', 'PRECALIENTA el horno a 180°
+                                                                                           MEZCLA todos los ingredientes, reservando un poco de queso manchego rallado.
+                                                                                           COLOCA la mezcla de espinacas con queso cottage en un refractario y espolvorea con el queso restante.
+                                                                                           HORNEA durante 25 minutos.
+                                                                                           SIRVE estas espinacas con queso gratinado para la dieta como plato fuerte acompañado de arroz o como guarnición.', 1 )

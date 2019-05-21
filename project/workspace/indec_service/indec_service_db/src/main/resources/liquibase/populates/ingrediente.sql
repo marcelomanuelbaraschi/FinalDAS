@@ -36,3 +36,8 @@ VALUES
 ,(34, 'Bistec')
 ,(35, 'Atun En Lomitos')
 ,(36, 'Pan Rallado')
+,(37, 'Ricota')
+,(38, 'Espinaca')
+
+
+

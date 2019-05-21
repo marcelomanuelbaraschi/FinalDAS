@@ -65,6 +65,7 @@ INSERT INTO producto --ok. con imagenes
 VALUES
  (27,'0024003300000',13,'Cebolla común 1 Kg',0,'./../../assets/img/products/0024003300000.jpg')--16
 ,(62,'0024014300000',13,'Zanahoria 1 Kg',0,'./../../assets/img/products/0024014300000.jpg')--17
+,(64,'7790070032690',13,'Espinaca Congelada Granja del Sol 1 Kg',68,'./../../assets/img/products/7790070032690.jpg')--17
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Frutas
@@ -106,6 +107,7 @@ INSERT INTO producto --ok. con imagenes
 VALUES
  (47,'7793940692000',20,'Queso Rallado Bolsa La Serenisima 200 Gr',34,'./../../assets/img/products/7793940692000.jpg')--11
 ,(48,'7790787002931',20,'Queso Rallado Ilolay 120 Gr',60,'./../../assets/img/products/7790787002931.jpg')--11
+,(63,'060613001',20,'Ricota - Ricota',0,'./../../assets/img/products/060613001.jpg')--11
 
 
 INSERT INTO producto --ok. con imagenes
@@ -143,4 +145,5 @@ VALUES
 ---------------------------------------------
 
 
---MAX 62
+--MAX 64
+
