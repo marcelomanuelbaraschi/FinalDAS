@@ -62,11 +62,13 @@ public class MSMenuSemanalDao extends DaoImpl {
                 plato.setImagenPlato(result.getString("imagenPlato"));
                 plato.setPreparacion(result.getString("preparacion"));
                 plato.setIdPlato(result.getInt("idPlato"));
+                plato.setIdMenu(result.getInt("idMenu"));
                 ingredientes = new LinkedList<Ingrediente>();
                 while (result.getRow()>0 && plato.getIdPlato() == result.getInt("idPlato")) {
                     ingrediente = new Ingrediente();
                     ingrediente.setNombreIngrediente(result.getString("nombreIngrediente"));
                     ingrediente.setDescripcion(result.getString("descripcion"));
+                    ingrediente.setIdIngrediente(result.getInt("idIngrediente"));
                     ingredientes.add(ingrediente);
                     result.next();
                 }

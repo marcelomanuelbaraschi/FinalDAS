@@ -4,26 +4,23 @@ import db.beans.*;
 import db.Bean;
 import db.DaoFactory;
 import utilities.GSON;
-import utilities.NumberUtils;
 
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.naturalOrder;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toList;
 
-public class Menu {
+public class MenuSaludable {
 
 
     public static List<Menu> obtenerMenuSemanal() throws APIException
     {
         try {
             List<Bean> menuSemanal = DaoFactory.getDao("MenuSemanal")
-                    .select(null);
+                                               .select(null);
             return Arrays.asList(GSON.transform(menuSemanal, Menu[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);

@@ -1,18 +1,16 @@
 package ws;
 
 import db.beans.Cadena;
-import db.beans.Producto;
 import service.*;
 import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
@@ -21,7 +19,6 @@ import static javax.ws.rs.core.Response.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utilities.ListUtils;
 
 @Path("/app")
 @Produces(MediaType.APPLICATION_JSON)
@@ -192,14 +189,14 @@ public class WebService {
             ,@QueryParam("codigos") final String codigos)
     {
 
-        response.setTimeout(6, SECONDS);
+        response.setTimeout(15, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(6, SECONDS,executor,supplyAsync(() ->
+        FutureOps.within(15, SECONDS,executor,supplyAsync(() ->
                 Cadenas.obtenerConfiguraciones())
         )
         .thenApply((configuraciones) ->{
@@ -222,24 +219,24 @@ public class WebService {
     @Path("/menu")
     public void menu (@Suspended final AsyncResponse response) {
 
-        response.setTimeout(3, SECONDS);
+        response.setTimeout(3600, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
-                Menu.obtenerMenuSemanal())
+        FutureOps.within(3600,SECONDS,executor,supplyAsync(() ->
+                MenuSaludable.obtenerMenuSemanal())
         )
-                .thenApply(GSON::toJson)
-                .thenApply(response::resume)
-                .exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                });
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        });
 
     }
 //---------------------------Experimental---------------------
@@ -258,16 +255,16 @@ public class WebService {
         );
 
         FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
-                Menu.armarPlato(codigoentidadfederal,localidad,idplato))
+                MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
         )
-                .thenApply(GSON::toJson)
-                .thenApply(response::resume)
-                .exceptionally(exception -> {
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                });
+        .thenApply(GSON::toJson)
+        .thenApply(response::resume)
+        .exceptionally(exception -> {
+            logger.error("Endpoint Failure: {}", exception.getMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .entity(exception)
+                    .build());
+        });
 
     }
 
@@ -310,7 +307,7 @@ public class WebService {
         );
         Comparador comparador = new Comparador();
         within(50,SECONDS,supplyAsync(() ->
-                Menu.obtenerProductosPorPlato(idPlato))
+                MenuSaludable.obtenerProductosPorPlato(idPlato))
         )
         .thenApply((codigos)->
         )
