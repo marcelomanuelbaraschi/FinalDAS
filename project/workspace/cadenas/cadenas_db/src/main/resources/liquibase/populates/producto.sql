@@ -1,6 +1,6 @@
 INSERT INTO producto (codigoDeBarras,nombre,idMarca)
 VALUES
-,('7791708001231','Pan Hamburguesas con Sesamo Veneziana 210 Gr',59)
+ ('7791708001231','Pan Hamburguesas con Sesamo Veneziana 210 Gr',59)
 ,('7791708001248','Pan Hamburguesas Americana Veneziana 210 Gr',59)
 ,('7791708001378','Pan para Panchos Veneziana 210 Gr',59)
 ,('7793890001020','Pan para Panchos Fargo 210 Gr',25)
