@@ -241,20 +241,20 @@ public class WebService {
     }
 //---------------------------Experimental---------------------
     @GET
-    @Path("/armarplato")
+    @Path("/comparadorplato")
     public void armarplato (@Suspended final AsyncResponse response
                              ,@QueryParam("idplato") final Integer idplato
                              ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                              ,@QueryParam("localidad") final String localidad) {
 
-        response.setTimeout(3, SECONDS);
+        response.setTimeout(6, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(3,SECONDS,executor,supplyAsync(() ->
+        FutureOps.within(6,SECONDS,executor,supplyAsync(() ->
                 MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
         )
         .thenApply(GSON::toJson)
