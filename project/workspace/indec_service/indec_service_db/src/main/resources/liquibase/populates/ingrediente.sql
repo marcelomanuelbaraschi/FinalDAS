@@ -38,6 +38,17 @@ VALUES
 ,(36, 'Pan Rallado')
 ,(37, 'Ricota')
 ,(38, 'Espinaca')
-
+,(39, 'Berenjena')
+,(40, 'Provenzal')
+,(41, 'Queso Cremoso')
+,(42, 'Vinagre')
+,(43, 'Zapallo')
+,(44, 'Carne Molida')
+,(45, 'Queso Dambo')
+,(46, 'Tapa de Empanada')
+,(47, 'Pimiento Rojo')
+,(48, 'Pata Pollo')
+,(49, 'Vino Blanco')
+,(50, 'Papa blanca')
 
 

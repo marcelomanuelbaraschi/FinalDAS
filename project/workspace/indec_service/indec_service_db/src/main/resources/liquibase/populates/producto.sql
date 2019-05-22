@@ -7,6 +7,8 @@ VALUES
 ,(4,'7793890001020',1,'Pan para Panchos Fargo 210 Gr',25,'./../../assets/img/products/7793890001020.jpg')--2
 ,(5,'7791708611652',1,'Pan para Panchos Super Veneziana 6 Un 350 Gr',59,'./../../assets/img/products/7791708611652.jpg')--2
 ,(6,'00483293',1,'Pan Rallado Lucchetti Paq 500 gr',38,'./../../assets/img/products/00483293.jpg')--36
+,(72,'7790335000082',1,'Tapas Empanadas Horno Ottonello 12 Un',69,'./../../assets/img/products/7790335000082.jpg')--36
+
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto)--Galletitas de Agua
@@ -66,6 +68,11 @@ VALUES
  (27,'0024003300000',13,'Cebolla común 1 Kg',0,'./../../assets/img/products/0024003300000.jpg')--16
 ,(62,'0024014300000',13,'Zanahoria 1 Kg',0,'./../../assets/img/products/0024014300000.jpg')--17
 ,(64,'7790070032690',13,'Espinaca Congelada Granja del Sol 1 Kg',68,'./../../assets/img/products/7790070032690.jpg')--17
+,(65,'060906001',13,'Berenjenas - Berenjenas',0,'./../../assets/img/products/060906001.jpg')--17
+,(69,'00000688',13,'Zapallo Anco X Kg',0,'./../../assets/img/products/00000688.jpg')--17
+,(73,'00000671',13,'Pimiento Rojo 1 kg',0,'./../../assets/img/products/00000671.jpg')--17
+,(76,'00000695',13,'Papa Blanca  1 kg',0,'./../../assets/img/products/00000695.jpg')--17
+
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Frutas
@@ -80,7 +87,8 @@ VALUES
  (30,'0021016900000',15,'Pechuga de Pollo 1 Kg',0,'./../../assets/img/products/0021016900000.jpg')--6
 ,(40,'00042316',15,'Bife Angosto 1 kg',0,'./../../assets/img/products/00042316.jpg')--34
 ,(41,'7793360005084',15,'Atun en Lomitos al Natural La Campagnola 170 gr',33,'./../../assets/img/products/7793360005084.jpg')--35
-
+,(70,'00041412',15,'Picada Común 1 Kg',0,'./../../assets/img/products/00041412.jpg')--35
+,(74,'00046368',15,'Pata Pollo Sin Piel 1 kg',0,'./../../assets/img/products/00046368.jpg')--35
 
 
 INSERT INTO producto --ok. con imagenes
@@ -108,7 +116,8 @@ VALUES
  (47,'7793940692000',20,'Queso Rallado Bolsa La Serenisima 200 Gr',34,'./../../assets/img/products/7793940692000.jpg')--11
 ,(48,'7790787002931',20,'Queso Rallado Ilolay 120 Gr',60,'./../../assets/img/products/7790787002931.jpg')--11
 ,(63,'060613001',20,'Ricota - Ricota',0,'./../../assets/img/products/060613001.jpg')--11
-
+,(68,'00042220',20,'Cremoso Fraccionado Tregar 1 Kg',6,'./../../assets/img/products/00042220.jpg')--11
+,(71,'00035712',20,'Queso Barra Dambo Horma Milkaut 1 kg ',45,'./../../assets/img/products/00035712.jpg')--11
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Manteca
@@ -120,6 +129,12 @@ INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Aceite
 VALUES
  (50,'7790070012050',23,'Aceite de Girasol Cocinero 900 Ml',61,'./../../assets/img/products/7790070012050.jpg')--12
+
+INSERT INTO producto --ok. con imagenes
+(idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --beb alchol
+VALUES
+ (75,'7790762052357',25,'Vino Blanco Seleccion Especial Santa Ana 700 ml',70,'./../../assets/img/products/7790762052357.jpg')--14
+
 
 
 INSERT INTO producto --ok. con imagenes
@@ -141,9 +156,16 @@ VALUES
  ,(59,'7794000554726',27,'Caldo Para Saborizar Verduras Knorr 30 Gr',32,'./../../assets/img/products/7794000554726.jpg')--28
  ,(60,'7790150465400',27,'Comino Molido Naturalidad Intacta Alicante 25 Gr',64,'./../../assets/img/products/7790150465400.jpg')--29
  ,(61,'7790150564806',27,'Pimenton Seleccionado Extra Dulce Alicante 25 Gr',64,'./../../assets/img/products/7790150564806.jpg')--30
+ ,(66,'7790150570340',27,'Provenzal Deshidratado Naturalidad Intacta Alicante 50 Gr ',64,'./../../assets/img/products/7790150570340.jpg')--30
+
+
+INSERT INTO producto --ok. con imagenes
+(idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Vinagre
+VALUES
+  (67,'7792900093024',28,'Vinagre de Alcohol Dos Anclas 500 Cc',20,'./../../assets/img/products/7792900093024.jpg')--13
 
 ---------------------------------------------
 
 
---MAX 64
+--MAX 76
 
