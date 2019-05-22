@@ -59,6 +59,7 @@ public class MenuSaludable {
         List<Configuracion> configs = Cadenas.obtenerConfiguraciones();
 
         List<Cadena> cadenas = Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configs);
+        //Falta separar las cadenas disponibles de las no disponibles.
 //----------------------------------------------------------------------------------------------------------------------
         for (Cadena cadena : cadenas) {
             if (cadena.getDisponible()) {
