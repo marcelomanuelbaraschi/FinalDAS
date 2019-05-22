@@ -74,7 +74,6 @@ public class MSMenuSemanalDao extends DaoImpl {
                 }
                 plato.setIngredientes(ingredientes);
                 platos.add(plato);
-                result.next();
             }
             menu.setPlatos(platos);
             menuSemanal.add(menu);
