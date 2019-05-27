@@ -8,13 +8,13 @@
 
 	<!--   TABLE CREATION CHANGE-SETS  -->
 
-	<changeSet id="Create table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Create table marcaProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="marca"/>
+				<tableExists tableName="marcaProducto"/>
 			</not>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/marca.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/tables/marcaProducto.sql"/>
 	</changeSet>
 
 	<changeSet id="Create table producto" author="DAS-Team" runAlways="true" runOnChange="true">
@@ -54,22 +54,22 @@
 		<sqlFile path="/src/main/resources/liquibase/tables/sucursal.sql"/>
 	</changeSet>
 
-	<changeSet id="Create table productoSucursal" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Create table producto_sucursal" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="productoSucursal"/>
+				<tableExists tableName="producto_sucursal"/>
 			</not>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/productoSucursal.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/tables/producto_sucursal.sql"/>
 	</changeSet>
 
-	<changeSet id="Create table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Create table precioProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="precio"/>
+				<tableExists tableName="precioProducto"/>
 			</not>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/tables/precio.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/tables/precioProducto.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

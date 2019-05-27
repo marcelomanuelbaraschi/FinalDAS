@@ -9,11 +9,11 @@
 	<!--   TABLE POPULATION CHANGE-SETS   -->
 	<!-- ******************************** -->
 
-	<changeSet id="Populate table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Populate table marcaProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="marca"/>
+			<tableExists tableName="marcaProducto"/>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/marca.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/populates/marcaProducto.sql"/>
 	</changeSet>
 
 	<changeSet id="Populate table producto" author="DAS-Team" runAlways="true" runOnChange="true">

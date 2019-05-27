@@ -1,5 +1,5 @@
-CREATE TABLE productoSucursal (
-    idSucursal BIGINT NOT NULL
+CREATE TABLE producto_sucursal (
+    idSucursal SMALLINT NOT NULL
    ,codigoDeBarras VARCHAR (100) NOT NULL
    ,activo CHAR NOT NULL
    ,CONSTRAINT rango_activo CHECK (activo IN ('S','N'))

@@ -1,7 +1,7 @@
 CREATE TABLE localidad (
-     idLocalidad BIGINT NOT NULL
+     idLocalidad SMALLINT NOT NULL
     ,nombre VARCHAR (100) NOT NULL
-    ,idProvincia BIGINT NOT NULL
+    ,idProvincia SMALLINT NOT NULL
     ,PRIMARY KEY (idProvincia,idLocalidad)
     ,FOREIGN KEY (idProvincia) REFERENCES provincia (idProvincia)
 )

@@ -13,7 +13,7 @@ public class MSSucursalesDao extends DaoImpl {
     @Override
     public Bean make(ResultSet result) throws SQLException {
         Sucursal sucursal = new Sucursal();
-        sucursal.setIdSucursal(result.getLong("idSucursal"));
+        sucursal.setIdSucursal(result.getInt("idSucursal"));
         sucursal.setNombreSucursal(result.getString("nombreSucursal"));
         sucursal.setCuit(result.getString("cuit"));
         sucursal.setEmail(result.getString("email"));

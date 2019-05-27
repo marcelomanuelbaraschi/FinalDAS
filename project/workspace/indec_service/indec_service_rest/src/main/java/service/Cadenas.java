@@ -23,7 +23,7 @@ public class Cadenas {
         try {
 
             List<Bean> cadenas = DaoFactory.getDao("Cadenas")
-                    .select(null);
+                                           .select(null);
 
             return Arrays.asList(GSON.transform(cadenas, Cadena[].class));
 
@@ -61,9 +61,8 @@ public class Cadenas {
 
             List<Sucursal> sucursales =
                     Arrays.asList(
-                            GSON.toObject(sucursalesJson
-                                    ,Sucursal[].class)
-                    );;
+                            GSON.toObject(sucursalesJson,Sucursal[].class)
+                    );
 
 
 
@@ -127,8 +126,7 @@ public class Cadenas {
 
             List<Sucursal> sucursales =
                     Arrays.asList(
-                            GSON.toObject(client.precios(codigoentidadfederal,localidad,codigos)
-                                          ,Sucursal[].class)
+                            GSON.toObject(client.precios(codigoentidadfederal,localidad,codigos),Sucursal[].class)
                     );
 
             if (sucursales.isEmpty()) throw new Exception("No hay sucursales en esta zona");

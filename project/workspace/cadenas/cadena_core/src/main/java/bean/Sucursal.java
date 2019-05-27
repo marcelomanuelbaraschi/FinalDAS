@@ -8,7 +8,7 @@ import java.util.List;
 public class Sucursal implements Bean {
 
     @SerializedName("idSucursal")
-    private Long idSucursal;
+    private Integer idSucursal;
 
     @SerializedName("nombreSucursal")
     private String nombreSucursal;
@@ -44,11 +44,11 @@ public class Sucursal implements Bean {
     @SerializedName("productos")
     private List<Producto> productos;
 
-    public Long getIdSucursal() {
+    public Integer getIdSucursal() {
         return idSucursal;
     }
 
-    public void setIdSucursal(Long idSucursal) {
+    public void setIdSucursal(Integer idSucursal) {
         this.idSucursal = idSucursal;
     }
 

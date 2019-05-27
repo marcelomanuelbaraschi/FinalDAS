@@ -66,7 +66,7 @@ public class MSPreciosSucursalesDao extends DaoImpl {
 
         while(result.getRow()>0){
             Sucursal sucursal = new Sucursal();
-            sucursal.setIdSucursal(result.getLong("idSucursal"));
+            sucursal.setIdSucursal(result.getInt("idSucursal"));
             sucursal.setNombreSucursal(result.getString("nombreSucursal"));
             sucursal.setDireccion(result.getString("direccion"));
             sucursal.setLongitud(result.getString("latitud"));
@@ -79,7 +79,7 @@ public class MSPreciosSucursalesDao extends DaoImpl {
             sucursal.setCodigoEntidadFederal(result.getString("codigoEntidadFederal"));
 
             productos = new LinkedList<Producto>();
-            while (result.getRow()>0 && sucursal.getIdSucursal() == result.getLong("idSucursal")){
+            while (result.getRow()>0 && sucursal.getIdSucursal() == result.getInt("idSucursal")){
                 producto = new Producto();
                 producto.setCodigoDeBarras(result.getString("codigoDeBarras"));
                 producto.setNombre(result.getString("nombreProducto"));

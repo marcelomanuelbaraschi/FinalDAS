@@ -1,5 +1,5 @@
 CREATE TABLE tecnologia (
-	   idTecnologia BIGINT IDENTITY (1,1)
+	   idTecnologia SMALLINT NOT NULL
       ,nombreTecnologia VARCHAR(20) NOT NULL
 	  ,PRIMARY KEY(idTecnologia)
       ,UNIQUE (nombreTecnologia)

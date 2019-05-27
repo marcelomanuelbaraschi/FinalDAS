@@ -18,7 +18,7 @@ public class CadenaAPI {
     private CadenaAPI(){ }
 
     public static String sucursales (final String codigoentidadfederal
-                                            ,final String localidad) throws Exception
+                                    ,final String localidad) throws Exception
     {
 
         if(codigoentidadfederal == null) throw new Exception("El parametro codigos es null.");

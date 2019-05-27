@@ -8,7 +8,7 @@ import java.util.List;
 public class Sucursal {
 
     @SerializedName("idSucursal")
-    private Long idSucursal;
+    private Integer idSucursal;
 
     @SerializedName("nombreSucursal")
     private String nombreSucursal;
@@ -81,11 +81,11 @@ public class Sucursal {
     public void setMejorOpcion(boolean mejorOpcion) {
         this.mejorOpcion = mejorOpcion;
     }
-    public Long getIdSucursal() {
+    public Integer getIdSucursal() {
         return idSucursal;
     }
 
-    public void setIdSucursal(Long idSucursal) {
+    public void setIdSucursal(Integer idSucursal) {
         this.idSucursal = idSucursal;
     }
 

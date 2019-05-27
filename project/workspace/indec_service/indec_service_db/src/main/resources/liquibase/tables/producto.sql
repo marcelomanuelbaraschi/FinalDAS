@@ -1,5 +1,5 @@
 CREATE TABLE producto (
-          idProducto SMALLINT NOT NULL
+      idProducto SMALLINT NOT NULL
     , codigoDeBarras VARCHAR (100) NOT NULL
     , idCategoria SMALLINT NOT NULL
 	, nombreProducto VARCHAR(100) NOT NULL

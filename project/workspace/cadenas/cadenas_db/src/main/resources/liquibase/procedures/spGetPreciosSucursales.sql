@@ -25,7 +25,7 @@ BEGIN
             FROM string_split(@codigos, ',')
 
 
-    SELECT prodt.*,precio.precio,precio.validoDesde
+    SELECT prodt.*,precioProducto.precio,precioProducto.validoDesde
         FROM (SELECT suc.idSucursal AS idSucursal
                            ,suc.nombre AS nombreSucursal
                            ,suc.direccion AS direccion
@@ -41,7 +41,7 @@ BEGIN
                            ,prod.nombre AS nombreProducto
                            ,MAX(pre.idPrecio) AS idPrecio
                            ,marc.nombre AS marca
-                         FROM productoSucursal ps
+                         FROM producto_sucursal ps
                              JOIN sucursal suc
                                  ON ps.idSucursal = suc.idSucursal
                              JOIN localidad loc
@@ -50,12 +50,12 @@ BEGIN
                              JOIN provincia prov
                                  ON prov.idProvincia = suc.idProvincia
                                  AND prov.codigoEntidadFederal = @codigoEntidadFederal
-                             JOIN precio pre
+                             JOIN precioProducto pre
                                  ON pre.idSucursal = ps.idSucursal
                                  AND pre.codigoDeBarras = ps.codigoDeBarras
                              JOIN producto prod
                                  ON prod.codigoDeBarras = ps.codigoDeBarras
-                             JOIN marca marc
+                             JOIN marcaProducto marc
                                  ON prod.idMarca = marc.idMarca
                          WHERE
                               ps.codigoDeBarras IN (SELECT * FROM @tcodigos)
@@ -75,8 +75,8 @@ BEGIN
                                  ,prod.nombre
                                  ,marc.nombre
                  ) AS prodt
-                         JOIN precio
-                               ON precio.idPrecio = prodt.idPrecio
+                         JOIN precioProducto
+                               ON precioProducto.idPrecio = prodt.idPrecio
 
 
 

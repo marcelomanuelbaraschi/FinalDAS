@@ -1,5 +1,5 @@
 CREATE TABLE provincia (
-     idProvincia BIGINT NOT NULL
+     idProvincia SMALLINT NOT NULL
     ,codigoEntidadFederal VARCHAR (10) NOT NULL
     ,nombre VARCHAR (50) NOT NULL
     ,PRIMARY KEY (idProvincia)

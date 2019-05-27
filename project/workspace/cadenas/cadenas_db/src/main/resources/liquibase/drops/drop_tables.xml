@@ -7,18 +7,18 @@
 
 	<!--   TABLE DROP CHANGE-SETS      -->
 
-	<changeSet id="Drop table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Drop table precioProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="precio"/>
+			<tableExists tableName="precioProducto"/>
 		</preConditions>
-		<dropTable tableName="precio"/>
+		<dropTable tableName="precioProducto"/>
 	</changeSet>
 
-	<changeSet id="Drop table productoSucursal" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Drop table producto_sucursal" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="productoSucursal"/>
+			<tableExists tableName="producto_sucursal"/>
 		</preConditions>
-		<dropTable tableName="productoSucursal"/>
+		<dropTable tableName="producto_sucursal"/>
 	</changeSet>
 
 	<changeSet id="Drop table sucursal" author="DAS-Team" runAlways="true" runOnChange="true">
@@ -49,11 +49,11 @@
 		<dropTable tableName="producto"/>
 	</changeSet>
 
-	<changeSet id="Drop table marca" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Drop table marcaProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="marca"/>
+			<tableExists tableName="marcaProducto"/>
 		</preConditions>
-		<dropTable tableName="marca"/>
+		<dropTable tableName="marcaProducto"/>
 	</changeSet>
 
 </databaseChangeLog>

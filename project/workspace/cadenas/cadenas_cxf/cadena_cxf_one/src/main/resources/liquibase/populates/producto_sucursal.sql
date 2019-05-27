@@ -1,4 +1,4 @@
-INSERT INTO productoSucursal (idSucursal,codigoDeBarras,activo) VALUES
+INSERT INTO producto_sucursal (idSucursal,codigoDeBarras,activo) VALUES
  (1,'7791708001231','S')
 ,(1,'7791708001248','S')
 ,(1,'7791708001378','S')
@@ -66,7 +66,7 @@ INSERT INTO productoSucursal (idSucursal,codigoDeBarras,activo) VALUES
 ,(1,'7790762052357','S')
 ,(1,'00000695','S')
 
-INSERT INTO productoSucursal (idSucursal,codigoDeBarras,activo) VALUES
+INSERT INTO producto_sucursal (idSucursal,codigoDeBarras,activo) VALUES
  (2,'7791708001231','S')
 ,(2,'7791708001248','S')
 ,(2,'7791708001378','S')

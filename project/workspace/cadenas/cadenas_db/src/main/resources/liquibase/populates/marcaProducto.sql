@@ -1,4 +1,4 @@
-INSERT INTO marca (idMarca, nombre)
+INSERT INTO marcaProducto (idMarca, nombre)
 VALUES
  (0  ,'SIN MARCA')
 ,(1  ,'53')

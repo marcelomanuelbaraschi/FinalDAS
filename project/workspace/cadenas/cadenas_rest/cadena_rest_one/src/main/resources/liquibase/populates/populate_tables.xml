@@ -21,26 +21,26 @@
 		<sqlFile path="/src/main/resources/liquibase/populates/sucursal.sql"/>
 	</changeSet>
 
-	<changeSet id="Populate table productoSucursal" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Populate table producto_sucursal" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="productoSucursal"/>
+			<tableExists tableName="producto_sucursal"/>
 			<sqlCheck expectedResult="0">
 				SELECT COUNT(*)
-				FROM productoSucursal
+				FROM producto_sucursal
 			</sqlCheck>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/productoSucursal.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/populates/producto_sucursal.sql"/>
 	</changeSet>
 
-	<changeSet id="Populate table precio" author="DAS-Team" runAlways="true" runOnChange="true">
+	<changeSet id="Populate table precioProducto" author="DAS-Team" runAlways="true" runOnChange="true">
 		<preConditions onFail="MARK_RAN">
-			<tableExists tableName="precio"/>
+			<tableExists tableName="precioProducto"/>
 			<sqlCheck expectedResult="0">
 				SELECT COUNT(*)
-				FROM precio
+				FROM precioProducto
 			</sqlCheck>
 		</preConditions>
-		<sqlFile path="/src/main/resources/liquibase/populates/precio.sql"/>
+		<sqlFile path="/src/main/resources/liquibase/populates/precioProducto.sql"/>
 	</changeSet>
 
 </databaseChangeLog>

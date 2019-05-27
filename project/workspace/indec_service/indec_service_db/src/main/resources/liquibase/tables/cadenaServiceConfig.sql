@@ -1,9 +1,9 @@
 CREATE TABLE cadenaServiceConfig (
-	  idConfig SMALLINT IDENTITY (1,1)
+	  idConfig SMALLINT  NOT NULL
 	, idCadena SMALLINT NOT NULL
-	, nombreTecnologia VARCHAR(20) NOT NULL
+	, idTecnologia SMALLINT NOT NULL
     , url VARCHAR(200) NOT NULL
-	, FOREIGN KEY(nombreTecnologia) REFERENCES tecnologia(nombreTecnologia)
+	, FOREIGN KEY(idTecnologia) REFERENCES tecnologia(idTecnologia)
 	, FOREIGN KEY(idCadena) REFERENCES cadena(idCadena)
 	, PRIMARY KEY(idConfig)
 )

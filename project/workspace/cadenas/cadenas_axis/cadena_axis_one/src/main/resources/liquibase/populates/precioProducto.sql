@@ -1,4 +1,4 @@
-INSERT INTO precio ( idSucursal,precio,codigoDeBarras) VALUES
+INSERT INTO precioProducto ( idSucursal,precio,codigoDeBarras) VALUES
  (1,71.49,'7791708001231')
 ,(1,49.46,'7791708001248')
 ,(1,86.86,'7791708001378')
@@ -52,7 +52,7 @@ INSERT INTO precio ( idSucursal,precio,codigoDeBarras) VALUES
 ,(1,79.47,'7790150465400')
 ,(1,99.50,'7790150564806')
 
-INSERT INTO precio ( idSucursal,precio,codigoDeBarras) VALUES
+INSERT INTO precioProducto ( idSucursal,precio,codigoDeBarras) VALUES
  (2,35.49,'7791708001231')
 ,(2,95.46,'7791708001248')
 ,(2,86.86,'7791708001378')
