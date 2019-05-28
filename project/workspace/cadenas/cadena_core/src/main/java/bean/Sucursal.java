@@ -40,7 +40,6 @@ public class Sucursal implements Bean {
     @SerializedName("codigoEntidadFederal")
     private String codigoEntidadFederal;
 
-
     @SerializedName("productos")
     private List<Producto> productos;
 

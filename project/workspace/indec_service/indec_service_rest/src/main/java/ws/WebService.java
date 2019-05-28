@@ -1,6 +1,7 @@
 package ws;
 
 import db.beans.Cadena;
+import db.beans.CriterioBusquedaProducto;
 import service.*;
 import utilities.GSON;
 import javax.ws.rs.*;
@@ -38,8 +39,8 @@ public class WebService {
         response.setTimeout(3, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build())
+                              .entity("Operation timed out")
+                              .build())
         );
 
         FutureOps.within(3, SECONDS, executor, supplyAsync(()->
@@ -57,16 +58,23 @@ public class WebService {
 
     @GET
     @Path("/productos")
-    public void productos(@Suspended final AsyncResponse response) {
-        response.setTimeout(3, SECONDS);
+    public void productos(@Suspended final AsyncResponse response
+                         ,@QueryParam("idcategoria") final Short idcategoria
+                         ,@QueryParam("keyword") final String keyword)
+    {
+        response.setTimeout(3600, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build())
         );
 
-        FutureOps.within(3,SECONDS, executor ,supplyAsync(()->
-                CanastaBasica.obtenerProductos())
+        CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
+        criterio.setIdCategoria(idcategoria);
+        criterio.setKeyword(keyword);
+
+        FutureOps.within(3600,SECONDS, executor ,supplyAsync(()->
+                CanastaBasica.obtenerProductos(criterio))
         )
         .thenApply(GSON::toJson)
         .thenApply(response::resume)
@@ -184,9 +192,9 @@ public class WebService {
     @POST
     @Path("/comparador")
     public void comparador(@Suspended final AsyncResponse response
-            ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-            ,@QueryParam("localidad") final String localidad
-            ,@QueryParam("codigos") final String codigos)
+                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                          ,@QueryParam("localidad") final String localidad
+                          ,@QueryParam("codigos") final String codigos)
     {
 
         response.setTimeout(15, SECONDS);
@@ -289,38 +297,3 @@ public class WebService {
 
 
 }
-
-
-
-/* @POST
-    @Path("/armadorDePlato")
-    public void armadorDePlato (@Suspended final AsyncResponse response
-            ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-            ,@QueryParam("localidad") final String localidad
-            ,@QueryParam("idPlato") final Integer idPlato)
-    {
-        response.setTimeout(50, SECONDS);
-        response.setTimeoutHandler(
-                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build())
-        );
-        Comparador comparador = new Comparador();
-        within(50,SECONDS,supplyAsync(() ->
-                MenuSaludable.obtenerProductosPorPlato(idPlato))
-        )
-        .thenApply((codigos)->
-        )
-        .thenApply((cadenas) -> {
-            return comparador.compararPrecios(cadenas);
-        })
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
-            });
-
-    }*/

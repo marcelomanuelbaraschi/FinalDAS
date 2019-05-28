@@ -1,6 +1,7 @@
 package service;
 
 import db.beans.CategoriaProducto;
+import db.beans.CriterioBusquedaProducto;
 import db.beans.Producto;
 import db.Bean;
 import db.DaoFactory;
@@ -34,12 +35,12 @@ public class CanastaBasica {
 
     }
 
-    public static List<Producto> obtenerProductos()
-            throws APIException
+    public static List<Producto> obtenerProductos(final CriterioBusquedaProducto criterio) throws APIException
     {
         try {
+
             List<Bean> productos = DaoFactory.getDao("Productos")
-                                             .select(null);
+                                             .select(criterio);
             return Arrays.asList(GSON.transform(productos, Producto[].class));
         } catch (SQLException ex) {
             throw new APIException(ex);

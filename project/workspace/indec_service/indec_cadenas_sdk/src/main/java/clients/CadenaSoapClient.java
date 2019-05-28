@@ -12,8 +12,7 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
         super(wsdlUrl);
      }
 
-     public String health()
-            throws ClientException
+     public String health()throws ClientException
     {
         final Object object = executeMethod(HEALTH);
         final String jsonBean = object.toString();
@@ -23,8 +22,7 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
 
     public String sucursales
             (final String codigoentidadfederal
-            ,final String localidad)
-            throws ClientException
+            ,final String localidad)throws ClientException
     {
         //Ejecutamos el metodo en el servicio con el cual mantenemos conexion
         final Object object = executeMethod(SUCURSALES,codigoentidadfederal,localidad);
@@ -33,26 +31,14 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
         final String sucursalesJson = object.toString();
 
         return sucursalesJson;
-        //Pasamos de un json a una Lista de Sucursales
-        //List<Sucursal> sucursales = Arrays.asList(GSON.toObject(sucursalesJson,Sucursal[].class));
 
-        //Le asignamos a las sucursales un  idCadena
-        /*if (!sucursales.isEmpty()) {
-
-            for (Sucursal sucursal : sucursales) {
-                sucursal.setIdCadena(this.idCadena);
-            }
-            return sucursales;
-        }
-        else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
-     */
     }
 
 
     public String precios
-            (final String codigoentidadfederal,
-             final String localidad, String codigos)
-            throws ClientException
+            (final String codigoentidadfederal
+            ,final String localidad
+            ,final String codigos)throws ClientException
     {
 
         //Ejecutamos el metodo en el servicio con el cual mantenemos conexion
@@ -62,19 +48,7 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
         final String preciosJson = object.toString();
 
         return preciosJson;
-        //Pasamos de un json a una Lista de Sucursales
-        //List<Sucursal> precioSucursales = Arrays.asList(GSON.toObject(preciosJson,Sucursal[].class));
 
-        //Le asignamos a las sucursales un  idCadena
-        /*if (!precioSucursales.isEmpty()) {
-
-            for (Sucursal sucursal : precioSucursales) {
-                sucursal.setIdCadena(this.idCadena);
-            }
-            return precioSucursales;
-        }
-        else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
-        */
     }
 
 }
