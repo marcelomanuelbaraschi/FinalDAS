@@ -13,8 +13,8 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import static javax.ws.rs.core.Response.status;
 
-public class RunOp {
-    public static <T> CompletableFuture<T>
+public class FutureOp {
+    private static <T> CompletableFuture<T>
         within(long duration, TimeUnit unit, ScheduledExecutorService executor, CompletableFuture<T> future)
     {
         final CompletableFuture<T> timeout = failAfter(duration, unit, executor);
@@ -33,25 +33,22 @@ public class RunOp {
     }
 
 
-    public static void configureTimer(int i, TimeUnit seconds, AsyncResponse response) {
+    public static void execute (int i, TimeUnit seconds, ScheduledExecutorService executor,Logger logger, AsyncResponse response, CompletableFuture<String> future) {
         response.setTimeout(i, seconds);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build())
+                              .entity("Operation timed out")
+                              .build())
         );
-
-    }
-
-    public static void runXinc(int i, TimeUnit seconds, ScheduledExecutorService executor,Logger logger, AsyncResponse response, CompletableFuture<String> future) {
-         within(i,seconds,executor,future)
+        within(i,seconds,executor,future)
         .thenApply(response::resume)
         .exceptionally(exception -> {
             logger.error("Endpoint Failure: {}", exception.getMessage());
             return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
+                           .entity(exception)
+                           .build());
         });
+
     }
 
 }

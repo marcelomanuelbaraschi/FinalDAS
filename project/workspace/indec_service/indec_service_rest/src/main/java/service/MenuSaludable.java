@@ -56,9 +56,7 @@ public class MenuSaludable {
         String codigos =
                 productosIngrediente.stream().map(p -> p.getCodigoDeBarras()).collect(Collectors.joining(","));
 
-        List<Configuracion> configs = Cadenas.obtenerConfiguraciones();
-
-        List<Cadena> cadenas = Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configs);
+        List<Cadena> cadenas = Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos);
         //Falta separar las cadenas disponibles de las no disponibles.
 //----------------------------------------------------------------------------------------------------------------------
         for (Cadena cadena : cadenas) {

@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.concurrent.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
-import static javax.ws.rs.core.Response.status;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +27,16 @@ public class WebService {
     private static final ScheduledExecutorService executor =
             Executors.newScheduledThreadPool(4);
 
-
     @GET
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse response) {
 
-        RunOp.configureTimer(3, SECONDS,response);
-        RunOp.runXinc(3,SECONDS,executor,logger,response,supplyAsync(() -> GSON.toJson(CanastaBasica.obtenerCategorias())));
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        CanastaBasica.obtenerCategorias()
+                )
+        ));
     }
-
 
     @GET
     @Path("/productos")
@@ -46,58 +44,61 @@ public class WebService {
                          ,@QueryParam("idcategoria") final Short idcategoria
                          ,@QueryParam("keyword") final String keyword)
     {
-        RunOp.configureTimer(3, SECONDS,response);
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
         criterio.setKeyword(keyword);
 
-        RunOp.runXinc(3,SECONDS,executor,logger,response,supplyAsync(() -> GSON.toJson(CanastaBasica.obtenerProductos(criterio))));
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        CanastaBasica.obtenerProductos(criterio)
+                )
+        ));
 
     }
 
     @GET
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response) {
-        RunOp.configureTimer(3, SECONDS,response);
-        RunOp.runXinc(3,SECONDS,executor,logger,response,supplyAsync(() -> GSON.toJson(Localizacion.obtenerProvincias())));
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        Localizacion.obtenerProvincias()
+                )
+        ));
     }
 
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response) {
-        RunOp.configureTimer(3, SECONDS,response);
-        RunOp.runXinc(3,SECONDS,executor,logger,response,supplyAsync(() -> GSON.toJson(Localizacion.obtenerLocalidades())));
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        Localizacion.obtenerLocalidades()
+                )
+        ));
     }
 
     @GET
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response) {
-        RunOp.configureTimer(3, SECONDS,response);
-        RunOp.runXinc(3,SECONDS,executor,logger,response,supplyAsync(() -> GSON.toJson(Cadenas.obtenerCadenas())));
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        Cadenas.obtenerCadenas()
+                )
+        ));
     }
 
     @GET
     @Path("/sucursales")
     public void sucursales(@Suspended final AsyncResponse response
-            ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-            ,@QueryParam("localidad") final String localidad) {
+                          ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                          ,@QueryParam("localidad") final String localidad) {
 
-        RunOp.configureTimer(6, SECONDS,response);
-        RunOp.within(6, SECONDS,executor,supplyAsync(() ->
-                Cadenas.obtenerConfiguraciones())
-        )
-        .thenApply((configuraciones) ->
-                Cadenas.obtenerSucursales(codigoentidadfederal,localidad,configuraciones)
-        )
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
-        });
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        Cadenas.obtenerSucursales(codigoentidadfederal,localidad)
+                )
+        ));
+
     }
 
     @POST
@@ -107,24 +108,10 @@ public class WebService {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos)
     {
-
-        RunOp.configureTimer(6, SECONDS,response);
-        RunOp.within(6, SECONDS,executor,supplyAsync(() ->
-                Cadenas.obtenerConfiguraciones())
-        )
-        .thenApply((configuraciones) ->{
-                final List<Cadena> cadenas =
-                        Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones);
-                return (new Comparador()).compararPrecios(cadenas,codigos);
-        })
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                    .entity(exception)
-                    .build());
-        });
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() -> {
+            final List<Cadena> cadenas =  Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos);
+            return GSON.toJson((new Comparador()).compararPrecios(cadenas,codigos));
+        }));
 
     }
 
@@ -132,44 +119,27 @@ public class WebService {
     @Path("/menu")
     public void menu (@Suspended final AsyncResponse response) {
 
-        RunOp.configureTimer(3, SECONDS,response);
-        RunOp.within(3,SECONDS,executor,supplyAsync(() ->
-                MenuSaludable.obtenerMenuSemanal())
-        )
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
-        });
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        MenuSaludable.obtenerMenuSemanal()
+                )
+        ));
 
     }
-//---------------------------Experimental---------------------
+
     @GET
     @Path("/comparadorplato")
     public void armarplato (@Suspended final AsyncResponse response
-                             ,@QueryParam("idplato") final Integer idplato
-                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-                             ,@QueryParam("localidad") final String localidad) {
+                            ,@QueryParam("idplato") final Integer idplato
+                            ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
+                            ,@QueryParam("localidad") final String localidad) {
 
-        RunOp.configureTimer(6, SECONDS,response);
-
-        RunOp.within(6,SECONDS,executor,supplyAsync(() ->
-                MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
-        )
-        .thenApply(GSON::toJson)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
-        });
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato)
+                )
+        ));
 
     }
-
-
 
 }

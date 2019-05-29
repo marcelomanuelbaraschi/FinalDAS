@@ -32,20 +32,15 @@ public class Cadenas {
         }
     }
 
-    public static List<Cadena> obtenerSucursales
-        (final String codigoentidadfederal
-        ,final String localidad
-        ,final List<Configuracion> configuraciones)
+    public static List<Cadena> obtenerSucursales (final String codigoentidadfederal,final String localidad) throws APIException
     {
+        List<Configuracion> configuraciones =  Cadenas.obtenerConfiguraciones();
         return configuraciones.parallelStream()
                 .map((config) -> obtenerSucursales(codigoentidadfederal,localidad,config))
                 .collect(toList());
     }
 
-    public static Cadena obtenerSucursales
-        (final String codigoentidadfederal
-        ,final String localidad
-        ,final Configuracion configuracion)
+    public static Cadena obtenerSucursales (final String codigoentidadfederal,final String localidad,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
@@ -91,13 +86,9 @@ public class Cadenas {
             }
         }
 
-    public static List<Cadena> obtenerPrecios
-        (final String codigoentidadfederal
-        ,final String localidad
-        ,final String codigos
-        ,final List<Configuracion> configuraciones)throws APIException
+    public static List<Cadena> obtenerPrecios (final String codigoentidadfederal,final String localidad,final String codigos)throws APIException
     {
-
+        final List<Configuracion> configuraciones = Cadenas.obtenerConfiguraciones();
         return configuraciones.parallelStream()
                 .map((config) ->
                         obtenerPrecios(codigoentidadfederal
@@ -108,11 +99,7 @@ public class Cadenas {
 
     }
 
-    public static Cadena obtenerPrecios
-        (final String codigoentidadfederal
-        ,final String localidad
-        ,final String codigos
-        ,final Configuracion configuracion)
+    public static Cadena obtenerPrecios (final String codigoentidadfederal,final String localidad,final String codigos,final Configuracion configuracion)
     {
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
@@ -153,7 +140,6 @@ public class Cadenas {
             return cadena;
         }
     }
-
 
 
     public static List<Configuracion> obtenerConfiguraciones() throws APIException
