@@ -167,7 +167,7 @@ public class Comparador {
     private List<Producto> obtenerProductosSeleccionadosPorUsuario(final String codigos) throws APIException {
         final List<String> codigosDeBarra = ListUtils.asList(codigos);
         List<Producto> productosSeleccionados = new LinkedList<>();
-        List<Producto> productos = CanastaBasica.obtenerProductos(null);
+        List<Producto> productos = CanastaBasica.obtenerProductos();
         for(Producto p : productos){
             if(codigosDeBarra.contains(p.getCodigoDeBarras())){
                 productosSeleccionados.add(p);

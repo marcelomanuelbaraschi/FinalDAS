@@ -42,12 +42,12 @@ public class WebService {
     @Path("/productos")
     public void productos(@Suspended final AsyncResponse response
                          ,@QueryParam("idcategoria") final Short idcategoria
-                         ,@QueryParam("keyword") final String keyword)
+                         ,@QueryParam("palabraclave") final String palabraclave)
     {
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
-        criterio.setKeyword(keyword);
+        criterio.setPalabraclave(palabraclave);
 
         FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(

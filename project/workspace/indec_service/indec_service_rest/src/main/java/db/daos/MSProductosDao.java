@@ -40,32 +40,8 @@ public class MSProductosDao  extends DaoImpl {
 
     @Override
     public List<Bean> select(Bean bean) throws SQLException {
-        CriterioBusquedaProducto criterio = (CriterioBusquedaProducto) bean;
         this.connect();
-        this.setProcedure("dbo.spProductos(?,?,?)");
-
-        if(criterio !=null){
-            if(criterio.getIdCategoria()!=null){
-                this.setParameter(1,criterio.getIdCategoria());
-            }else{
-                this.setNull(1,Types.SMALLINT);
-            }
-            if(criterio.getCodigos()!=null){
-                this.setParameter(2,criterio.getCodigos());
-            }else{
-                this.setNull(2,Types.VARCHAR);
-            }
-            if(criterio.getKeyword()!=null){
-                this.setParameter(3,criterio.getKeyword());
-            }else{
-                this.setNull(3,Types.VARCHAR);
-            }
-        }else{
-            this.setNull(1,Types.SMALLINT);
-            this.setNull(2,Types.VARCHAR);
-            this.setNull(3,Types.VARCHAR);
-        }
-
+        this.setProcedure("dbo.spProductos");
         List<Bean> productos = this.executeQuery();
         this.disconnect();
         return productos;

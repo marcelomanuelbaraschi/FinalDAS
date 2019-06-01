@@ -7,4 +7,7 @@ public class APIException extends RuntimeException {
         super(ex.getMessage(), ex.getCause());
     }
 
+    public APIException(final String exmsg) {
+        super(exmsg);
+    }
 }

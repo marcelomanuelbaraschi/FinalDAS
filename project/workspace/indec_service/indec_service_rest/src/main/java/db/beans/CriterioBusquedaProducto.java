@@ -11,8 +11,8 @@ public class CriterioBusquedaProducto implements Bean {
     @SerializedName("codigos")
     private String  codigos;
 
-    @SerializedName("keyword")
-    private String keyword;
+    @SerializedName("palabraclave")
+    private String palabraclave;
 
     public String getCodigos() {
         return codigos;
@@ -26,8 +26,7 @@ public class CriterioBusquedaProducto implements Bean {
 
     public void setIdCategoria(Short idCategoria) { this.idCategoria = idCategoria; }
 
-    public String getKeyword() { return keyword; }
+    public String getPalabraclave() {return palabraclave; }
 
-    public void setKeyword(String keyword) { this.keyword = keyword; }
-
+    public void setPalabraclave(String palabraclave) { this.palabraclave = palabraclave; }
 }
