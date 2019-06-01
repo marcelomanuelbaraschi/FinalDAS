@@ -42,12 +42,12 @@ public class WebService {
     @Path("/productos")
     public void productos(@Suspended final AsyncResponse response
                          ,@QueryParam("idcategoria") final Short idcategoria
-                         ,@QueryParam("palabraclave") final String palabraclave)
+                         ,@QueryParam("marca") final String marca)
     {
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
-        criterio.setPalabraclave(palabraclave);
+        criterio.setMarca(marca);
 
         FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
@@ -55,6 +55,18 @@ public class WebService {
                 )
         ));
 
+    }
+
+    @GET
+    @Path("/buscarproductos")
+    public void buscarproductos(@Suspended final AsyncResponse response,
+                                @QueryParam("palabraclave") final String palabraclave)
+    {
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(
+                        CanastaBasica.buscarProductos(palabraclave)
+                )
+        ));
     }
 
     @GET
