@@ -11,10 +11,7 @@ import utilities.GSON;
 import utilities.ListUtils;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -41,84 +38,70 @@ public class CanastaBasica {
 
     }
 
-    public static List<Producto> obtenerProductos() throws APIException
-    {
-        try {
-
-            List<Bean> productos = DaoFactory.getDao("Productos")
-                                             .select(null);
-            return Arrays.asList(GSON.transform(productos, Producto[].class));
-        } catch (SQLException ex) {
-            throw new APIException(ex);
-        }
-
-    }
 
     public static List<Producto> obtenerProductos(final CriterioBusquedaProducto criterio) throws APIException
     {
-        List<Producto> productos = obtenerProductos();
+        List<Producto> productos;
+        List<Bean> beans;
+
+        if(criterio == null){
+            throw new APIException("El criterio de busqueda del producto es es null");
+        }
+
+        try {
+            beans = DaoFactory.getDao("Productos").select(null);
+        }catch (SQLException ex) {
+            throw new APIException(ex);
+        }
+
+        productos = Arrays.asList(GSON.transform(beans, Producto[].class));
+
+        if(productos == null || beans == null){
+            throw new APIException("Fallo al obtener los productos");
+        }
+
+
+        if(criterio.getPalabraclave() == null & criterio.getIdCategoria() == null) {
+            return productos;
+        }
 
         List<Producto> productosEncontrados = new ArrayList<>();
 
-        List<Producto> porCategoria = buscarProductosPorCategoria(productos, criterio.getIdCategoria());
-        List<Producto> porPalabraClave = buscarProductosPorPalabraClave(productos, criterio.getPalabraclave());
-        List<Producto> porPalabraCodigos = buscarProductosPorCodigos (productos,criterio.getCodigos());
+        productosEncontrados.addAll(buscarProductosPorCategoria(productos, criterio.getIdCategoria()));
+        productosEncontrados.addAll(buscarProductosPorPalabraClave(productos, criterio.getPalabraclave()));
 
-        productosEncontrados.addAll(porCategoria);
-        productosEncontrados.addAll(porPalabraClave);
-        productosEncontrados.addAll(porPalabraCodigos);
-
-        return productosEncontrados;
+        //removemos duplicados
+        return productosEncontrados.stream().distinct().collect(toList());
     }
 
 
     private static List<Producto> buscarProductosPorCategoria(final List<Producto> productos, final Short idcategoria)
     {
-        if(productos == null)
-        {
-            throw new APIException("buscarProductosPorCategoria : El parametros productos es null..");
-        }
-        if(idcategoria == null)
-        {
-            return new ArrayList<Producto>();
-        }
+        if(idcategoria == null) return new ArrayList<Producto>();
+
         List<Producto> productosEncontrados = productos.stream().filter(p -> p.getIdCategoria().equals(idcategoria)).collect(toList());
         return productosEncontrados;
-
     }
 
-    private static List<Producto> buscarProductosPorPalabraClave(final List<Producto> productos, final String palabraclave) throws APIException
+    private static List<Producto> buscarProductosPorPalabraClave(final List<Producto> productos, final String palabraclave)
     {
-        if(productos == null)
-        {
-            throw new APIException("buscarProductosPorCategoria : El parametros productos es null..");
-        }
-        if(palabraclave == null)
-        {
-            return new ArrayList<Producto>();
-        }
+        if(palabraclave == null) return new ArrayList<Producto>();
 
         List<Producto> productosEncontrados = productos.stream().filter((p) -> {
-            return p.getNombreProducto().contains(palabraclave) || p.getNombreMarca().contains(palabraclave) || p.getNombreCategoria().contains(palabraclave);
+            return     p.getNombreProducto().toLowerCase().trim().contains(palabraclave.toLowerCase().trim())
+                    || p.getNombreMarca().toLowerCase().trim().contains(palabraclave.toLowerCase().trim())
+                    || p.getNombreCategoria().toLowerCase().trim().contains(palabraclave.toLowerCase().trim());
         }).collect(toList());
         return productosEncontrados;
 
-
     }
 
 
-    private static List<Producto> buscarProductosPorCodigos(final List<Producto> productos, final String codigos) throws APIException
+    private static List<Producto> buscarProductosPorCodigos(final List<Producto> productos, final String codigos)
     {
-        if(productos == null)
-        {
-            throw new APIException("buscarProductosPorCategoria : El parametros productos es null..");
-        }
-        if(codigos == null)
-        {
-            return new ArrayList<Producto>();
-        }
+        if(codigos == null) return new ArrayList<Producto>();
 
-        List<String> lcodigos = ListUtils.asList(codigos);
+        List<String> lcodigos = ListUtils.asList(codigos).stream().map(c -> c.trim()).collect(toList());
 
         List<Producto> productosEncontrados = productos.stream().filter((p) -> {
             return lcodigos.contains(p.getCodigoDeBarras());

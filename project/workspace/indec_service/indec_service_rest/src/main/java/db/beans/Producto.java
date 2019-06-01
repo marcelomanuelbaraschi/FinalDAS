@@ -10,7 +10,7 @@ public class Producto implements Bean {
     @SerializedName("codigoDeBarras")
     private String codigoDeBarras;
     @SerializedName("idCategoria")
-    private Long idCategoria;
+    private Short idCategoria;
     @SerializedName("nombreCategoria")
     private String nombreCategoria;
     @SerializedName("nombreMarca")
@@ -40,11 +40,11 @@ public class Producto implements Bean {
 
     public void setImagenProducto(String imagenProducto) {       this.imagenProducto = imagenProducto;   }
 
-    public Long getIdCategoria() {
+    public Short getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(Long idCategoria) {
+    public void setIdCategoria(Short idCategoria) {
         this.idCategoria = idCategoria;
     }
 

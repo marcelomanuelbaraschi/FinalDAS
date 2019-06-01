@@ -1,5 +1,6 @@
 package service;
 import db.beans.Cadena;
+import db.beans.CriterioBusquedaProducto;
 import db.beans.Producto;
 import utilities.ListUtils;
 import utilities.NumberUtils;
@@ -167,7 +168,8 @@ public class Comparador {
     private List<Producto> obtenerProductosSeleccionadosPorUsuario(final String codigos) throws APIException {
         final List<String> codigosDeBarra = ListUtils.asList(codigos);
         List<Producto> productosSeleccionados = new LinkedList<>();
-        List<Producto> productos = CanastaBasica.obtenerProductos();
+        CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
+        List<Producto> productos = CanastaBasica.obtenerProductos(criterio);
         for(Producto p : productos){
             if(codigosDeBarra.contains(p.getCodigoDeBarras())){
                 productosSeleccionados.add(p);

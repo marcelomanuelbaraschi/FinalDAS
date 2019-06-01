@@ -1,13 +1,10 @@
 package db.daos;
-
-import db.beans.CriterioBusquedaProducto;
 import db.beans.Producto;
 import db.Bean;
 import db.DaoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
 public class MSProductosDao  extends DaoImpl {
@@ -15,7 +12,7 @@ public class MSProductosDao  extends DaoImpl {
     public Bean make(ResultSet result) throws SQLException {
         Producto producto = new Producto();
         producto.setCodigoDeBarras(result.getString("codigoDeBarras"));
-        producto.setIdCategoria(result.getLong("idCategoria"));
+        producto.setIdCategoria(result.getShort("idCategoria"));
         producto.setNombreCategoria(result.getString("nombreCategoria"));
         producto.setNombreProducto(result.getString("nombreProducto"));
         producto.setNombreMarca(result.getString("nombreMarca"));
