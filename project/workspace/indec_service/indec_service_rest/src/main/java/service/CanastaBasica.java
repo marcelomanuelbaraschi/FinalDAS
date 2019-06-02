@@ -18,20 +18,20 @@ public class CanastaBasica {
     private static final Logger logger =
             LoggerFactory.getLogger(CanastaBasica.class);
 
-
-    public static List<CategoriaProducto> obtenerCategorias()throws APIException {
-            try {
-                List<Bean> categorias = DaoFactory.getDao("CategoriasProducto")
-                                                  .select(null);
-                return Arrays.asList(GSON.transform(categorias, CategoriaProducto[].class));
-            } catch (SQLException ex) {
-                throw new APIException(ex);
-            }
+    public static List<CategoriaProducto> obtenerCategorias()throws APIException
+    {
+        try {
+            List<Bean> categorias = DaoFactory.getDao("CategoriasProducto")
+                                              .select(null);
+            return Arrays.asList(GSON.transform(categorias, CategoriaProducto[].class));
+        } catch (SQLException ex) {
+            throw new APIException(ex);
+        }
 
     }
 
-
-    private static List<Producto>  obtenerProductos(){
+    private static List<Producto>  obtenerProductos() throws APIException
+    {
         List<Producto> productos;
         List<Bean> beans;
         
@@ -88,8 +88,7 @@ public class CanastaBasica {
 
     }
 
-
-    public static List<Producto> buscarProductos(final String palabraclave)
+    public static List<Producto> buscarProductos(final String palabraclave) throws APIException
     {
         if(palabraclave == null) return new ArrayList<Producto>();
 
@@ -106,7 +105,7 @@ public class CanastaBasica {
 
     }
 
-    public static List<Producto> buscarProductosPorCodigos(final String codigos)
+    public static List<Producto> buscarProductosPorCodigos(final String codigos) throws APIException
     {
         List<Producto> productos = obtenerProductos();
 

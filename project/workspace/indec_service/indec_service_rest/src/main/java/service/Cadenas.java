@@ -18,7 +18,8 @@ import static java.util.stream.Collectors.toList;
 
 public class Cadenas {
 
-    public static List<Cadena> obtenerCadenas() throws APIException
+    public static List<Cadena> obtenerCadenas()
+            throws APIException
     {
         try {
 
@@ -32,7 +33,8 @@ public class Cadenas {
         }
     }
 
-    public static List<Cadena> obtenerSucursales (final String codigoentidadfederal,final String localidad) throws APIException
+    public static List<Cadena> obtenerSucursales (final String codigoentidadfederal,final String localidad)
+            throws APIException
     {
         List<Configuracion> configuraciones =  Cadenas.obtenerConfiguraciones();
         return configuraciones.parallelStream()
@@ -86,7 +88,8 @@ public class Cadenas {
             }
         }
 
-    public static List<Cadena> obtenerPrecios (final String codigoentidadfederal,final String localidad,final String codigos)throws APIException
+    public static List<Cadena> obtenerPrecios (final String codigoentidadfederal,final String localidad,final String codigos)
+            throws APIException
     {
         final List<Configuracion> configuraciones = Cadenas.obtenerConfiguraciones();
         return configuraciones.parallelStream()
@@ -142,7 +145,8 @@ public class Cadenas {
     }
 
 
-    public static List<Configuracion> obtenerConfiguraciones() throws APIException
+    public static List<Configuracion> obtenerConfiguraciones()
+            throws APIException
     {
         try {
 
@@ -155,7 +159,6 @@ public class Cadenas {
             throw new APIException(ex);
         }
     }
-
 
 }
 

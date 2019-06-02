@@ -71,7 +71,8 @@ public class WebService {
 
     @GET
     @Path("/provincias")
-    public void provincias(@Suspended final AsyncResponse response) {
+    public void provincias(@Suspended final AsyncResponse response)
+    {
         FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
                         Localizacion.obtenerProvincias()
