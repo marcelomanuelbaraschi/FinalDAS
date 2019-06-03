@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/app")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.TEXT_PLAIN)
 public class WebService {
 
 
@@ -31,9 +31,9 @@ public class WebService {
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse response) {
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        CanastaBasica.obtenerCategorias()
+                        (new CanastaBasica()).obtenerCategorias()
                 )
         ));
     }
@@ -49,9 +49,9 @@ public class WebService {
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        CanastaBasica.obtenerProductos(criterio)
+                        (new CanastaBasica()).obtenerProductos(criterio)
                 )
         ));
 
@@ -64,7 +64,7 @@ public class WebService {
     {
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        CanastaBasica.buscarProductos(palabraclave)
+                        (new CanastaBasica()).buscarProductos(palabraclave)
                 )
         ));
     }
@@ -73,9 +73,9 @@ public class WebService {
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response)
     {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        Localizacion.obtenerProvincias()
+                        (new Localizacion()).obtenerProvincias()
                 )
         ));
     }
@@ -83,9 +83,9 @@ public class WebService {
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response) {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        Localizacion.obtenerLocalidades()
+                        (new Localizacion()).obtenerLocalidades()
                 )
         ));
     }
@@ -93,7 +93,7 @@ public class WebService {
     @GET
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response) {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
                         Cadenas.obtenerCadenas()
                 )
@@ -106,7 +106,7 @@ public class WebService {
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad) {
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
                         Cadenas.obtenerSucursales(codigoentidadfederal,localidad)
                 )

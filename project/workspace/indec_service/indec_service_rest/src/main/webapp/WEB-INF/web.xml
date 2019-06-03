@@ -15,16 +15,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>ws</param-value>
-            <param-value>
-                the.package.of.your.resources,
-                org.codehaus.jackson.jaxrs <!-- Jackson providers -->
-            </param-value>
-        </init-param>
-        <init-param>
-            <param-name>jersey.config.server.provider.classnames</param-name>
-            <param-value>
-                org.glassfish.jersey.jackson.JacksonFeature
-            </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
