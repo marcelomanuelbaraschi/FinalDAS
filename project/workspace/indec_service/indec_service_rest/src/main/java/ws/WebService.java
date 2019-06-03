@@ -33,7 +33,7 @@ public class WebService {
 
         FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        (new CanastaBasica()).obtenerCategorias()
+                        CanastaBasica.obtenerCategorias()
                 )
         ));
     }
@@ -51,7 +51,7 @@ public class WebService {
 
         FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        (new CanastaBasica()).obtenerProductos(criterio)
+                        CanastaBasica.obtenerProductos(criterio)
                 )
         ));
 
@@ -64,7 +64,7 @@ public class WebService {
     {
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        (new CanastaBasica()).buscarProductos(palabraclave)
+                        CanastaBasica.buscarProductos(palabraclave)
                 )
         ));
     }
@@ -75,7 +75,7 @@ public class WebService {
     {
         FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        (new Localizacion()).obtenerProvincias()
+                        Localizacion.obtenerProvincias()
                 )
         ));
     }
@@ -83,9 +83,9 @@ public class WebService {
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response) {
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
-                        (new Localizacion()).obtenerLocalidades()
+                        Localizacion.obtenerLocalidades()
                 )
         ));
     }
@@ -93,7 +93,7 @@ public class WebService {
     @GET
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response) {
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
                         Cadenas.obtenerCadenas()
                 )
@@ -106,7 +106,7 @@ public class WebService {
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad) {
 
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
                 GSON.toJson(
                         Cadenas.obtenerSucursales(codigoentidadfederal,localidad)
                 )

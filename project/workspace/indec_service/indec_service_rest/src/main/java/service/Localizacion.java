@@ -13,7 +13,7 @@ import java.util.List;
 public class Localizacion {
 
 
-    public  List<Localidad> obtenerLocalidades() throws APIException
+    public static List<Localidad> obtenerLocalidades() throws APIException
     {
         try {
             List<Bean> localidades = DaoFactory.getDao("Localidades")
@@ -26,7 +26,7 @@ public class Localizacion {
         }
     }
 
-    public  List<Provincia> obtenerProvincias() throws APIException
+    public static List<Provincia> obtenerProvincias() throws APIException
     {
         try {
             List<Bean> provincias = DaoFactory.getDao("Provincias")
