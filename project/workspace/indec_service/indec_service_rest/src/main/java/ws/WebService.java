@@ -1,5 +1,6 @@
 package ws;
 
+import db.Bean;
 import db.beans.Cadena;
 import db.beans.CriterioBusquedaProducto;
 import service.*;
@@ -7,11 +8,17 @@ import utilities.GSON;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.concurrent.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import static javax.ws.rs.core.Response.status;
+import static service.CanastaBasica.obtenerProductos;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,34 +32,29 @@ public class WebService {
             LoggerFactory.getLogger(WebService.class);
 
     private static final ScheduledExecutorService executor =
-            Executors.newScheduledThreadPool(8);
+            Executors.newScheduledThreadPool(3);
 
     @GET
     @Path("/categorias")
-    public void categorias(@Suspended final AsyncResponse response) {
+    public void categorias(@Suspended final AsyncResponse response)
+    {
 
         FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        CanastaBasica.obtenerCategorias()
-                )
+                GSON.toJson(CanastaBasica.obtenerCategorias())
         ));
     }
 
     @GET
     @Path("/productos")
-    public void productos(@Suspended final AsyncResponse response
-                         ,@QueryParam("idcategoria") final Short idcategoria
-                         ,@QueryParam("marca") final String marca)
+    public void productos(@Suspended final AsyncResponse response,@QueryParam("idcategoria") final Short idcategoria,@QueryParam("marca") final String marca)
     {
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
 
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        CanastaBasica.obtenerProductos(criterio)
-                )
+        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+                GSON.toJson(obtenerProductos(criterio))
         ));
 
     }
@@ -63,9 +65,7 @@ public class WebService {
                                 @QueryParam("palabraclave") final String palabraclave)
     {
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        CanastaBasica.buscarProductos(palabraclave)
-                )
+                GSON.toJson(CanastaBasica.buscarProductos(palabraclave))
         ));
     }
 
@@ -74,29 +74,25 @@ public class WebService {
     public void provincias(@Suspended final AsyncResponse response)
     {
         FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        Localizacion.obtenerProvincias()
-                )
+                GSON.toJson(Localizacion.obtenerProvincias())
         ));
     }
 
     @GET
     @Path("/localidades")
-    public void localidades(@Suspended final AsyncResponse response) {
+    public void localidades(@Suspended final AsyncResponse response)
+    {
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        Localizacion.obtenerLocalidades()
-                )
+                GSON.toJson(Localizacion.obtenerLocalidades())
         ));
     }
 
     @GET
     @Path("/cadenas")
-    public void cadenas(@Suspended final AsyncResponse response) {
+    public void cadenas(@Suspended final AsyncResponse response)
+    {
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        Cadenas.obtenerCadenas()
-                )
+                GSON.toJson(Cadenas.obtenerCadenas())
         ));
     }
 
@@ -104,12 +100,11 @@ public class WebService {
     @Path("/sucursales")
     public void sucursales(@Suspended final AsyncResponse response
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-                          ,@QueryParam("localidad") final String localidad) {
+                          ,@QueryParam("localidad") final String localidad)
+    {
 
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        Cadenas.obtenerSucursales(codigoentidadfederal,localidad)
-                )
+                GSON.toJson(Cadenas.obtenerSucursales(codigoentidadfederal,localidad))
         ));
 
     }
@@ -130,12 +125,11 @@ public class WebService {
 
     @GET
     @Path("/menu")
-    public void menu (@Suspended final AsyncResponse response) {
+    public void menu (@Suspended final AsyncResponse response)
+    {
 
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        MenuSaludable.obtenerMenuSemanal()
-                )
+                GSON.toJson(MenuSaludable.obtenerMenuSemanal())
         ));
 
     }
@@ -145,12 +139,11 @@ public class WebService {
     public void armarplato (@Suspended final AsyncResponse response
                             ,@QueryParam("idplato") final Integer idplato
                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
-                            ,@QueryParam("localidad") final String localidad) {
+                            ,@QueryParam("localidad") final String localidad)
+    {
 
         FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(
-                        MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato)
-                )
+                GSON.toJson(MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
         ));
 
     }

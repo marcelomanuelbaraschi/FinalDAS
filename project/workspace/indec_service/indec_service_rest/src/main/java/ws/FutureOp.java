@@ -1,20 +1,16 @@
 package ws;
 
 import org.slf4j.Logger;
-
 import javax.ws.rs.container.AsyncResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
-
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import static javax.ws.rs.core.Response.Status.*;
 import static javax.ws.rs.core.Response.status;
-
 public class FutureOp {
-    private static <T> CompletableFuture<T>
+    public static <T> CompletableFuture<T>
         within(long duration, TimeUnit unit, ScheduledExecutorService executor, CompletableFuture<T> future)
     {
         final CompletableFuture<T> timeout = failAfter(duration, unit, executor);
@@ -33,21 +29,16 @@ public class FutureOp {
     }
 
 
-    public static void execute (int i, TimeUnit seconds, ScheduledExecutorService executor,Logger logger, AsyncResponse response, CompletableFuture<String> future) {
-        response.setTimeout(i, seconds);
-        response.setTimeoutHandler(
-                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                              .entity("Operation timed out")
-                              .build())
-        );
-        within(i,seconds,executor,future)
-        .thenApply(response::resume)
-        .exceptionally(exception -> {
-            logger.error("Endpoint Failure: {}", exception.getMessage());
-            return response.resume(status(INTERNAL_SERVER_ERROR)
-                           .entity(exception)
-                           .build());
-        });
+    public static void  execute (int i, TimeUnit seconds, ScheduledExecutorService executor, Logger logger, AsyncResponse response, CompletableFuture<String> futurejson) {
+
+        within(i,seconds,executor,futurejson)
+                .thenApply((json) -> response.resume(json))
+                .exceptionally(exception -> {
+                    logger.error("Endpoint Failure: {}", exception.getMessage());
+                    return response.resume(status(INTERNAL_SERVER_ERROR)
+                            .entity(exception)
+                            .build());
+                });
 
     }
 

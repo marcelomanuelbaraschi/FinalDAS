@@ -81,10 +81,15 @@ public class CanastaBasica {
             }
         };
 
-        return productos.stream()
-                        .filter(porCategoria)
-                        .filter(porMarca)
-                        .collect(toList());
+        List<Producto> list = new ArrayList<>();
+        for (Producto producto : productos) {
+            if (porCategoria.test(producto)) {
+                if (porMarca.test(producto)) {
+                    list.add(producto);
+                }
+            }
+        }
+        return list;
 
     }
 
@@ -101,7 +106,13 @@ public class CanastaBasica {
         };
 
 
-        return productos.stream().filter(buscarPorPalabraClave).collect(toList());
+        List<Producto> list = new ArrayList<>();
+        for (Producto producto : productos) {
+            if (buscarPorPalabraClave.test(producto)) {
+                list.add(producto);
+            }
+        }
+        return list;
 
     }
 
