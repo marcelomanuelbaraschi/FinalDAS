@@ -8,7 +8,7 @@ import static javax.ws.rs.core.Response.Status.*;
 import static javax.ws.rs.core.Response.status;
 public class ServiceOperation {
 
-    private static final long timeToLive = 15L;
+    private static final long timeToLive = 5L;
     private static final TimeUnit timeUnit = SECONDS;
     private static final int minimumPoolSize = 0;
     private static final int maximumPoolSize = 4;

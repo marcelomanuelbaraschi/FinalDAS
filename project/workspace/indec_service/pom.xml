@@ -82,9 +82,9 @@
                     <path>${tomcat.path}</path>
                     <port>${tomcat.port}</port>
                     <contextReloadable>true</contextReloadable>
-                    <systemProperties>
+                   <!-- <systemProperties>
                         <JAVA_OPTS> -Xms512M -Xmx512M -Xss512M</JAVA_OPTS>
-                    </systemProperties>
+                    </systemProperties>-->
                 </configuration>
             </plugin>
             <plugin>
