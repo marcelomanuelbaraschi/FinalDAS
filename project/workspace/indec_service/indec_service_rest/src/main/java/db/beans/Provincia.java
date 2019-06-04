@@ -3,6 +3,7 @@ package db.beans;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
+
 public class Provincia implements Bean {
 
     @SerializedName("codigoEntidadFederal")
