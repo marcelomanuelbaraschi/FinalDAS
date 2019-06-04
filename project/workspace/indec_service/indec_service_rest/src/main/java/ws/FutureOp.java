@@ -1,11 +1,9 @@
 package ws;
 
+import javassist.bytecode.analysis.Executor;
 import org.slf4j.Logger;
 import javax.ws.rs.container.AsyncResponse;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.function.Function;
 import static javax.ws.rs.core.Response.Status.*;
 import static javax.ws.rs.core.Response.status;
@@ -29,9 +27,9 @@ public class FutureOp {
     }
 
 
-    public static void  execute (int i, TimeUnit seconds, ScheduledExecutorService executor, Logger logger, AsyncResponse response, CompletableFuture<String> futurejson) {
+    public static void  execute (int i, TimeUnit seconds, Logger logger, AsyncResponse response, CompletableFuture<String> futurejson) {
 
-        within(i,seconds,executor,futurejson)
+        futurejson
                 .thenApply((json) -> response.resume(json))
                 .exceptionally(exception -> {
                     logger.error("Endpoint Failure: {}", exception.getMessage());

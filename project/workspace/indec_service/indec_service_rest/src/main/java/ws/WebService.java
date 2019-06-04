@@ -31,17 +31,16 @@ public class WebService {
     private static final Logger logger =
             LoggerFactory.getLogger(WebService.class);
 
-    private static final ScheduledExecutorService executor =
-            Executors.newScheduledThreadPool(3);
+           ExecutorService executor = Executors.newCachedThreadPool();
 
     @GET
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse response)
     {
 
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
                 GSON.toJson(CanastaBasica.obtenerCategorias())
-        ));
+        ,executor));
     }
 
     @GET
@@ -53,9 +52,9 @@ public class WebService {
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
 
-        FutureOp.execute(3,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
                 GSON.toJson(obtenerProductos(criterio))
-        ));
+        ,executor));
 
     }
 
@@ -64,36 +63,38 @@ public class WebService {
     public void buscarproductos(@Suspended final AsyncResponse response,
                                 @QueryParam("palabraclave") final String palabraclave)
     {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(CanastaBasica.buscarProductos(palabraclave))
-        ));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(CanastaBasica.buscarProductos(palabraclave))
+        ,executor));
     }
 
     @GET
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response)
     {
-        FutureOp.execute(5,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(Localizacion.obtenerProvincias())
-        ));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(Localizacion.obtenerProvincias())
+        ,executor));
     }
 
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response)
     {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(Localizacion.obtenerLocalidades())
-        ));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(Localizacion.obtenerLocalidades())
+        ,executor));
     }
 
     @GET
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response)
     {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(Cadenas.obtenerCadenas())
-        ));
+
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(Cadenas.obtenerCadenas())
+        ,executor));
+
     }
 
     @GET
@@ -103,9 +104,9 @@ public class WebService {
                           ,@QueryParam("localidad") final String localidad)
     {
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(Cadenas.obtenerSucursales(codigoentidadfederal,localidad))
-        ));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(Cadenas.obtenerSucursales(codigoentidadfederal,localidad))
+        ,executor));
 
     }
 
@@ -116,10 +117,11 @@ public class WebService {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos)
     {
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() -> {
-            final List<Cadena> cadenas =  Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos);
-            return GSON.toJson((new Comparador()).compararPrecios(cadenas,codigos));
-        }));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() -> {
+                    final List<Cadena> cadenas = Cadenas.obtenerPrecios(codigoentidadfederal, localidad, codigos);
+                    return GSON.toJson((new Comparador()).compararPrecios(cadenas, codigos));
+                    }
+        ,executor));
 
     }
 
@@ -128,9 +130,9 @@ public class WebService {
     public void menu (@Suspended final AsyncResponse response)
     {
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
                 GSON.toJson(MenuSaludable.obtenerMenuSemanal())
-        ));
+        ,executor));
 
     }
 
@@ -142,9 +144,9 @@ public class WebService {
                             ,@QueryParam("localidad") final String localidad)
     {
 
-        FutureOp.execute(10,SECONDS,executor,logger,response,supplyAsync(() ->
-                GSON.toJson(MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
-        ));
+        FutureOp.execute(3,SECONDS,logger,response,supplyAsync(() ->
+                        GSON.toJson(MenuSaludable.armarPlato(codigoentidadfederal,localidad,idplato))
+        ,executor));
 
     }
 
