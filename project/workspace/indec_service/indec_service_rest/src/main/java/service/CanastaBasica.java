@@ -18,7 +18,7 @@ public class CanastaBasica {
     private static final Logger logger =
             LoggerFactory.getLogger(CanastaBasica.class);
 
-    public static  List<CategoriaProducto> obtenerCategorias()throws APIException
+    public static  List<CategoriaProducto> obtenerCategorias()throws RuntimeException
     {
         try {
             List<Bean> categorias = DaoFactory.getDao("CategoriasProducto")
@@ -38,13 +38,13 @@ public class CanastaBasica {
         try {
             beans = DaoFactory.getDao("Productos").select(null);
         }catch (SQLException ex) {
-            throw new APIException(ex);
+            throw new RuntimeException(ex.getMessage());
         }
 
         productos = Arrays.asList(GSON.transform(beans, Producto[].class));
 
         if(productos == null || beans == null){
-            throw new APIException("Fallo al obtener los productos");
+            throw new RuntimeException("Fallo al obtener los productos");
         }
         return productos;
 

@@ -3,12 +3,15 @@ package ws;
 import db.beans.Cadena;
 import db.beans.CriterioBusquedaProducto;
 import service.*;
+
+import javax.annotation.Resource;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static service.Cadenas.*;
 import static service.Cadenas.obtenerCadenas;
@@ -29,16 +32,13 @@ public class WebService {
     private static final Logger logger =
             LoggerFactory.getLogger(WebService.class);
 
-
-    private static final ExecutorService executor = ServiceOperation.newCustomCachedThreadPool();
     @GET
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse asyncResponse)
     {
 
         ServiceOperation.run(logger,asyncResponse,supplyAsync(() ->
-                        toJson(obtenerCategorias())
-                ,executor));
+                        toJson(obtenerCategorias())));
     }
 
     @GET
@@ -51,8 +51,7 @@ public class WebService {
         criterio.setMarca(marca);
 
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerProductos(criterio))
-                ,executor));
+                    toJson(obtenerProductos(criterio))));
 
     }
 
@@ -62,8 +61,7 @@ public class WebService {
                                 @QueryParam("palabraclave") final String palabraclave)
     {
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(buscarProductos(palabraclave))
-                ,executor));
+                        toJson(buscarProductos(palabraclave))));
 
     }
 
@@ -72,8 +70,7 @@ public class WebService {
     public void provincias(@Suspended final AsyncResponse response)
     {
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerProvincias())
-                ,executor));
+                        toJson(obtenerProvincias())));
     }
 
     @GET
@@ -81,8 +78,7 @@ public class WebService {
     public void localidades(@Suspended final AsyncResponse response)
     {
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerLocalidades())
-                ,executor));
+                        toJson(obtenerLocalidades())));
     }
 
     @GET
@@ -91,8 +87,7 @@ public class WebService {
     {
 
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerCadenas())
-                ,executor));
+                        toJson(obtenerCadenas())));
 
     }
 
@@ -104,8 +99,7 @@ public class WebService {
     {
 
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerSucursales(codigoentidadfederal,localidad))
-                ,executor));
+                        toJson(obtenerSucursales(codigoentidadfederal,localidad))));
 
     }
 
@@ -118,8 +112,7 @@ public class WebService {
     {
         ServiceOperation.run(logger,response,supplyAsync(() -> {
                         final List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos);
-                        return toJson((new Comparador()).compararPrecios(cadenas, codigos));}
-                ,executor));
+                        return toJson((new Comparador()).compararPrecios(cadenas, codigos));}));
 
     }
 
@@ -129,8 +122,7 @@ public class WebService {
     {
 
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerMenuSemanal())
-                ,executor));
+                        toJson(obtenerMenuSemanal())));
 
     }
 
@@ -143,8 +135,7 @@ public class WebService {
     {
 
         ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(armarPlato(codigoentidadfederal,localidad,idplato))
-                ,executor));
+                        toJson(armarPlato(codigoentidadfederal,localidad,idplato))));
 
     }
 
