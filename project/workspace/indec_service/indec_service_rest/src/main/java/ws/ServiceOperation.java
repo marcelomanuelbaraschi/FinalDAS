@@ -33,4 +33,12 @@ public class ServiceOperation {
 
     }
 
+    public static void setTimer(AsyncResponse response){
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build())
+        );
+    }
 }

@@ -1,6 +1,7 @@
 package ws;
 
 import db.beans.Cadena;
+import db.beans.CategoriaProducto;
 import db.beans.CriterioBusquedaProducto;
 import service.*;
 
@@ -11,8 +12,11 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.status;
 import static service.Cadenas.*;
 import static service.Cadenas.obtenerCadenas;
 import static service.CanastaBasica.*;
@@ -20,6 +24,7 @@ import static service.CanastaBasica.obtenerProductos;
 import static service.Localizacion.*;
 import static service.MenuSaludable.*;
 import static utilities.GSON.toJson;
+import static ws.ServiceOperation.setTimer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +34,32 @@ import org.slf4j.LoggerFactory;
 public class WebService {
 
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(WebService.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebService.class);
+
+    private static ExecutorService executor = Executors.newFixedThreadPool(10);
 
     @GET
     @Path("/categorias")
-    public void categorias(@Suspended final AsyncResponse asyncResponse)
+    public void categorias(@Suspended final AsyncResponse response)
     {
+        setTimer(response);
+        executor.execute(
 
-        ServiceOperation.run(logger,asyncResponse,supplyAsync(() ->
-                        toJson(obtenerCategorias())));
+                () -> {
+                    List<CategoriaProducto> categorias = null;
+                    try {
+                        categorias = obtenerCategorias();
+                    } catch(Exception e){
+                        response.resume(status(INTERNAL_SERVER_ERROR)
+                                .entity(e)
+                                .build());
+                        logger.error("Endpoint Failure: {}", e.getMessage());
+                    }
+
+                    response.resume(toJson(categorias));
+                }
+        );
+
     }
 
     @GET
