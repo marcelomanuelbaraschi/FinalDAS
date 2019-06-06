@@ -5,6 +5,9 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.apache.http.client.ClientProtocolException;
+
+import java.io.IOException;
 
 public class SoapClient {
 
@@ -27,8 +30,8 @@ public class SoapClient {
             handleError( client );
             return res[0];
 
-        }catch (Exception e) {
-            throw new ClientException("ENDPOINT "+wsdlUrl+" IS DOWN : " + e.getMessage());
+        } catch (Exception ex) {
+            throw new ClientException("ENDPOINT "+wsdlUrl+" IS DOWN : " + ex.getMessage());
         }
     }
 
