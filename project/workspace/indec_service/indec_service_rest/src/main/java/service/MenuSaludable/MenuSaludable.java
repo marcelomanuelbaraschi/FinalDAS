@@ -74,9 +74,9 @@ public class MenuSaludable {
 
             final List<Configuracion> configuraciones = Cadenas.obtenerConfiguraciones();
 
-            for (Producto producto : productosIngrediente) {
+            /*for (Producto producto : productosIngrediente) {
                 System.out.println(producto.getCodigoDeBarras() + "-" + producto.getIdIngrediente());
-            }
+            }*/
 
             String codigos =
                     productosIngrediente.stream().map(p -> p.getCodigoDeBarras()).collect(Collectors.joining(","));
