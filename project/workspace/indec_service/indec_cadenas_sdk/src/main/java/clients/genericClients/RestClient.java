@@ -4,12 +4,14 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ServiceUnavailableRetryStrategy;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.URI;
@@ -25,7 +27,21 @@ public class RestClient  {
 
     protected RestClient(final String url) {
         this.url = url;
-        this.client = HttpClientBuilder.create().build();
+        this.client = HttpClientBuilder
+                .create()
+                .setServiceUnavailableRetryStrategy(
+                        new ServiceUnavailableRetryStrategy() {
+                @Override
+                public boolean retryRequest(HttpResponse httpResponse, int i, HttpContext httpContext)
+                {
+                    return false;
+                }
+
+                @Override
+                public long getRetryInterval() {
+                    return 0;
+                }
+        }).build();
     }
 
     protected String getQuery(final String base, final String... params) {
