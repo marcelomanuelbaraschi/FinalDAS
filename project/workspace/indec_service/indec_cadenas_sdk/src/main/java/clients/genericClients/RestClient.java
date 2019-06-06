@@ -29,19 +29,8 @@ public class RestClient  {
         this.url = url;
         this.client = HttpClientBuilder
                 .create()
-                .setServiceUnavailableRetryStrategy(
-                        new ServiceUnavailableRetryStrategy() {
-                @Override
-                public boolean retryRequest(HttpResponse httpResponse, int i, HttpContext httpContext)
-                {
-                    return false;
-                }
-
-                @Override
-                public long getRetryInterval() {
-                    return 0;
-                }
-        }).build();
+                .disableAutomaticRetries()
+                .build();
     }
 
     protected String getQuery(final String base, final String... params) {
