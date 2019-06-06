@@ -65,8 +65,10 @@ public class RestClient  {
     private HttpResponse execute (HttpUriRequest uri) throws ClientException {
       try{
           return client.execute(uri);
-      } catch (Exception ex) {
-          throw new ClientException("ENDPOINT "+url+" IS DOWN : " + ex.getMessage());
+      } catch (ClientException ex) {
+          throw new ClientException( "ENDPOINT " + url + " IS DOWN : " + ex.getMessage() );
+      } catch (IOException ex) {
+          throw new ClientException( "ENDPOINT " + url + " IS DOWN : " + ex.getMessage() );
       }
     }
 

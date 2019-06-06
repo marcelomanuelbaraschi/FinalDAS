@@ -21,7 +21,7 @@ public class SoapClient {
             throws ClientException
     {
         final JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-        try (final Client client = dcf.createClient(wsdlUrl)) {
+        try (final Client client = dcf.createClient( wsdlUrl )) {
 
             final Object[] res = client.invoke( methodName, params );
             if (res == null || res.length == 0) {
@@ -30,8 +30,10 @@ public class SoapClient {
             handleError( client );
             return res[0];
 
+        } catch (ClientException ex) {
+            throw new ClientException( "ENDPOINT " + wsdlUrl + " IS DOWN : " + ex.getMessage() );
         } catch (Exception ex) {
-            throw new ClientException("ENDPOINT "+wsdlUrl+" IS DOWN : " + ex.getMessage());
+            throw new ClientException( "ENDPOINT " + wsdlUrl + " IS DOWN : " + ex.getMessage() );
         }
     }
 
