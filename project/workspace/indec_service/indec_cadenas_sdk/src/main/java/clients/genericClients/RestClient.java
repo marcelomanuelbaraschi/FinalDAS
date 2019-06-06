@@ -25,11 +25,7 @@ public class RestClient  {
 
     protected RestClient(final String url) {
         this.url = url;
-        RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(60 * 1000)
-                .setConnectionRequestTimeout(60* 1000)
-                .setSocketTimeout(60 * 1000).build();
-        this.client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+        this.client = HttpClientBuilder.create().build();
     }
 
     protected String getQuery(final String base, final String... params) {
@@ -69,10 +65,10 @@ public class RestClient  {
     private HttpResponse execute (HttpUriRequest uri) throws ClientException {
       try{
           return client.execute(uri);
-        } catch (ClientProtocolException ce) {
-            throw new ClientException(ce);
-        } catch (IOException ioe) {
-            throw new ClientException(ioe);
+        } catch (ClientProtocolException ex) {
+          throw new ClientException("ENDPOINT "+url+" IS DOWN : " + ex.getMessage());
+        } catch (IOException ex) {
+            throw new ClientException("ENDPOINT "+url+" IS DOWN : " + ex.getMessage());
         }
     }
 
@@ -86,8 +82,8 @@ public class RestClient  {
 
     private HttpResponse filterBadResponse(HttpResponse response) throws ClientException {
         final int statusCode = response.getStatusLine().getStatusCode();
-        if (statusCode >= 500) throw new ClientException("SERVER ERROR = " + response.toString());
-        if (statusCode >= 400) throw new ClientException("CLIENT ERROR = " + response.toString());
+        if (statusCode >= 500) throw new ClientException("Server Error -> " + response.toString());
+        if (statusCode >= 400) throw new ClientException("Client Error -> " + response.toString());
         return response;
 
     }
