@@ -77,7 +77,6 @@ public class Cadenas {
                 try {
                     sucursalesJson = client.sucursales(codigoentidadfederal,localidad);
                 }catch (Exception clientException) {
-                    logger.error( "Error SDK, {}", clientException.getMessage() );
                     return CadenaFacade.buildCadenaNoDisponible(configuracion);
                 }
 
