@@ -40,5 +40,14 @@ public class Configuracion implements Bean {
         this.url = url;
     }
 
-
+    @Override
+    public String toString() {
+        return "Configuracion{" +
+                "idConfig=" + idConfig +
+                ", idCadena=" + idCadena +
+                ", nombreCadena='" + nombreCadena + '\'' +
+                ", nombreTecnologia='" + nombreTecnologia + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

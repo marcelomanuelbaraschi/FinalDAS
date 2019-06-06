@@ -8,7 +8,7 @@ import java.util.List;
 public class Plato implements Bean {
 
     @SerializedName("idPlato")
-    private Integer idPlato;
+    private short idPlato;
     @SerializedName("nombrePlato")
     private String nombrePlato;
     @SerializedName("preparacion")
@@ -20,9 +20,9 @@ public class Plato implements Bean {
     @SerializedName("ingredientes")
     private List<Ingrediente> ingredientes;
 
-    public Integer getIdPlato() {      return idPlato;   }
+    public short getIdPlato() {      return idPlato;   }
 
-    public void setIdPlato(Integer idPlato) {       this.idPlato = idPlato;   }
+    public void setIdPlato(short idPlato) {       this.idPlato = idPlato;   }
 
     public String getNombrePlato() {       return nombrePlato;   }
 

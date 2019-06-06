@@ -1,6 +1,6 @@
 package db.beans;
 
-import service.Sucursal;
+import service.Cadenas.Sucursal;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 
@@ -33,8 +33,6 @@ public class Cadena implements Bean {
     public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
-
-
 
     public Integer getIdCadena() {      return idCadena;   }
 

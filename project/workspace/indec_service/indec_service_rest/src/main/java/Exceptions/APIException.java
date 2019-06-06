@@ -1,5 +1,4 @@
-package service;
-
+package Exceptions;
 
 public class APIException extends RuntimeException {
 
@@ -11,3 +10,4 @@ public class APIException extends RuntimeException {
         super(exmsg);
     }
 }
+

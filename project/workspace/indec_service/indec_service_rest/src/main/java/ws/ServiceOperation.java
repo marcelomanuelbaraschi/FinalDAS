@@ -22,23 +22,12 @@ public class ServiceOperation {
         );
 
         futurejson
-                .thenAccept((json) -> response.resume(json))
-                .exceptionally(exception -> {
-                    response.resume(status(INTERNAL_SERVER_ERROR)
-                            .entity(exception)
-                            .build());
-                    logger.error("Endpoint Failure: {}", exception.getMessage());
-                    return null;
-                });
-
-    }
-
-    public static void setTimer(AsyncResponse response){
-        response.setTimeout(timeOut, SECONDS);
-        response.setTimeoutHandler(
-                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build())
-        );
+        .thenApply((json) -> {
+                return response.resume(json);
+        }).exceptionally( exception -> {
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            return response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        });
     }
 }

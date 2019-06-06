@@ -1,7 +1,12 @@
-package service;
+package service.Comparador;
 import db.beans.Cadena;
 import db.beans.CriterioBusquedaProducto;
 import db.beans.Producto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.Cadenas.Sucursal;
+import service.CanastaBasica.CanastaBasica;
+import service.Cadenas.ProductoSucursal;
 import utilities.ListUtils;
 import utilities.NumberUtils;
 
@@ -13,38 +18,37 @@ import static java.util.stream.Collectors.*;
 
 public class Comparador {
 
-    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final String codigos) throws IllegalArgumentException, APIException{
+    private static final Logger logger =
+            LoggerFactory.getLogger(Comparador.class);
 
-        if (cadenas == null)
-            throw new IllegalArgumentException("El parametro cadenas is null");
-        if (codigos == null)
-            throw new IllegalArgumentException("El parametro codigos is null");
+    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final List<Producto> productosSeleccionados){
 
-        List<Producto> productosSeleccionados = obtenerProductosSeleccionadosPorUsuario(codigos);
+            List<Cadena> cadenasDisponibles = new LinkedList<>();
+            List<Cadena> cadenasNoDisponibles = new LinkedList<>();
 
-        List<Cadena> cadenasDisponibles = new LinkedList<>();
-        List<Cadena> cadenasNoDisponibles = new LinkedList<>();
+            //Separamos las cadenasDisponibles de las cadenasNoDisponibles
+            for(Cadena cad : cadenas){
+                if(cad.getDisponible())
+                    cadenasDisponibles.add(cad);
+                if(!cad.getDisponible())
+                    cadenasNoDisponibles.add(cad);
+            }
 
-        //Separamos las cadenasDisponibles de las cadenasNoDisponibles
-        for(Cadena cad : cadenas){
-            if(cad.getDisponible())
-                cadenasDisponibles.add(cad);
-            if(!cad.getDisponible())
-                cadenasNoDisponibles.add(cad);
-        }
+            //Si existen cadenasDisponibles
+            if(!cadenasDisponibles.isEmpty()){
+                //Primero marcamos los productos
+                //Luego marcamos las cadenas.
+                List<Cadena> cadenasDisponiblesMarcadas =
+                        marcarSucursales(
+                                marcarProductos(cadenasDisponibles,productosSeleccionados)
+                        );
 
-        //Si existen cadenasDisponibles
-        if(!cadenasDisponibles.isEmpty()){
-            //Primero marcamos los productos
-            //Luego marcamos las cadenas.
-            List<Cadena> cadenasDisponiblesMarcadas =
-                    marcarSucursales(
-                            marcarProductos(cadenasDisponibles,productosSeleccionados)
-                    );
+                  return  Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream())
+                                .collect(toList());
 
-            return Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream()).collect(toList());
-        }
-        else return cadenasNoDisponibles;
+            }
+
+            return cadenasNoDisponibles;
 
     }
 
@@ -73,7 +77,7 @@ public class Comparador {
                         p.setMejorPrecio(false);
                     }
                 }
-                s.setTotal(NumberUtils.round(precioTotal,2));
+                s.setTotal(NumberUtils.round(precioTotal,2)); //TODO: causando problemas..
 
                 List<ProductoSucursal> productosAusentes = new LinkedList<>();
                 for (Producto p : productos) {
@@ -156,7 +160,7 @@ public class Comparador {
 
     }
 
-    private  boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
+    private   boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
         for (ProductoSucursal producto : productos) {
             if(producto.getCodigoDeBarras().equals(codigoDeBarras)){
                 return true;
@@ -164,18 +168,6 @@ public class Comparador {
         }
         return false;
     }
-
-    private List<Producto> obtenerProductosSeleccionadosPorUsuario(final String codigos) throws APIException {
-        final List<String> codigosDeBarra = ListUtils.asList(codigos);
-        List<Producto> productosSeleccionados = new LinkedList<>();
-        CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
-        List<Producto> productos = CanastaBasica.obtenerProductos(criterio);
-        for(Producto p : productos){
-            if(codigosDeBarra.contains(p.getCodigoDeBarras())){
-                productosSeleccionados.add(p);
-            }
-        }
-        return productosSeleccionados;
-    }
+    
 
 }

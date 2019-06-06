@@ -14,7 +14,7 @@ public class MSProductosPorPlatoDao extends DaoImpl {
     public Bean make(ResultSet result) throws SQLException {
         Producto producto = new Producto();
         producto.setCodigoDeBarras(result.getString("codigoDeBarras"));
-        producto.setIdIngrediente(result.getInt("idIngrediente"));
+        producto.setIdIngrediente(result.getShort("idIngrediente"));
         return producto;
     }
 

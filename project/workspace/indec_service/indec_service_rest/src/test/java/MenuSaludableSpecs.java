@@ -1,44 +1,54 @@
+import Exceptions.APIException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import db.Bean;
+import db.Dao;
+import db.DaoFactory;
+import db.beans.*;
+import org.junit.Test;
+import service.MenuSaludable.MenuSaludable;
 
-public class DaosSpecs {
+import java.sql.SQLException;
+import java.util.List;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.fail;
+
+public class MenuSaludableSpecs {
 
     private Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
             .create();
+
+    @Test
+    public void obtenerProductosPorPlato_Success() {
+        try {
+            List<Producto> ip = MenuSaludable.obtenerProductosPorPlato( (short) 1 );
+            System.out.println(gson.toJson(ip));
+            assertTrue(true);
+        }
+        catch(APIException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
+
+    @Test
+    public void MSProductosPorPlatoDao_Success() {
+        try {
+            Plato plato = new Plato();
+            plato.setIdPlato((short)1);
+            Dao dao = DaoFactory.getDao("ProductosPorPlato", "");
+            List<Bean> ip = dao.select(plato);
+            System.out.println(gson.toJson(ip));
+            assertTrue(true);
+        }
+        catch(SQLException ex) {
+            System.out.println("Error: "+ex.getMessage());
+            fail();
+        }
+    }
 /*
-    @Test
-    public void MSCadenasServicesConfigsDao_success() {
-        try {
-            Configuracion config = new Configuracion();
-            Dao dao = DaoFactory.getDao("CadenasServicesConfigs", "");
-            List<Bean> configs = dao.select(config);
-            assertEquals(configs.size(),5);
-            System.out.println(gson.toJson(configs));
-            assertTrue(true);
-        }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            fail();
-        }
-    }
-
-    @Test
-    public void MSCategoriasProductoDao_success() {
-        try {
-            CategoriaProducto categoria = new CategoriaProducto();
-            Dao dao = DaoFactory.getDao("CategoriasProducto", "");
-            List<Bean> configs = dao.select(categoria);
-            assertEquals(configs.size(),30);
-            System.out.println(gson.toJson(configs));
-            assertTrue(true);
-        }
-        catch(SQLException ex) {
-            System.out.println("Error: "+ex.getMessage());
-            fail();
-        }
-    }
-
     @Test
     public void MSProductosDao_success() {
         try {

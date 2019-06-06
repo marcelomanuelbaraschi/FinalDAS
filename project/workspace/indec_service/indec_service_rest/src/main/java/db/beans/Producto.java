@@ -18,13 +18,13 @@ public class Producto implements Bean {
     @SerializedName("imagenProducto")
     private String imagenProducto;
     @SerializedName("idIngrediente")
-    private int idIngrediente;
+    private short idIngrediente;
 
-    public int getIdIngrediente() {
+    public short getIdIngrediente() {
         return idIngrediente;
     }
 
-    public void setIdIngrediente(int idIngrediente) {
+    public void setIdIngrediente(short idIngrediente) {
         this.idIngrediente = idIngrediente;
     }
 
@@ -60,4 +60,17 @@ public class Producto implements Bean {
     public String getNombreCategoria() {     return nombreCategoria;  }
 
     public void setNombreCategoria(String nombreCategoria) {     this.nombreCategoria = nombreCategoria;  }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "nombreProducto='" + nombreProducto + '\'' +
+                ", codigoDeBarras='" + codigoDeBarras + '\'' +
+                ", idCategoria=" + idCategoria +
+                ", nombreCategoria='" + nombreCategoria + '\'' +
+                ", nombreMarca='" + nombreMarca + '\'' +
+                ", imagenProducto='" + imagenProducto + '\'' +
+                ", idIngrediente=" + idIngrediente +
+                '}';
+    }
 }

@@ -34,20 +34,6 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
 
         return sucursalesJson;
 
-
-        //Pasamos de un json a una Lista de Sucursales
-        //List<Sucursal> sucursales = Arrays.asList(GSON.toObject(sucursalesJson, Sucursal[].class));
-
-        /*//Le asignamos a las sucursales un idCadena
-        if (!sucursales.isEmpty()) {
-
-            for (Sucursal sucursal : sucursales) {
-                sucursal.setIdCadena(this.idCadena);
-            }
-            return sucursales;
-        }
-        else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
-        */
     }
 
     public String precios(String codigoentidadfederal, String localidad, String codigos)
@@ -68,18 +54,5 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
         final String preciosJson = call(POST, url);
 
         return preciosJson;
-        //Pasamos de un json a una Lista de Sucursales
-        //List<Sucursal> sucursales = Arrays.asList(GSON.toObject(preciosJson, Sucursal[].class));
-
-        //Le asignamos a las sucursales un  idCadena
-        /*if (!sucursales.isEmpty()) {
-
-            for (Sucursal sucursal : sucursales) {
-                sucursal.setIdCadena(this.idCadena);
-            }
-            return sucursales;
-        }
-        else throw new ClientException("La lista de Sucursales de la Cadena " + idCadena +  " esta vacia");
-        */
     }
 }

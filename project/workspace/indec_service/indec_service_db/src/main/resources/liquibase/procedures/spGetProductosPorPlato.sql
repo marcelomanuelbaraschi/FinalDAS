@@ -7,7 +7,7 @@ BEGIN
          RAISERROR('El parametro @idPlato es null', 15, 1)
       END
 
-    SELECT PR.codigoDeBarras
+    SELECT PR.codigoDeBarras,I.idIngrediente
         FROM plato P
         JOIN ingredientes_plato IP
         ON P.idPlato = IP.idPlato

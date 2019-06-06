@@ -1,88 +1,79 @@
 package ws;
-
-import db.beans.Cadena;
-import db.beans.CategoriaProducto;
-import db.beans.CriterioBusquedaProducto;
-import service.*;
-
-import javax.annotation.Resource;
+import db.beans.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import service.Comparador.Comparador;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
+import java.util.Optional;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.status;
-import static service.Cadenas.*;
-import static service.Cadenas.obtenerCadenas;
-import static service.CanastaBasica.*;
-import static service.CanastaBasica.obtenerProductos;
-import static service.Localizacion.*;
-import static service.MenuSaludable.*;
-import static utilities.GSON.toJson;
-import static ws.ServiceOperation.setTimer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static service.Cadenas.Cadenas.*;
+import static service.CanastaBasica.CanastaBasica.*;
+import static service.Ubicacion.Ubicacion.obtenerLocalidades;
+import static service.Ubicacion.Ubicacion.obtenerProvincias;
+import static service.MenuSaludable.MenuSaludable.armarPlato;
+import static service.MenuSaludable.MenuSaludable.obtenerMenuSemanal;
+import static utilities.GSON.toJson;
 
 @Path("/app")
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
 public class WebService {
 
-
     private static final Logger logger = LoggerFactory.getLogger(WebService.class);
-
-    private static ExecutorService executor = Executors.newFixedThreadPool(10);
 
     @GET
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse response)
     {
-        setTimer(response);
-        executor.execute(
-
-                () -> {
-                    List<CategoriaProducto> categorias = null;
-                    try {
-                        categorias = obtenerCategorias();
-                    } catch(Exception e){
-                        response.resume(status(INTERNAL_SERVER_ERROR)
-                                .entity(e)
-                                .build());
-                        logger.error("Endpoint Failure: {}", e.getMessage());
-                    }
-
-                    response.resume(toJson(categorias));
-                }
-        );
-
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(obtenerCategorias())
+        ));
     }
 
     @GET
     @Path("/productos")
-    public void productos(@Suspended final AsyncResponse response,@QueryParam("idcategoria") final Short idcategoria,@QueryParam("marca") final String marca)
+    public void productos(@Suspended final AsyncResponse response
+                         ,@QueryParam("idcategoria") final Short idcategoria
+                         ,@QueryParam("marca") final String marca)
     {
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
 
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                    toJson(obtenerProductos(criterio))));
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(obtenerProductos(criterio))
+        ));
 
     }
 
     @GET
-    @Path("/buscarproductos")
-    public void buscarproductos(@Suspended final AsyncResponse response,
-                                @QueryParam("palabraclave") final String palabraclave)
+    @Path("/buscarproductosxcodigos")
+    public void buscarproductosxcodigos( @Suspended final AsyncResponse response
+                                        ,@QueryParam("codigos") final String codigos)
     {
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(buscarProductos(palabraclave))));
+
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(buscarProductosPorCodigos(codigos))
+        ));
+
+    }
+
+
+    @GET
+    @Path("/buscarproductos")
+    public void buscarproductos(@Suspended final AsyncResponse response
+                               ,@QueryParam("palabraclave") final String palabraclave)
+    {
+
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(buscarProductos(palabraclave))
+        ));
 
     }
 
@@ -90,16 +81,20 @@ public class WebService {
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response)
     {
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerProvincias())));
+
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(obtenerProvincias())
+        ));
     }
 
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response)
     {
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerLocalidades())));
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(obtenerLocalidades())
+        ));
+
     }
 
     @GET
@@ -107,8 +102,9 @@ public class WebService {
     public void cadenas(@Suspended final AsyncResponse response)
     {
 
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerCadenas())));
+        ServiceOperation.run(logger,response,supplyAsync(
+                () -> toJson(obtenerCadenas())
+        ));
 
     }
 
@@ -119,9 +115,16 @@ public class WebService {
                           ,@QueryParam("localidad") final String localidad)
     {
 
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerSucursales(codigoentidadfederal,localidad))));
+        ServiceOperation.run(logger,response,supplyAsync(
 
+                () -> {
+                    List<Configuracion> configuraciones = obtenerConfiguraciones();
+
+                    List<Cadena> infosuc = obtenerSucursales(codigoentidadfederal,localidad,configuraciones);
+
+                    return toJson(infosuc);
+                }
+        ));
     }
 
     @POST
@@ -129,12 +132,21 @@ public class WebService {
     public void comparador(@Suspended final AsyncResponse response
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad
-                          ,@QueryParam("codigos") final String codigos)
-    {
-        ServiceOperation.run(logger,response,supplyAsync(() -> {
-                        final List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos);
-                        return toJson((new Comparador()).compararPrecios(cadenas, codigos));}));
+                          ,@QueryParam("codigos") final String codigos) {
 
+        ServiceOperation.run( logger, response, supplyAsync(
+                () -> {
+                        List<Configuracion> configuraciones = obtenerConfiguraciones();
+
+                        List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
+
+                        List<Producto> productos = buscarProductosPorCodigos( codigos );
+
+                        List<Cadena> sucursalesComparadas = (new Comparador()).compararPrecios(cadenas, productos);
+
+                        return toJson( sucursalesComparadas);
+                    }
+                ));
     }
 
     @GET
@@ -142,22 +154,24 @@ public class WebService {
     public void menu (@Suspended final AsyncResponse response)
     {
 
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(obtenerMenuSemanal())));
-
+        ServiceOperation.run( logger, response, supplyAsync(
+                () -> toJson(obtenerMenuSemanal())
+        ));
     }
 
     @GET
     @Path("/comparadorplato")
     public void armarplato (@Suspended final AsyncResponse response
-                            ,@QueryParam("idplato") final Integer idplato
+                            ,@QueryParam("idplato") final short idplato
                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                             ,@QueryParam("localidad") final String localidad)
     {
-
-        ServiceOperation.run(logger,response,supplyAsync(() ->
-                        toJson(armarPlato(codigoentidadfederal,localidad,idplato))));
-
+        ServiceOperation.run( logger, response, supplyAsync(
+                () -> {
+                    List<Cadena> cadenas = armarPlato(codigoentidadfederal,localidad,idplato);
+                    return toJson(cadenas);
+                }
+        ));
     }
 
 }
