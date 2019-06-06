@@ -2,6 +2,7 @@ package clients.genericClients;
 
 import clients.exceptions.ClientException;
 import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.interceptor.OutFaultChainInitiatorObserver;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
@@ -21,7 +22,10 @@ public class SoapClient {
             throws ClientException
     {
         final JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-        try (final Client client = dcf.createClient( wsdlUrl )) {
+        Client client = null;
+
+        try {
+            client  =  dcf.createClient( wsdlUrl );
             final Object[] res = client.invoke( methodName, params );
             if (res == null || res.length == 0) {
                 throw new ClientException( "Failed Invoking Client" );
@@ -35,6 +39,12 @@ public class SoapClient {
             throw new ClientException( "ENDPOINT " + wsdlUrl + " IS DOWN : " + ex.getMessage() );
         } catch (Exception ex) {
             throw new ClientException( "ENDPOINT " + wsdlUrl + " IS DOWN : " + ex.getMessage() );
+        }finally {
+            try {
+                client.close();
+            } catch (Exception e) {
+                throw new ClientException( "No se pudo cerrar el cliente SOAP" );
+            }
         }
     }
 
