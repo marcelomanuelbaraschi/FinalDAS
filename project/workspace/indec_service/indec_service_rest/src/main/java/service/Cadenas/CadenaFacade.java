@@ -18,10 +18,9 @@ public class CadenaFacade {
 
     public static CadenaServiceContract buildClient(Configuracion configuracion) throws APIException{
 
-        /*if(esConfiguracionValida(configuracion)){
+        if(esConfiguracionValida(configuracion)){
             throw new APIException("La configuracion del cliente no es valida: " + configuracion.toString());
-
-        }*/
+        }
 
         final String url = configuracion.getUrl();
         final Tecnologia tecnologia = valueOf(Tecnologia.class, configuracion.getNombreTecnologia());
