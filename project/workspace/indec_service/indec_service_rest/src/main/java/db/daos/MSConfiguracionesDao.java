@@ -11,9 +11,9 @@ public class MSConfiguracionesDao extends DaoImpl {
     public Bean make(ResultSet result) throws SQLException {
         Configuracion config = new Configuracion();
         config.setIdConfig(result.getInt("idConfig"));
-        config.setNombreTecnologia(result.getString("nombreTecnologia"));
         config.setIdCadena(result.getInt("idCadena"));
         config.setNombreCadena(result.getString("nombreCadena"));
+        config.setNombreTecnologia(result.getString("nombreTecnologia"));
         config.setUrl(result.getString("url"));
         return config;
     }

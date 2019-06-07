@@ -1,7 +1,6 @@
 package service.Cadenas;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 
@@ -168,7 +167,6 @@ public class Sucursal {
     public void setCodigoEntidadFederal(String codigoEntidadFederal) {
         this.codigoEntidadFederal = codigoEntidadFederal;
     }
-
     public Integer getIdCadena() {
         return idCadena;
     }

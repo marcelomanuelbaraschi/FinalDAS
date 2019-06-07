@@ -8,10 +8,10 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-import java.util.Optional;
-import static java.util.concurrent.CompletableFuture.supplyAsync;
-
-
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import static javax.ws.rs.core.Response.status;
 import static service.Cadenas.Cadenas.*;
 import static service.CanastaBasica.CanastaBasica.*;
 import static service.Ubicacion.Ubicacion.obtenerLocalidades;
@@ -25,14 +25,24 @@ import static utilities.GSON.toJson;
 public class WebService {
 
     private static final Logger logger = LoggerFactory.getLogger(WebService.class);
+    private static final long timeOut = 3;
 
     @GET
     @Path("/categorias")
     public void categorias(@Suspended final AsyncResponse response)
     {
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(obtenerCategorias())
-        ));
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+        try{
+            response.resume(toJson(obtenerCategorias()));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
@@ -46,10 +56,19 @@ public class WebService {
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
 
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(obtenerProductos(criterio))
-        ));
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
 
+        try{
+            response.resume(toJson(obtenerProductos(criterio)));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
@@ -58,9 +77,20 @@ public class WebService {
                                         ,@QueryParam("codigos") final String codigos)
     {
 
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(buscarProductosPorCodigos(codigos))
-        ));
+
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
+        try{
+            response.resume(toJson(buscarProductosPorCodigos(codigos)));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
 
     }
 
@@ -71,41 +101,52 @@ public class WebService {
                                ,@QueryParam("palabraclave") final String palabraclave)
     {
 
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(buscarProductos(palabraclave))
-        ));
-
+        try{
+            response.resume(toJson(buscarProductos(palabraclave)));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response)
     {
-
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(obtenerProvincias())
-        ));
+        try{
+            response.resume(toJson(obtenerProvincias()));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response)
     {
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(obtenerLocalidades())
-        ));
-
+        try{
+            response.resume(toJson(obtenerLocalidades()));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response)
     {
-
-        ServiceOperation.run(logger,response,supplyAsync(
-                () -> toJson(obtenerCadenas())
-        ));
-
+        try{
+            response.resume(toJson(obtenerCadenas()));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
@@ -114,17 +155,18 @@ public class WebService {
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad)
     {
+        try{
+            List<Configuracion> configuraciones = obtenerConfiguraciones();
 
-        ServiceOperation.run(logger,response,supplyAsync(
+            List<Cadena> infosuc = obtenerSucursales(codigoentidadfederal,localidad,configuraciones);
 
-                () -> {
-                    List<Configuracion> configuraciones = obtenerConfiguraciones();
+            response.resume(toJson(infosuc));
 
-                    List<Cadena> infosuc = obtenerSucursales(codigoentidadfederal,localidad,configuraciones);
-
-                    return toJson(infosuc);
-                }
-        ));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @POST
@@ -132,31 +174,37 @@ public class WebService {
     public void comparador(@Suspended final AsyncResponse response
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad
-                          ,@QueryParam("codigos") final String codigos) {
+                          ,@QueryParam("codigos") final String codigos)
+    {
+        try{
+            List<Configuracion> configuraciones = obtenerConfiguraciones();
 
-        ServiceOperation.run( logger, response, supplyAsync(
-                () -> {
-                        List<Configuracion> configuraciones = obtenerConfiguraciones();
+            List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
 
-                        List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
+            List<Producto> productos = buscarProductosPorCodigos(codigos);
 
-                        List<Producto> productos = buscarProductosPorCodigos( codigos );
+            List<Cadena> sucursalesComparadas = (new Comparador()).compararPrecios(cadenas, productos);
 
-                        List<Cadena> sucursalesComparadas = (new Comparador()).compararPrecios(cadenas, productos);
+            response.resume(toJson( sucursalesComparadas)) ;
 
-                        return toJson( sucursalesComparadas);
-                    }
-                ));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
     @Path("/menu")
     public void menu (@Suspended final AsyncResponse response)
     {
-
-        ServiceOperation.run( logger, response, supplyAsync(
-                () -> toJson(obtenerMenuSemanal())
-        ));
+        try{
+            response.resume(toJson(obtenerMenuSemanal()));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
 
     @GET
@@ -166,12 +214,12 @@ public class WebService {
                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                             ,@QueryParam("localidad") final String localidad)
     {
-        ServiceOperation.run( logger, response, supplyAsync(
-                () -> {
-                    List<Cadena> cadenas = armarPlato(codigoentidadfederal,localidad,idplato);
-                    return toJson(cadenas);
-                }
-        ));
+        try{
+            response.resume(toJson(armarPlato(codigoentidadfederal,localidad,idplato)));
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
     }
-
 }
