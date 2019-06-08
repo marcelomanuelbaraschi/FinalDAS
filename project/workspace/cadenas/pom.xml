@@ -65,7 +65,6 @@
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
             <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadena;</urlDB><!-- local -->
-            <!-- <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadena;</urlDB>  manu -->
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_axis_one</contextDB>
@@ -276,7 +275,6 @@
                     <username>${usernameDB}</username>
                     <password>${passwordDB}</password>
                     <contexts>${contextDB}</contexts>
-                    <!--<propertyFile>${db.property.file.path}</propertyFile>-->
                 </configuration>
                 <executions>
                     <execution>

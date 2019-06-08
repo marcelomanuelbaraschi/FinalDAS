@@ -33,6 +33,7 @@
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
         <liquibase.version>3.6.1</liquibase.version>
 
+
         <jaxrs.version>2.0.1</jaxrs.version>
         <jersey2.version>2.19</jersey2.version>
 

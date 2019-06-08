@@ -51,16 +51,15 @@ public class WebService {
                          ,@QueryParam("idcategoria") final Short idcategoria
                          ,@QueryParam("marca") final String marca)
     {
-
-        CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
-        criterio.setIdCategoria(idcategoria);
-        criterio.setMarca(marca);
-
         response.setTimeout(timeOut, SECONDS);
         response.setTimeoutHandler(
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build()));
+
+        CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
+        criterio.setIdCategoria(idcategoria);
+        criterio.setMarca(marca);
 
         try{
             response.resume(toJson(obtenerProductos(criterio)));
@@ -100,6 +99,11 @@ public class WebService {
     public void buscarproductos(@Suspended final AsyncResponse response
                                ,@QueryParam("palabraclave") final String palabraclave)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
 
         try{
             response.resume(toJson(buscarProductos(palabraclave)));
@@ -114,6 +118,12 @@ public class WebService {
     @Path("/provincias")
     public void provincias(@Suspended final AsyncResponse response)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
         try{
             response.resume(toJson(obtenerProvincias()));
         }catch(Exception exception){
@@ -127,6 +137,12 @@ public class WebService {
     @Path("/localidades")
     public void localidades(@Suspended final AsyncResponse response)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
         try{
             response.resume(toJson(obtenerLocalidades()));
         }catch(Exception exception){
@@ -140,6 +156,11 @@ public class WebService {
     @Path("/cadenas")
     public void cadenas(@Suspended final AsyncResponse response)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
         try{
             response.resume(toJson(obtenerCadenas()));
         }catch(Exception exception){
@@ -155,6 +176,12 @@ public class WebService {
                           ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                           ,@QueryParam("localidad") final String localidad)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
 
@@ -176,6 +203,12 @@ public class WebService {
                           ,@QueryParam("localidad") final String localidad
                           ,@QueryParam("codigos") final String codigos)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
 
@@ -198,6 +231,11 @@ public class WebService {
     @Path("/menu")
     public void menu (@Suspended final AsyncResponse response)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
         try{
             response.resume(toJson(obtenerMenuSemanal()));
         }catch(Exception exception){
@@ -214,6 +252,12 @@ public class WebService {
                             ,@QueryParam("codigoentidadfederal") final String codigoentidadfederal
                             ,@QueryParam("localidad") final String localidad)
     {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
         try{
             response.resume(toJson(armarPlato(codigoentidadfederal,localidad,idplato)));
         }catch(Exception exception){
