@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.GSON;
 import utilities.ListUtils;
+
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.function.Predicate;
-
-import static java.util.Optional.*;
+import java.util.stream.Collectors;
 
 public class CanastaBasica {
 
@@ -50,7 +51,7 @@ public class CanastaBasica {
         }
     }
 
-    public  static List<Producto> obtenerProductos(final CriterioBusquedaProducto criterio) throws APIException
+    public  static List<Producto> buscarProductos (final CriterioBusquedaProducto criterio) throws APIException
     {
         if(criterio == null) {
             throw new APIException("Se debe proveer un criterio para la busqueda de productos" );
@@ -58,60 +59,14 @@ public class CanastaBasica {
 
         List<Producto> productos = obtenerProductos();
 
-        if(criterio.getIdCategoria() == null & criterio.getMarca() == null)
+        if(criterio.getIdCategoria() == null & criterio.getMarca() == null & criterio.getPalabraclave() == null)
             return productos;
 
-        Predicate<Producto> porCategoria = p -> {
-            if (criterio.getIdCategoria() == null) {
-                return true;
-            } else {
-                return p.getIdCategoria().equals(criterio.getIdCategoria());
-            }
-
-        };
-
-        Predicate<Producto> porMarca = p -> {
-            if (criterio.getMarca() == null) {
-                return true;
-            } else {
-                return (p.getNombreMarca().trim().toLowerCase().equals(criterio.getMarca().trim().toLowerCase()));
-            }
-        };
-
-        List<Producto> list = new ArrayList<>();
-
-        for (Producto producto : productos) {
-            if (porCategoria.test(producto)) {
-                if (porMarca.test(producto)) {
-                    list.add(producto);
-                }
-            }
-        }
-        return list;
-    }
-
-    public  static List<Producto>  buscarProductos(final String palabraclave) throws APIException
-    {
-        if(palabraclave == null) {
-            throw new APIException("Se debe proveer una palabraclave para la busqueda de productos");
-        }
-
-        List<Producto> productos = obtenerProductos();
-        Predicate<Producto> buscarPorPalabraClave =  p -> {
-            return     p.getNombreProducto().trim().toLowerCase().contains(palabraclave.toLowerCase().trim())
-                    || p.getNombreMarca().trim().toLowerCase().contains(palabraclave.toLowerCase().trim())
-                    || p.getNombreCategoria().trim().toLowerCase().contains(palabraclave.toLowerCase().trim());
-        };
-
-
-        List<Producto> list = new ArrayList<>();
-        for (Producto producto : productos) {
-            if (buscarPorPalabraClave.test(producto)) {
-                list.add(producto);
-            }
-        }
-
-        return list;
+        return productos.stream()
+                        .filter(p -> criterio.filtraPorCategoria(p))
+                        .filter(p -> criterio.filtraPorMarca(p))
+                        .filter(p -> criterio.filtraPorPalabraClave(p))
+                        .collect(Collectors.toList());
     }
 
     public  static List<Producto> buscarProductosPorCodigos(final String codigos) throws APIException

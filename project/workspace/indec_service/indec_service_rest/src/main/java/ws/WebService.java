@@ -46,10 +46,11 @@ public class WebService {
     }
 
     @GET
-    @Path("/productos")
-    public void productos(@Suspended final AsyncResponse response
-                         ,@QueryParam("idcategoria") final Short idcategoria
-                         ,@QueryParam("marca") final String marca)
+    @Path("/buscarproductos")
+    public void buscarproductos(@Suspended final AsyncResponse response
+                               ,@QueryParam("idcategoria") final Short idcategoria
+                               ,@QueryParam("marca") final String marca
+                               ,@QueryParam("palabraclave") final String palabraclave)
     {
         response.setTimeout(timeOut, SECONDS);
         response.setTimeoutHandler(
@@ -60,9 +61,10 @@ public class WebService {
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
         criterio.setMarca(marca);
+        criterio.setPalabraclave(palabraclave);
 
         try{
-            response.resume(toJson(obtenerProductos(criterio)));
+            response.resume(toJson(buscarProductos(criterio)));
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
@@ -93,8 +95,7 @@ public class WebService {
 
     }
 
-
-    @GET
+   /* @GET
     @Path("/buscarproductos")
     public void buscarproductos(@Suspended final AsyncResponse response
                                ,@QueryParam("palabraclave") final String palabraclave)
@@ -112,7 +113,7 @@ public class WebService {
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
-    }
+    }*/
 
     @GET
     @Path("/provincias")
