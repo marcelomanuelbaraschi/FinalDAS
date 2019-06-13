@@ -59,12 +59,12 @@ public class CanastaBasica {
 
         List<Producto> productos = obtenerProductos();
 
-        if(criterio.getIdCategoria() == null & criterio.getMarca() == null & criterio.getPalabraclave() == null)
+        if(criterio.getIdCategoria() == null & criterio.getMarcas() == null & criterio.getPalabraclave() == null)
             return productos;
 
         return productos.stream()
                         .filter(p -> criterio.filtraPorCategoria(p))
-                        .filter(p -> criterio.filtraPorMarca(p))
+                        .filter(p -> criterio.filtraPorMarcas(p))
                         .filter(p -> criterio.filtraPorPalabraClave(p))
                         .collect(Collectors.toList());
     }

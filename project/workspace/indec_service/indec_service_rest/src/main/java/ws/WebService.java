@@ -3,6 +3,8 @@ import db.beans.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.Comparador.Comparador;
+import utilities.ListUtils;
+
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
@@ -49,7 +51,7 @@ public class WebService {
     @Path("/buscarproductos")
     public void buscarproductos(@Suspended final AsyncResponse response
                                ,@QueryParam("idcategoria") final Short idcategoria
-                               ,@QueryParam("marca") final String marca
+                               ,@QueryParam("marcas") final String marcas
                                ,@QueryParam("palabraclave") final String palabraclave)
     {
         response.setTimeout(timeOut, SECONDS);
@@ -60,7 +62,7 @@ public class WebService {
 
         CriterioBusquedaProducto criterio = new CriterioBusquedaProducto();
         criterio.setIdCategoria(idcategoria);
-        criterio.setMarca(marca);
+        criterio.setMarcas(marcas!=null?ListUtils.asList(marcas):null);
         criterio.setPalabraclave(palabraclave);
 
         try{

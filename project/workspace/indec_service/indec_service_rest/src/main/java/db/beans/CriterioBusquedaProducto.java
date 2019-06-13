@@ -1,17 +1,17 @@
 package db.beans;
+
+import java.util.List;
+
 public class CriterioBusquedaProducto {
 
     private Short idCategoria;
-    private String marca;
+    private List<String> marcas;
     private String palabraclave;
 
     public String getPalabraclave() { return palabraclave; }
 
     public void setPalabraclave(String palabraclave) { this.palabraclave = palabraclave; }
 
-    public String getMarca() { return marca; }
-
-    public void setMarca(String marca) { this.marca = marca; }
 
     public Short getIdCategoria() { return idCategoria; }
 
@@ -25,11 +25,16 @@ public class CriterioBusquedaProducto {
         }
     }
 
-    public boolean filtraPorMarca (Producto p) {
-        if (this.getMarca() == null) {
+    public boolean filtraPorMarcas (Producto p) {
+        if (this.getMarcas() == null) {
             return true;
         } else {
-            return (p.getNombreMarca().trim().toLowerCase().equals(this.getMarca().trim().toLowerCase()));
+            for (String marca:this.getMarcas()){
+                if(p.getNombreMarca().trim().toLowerCase().equals(marca.trim().toLowerCase())){
+                  return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -44,5 +49,13 @@ public class CriterioBusquedaProducto {
                             || p.getNombreCategoria().trim().toLowerCase().contains(this.getPalabraclave().toLowerCase().trim());
         }
 
+    }
+
+    public List<String> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(List<String> marcas) {
+        this.marcas = marcas;
     }
 }
