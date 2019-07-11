@@ -1,173 +1,172 @@
 package service.Comparador;
+
 import db.beans.Cadena;
-import db.beans.CriterioBusquedaProducto;
 import db.beans.Producto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import service.Cadenas.Sucursal;
-import service.CanastaBasica.CanastaBasica;
+
 import service.Cadenas.ProductoSucursal;
-import utilities.ListUtils;
-import utilities.NumberUtils;
+import service.Cadenas.Sucursal;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
-import java.util.stream.Stream;
-
-import static java.util.Comparator.*;
-import static java.util.stream.Collectors.*;
 
 public class Comparador {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(Comparador.class);
+    private final List<Cadena> cadenas;
+    private final List<Producto> productosDelCarrito;
+    private final Map<String,Double> codigoPrecio;
+    private Integer cant_max;
 
-    public  List<Cadena> compararPrecios (final List<Cadena> cadenas, final List<Producto> productosSeleccionados){
+    public Comparador(final List<Cadena> cadenas, final List<Producto> productosDelCarrito) {
 
-            List<Cadena> cadenasDisponibles = new LinkedList<>();
-            List<Cadena> cadenasNoDisponibles = new LinkedList<>();
+        if ((cadenas != null) && (!cadenas.isEmpty())){
+            this.cadenas = cadenas;
+        }else{
+            throw new IllegalArgumentException("Comparador -> La lista de cadenas es null o esta vacia");
+        }
 
-            //Separamos las cadenasDisponibles de las cadenasNoDisponibles
-            for(Cadena cad : cadenas){
-                if(cad.getDisponible())
-                    cadenasDisponibles.add(cad);
-                if(!cad.getDisponible())
-                    cadenasNoDisponibles.add(cad);
-            }
+        if ((productosDelCarrito != null) && (!productosDelCarrito.isEmpty())){
+            this.productosDelCarrito = productosDelCarrito;
+        }else{
+            throw new IllegalArgumentException("Comparador -> La lista de productos es null o esta vacia");
+        }
 
-            //Si existen cadenasDisponibles
-            if(!cadenasDisponibles.isEmpty()){
-                //Primero marcamos los productos
-                //Luego marcamos las cadenas.
-                List<Cadena> cadenasDisponiblesMarcadas =
-                        marcarSucursales(
-                                marcarProductos(cadenasDisponibles,productosSeleccionados)
-                        );
-
-                  return  Stream.concat(cadenasDisponiblesMarcadas.stream(), cadenasNoDisponibles.stream())
-                                .collect(toList());
-
-            }
-
-            return cadenasNoDisponibles;
+        this.codigoPrecio = new HashMap<>();
+        cant_max = 0;
 
     }
 
-    private   List<Cadena> marcarProductos(final List<Cadena> cadenas,final List<Producto> productos){
+    public void comparar(){
+        buscarPreciosMasBajos();
+        marcarProductosMasBaratos();
+        calcularTotalesPorSucursal();
+        calcularCantidadDeProductosMasBaratosPorSucursal();
+        marcarMejoresSucursales();
+        completarProductosFaltantes();
+    }
 
-        //Asignamos el parametro para no mutarlo.
-        List<Cadena> cadenasConProductosMarcados = cadenas;
+    public List<Cadena> obtenerComparacion(){
+        return this.cadenas;
+    }
 
-        //Buscamos los mejores precios por codigo de barras.
-        final Map<String,Float> preciosMasBajos  = buscarPreciosMasBajos(cadenas);
-
-        float precioTotal = 0;
-
-        for (Cadena c : cadenasConProductosMarcados) {
-            for (Sucursal s :  c.getSucursales()) {
-                precioTotal = 0;
-                for (ProductoSucursal p : s.getProductos()) {
-
-                    precioTotal = precioTotal + p.getPrecio();
-
-                    Float precioMasBajo = preciosMasBajos.get(p.getCodigoDeBarras());
-
-                    if (p.getPrecio() == precioMasBajo) {
+    private void marcarProductosMasBaratos() {
+        double precio;
+        String codigo;
+        for (Cadena c : cadenas) {
+            for (Sucursal sc : c.getSucursales()) {
+                for (ProductoSucursal p : sc.getProductos()) {
+                    codigo = p.getCodigoDeBarras();
+                    precio = codigoPrecio.get(codigo);
+                    if (p.getPrecio() == precio) {
                         p.setMejorPrecio(true);
                     } else {
                         p.setMejorPrecio(false);
                     }
                 }
-                s.setTotal(NumberUtils.round(precioTotal,2)); //TODO: causando problemas..
+            }
+        }
+    }
 
-                List<ProductoSucursal> productosAusentes = new LinkedList<>();
-                for (Producto p : productos) {
-                    boolean existe = exists(p.getCodigoDeBarras(),s.getProductos());
-                    if(!existe){
-                        ProductoSucursal newProduct = new ProductoSucursal();
-                        newProduct.setMejorPrecio(false);
-                        newProduct.setPrecio((float) 0);
-                        newProduct.setCodigoDeBarras(p.getCodigoDeBarras());
-                        newProduct.setNombre(p.getNombreProducto());
-                        newProduct.setMarca(p.getNombreMarca());
-                        productosAusentes.add(newProduct);
+    private void buscarPreciosMasBajos() {
+        double  precioActual,precio;
+        String codigo;
+        for (Cadena c : cadenas) {
+            for (Sucursal sc : c.getSucursales()) {
+                for (ProductoSucursal p : sc.getProductos()) {
+                    codigo = p.getCodigoDeBarras();
+                    precio = p.getPrecio();
+                    if (codigoPrecio.containsKey( codigo )) {
+                        precioActual = codigoPrecio.get( codigo );
+                        if (precio < precioActual) {
+                            codigoPrecio.replace( codigo, precio );
+                        }
+                    } else {
+                        codigoPrecio.put( codigo, precio );
                     }
                 }
-                List<ProductoSucursal> allProducts =
-                        Stream.concat(s.getProductos().stream(), productosAusentes.stream()).collect(toList());
-                s.setProductos(allProducts);
-
             }
         }
-        return cadenasConProductosMarcados;
     }
 
-    private   List<Cadena>  marcarSucursales (final List<Cadena> cadenas) {
-
-        List<Cadena> cadenasConSucursalesMarcadas =  cadenas;
-
-        List <Long> cantidades = new LinkedList<>();
-
-        for (Cadena c : cadenasConSucursalesMarcadas) {
+    private void calcularTotalesPorSucursal() {
+        DecimalFormat formatter = new DecimalFormat("#.##");
+        formatter.setRoundingMode(RoundingMode.UP);
+        double precioTotal;
+        for (Cadena c : this.cadenas) {
             for (Sucursal s : c.getSucursales()) {
-                long cantidadDeProductosConPrecioMasBajo = 0L;
+                precioTotal = 0;
+                for (ProductoSucursal p : s.getProductos()) {
+                    precioTotal = precioTotal + p.getPrecio();
+                }
+                s.setTotal(Double.parseDouble(formatter.format(precioTotal)));
+            }
+        }
+    }
+
+    private void calcularCantidadDeProductosMasBaratosPorSucursal(){
+
+        for (Cadena c : cadenas) {
+            for (Sucursal s : c.getSucursales()) {
+                Integer cantidad = 0;
                 for(ProductoSucursal p : s.getProductos()){
                     if(p.isMejorPrecio())
-                        cantidadDeProductosConPrecioMasBajo = cantidadDeProductosConPrecioMasBajo + 1L;
+                        cantidad = cantidad + 1;
                 }
-                s.setCantidadDeProductosConPrecioMasBajo(cantidadDeProductosConPrecioMasBajo);
-
-                cantidades.add(cantidadDeProductosConPrecioMasBajo);
+                s.setCantidadDeProductosConPrecioMasBajo(cantidad);
+                if(cantidad > cant_max){
+                    cant_max = cantidad;
+                }
             }
         }
 
-        final long cantidad_max = cantidades.stream().max(naturalOrder()).get().longValue();
+    }
 
-        for (Cadena c : cadenasConSucursalesMarcadas) {
+    private void completarProductosFaltantes(){
+        ProductoSucursal np;
+        List<ProductoSucursal> productosSucursal;
+        List<ProductoSucursal> productosAusentes;
+        boolean elProductoNoEstaEnElCarrito;
+        for (Cadena c : this.cadenas) {
             for (Sucursal s : c.getSucursales()) {
-                if(cantidad_max == s.getCantidadDeProductosConPrecioMasBajo())
+                productosAusentes = new LinkedList<>();
+                for(Producto pc : productosDelCarrito){
+                    productosSucursal = s.getProductos();
+                    elProductoNoEstaEnElCarrito = !existe(pc,productosSucursal);
+                    if(elProductoNoEstaEnElCarrito){
+                        np = new ProductoSucursal();
+                        np.setMejorPrecio(false);
+                        np.setPrecio(0.0);
+                        np.setCodigoDeBarras(pc.getCodigoDeBarras());
+                        np.setNombre(pc.getNombreProducto());
+                        np.setMarca(pc.getNombreMarca());
+                        productosAusentes.add(np);
+                    }
+                }
+                s.getProductos().addAll(productosAusentes);
+            }
+        }
+    }
+
+    private void marcarMejoresSucursales() {
+
+        for (Cadena c : this.cadenas) {
+            for (Sucursal s : c.getSucursales()) {
+                if(cant_max == s.getCantidadDeProductosConPrecioMasBajo())
                     s.setMejorOpcion(true);
-                else s.setMejorOpcion(false);
+                else
+                    s.setMejorOpcion(false);
 
             }
         }
-
-        return cadenasConSucursalesMarcadas;
     }
 
-    private   Map<String,Float> buscarPreciosMasBajos(final List<Cadena> cadenasDisponibles){
-
-
-        final Map<String, List<ProductoSucursal>> productosPorCodigoDeBarra =
-
-                cadenasDisponibles.stream()
-                        .flatMap(cad -> cad.getSucursales().stream())
-                        .filter(suc -> !suc.getProductos().isEmpty())
-                        .flatMap(suc -> suc.getProductos().stream())
-                        .collect(groupingBy(ProductoSucursal::getCodigoDeBarras));
-
-
-        final Map<String,Float> preciosMasBajosPorCodigoDeBarra = new HashMap<>();
-
-        productosPorCodigoDeBarra.forEach((codigoDeBarras,productos)-> {
-                    final Float precioMasBajo =
-                            productos.stream().min(comparing(p -> p.getPrecio())).get().getPrecio();
-                    preciosMasBajosPorCodigoDeBarra.put(codigoDeBarras,precioMasBajo);
-
-                }
-        );
-
-        return preciosMasBajosPorCodigoDeBarra;
-
-    }
-
-    private   boolean exists(final String codigoDeBarras,List<ProductoSucursal>productos){
-        for (ProductoSucursal producto : productos) {
-            if(producto.getCodigoDeBarras().equals(codigoDeBarras)){
+    private boolean existe (final Producto producto,List<ProductoSucursal>productos){
+        for (ProductoSucursal p : productos) {
+            if(p.getCodigoDeBarras().equals(producto.getCodigoDeBarras())) {
                 return true;
             }
+
         }
         return false;
     }
-    
-
 }

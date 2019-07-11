@@ -69,10 +69,10 @@ public class CanastaBasica {
                         .collect(Collectors.toList());
     }
 
-    public  static List<Producto> buscarProductosPorCodigos(final String codigos) throws APIException
+    public static List<Producto> buscarProductosPorCodigos(final String codigos) throws APIException
     {
         if(codigos == null) {
-            throw new APIException("Se debe proveer una lista de codigos para la busqueda de productos");
+            throw new IllegalArgumentException("Se debe proveer una lista de codigos para la busqueda de productos");
         }
 
         List<Producto> productos = obtenerProductos();

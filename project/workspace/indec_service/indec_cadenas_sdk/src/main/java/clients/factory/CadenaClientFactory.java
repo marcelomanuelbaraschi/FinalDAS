@@ -10,20 +10,17 @@ public class CadenaClientFactory {
     public static CadenaServiceContract  clientFor (final String url,final String tecnologia)
             throws ClientException
     {
-        final boolean isUrlValid = (url!= null) && (!url.trim().equals(""));
-        final boolean isTecnologiaValida = (tecnologia!= null) && (!tecnologia.trim().equals(""));
+        CadenaServiceContract sc;
+        if (tecnologia.trim().toUpperCase().equals("REST")) {
+            sc = new CadenaRestClient(url);
+        }else if (tecnologia.trim().toUpperCase().equals("SOAP")) {
+            sc = new CadenaSoapClient(url);
+        } else  throw new ClientException ("No se pudo crear el cliente, verifique los parametros..");
 
-        if(isUrlValid && isTecnologiaValida){
-
-            if (tecnologia.toUpperCase().equals("REST")) {
-                return new CadenaRestClient(url);
-            }else if (tecnologia.toUpperCase().equals("SOAP")) {
-                return new CadenaSoapClient(url);
-            } else  throw new ClientException ("No se pudo crear el cliente, verifique los parametros..");
-
+        if(sc==null){
+            throw new  ClientException("El cliente creado por CadenaClientFactory es null");
         }else{
-            throw new ClientException ("No se pudo crear el cliente, verifique los parametros..");
+            return sc;
         }
-
     }
 }

@@ -47,29 +47,29 @@ public class Sucursal {
 
 
     @SerializedName("cantidadDeProductosConPrecioMasBajo")
-    private long cantidadDeProductosConPrecioMasBajo;
+    private int cantidadDeProductosConPrecioMasBajo;
 
     @SerializedName("mejorOpcion")
     private boolean mejorOpcion;
 
 
     @SerializedName("total")
-    private float total;
+    private double total;
 
 
-    public long getCantidadDeProductosConPrecioMasBajo() {
+    public int getCantidadDeProductosConPrecioMasBajo() {
         return cantidadDeProductosConPrecioMasBajo;
     }
 
-    public void setCantidadDeProductosConPrecioMasBajo(long cantidadDeProductosConPrecioMasBajo) {
+    public void setCantidadDeProductosConPrecioMasBajo(int cantidadDeProductosConPrecioMasBajo) {
         this.cantidadDeProductosConPrecioMasBajo = cantidadDeProductosConPrecioMasBajo;
     }
 
-    public float getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

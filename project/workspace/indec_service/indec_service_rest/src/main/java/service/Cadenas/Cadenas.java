@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Cadenas {
 
-    public static List<Cadena> obtenerCadenas() throws APIException
+    public static List<Cadena> obtenerCadenas()
     {
         try {
             List<Bean> beans = DaoFactory.getDao("Cadenas").select(null);
@@ -28,11 +28,11 @@ public class Cadenas {
                 throw new APIException("GSON failed -> obtenerCadenas");
             }
         }catch (SQLException ex) {
-            throw new APIException("SQLException,metodo -> obtenerCadenas:{}" + ex.getMessage());
+            throw new APIException("SQLException,metodo -> obtenerCadenas " + ex.getMessage());
         }
     }
 
-    public static List<Configuracion> obtenerConfiguraciones() throws APIException
+    public static List<Configuracion> obtenerConfiguraciones()
     {
         try {
             List<Bean> beans = DaoFactory.getDao("Configuraciones").select(null);
@@ -43,11 +43,14 @@ public class Cadenas {
                 throw new APIException("GSON failed -> obtenerConfiguraciones");
             }
         }catch (SQLException ex) {
-            throw new APIException("SQLException,metodo -> obtenerConfiguraciones:{}" + ex.getMessage());
+            throw new APIException("SQLException,metodo -> obtenerConfiguraciones " + ex.getMessage());
         }
     }
 
-    public static List<Cadena> obtenerSucursales (final String codigoentidadfederal,final String localidad,List<Configuracion> configuraciones)
+    public static List<Cadena> obtenerSucursales
+            (final String codigoentidadfederal
+                    ,final String localidad
+                    ,final List<Configuracion> configuraciones)
     {
         return configuraciones
                 .parallelStream()
@@ -56,7 +59,11 @@ public class Cadenas {
 
     }
 
-    public static List<Cadena> obtenerPrecios (final String codigoentidadfederal,final String localidad,final String codigos,List<Configuracion> configuraciones)
+    public static List<Cadena> obtenerPrecios
+            (final String codigoentidadfederal
+                    ,final String localidad
+                    ,final String codigos
+                    ,final List<Configuracion> configuraciones)
     {
         return configuraciones
                 .parallelStream()
@@ -64,52 +71,53 @@ public class Cadenas {
                 .collect(toList());
     }
 
-    public static Cadena obtenerSucursalesDeCadena (final String codigoentidadfederal,final String localidad,final Configuracion configuracion)
-    {
-            try{
-                CadenaServiceContract client = buildClient(configuracion);
-
-                String sucursalesJson = null;
-
-                try {
-                    sucursalesJson = client.sucursales(codigoentidadfederal,localidad);
-                }catch (Exception ex) {
-                    return buildCadenaNoDisponible(configuracion);
-                }
-
-                List<Sucursal> sucursales = Arrays.asList(
-                        GSON.toObject( sucursalesJson, Sucursal[].class )
-                );
-
-                final boolean haySucursales = sucursales != null && !(sucursales.isEmpty());
-
-                if (haySucursales) {
-                    return buildCadenaDisponible(configuracion, sucursales);
-                } else {
-                    return buildCadenaNoDisponible(configuracion);
-                }
-            }catch (Exception ex){
-                return buildCadenaNoDisponible(configuracion);
-            }
-    }
-
-    public static Cadena obtenerPreciosDeCadena (final String codigoentidadfederal,final String localidad,final String codigos,final Configuracion configuracion)
+    public static Cadena obtenerSucursalesDeCadena
+            (final String codigoentidadfederal
+                    ,final String localidad
+                    ,final Configuracion configuracion)
     {
 
         try{
             CadenaServiceContract client = buildClient(configuracion);
 
-            String jsonresp = null;
+            String jsonResponse;
 
-            try {
-                jsonresp = client.precios(codigoentidadfederal,localidad,codigos);
-            }catch (Exception clientException) {
+            jsonResponse = client.sucursales(codigoentidadfederal,localidad);
+
+            Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
+
+            List<Sucursal> sucursales = Arrays.asList(cadenas);
+
+            final boolean haySucursales = sucursales != null && !(sucursales.isEmpty());
+
+            if (haySucursales) {
+                return buildCadenaDisponible(configuracion, sucursales);
+            } else {
                 return buildCadenaNoDisponible(configuracion);
             }
 
-            List<Sucursal> sucursales = Arrays.asList(
-                    GSON.toObject( jsonresp, Sucursal[].class )
-            );
+        }catch (Exception ex){
+            return buildCadenaNoDisponible(configuracion);
+        }
+
+    }
+
+    public static Cadena obtenerPreciosDeCadena
+            (final String codigoentidadfederal
+                    ,final String localidad
+                    ,final String codigos,final Configuracion configuracion)
+    {
+
+        try{
+            CadenaServiceContract client = buildClient(configuracion);
+
+            String jsonResponse;
+
+            jsonResponse = client.precios(codigoentidadfederal,localidad,codigos);
+
+            Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
+
+            List<Sucursal> sucursales = Arrays.asList(cadenas);
 
             final boolean haySucursales = sucursales != null && !(sucursales.isEmpty());
 
@@ -123,7 +131,7 @@ public class Cadenas {
         }
     }
 
-    public static CadenaServiceContract buildClient(Configuracion configuracion) throws APIException
+    public static CadenaServiceContract buildClient(Configuracion configuracion)
     {
 
         if(esConfiguracionDeCadenaValida(configuracion)){
@@ -132,19 +140,11 @@ public class Cadenas {
             final String tecnologia = configuracion.getNombreTecnologia();
 
             CadenaServiceContract client;
-            try {
-                client = CadenaClientFactory.clientFor(url,tecnologia);
+            client = CadenaClientFactory.clientFor(url,tecnologia);
+            return client;
 
-                if(client == null){
-                    throw new  APIException("El cliente creado por el sdk es null");
-                }
-                return client;
-
-            }catch(Exception ex) {
-                throw new  APIException("SDK Error " + ex.getMessage());
-            }
         }else{
-            throw new APIException("La configuracion del cliente no es valida: " + configuracion.toString());
+            throw new IllegalArgumentException("La configuracion del cliente no es valida: " + configuracion.toString());
         }
     }
 
@@ -180,17 +180,17 @@ public class Cadenas {
 
     public static Cadena buildCadenaDisponible(Configuracion configuracion, List<Sucursal> sucursales)
     {
-
         Cadena cadena = new Cadena();
+        Integer idCadena = configuracion.getIdCadena();
+        String nombreCadena = configuracion.getNombreCadena();
         for (Sucursal s : sucursales){
-            s.setIdCadena(configuracion.getIdCadena());
+            s.setIdCadena(idCadena);
         }
         cadena.setDisponible(true);
-        cadena.setIdCadena(configuracion.getIdCadena());
-        cadena.setNombreCadena(configuracion.getNombreCadena());
+        cadena.setIdCadena(idCadena);
+        cadena.setNombreCadena(nombreCadena);
         cadena.setSucursales(sucursales);
         return cadena;
-
     }
 }
 

@@ -215,13 +215,17 @@ public class WebService {
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
 
+
             List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
 
-            List<Producto> productos = buscarProductosPorCodigos(codigos);
+            List<Producto> productosDelCarrito = buscarProductosPorCodigos(codigos);
 
-            List<Cadena> sucursalesComparadas = (new Comparador()).compararPrecios(cadenas, productos);
+            //separar
+            Comparador comparador = new Comparador(cadenas, productosDelCarrito);
+            comparador.comparar();
+            List<Cadena> comparadas = comparador.obtenerComparacion();
 
-            response.resume(toJson( sucursalesComparadas)) ;
+            response.resume(toJson(comparadas)) ;
 
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());

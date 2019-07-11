@@ -110,8 +110,8 @@ public class MenuSaludable {
                     }
                 }
 //----------------------------------------------------------------------------------------------------------------------
-                float precioTotal = 0;
-                List<Long> cantidadesDeProductosPorSucursal = new LinkedList<>();
+                double precioTotal = 0;
+                List<Integer> cantidadesDeProductosPorSucursal = new LinkedList<>();
                 for (Cadena cadena : cadenasDisponibles) {
                     for (Sucursal sucursal : cadena.getSucursales()) {
                         precioTotal = 0;
@@ -134,8 +134,8 @@ public class MenuSaludable {
 
                         ArrayList<ProductoSucursal> prods = new ArrayList<>( productoMasBaratoPorIngrediente.values() );
                         sucursal.setProductos( prods );
-                        sucursal.setCantidadDeProductosConPrecioMasBajo( sucursal.getProductos().stream().count() );
-                        cantidadesDeProductosPorSucursal.add( sucursal.getCantidadDeProductosConPrecioMasBajo() );
+                        sucursal.setCantidadDeProductosConPrecioMasBajo((int) sucursal.getProductos().stream().count() );
+                        cantidadesDeProductosPorSucursal.add(sucursal.getCantidadDeProductosConPrecioMasBajo());
                         sucursal.setTotal( precioTotal );
                     }
                 }
@@ -144,7 +144,7 @@ public class MenuSaludable {
                         .max( naturalOrder() )
                         .get();
 
-                float menorPrecioTotal = Float.MAX_VALUE;
+                double menorPrecioTotal = Double.MAX_VALUE;
                 for (Cadena c : cadenasDisponibles) {
                     for (Sucursal s : c.getSucursales()) {
                         if (cantidad_max == s.getCantidadDeProductosConPrecioMasBajo()) {

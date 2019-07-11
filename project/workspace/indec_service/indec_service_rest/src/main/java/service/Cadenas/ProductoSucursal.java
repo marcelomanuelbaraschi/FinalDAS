@@ -8,7 +8,7 @@ public class ProductoSucursal {
     private String codigoDeBarras;
 
     @SerializedName("precio")
-    private float precio;
+    private double precio;
 
     private String validoDesde;
 
@@ -28,9 +28,9 @@ public class ProductoSucursal {
 
     public void setIdIngrediente(int idIngrediente) {        this.idIngrediente = idIngrediente;    }
 
-    public float getPrecio() { return precio; }
+    public double getPrecio() { return precio; }
 
-    public void setPrecio(float precio) { this.precio = precio; }
+    public void setPrecio(double precio) { this.precio = precio; }
 
     public String getCodigoDeBarras() {
         return codigoDeBarras;
