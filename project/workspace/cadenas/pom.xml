@@ -64,7 +64,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1434;databaseName=db_cadena;</urlDB><!-- local -->
+            <urlDB>jdbc:sqlserver://192.168.1.4:1434;databaseName=db_cadena;</urlDB><!-- local -->
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_axis_one</contextDB>
@@ -94,7 +94,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1435;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.4:1435;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_one</contextDB>
@@ -153,7 +153,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://localhost:1437;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.1.4:1437;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>cadena_cxf_one</contextDB>

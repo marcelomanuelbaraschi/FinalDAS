@@ -51,7 +51,38 @@
 		<dropProcedure procedureName="SP_GETPRECIOSSUCURSALES"/>
 	</changeSet>
 
-	
+
+	<changeSet id="Drop procedure spGetPreciosProductos" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETPRECIOSPRODUCTOS'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="SP_GETPRECIOSPRODUCTOS"/>
+	</changeSet>
+
+	<changeSet id="Drop procedure spInsertPrecioProducto" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_INSERTPRECIOPRODUCTO'
+			</sqlCheck>
+		</preConditions>
+		<dropProcedure procedureName="SP_INSERTPRECIOPRODUCTO"/>
+	</changeSet>
+
+
+
+
 	<!-- ******************************* -->
 	<!--  CREATE PROCEDURES CHANGE-SETS  -->
 	<!-- ******************************* -->
@@ -83,6 +114,8 @@
 			</sqlCheck>
 		</preConditions>
 		<sqlFile
+				endDelimiter="\nGO"
+				splitStatements="true"
 				path="/src/main/resources/liquibase/procedures/spGetSucursales.sql"/>
 	</changeSet>
 
@@ -98,7 +131,44 @@
 			</sqlCheck>
 		</preConditions>
 		<sqlFile
+				endDelimiter="\nGO"
+				splitStatements="true"
 				path="/src/main/resources/liquibase/procedures/spGetPreciosSucursales.sql"/>
 	</changeSet>
+
+	<changeSet id="Create procedure spGetPreciosProductos" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_GETPRECIOSPRODUCTOS'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				endDelimiter="\nGO"
+				splitStatements="true"
+				path="/src/main/resources/liquibase/procedures/spGetPreciosProductos.sql"/>
+	</changeSet>
+
+	<changeSet id="Create procedure spInsertPrecioProducto" author="DAS-Team" runAlways="true"
+			   runOnChange="true">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*)
+				FROM information_schema.routines
+				WHERE ROUTINE_TYPE = 'PROCEDURE'
+				AND SPECIFIC_CATALOG = 'db_cadena'
+				AND ROUTINE_NAME = 'SP_INSERTPRECIOPRODUCTO'
+			</sqlCheck>
+		</preConditions>
+		<sqlFile
+				endDelimiter="\nGO"
+				splitStatements="true"
+				path="/src/main/resources/liquibase/procedures/spInsertPrecioProducto.sql"/>
+	</changeSet>
+
 
 </databaseChangeLog>

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Sucursal implements Bean {
 
+    // TODO: TIENE QUE SER Short
     @SerializedName("idSucursal")
     private Integer idSucursal;
 

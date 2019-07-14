@@ -14,6 +14,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class CadenaRestOne  {
 
+    //TODO: USAR LOGGER
     @GET
     @Path("/health")
     public String health(){
@@ -50,8 +51,25 @@ public class CadenaRestOne  {
             ).build();
         }
         catch (Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                           .entity("{ error:" + e.getMessage() + "}")
+                           .build();
+        }
+    }
+
+    @PUT
+    @Path("/simularPrecios")
+    public Response simularPrecios (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
+                                   ,@QueryParam("localidad") final String localidad)
+    {
+        try{
+            CadenaAPI.simularPrecios(codigoEntidadFederal,localidad);
+            return Response.status(Response.Status.OK).build();
+        }
+        catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 }
 

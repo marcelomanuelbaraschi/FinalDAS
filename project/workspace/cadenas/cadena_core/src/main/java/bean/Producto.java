@@ -7,12 +7,11 @@ import db.Bean;
 
 public class Producto implements Bean {
 
-
     @SerializedName("codigoDeBarras")
     private String codigoDeBarras;
 
     @SerializedName("precio")
-    private Float precio;
+    private float precio;
 
     @SerializedName("validoDesde")
     private String validoDesde;
@@ -23,6 +22,9 @@ public class Producto implements Bean {
     @SerializedName("marca")
     private String marca;
 
+    //TODO: ESTO ES NUEVO
+    private short idSucursal;
+
     public String getCodigoDeBarras() {
         return codigoDeBarras;
     }
@@ -31,13 +33,11 @@ public class Producto implements Bean {
         this.codigoDeBarras = codigoDeBarras;
     }
 
-    public Float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Float precio) {
-        this.precio = precio;
-    }
+    public void setPrecio(float precio) { this.precio = precio; }
 
     public String getValidoDesde() {
         return validoDesde;
@@ -62,4 +62,11 @@ public class Producto implements Bean {
     public void setMarca(String marca) {
         this.marca = marca;
     }
+
+    public short getIdSucursal() { return idSucursal; }
+
+    public void setIdSucursal(short idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
 }

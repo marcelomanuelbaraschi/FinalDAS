@@ -10,6 +10,8 @@ import db.DaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.GSON;
+
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,6 +19,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class Cadenas {
+    private static final Logger logger = LoggerFactory.getLogger(Cadenas.class);
 
     public static List<Cadena> obtenerCadenas()
     {
@@ -84,6 +87,8 @@ public class Cadenas {
 
             jsonResponse = client.sucursales(codigoentidadfederal,localidad);
 
+            logger.error(jsonResponse);
+
             Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
 
             List<Sucursal> sucursales = Arrays.asList(cadenas);
@@ -97,6 +102,7 @@ public class Cadenas {
             }
 
         }catch (Exception ex){
+            logger.error( ex.getMessage() );
             return buildCadenaNoDisponible(configuracion);
         }
 

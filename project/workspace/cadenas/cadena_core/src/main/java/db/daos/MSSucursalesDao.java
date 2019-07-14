@@ -33,6 +33,11 @@ public class MSSucursalesDao extends DaoImpl {
     }
 
     @Override
+    public void insertBatch(List<Bean> beans) throws SQLException {
+
+    }
+
+    @Override
     public void update(Bean bean) throws SQLException {
 
     }

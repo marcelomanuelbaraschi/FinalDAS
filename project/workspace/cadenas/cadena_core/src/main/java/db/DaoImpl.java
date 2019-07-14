@@ -20,6 +20,7 @@ public abstract class DaoImpl implements Dao {
         try {
             if(this.statement != null && !this.statement.isClosed()) {
                 this.statement.close();
+
             }
         }
         catch(SQLException ex) {
@@ -39,6 +40,29 @@ public abstract class DaoImpl implements Dao {
             }
         }
     }
+
+    public void addBatch() throws SQLException {
+        this.statement.addBatch();
+    }
+
+
+    public int [] executeBatch() throws SQLException {
+        int rows [];
+        try {
+            this.connection.setAutoCommit(false);
+            rows = this.statement.executeBatch();
+            this.connection.commit();
+        }
+        catch(SQLException ex) {
+            this.connection.rollback();
+            throw new SQLException(ex.getMessage());
+        }
+        finally {
+            this.connection.setAutoCommit(true);
+        }
+        return rows;
+    }
+
 
     public void connect() throws SQLException {
         try {

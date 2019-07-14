@@ -1,4 +1,4 @@
-INSERT INTO precioProducto ( idSucursal,precio,codigoDeBarras) VALUES
+INSERT INTO precioProducto (idSucursal,precio,codigoDeBarras) VALUES
  (1,71.49,'7791708001231')
 ,(1,49.46,'7791708001248')
 ,(1,86.86,'7791708001378')

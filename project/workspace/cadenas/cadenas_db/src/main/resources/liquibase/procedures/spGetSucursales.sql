@@ -32,3 +32,4 @@ BEGIN
     WHERE prov.codigoEntidadFederal = @codigoEntidadFederal
     AND loc.nombre = @localidad
 END
+GO

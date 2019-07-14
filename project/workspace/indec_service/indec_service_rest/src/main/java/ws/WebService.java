@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.Comparador.Comparador;
 import utilities.ListUtils;
+import utilities.ServiceHealth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
@@ -27,7 +28,7 @@ import static utilities.GSON.toJson;
 public class WebService {
 
     private static final Logger logger = LoggerFactory.getLogger(WebService.class);
-    private static final long timeOut = 3;
+    private static final long timeOut = 30;
 
     @GET
     @Path("/categorias")
@@ -74,48 +75,6 @@ public class WebService {
         }
     }
 
-    @GET
-    @Path("/buscarproductosxcodigos")
-    public void buscarproductosxcodigos( @Suspended final AsyncResponse response
-                                        ,@QueryParam("codigos") final String codigos)
-    {
-
-
-        response.setTimeout(timeOut, SECONDS);
-        response.setTimeoutHandler(
-                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build()));
-
-        try{
-            response.resume(toJson(buscarProductosPorCodigos(codigos)));
-        }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
-            response.resume(status(INTERNAL_SERVER_ERROR)
-                    .build());
-        }
-
-    }
-
-   /* @GET
-    @Path("/buscarproductos")
-    public void buscarproductos(@Suspended final AsyncResponse response
-                               ,@QueryParam("palabraclave") final String palabraclave)
-    {
-        response.setTimeout(timeOut, SECONDS);
-        response.setTimeoutHandler(
-                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
-                        .entity("Operation timed out")
-                        .build()));
-
-        try{
-            response.resume(toJson(buscarProductos(palabraclave)));
-        }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
-            response.resume(status(INTERNAL_SERVER_ERROR)
-                    .build());
-        }
-    }*/
 
     @GET
     @Path("/provincias")
@@ -184,9 +143,13 @@ public class WebService {
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build()));
+        logger.error( "Entrando enpoint" );
 
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
+
+            logger.error(configuraciones.toString());
+
 
             List<Cadena> infosuc = obtenerSucursales(codigoentidadfederal,localidad,configuraciones);
 
@@ -273,4 +236,25 @@ public class WebService {
                     .build());
         }
     }
+
+    @GET
+    @Path("/traversalHealth")
+    public void traversalHealth (@Suspended final AsyncResponse response)
+    {
+        response.setTimeout(timeOut, SECONDS);
+        response.setTimeoutHandler(
+                (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
+                        .entity("Operation timed out")
+                        .build()));
+
+        try{
+            response.resume((ServiceHealth.traversalHealth().toString()));
+
+        }catch(Exception exception){
+            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            response.resume(status(INTERNAL_SERVER_ERROR)
+                    .build());
+        }
+    }
+
 }
