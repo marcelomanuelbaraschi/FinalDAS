@@ -21,8 +21,7 @@ public class CadenaRestTwo {
     public String sucursales (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
                              ,@QueryParam("localidad") final String localidad)
     {
-        return CadenaAPI.getInstance()
-                        .sucursales(codigoEntidadFederal,localidad);
+        return "";//CadenaAPI.sucursales(codigoEntidadFederal,localidad);
     }
 
     @POST
@@ -32,7 +31,6 @@ public class CadenaRestTwo {
                                     ,@QueryParam("localidad") final String localidad
                                     ,@QueryParam("codigos") final String codigos)
     {
-        return CadenaAPI.getInstance()
-                        .preciosSucursales(codigoEntidadFederal, localidad, codigos);
+        return "";//CadenaAPI.preciosSucursales(codigoEntidadFederal, localidad, codigos);
     }
 }

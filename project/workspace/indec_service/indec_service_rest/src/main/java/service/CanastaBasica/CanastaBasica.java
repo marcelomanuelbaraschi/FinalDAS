@@ -21,6 +21,8 @@ public class CanastaBasica {
     private static final Logger logger =
             LoggerFactory.getLogger(CanastaBasica.class);
 
+    //static config;
+
     public  static List<CategoriaProducto> obtenerCategorias() throws APIException
     {
         try {

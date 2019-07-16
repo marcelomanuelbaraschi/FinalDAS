@@ -1,4 +1,4 @@
-function run_docker() {
+run_docker () {
     echo "Running mssql_indec"
     docker run -p 1439:1433 --name mssql_indec -d mssql_indec:1.0
 }

@@ -39,5 +39,5 @@
 	<!-- ########################################### -->
 	<!-- Main triggers change-sets                   -->
 	<!-- ########################################### -->
-	<!-- include file="/src/main/resources/liquibase/triggers/triggers.xml"/-->
+	<include file="/src/main/resources/liquibase/triggers/triggers.xml"/>
 </databaseChangeLog>

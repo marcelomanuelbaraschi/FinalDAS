@@ -17,7 +17,8 @@ public class CadenaRestOne  {
     //TODO: USAR LOGGER
     @GET
     @Path("/health")
-    public String health(){
+    public String health()
+    {
         return "OK";
     }
 

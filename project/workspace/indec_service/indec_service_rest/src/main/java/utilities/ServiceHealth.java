@@ -2,13 +2,19 @@ package utilities;
 
 import contract.CadenaServiceContract;
 import db.beans.Configuracion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.Cadenas.Cadenas;
+
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static service.Cadenas.Cadenas.obtenerConfiguraciones;
 
 public class ServiceHealth {
+
+    private static final Logger logger = LoggerFactory.getLogger(ServiceHealth.class);
 
     public static String health
             (final Configuracion configuracion) {
@@ -37,16 +43,18 @@ public class ServiceHealth {
 
             okResponse = client.health();
 
+            logger.debug(okResponse);
+
             isAvailable = okResponse.trim().toLowerCase().equals("ok");
 
+            logger.debug("-------------------------");
+
             if(isAvailable) {
-
                 return String.format( status, "ok" );
-
-            }else {
-
-                return String.format( status, "nok" );
             }
+
+            return String.format( status, "nok" );
+
 
         } catch (Exception ex) {
              return String.format( status, "nok" );
@@ -58,10 +66,17 @@ public class ServiceHealth {
     {
         List<Configuracion> configuraciones = obtenerConfiguraciones();
 
-        return configuraciones
+        List<String> result = new LinkedList<>();
+
+        for(Configuracion config: configuraciones){
+            result.add(health(config));
+        }
+        return result;
+
+        /*return configuraciones
                 .parallelStream()
                 .map((config) -> health(config))
-                .collect(toList());
+                .collect(toList());*/
 
     }
 

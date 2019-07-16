@@ -67,7 +67,9 @@ public class WebService {
         criterio.setPalabraclave(palabraclave);
 
         try{
-            response.resume(toJson(buscarProductos(criterio)));
+            List<Producto> productos = buscarProductos(criterio);
+
+            response.resume(toJson(productos));
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
@@ -143,7 +145,6 @@ public class WebService {
                 (resp) -> resp.resume(status(SERVICE_UNAVAILABLE)
                         .entity("Operation timed out")
                         .build()));
-        logger.error( "Entrando enpoint" );
 
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
@@ -185,7 +186,9 @@ public class WebService {
 
             //separar
             Comparador comparador = new Comparador(cadenas, productosDelCarrito);
+
             comparador.comparar();
+
             List<Cadena> comparadas = comparador.obtenerComparacion();
 
             response.resume(toJson(comparadas)) ;
@@ -248,7 +251,9 @@ public class WebService {
                         .build()));
 
         try{
-            response.resume((ServiceHealth.traversalHealth().toString()));
+            List<String> ls = ServiceHealth.traversalHealth();
+            logger.debug( "entro" );
+            response.resume(ls.toString());
 
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
