@@ -16,7 +16,15 @@
 
     <properties>
         <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
+<<<<<<< Updated upstream
         <urlDB>jdbc:sqlserver://192.168.99.100:1439;databaseName=db_indec_service;</urlDB>
+=======
+<<<<<<< HEAD
+        <urlDB>jdbc:sqlserver://localhost:1439;databaseName=db_indec_service;</urlDB>
+=======
+        <urlDB>jdbc:sqlserver://192.168.99.100:1439;databaseName=db_indec_service;</urlDB>
+>>>>>>> master
+>>>>>>> Stashed changes
         <usernameDB>SA</usernameDB>
         <passwordDB>Das12345</passwordDB>
         <contextDB>db_indec_service</contextDB>
@@ -34,7 +42,15 @@
             </activation>
             <properties>
                 <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
+<<<<<<< Updated upstream
                 <urlDB>jdbc:sqlserver://192.168.99.100:1439;databaseName=db_indec_service</urlDB>
+=======
+<<<<<<< HEAD
+                <urlDB>jdbc:sqlserver://localhost:1439;databaseName=db_indec_service</urlDB>
+=======
+                <urlDB>jdbc:sqlserver://192.168.99.100:1439;databaseName=db_indec_service</urlDB>
+>>>>>>> master
+>>>>>>> Stashed changes
                 <usernameDB>SA</usernameDB>
                 <passwordDB>Das12345</passwordDB>
                 <contextDB>db_indec_service</contextDB>
