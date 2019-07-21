@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="build rest_one" type="MavenRunConfiguration" factoryName="Maven" folderName="cadenas builds">
+  <configuration default="false" name="db build rest_one" type="MavenRunConfiguration" factoryName="Maven" folderName="cadenas db build">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,8 +11,8 @@
           <option name="goals">
             <list>
               <option value="clean" />
-              <option value="compile" />
-              <option value="-U" />
+              <option value="install" />
+              <option value="-Denv=cadena_rest_one_env" />
             </list>
           </option>
           <option name="pomFileName" />
@@ -20,7 +20,7 @@
             <map />
           </option>
           <option name="resolveToWorkspace" value="true" />
-          <option name="workingDirPath" value="$PROJECT_DIR$/project/workspace/cadenas/cadenas_rest/cadena_rest_one" />
+          <option name="workingDirPath" value="$PROJECT_DIR$/project/workspace/cadenas/cadenas_db" />
         </MavenRunnerParameters>
       </option>
     </MavenSettings>

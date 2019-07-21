@@ -8,6 +8,7 @@ VALUES
 ,(5,'7791708611652',1,'Pan para Panchos Super Veneziana 6 Un 350 Gr',59,'./../../assets/img/products/7791708611652.jpg')--2
 ,(6,'00483293',1,'Pan Rallado Lucchetti Paq 500 gr',38,'./../../assets/img/products/00483293.jpg')--36
 ,(72,'7790335000082',1,'Tapas Empanadas Horno Ottonello 12 Un',69,'./../../assets/img/products/7790335000082.jpg')--36
+,(78,'00268418',1,'Pan Lacteado LACTAL Bsa 360 Gr',35,'./../../assets/img/products/00268418.jpg')--36
 
 
 INSERT INTO producto --ok. con imagenes
@@ -47,6 +48,9 @@ INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Harina
 VALUES
  (22,'7790070507235',5,'Harina de Trigo 000 con Vita Zinc Favorita 1 Kg',26,'./../../assets/img/products/7790070507235.jpg')--8
+,(94,'00257518',5,'Harina De Trigo FAVORITA 0000 Paquete 1 Kg',26,'./../../assets/img/products/00257518.jpg')--8
+
+
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Fideos
@@ -60,6 +64,7 @@ VALUES
  (24,'7790580980900',12,'Porotos Alubia Remojados Arcor 300 Gr',3,'./../../assets/img/products/7790580980900.jpg')--21
 ,(25,'7790580982102',12,'Arvejas Secas Remojadas en Lata Arcor 320 Gr',3,'./../../assets/img/products/7790580982102.jpg')--22
 ,(26,'7790580981907',12,'Garbanzos Secos Remojados Arcor 300 Gr',3,'./../../assets/img/products/7790580981907.jpg')--25
+,(89,'00073159',12,'Lenteja 1kg',0,'./../../assets/img/products/00073159.jpg')--25
 
 
 INSERT INTO producto --ok. con imagenes
@@ -72,13 +77,21 @@ VALUES
 ,(69,'00000688',13,'Zapallo Anco X Kg',0,'./../../assets/img/products/00000688.jpg')--17
 ,(73,'00000671',13,'Pimiento Rojo 1 kg',0,'./../../assets/img/products/00000671.jpg')--17
 ,(76,'00000695',13,'Papa Blanca  1 kg',0,'./../../assets/img/products/00000695.jpg')--17
-
+,(77,'060911001',13,'Lechuga - Lechuga',0,'./../../assets/img/products/060911001.jpg')--17
+,(80,'00000598',13,'Brocoli  1kg',0,'./../../assets/img/products/00000598.jpg')--17
+,(82,'7790580980009',13,'Choclo Amarillo en Granos en Lata Arcor 300 Gr',3,'./../../assets/img/products/7790580980009.jpg')--17
+,(84,'00040156',13,'Acelga X Paquete Uni',0,'./../../assets/img/products/00040156.jpg')--17
+,(88,'00000588',13,'Apio 1kg',0,'./../../assets/img/products/00000588.jpg')--17
+,(92,'00046634',13,'Cebolla D/Verdeo X Paq X 1 Uni',0,'./../../assets/img/products/00046634.jpg')--17
+,(93,'00100353',13,'Aceitunas Verdes CASTELL Descarozada Pouch 300 Gr',72,'./../../assets/img/products/00100353.jpg')--17
+,(101,'00046632',13,'Puerro Paquete X 1 Uni',0,'./../../assets/img/products/00046632.jpg')--17
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Frutas
 VALUES
  (28,'7795184003901',14,'Tomate Pelado Entero Comun Noel 400 Gr',47,'./../../assets/img/products/7795184003901.jpg')--24
 ,(29,'0024120000000',14,'Limon 1kg',0,'./../../assets/img/products/0024120000000.jpg')--26
+,(104,'00061002',14,'Manzana Comercial 1 Kg',0,'./../../assets/img/products/00061002.jpg')--26
 
 
 INSERT INTO producto --ok. con imagenes
@@ -89,7 +102,10 @@ VALUES
 ,(41,'7793360005084',15,'Atun en Lomitos al Natural La Campagnola 170 gr',33,'./../../assets/img/products/7793360005084.jpg')--35
 ,(70,'00041412',15,'Picada Común 1 Kg',0,'./../../assets/img/products/00041412.jpg')--35
 ,(74,'00046368',15,'Pata Pollo Sin Piel 1 kg',0,'./../../assets/img/products/00046368.jpg')--35
-
+,(81,'00042314',15,'Bola De Lomo 1kg',0,'./../../assets/img/products/00042314.jpg')--35
+,(98,'00042318',15,'Colita De Cuadril X KG',0,'./../../assets/img/products/00042318.jpg')--35
+,(102,'00035013',15,'Solomillo  1KG',0,'./../../assets/img/products/00035013.jpg')--35
+,(105,'00039688',15,'Filete De Merluza Despinado Congelado X Kg',0,'./../../assets/img/products/00039688.jpg')--35
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Fiambres
@@ -117,7 +133,9 @@ VALUES
 ,(48,'7790787002931',20,'Queso Rallado Ilolay 120 Gr',60,'./../../assets/img/products/7790787002931.jpg')--11
 ,(63,'060613001',20,'Ricota - Ricota',0,'./../../assets/img/products/060613001.jpg')--11
 ,(68,'00042220',20,'Cremoso Fraccionado Tregar 1 Kg',6,'./../../assets/img/products/00042220.jpg')--11
-,(71,'00035712',20,'Queso Barra Dambo Horma Milkaut 1 kg ',45,'./../../assets/img/products/00035712.jpg')--11
+,(71,'00035712',20,'Queso Barra Dambo Horma Milkaut 1 kg',45,'./../../assets/img/products/00035712.jpg')--11
+,(96,'00467016',20,'Queso Mozzarella . La Serenisima Sob 220 Gr',34,'./../../assets/img/products/00467016.jpg')--11
+
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Manteca
@@ -130,18 +148,26 @@ INSERT INTO producto --ok. con imagenes
 VALUES
  (50,'7790070012050',23,'Aceite de Girasol Cocinero 900 Ml',61,'./../../assets/img/products/7790070012050.jpg')--12
 
+
+INSERT INTO producto --ok. con imagenes
+(idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --beb no alchol
+VALUES
+ (91,'00003478',24,'Agua Mineral VILLAVICENCIO Botella 1.5 L',71,'./../../assets/img/products/00003478.jpg')--14
+
+
+
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --beb alchol
 VALUES
  (75,'7790762052357',25,'Vino Blanco Seleccion Especial Santa Ana 700 ml',70,'./../../assets/img/products/7790762052357.jpg')--14
-
-
+ ,(85,'00196923',25,'Vino Tinto SANTA ANA Etiqueta Negra Bot 750 CC',70,'./../../assets/img/products/00196923.jpg')--14
+ ,(103,'00007279',25,'Oporto X 750 EL ABUELO Bot 1 Uni',74,'./../../assets/img/products/00007279.jpg')--14
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Sal
 VALUES
  (51,'7790072001014',26,'Sal Fina en Paquete Celusal 500 Gr',63,'./../../assets/img/products/7790072001014.jpg')--14
-
+,(95,'00014110',26,'Sal Gruesa DOS ANCLAS Caja 1 Kg',20,'./../../assets/img/products/00014110.jpg')--14
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Condimentos
@@ -156,8 +182,15 @@ VALUES
  ,(59,'7794000554726',27,'Caldo Para Saborizar Verduras Knorr 30 Gr',32,'./../../assets/img/products/7794000554726.jpg')--28
  ,(60,'7790150465400',27,'Comino Molido Naturalidad Intacta Alicante 25 Gr',64,'./../../assets/img/products/7790150465400.jpg')--29
  ,(61,'7790150564806',27,'Pimenton Seleccionado Extra Dulce Alicante 25 Gr',64,'./../../assets/img/products/7790150564806.jpg')--30
- ,(66,'7790150570340',27,'Provenzal Deshidratado Naturalidad Intacta Alicante 50 Gr ',64,'./../../assets/img/products/7790150570340.jpg')--30
-
+ ,(66,'7790150570340',27,'Provenzal Deshidratado Naturalidad Intacta Alicante 50 Gr',64,'./../../assets/img/products/7790150570340.jpg')--30
+ ,(79,'7792900000312',27,'Salsa Cesar Dos Anclas 350 Gr',20,'./../../assets/img/products/7792900000312.jpg')--30
+ ,(83,'7794000597532',27,'Caldo de Carne con Recetas Knorr 12 Un',32,'./../../assets/img/products/7794000597532.jpg')--30
+ ,(86,'00164361',27,'Laurel En Hojas ALICANTE Sobre 10 Gr',64,'./../../assets/img/products/00164361.jpg')--30
+ ,(87,'00031924',27,'Tomillo DOS ANCLAS Sobre 25 Gr',20,'./../../assets/img/products/00031924.jpg')--30
+ ,(90,'00037201',27,'Albahaca Por Unidad Uni',0,'./../../assets/img/products/00037201.jpg')--30
+ ,(97,'00473389',27,'Nuez Moscada Molida Bol 50 Grm Nuez Moscada Molida Bol 50 Gr',0,'./../../assets/img/products/00473389.jpg')--30
+ ,(99,'00266136',27,'Mostaza SAVORA Pouch 250 Gr',73,'./../../assets/img/products/00266136.jpg')--30
+ ,(100,'00094574',27,'Romero DOS ANCLAS Sobre 25 Gr',20,'./../../assets/img/products/00094574.jpg')--30
 
 INSERT INTO producto --ok. con imagenes
 (idProducto,codigoDeBarras,idCategoria,nombreProducto,idMarca,imagenProducto) --Vinagre
@@ -167,7 +200,6 @@ VALUES
 ---------------------------------------------
 
 -- 62 -76
---MAX 76
-
+--MAX 105
 
 

@@ -26,6 +26,8 @@
           </option>
           <option name="goals">
             <list>
+              <option value="-pl" />
+              <option value="-indec_service_db" />
               <option value="clean" />
               <option value="install" />
               <option value="-U" />

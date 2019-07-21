@@ -50,5 +50,45 @@ VALUES
 ,(48, 'Pata Pollo')
 ,(49, 'Vino Blanco')
 ,(50, 'Papa blanca')
+,(51, 'Salsa Cesar')
+,(52, 'Lechuga')
+,(53, 'Pan Lacteado')
+,(54, 'Brocoli')
+,(55, 'Bola de Lomo')
+,(56, 'Choclo')
+,(57,'Caldo Para Carne')
+,(58, 'Acelga')
+,(59,'Apio')
+,(60,'Lenteja')
+,(61,'Vino Tinto')
+,(62,'Laurel')
+,(63,'Tomillo')
+,(64,'Albahaca')
+,(65,'Agua')
+,(66,'Cebolla Verdeo')
+,(67, 'Aceituna')
+,(68,'Sal Gruesa')
+,(69,'Harina de Trigo 0000')
+,(70,'Nuez Moscada')
+,(71,'Queso Mozzarella')
+,(72,'Colita de Cuadril')
+,(73,'Mostaza')
+,(74,'Romero')
+,(75,'Puerro')
+,(76,'Solomillo')
+,(77,'Vino Oporto')
+,(78,'Manzana')
+,(79,'Filet de Merluza')
+
+
+
+
+
+
+
+
+
+
+
 
 
