@@ -23,10 +23,10 @@ services:
             - '1437:1433'
         container_name: cxf_one
     cxf_two:
-       image: 'mssql_cadena:1.0'
-       ports: 
+        image: 'mssql_cadena:1.0'
+        ports: 
            - '1438:1433'
-       container_name: cxf_two
+        container_name: cxf_two
      
 
 
