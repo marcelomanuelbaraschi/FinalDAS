@@ -123,7 +123,7 @@
             <includePattern>*.wsdl</includePattern>
             <!-- DB -->
             <driverDB>com.microsoft.sqlserver.jdbc.SQLServerDriver</driverDB>
-            <urlDB>jdbc:sqlserver://192.168.99.100:1437;databaseName=db_cadena;</urlDB>
+            <urlDB>jdbc:sqlserver://192.168.99.100:1436;databaseName=db_cadena;</urlDB>
             <usernameDB>SA</usernameDB>
             <passwordDB>Das12345</passwordDB>
             <contextDB>rest_two</contextDB>

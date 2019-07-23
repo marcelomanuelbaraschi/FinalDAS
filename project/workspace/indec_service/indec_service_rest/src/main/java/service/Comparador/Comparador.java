@@ -39,6 +39,7 @@ public class Comparador {
     public void comparar(){
         buscarPreciosMasBajos();
         marcarProductosMasBaratos();
+        System.out.println("drfg");
         calcularTotalesPorSucursal();
         calcularCantidadDeProductosMasBaratosPorSucursal();
         marcarMejoresSucursales();

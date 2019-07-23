@@ -177,24 +177,27 @@ public class WebService {
                         .build()));
 
         try{
+            System.out.println(1);
             List<Configuracion> configuraciones = obtenerConfiguraciones();
-
+            System.out.println(2);
 
             List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
-
+            System.out.println(3);
             List<Producto> productosDelCarrito = buscarProductosPorCodigos(codigos);
-
+            System.out.println(4);
             //separar
             Comparador comparador = new Comparador(cadenas, productosDelCarrito);
+            System.out.println(5);
 
             comparador.comparar();
 
+            System.out.println(6);
             List<Cadena> comparadas = comparador.obtenerComparacion();
-
-            response.resume(toJson(comparadas)) ;
-
+            System.out.println(7);
+            response.resume(toJson(comparadas));
+            System.out.println(8);
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failuree, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }

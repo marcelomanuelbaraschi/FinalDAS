@@ -1,34 +1,55 @@
 package ws;
 
+
 import service.CadenaAPI;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(targetNamespace = "http://ws.das.edu.ubp.ar/", portName = "CadenaCXFTwoPort", serviceName = "CadenaCXFTwoService")
+@WebService(targetNamespace = "http://ws.das.edu.ubp.ar/"
+        ,portName = "CadenaCXFTwoPort"
+        ,serviceName = "CadenaCXFTwoService")
+
 public class CadenaCXFTwo {
+
+    private static final Logger logger = LoggerFactory.getLogger(CadenaCXFTwo.class);
 
     @WebMethod(operationName = "health", action = "urn:Health")
     public String health() {
         return "OK";
     }
 
-    @WebMethod(operationName = "precios", action = "urn:Precios")
-    public String precios(@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
-                         ,@WebParam(name = "localidad") final String localidad
-                         ,@WebParam(name = "codigos") final String codigos) {
-
-        return CadenaAPI.getInstance()
-                        .preciosSucursales(codigoEntidadFederal, localidad, codigos);
-    }
 
     @WebMethod(operationName = "sucursales", action = "urn:Sucursales")
-    public String sucursales(@WebParam(name = "codigoentidadfederal") final String codigoEntidadFederal
-                            ,@WebParam(name = "localidad") final String localidad) {
+    public String sucursales
+            (@WebParam(name = "codigoentidadfederal") final String codigoentidadfederal
+                    ,@WebParam(name = "localidad") final String localidad) throws Exception {
 
-        return CadenaAPI.getInstance()
-                        .sucursales(codigoEntidadFederal, localidad);
+
+        return CadenaAPI.sucursales(codigoentidadfederal, localidad);
+    }
+
+    @WebMethod(operationName = "precios", action = "urn:Precios")
+    public String precios
+            (@WebParam(name = "codigoentidadfederal") final String codigoentidadfederal
+                    ,@WebParam(name = "localidad") final String localidad
+                    ,@WebParam(name = "codigos") final String codigos) throws Exception{
+
+        return CadenaAPI.preciosSucursales(codigoentidadfederal,localidad,codigos);
+    }
+
+    @WebMethod(operationName = "simularPrecios", action = "urn:SimularPrecios")
+    public void simularPrecios
+            (@WebParam(name = "codigoentidadfederal") final String codigoentidadfederal
+                    ,@WebParam(name = "localidad") final String localidad
+                    ,@WebParam(name = "codigos") final String codigos) throws Exception{
+
+        CadenaAPI.simularPrecios(codigoentidadfederal,localidad);
+        return;
     }
 
 }
