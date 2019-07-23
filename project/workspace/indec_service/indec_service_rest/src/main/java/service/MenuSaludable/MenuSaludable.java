@@ -11,6 +11,8 @@ import service.Cadenas.ProductoSucursal;
 import service.Cadenas.Sucursal;
 import utilities.GSON;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,6 +53,7 @@ public class MenuSaludable {
         Plato plato = new Plato();
         plato.setIdPlato(idPlato);
 
+
         try {
             List<Bean> beans = DaoFactory.getDao("ProductosPorPlato").select(plato);
             if(beans != null){
@@ -69,8 +72,9 @@ public class MenuSaludable {
             ,final  String localidad
             ,final  short idPlato) throws APIException
     {
-            final List<Producto> productosIngrediente = obtenerProductosPorPlato(idPlato);
 
+            BigDecimal bd;
+            final List<Producto> productosIngrediente = obtenerProductosPorPlato(idPlato);
 
             final List<Configuracion> configuraciones = Cadenas.obtenerConfiguraciones();
 
@@ -166,6 +170,15 @@ public class MenuSaludable {
 
                     }
                 }
+//----------------------------------------------------------------------------------------------------------------------
+                for (Cadena c : cadenasDisponibles) {
+                    for (Sucursal s : c.getSucursales()) {
+                        bd = new BigDecimal(s.getTotal()).setScale(2, RoundingMode.HALF_UP);
+                        s.setTotal(bd.doubleValue());
+                    }
+                }
+
+
 //----------------------------------------------------------------------------------------------------------------------
                 return  Stream.concat(cadenasDisponibles.stream(), cadenasNoDisponibles.stream())
                         .collect(toList());

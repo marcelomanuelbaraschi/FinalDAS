@@ -6,8 +6,10 @@ import db.beans.Producto;
 import service.Cadenas.ProductoSucursal;
 import service.Cadenas.Sucursal;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class Comparador {
@@ -39,7 +41,6 @@ public class Comparador {
     public void comparar(){
         buscarPreciosMasBajos();
         marcarProductosMasBaratos();
-        System.out.println("drfg");
         calcularTotalesPorSucursal();
         calcularCantidadDeProductosMasBaratosPorSucursal();
         marcarMejoresSucursales();
@@ -90,8 +91,7 @@ public class Comparador {
     }
 
     private void calcularTotalesPorSucursal() {
-        DecimalFormat formatter = new DecimalFormat("#.##");
-        formatter.setRoundingMode(RoundingMode.UP);
+        BigDecimal  bd;
         double precioTotal;
         for (Cadena c : this.cadenas) {
             for (Sucursal s : c.getSucursales()) {
@@ -99,7 +99,8 @@ public class Comparador {
                 for (ProductoSucursal p : s.getProductos()) {
                     precioTotal = precioTotal + p.getPrecio();
                 }
-                s.setTotal(Double.parseDouble(formatter.format(precioTotal)));
+                bd = new BigDecimal(precioTotal).setScale(2, RoundingMode.HALF_UP);
+                s.setTotal(bd.doubleValue());
             }
         }
     }

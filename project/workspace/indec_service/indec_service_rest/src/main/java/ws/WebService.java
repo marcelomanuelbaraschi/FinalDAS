@@ -191,13 +191,13 @@ public class WebService {
 
             comparador.comparar();
 
-            System.out.println(6);
+
             List<Cadena> comparadas = comparador.obtenerComparacion();
             System.out.println(7);
             response.resume(toJson(comparadas));
             System.out.println(8);
         }catch(Exception exception){
-            logger.error("Endpoint Failuree, {}",exception.getMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
