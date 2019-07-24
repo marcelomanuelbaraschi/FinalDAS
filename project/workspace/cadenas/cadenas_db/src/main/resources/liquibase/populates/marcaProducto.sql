@@ -1,4 +1,4 @@
-INSERT INTO marcaProducto (idMarca, nombre)
+INSERT INTO marcaProducto(idMarca, nombre)
 VALUES
  (0  ,'SIN MARCA')
 ,(1  ,'53')
@@ -45,7 +45,7 @@ VALUES
 ,(42 ,'MATARAZZO')
 ,(43 ,'MEDIA TARDE')
 ,(44 ,'MELBA')
-,(45 ,'MILKA')
+,(45 ,'MILKAUT')
 ,(46 ,'MOLINOS ALA')
 ,(47 ,'NOEL')
 ,(48 ,'OPERA')
@@ -71,6 +71,8 @@ VALUES
 ,(68 ,'GRANJA DE SOL')
 ,(69 ,'OTTONELLO')
 ,(70 ,'SANTA ANA')
-
-
+,(71 ,'VILLAVICENCIO')
+,(72 ,'CASTELL')
+,(73 ,'SAVORA')
+,(74 ,'EL ABUELO')
 
