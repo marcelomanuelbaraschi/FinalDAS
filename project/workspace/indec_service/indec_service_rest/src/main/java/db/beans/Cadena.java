@@ -1,6 +1,6 @@
 package db.beans;
 
-import service.Cadenas.Sucursal;
+import ds.Sucursal;
 import com.google.gson.annotations.SerializedName;
 import db.Bean;
 

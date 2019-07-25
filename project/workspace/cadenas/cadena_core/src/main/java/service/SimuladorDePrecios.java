@@ -31,7 +31,6 @@ public class SimuladorDePrecios {
             min = p.getPrecio() - percentage;
             random = min + Math.random() * (max - min);
             p.setPrecio(round(random,2));
-            System.out.println(p.getPrecio());
         }
 
         return;

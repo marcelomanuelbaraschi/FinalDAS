@@ -7,8 +7,8 @@ import db.DaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.Cadenas.Cadenas;
-import service.Cadenas.ProductoSucursal;
-import service.Cadenas.Sucursal;
+import ds.ProductoSucursal;
+import ds.Sucursal;
 import utilities.GSON;
 
 import java.math.BigDecimal;
@@ -20,10 +20,8 @@ import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.naturalOrder;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static utilities.GSON.toJson;
 
 public class MenuSaludable {
 

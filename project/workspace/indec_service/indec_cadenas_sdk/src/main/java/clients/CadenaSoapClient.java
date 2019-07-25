@@ -3,6 +3,11 @@ package clients;
 import clients.exceptions.ClientException;
 import clients.genericClients.SoapClient;
 import contract.CadenaServiceContract;
+import ds.Sucursal;
+import utils.GSON;
+import java.util.Arrays;
+import java.util.List;
+
 import static clients.constants.Constants.*;
 
 
@@ -20,7 +25,7 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
     }
 
 
-    public String sucursales
+    public List<Sucursal> sucursales
             (final String codigoentidadfederal
             ,final String localidad)throws ClientException
     {
@@ -30,12 +35,17 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
         //Obtenemos el json de respuesta
         final String sucursalesJson = object.toString();
 
-        return sucursalesJson;
+        Sucursal[] sucs = GSON.toObject(sucursalesJson, Sucursal[].class);
+
+        List<Sucursal> sucursales = Arrays.asList(sucs);
+
+
+        return sucursales;
 
     }
 
 
-    public String preciosSucursales
+    public List<Sucursal>  preciosSucursales
             (final String codigoentidadfederal
             ,final String localidad
             ,final String codigos)throws ClientException
@@ -45,9 +55,14 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
         final Object object = executeMethod(PRECIOSSUCURSALES,codigoentidadfederal,localidad,codigos);
 
         //Obtenemos el json de respuesta
-        final String preciosJson = object.toString();
+        final String sucursalesJson = object.toString();
 
-        return preciosJson;
+        Sucursal[] sucs = GSON.toObject(sucursalesJson, Sucursal[].class);
+
+        List<Sucursal> sucursales = Arrays.asList(sucs);
+
+
+        return sucursales;
 
     }
 

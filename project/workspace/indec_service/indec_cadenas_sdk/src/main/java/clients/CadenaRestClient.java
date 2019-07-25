@@ -3,6 +3,11 @@ package clients;
 import clients.exceptions.ClientException;
 import clients.genericClients.RestClient;
 import contract.CadenaServiceContract;
+import ds.Sucursal;
+import utils.GSON;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static clients.constants.Constants.*;
 
@@ -19,7 +24,7 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
     }
 
 
-    public String sucursales(final String codigoentidadfederal, final String localidad)
+    public List<Sucursal> sucursales(final String codigoentidadfederal, final String localidad)
             throws ClientException
     {
 
@@ -32,11 +37,16 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
         //Hacemos la llamada http
         final String sucursalesJson = call(GET, url);
 
-        return sucursalesJson;
+
+        Sucursal[] sucs = GSON.toObject(sucursalesJson, Sucursal[].class);
+
+        List<Sucursal> sucursales = Arrays.asList(sucs);
+
+        return sucursales;
 
     }
 
-    public String preciosSucursales(String codigoentidadfederal, String localidad, String codigos)
+    public List<Sucursal> preciosSucursales(String codigoentidadfederal, String localidad, String codigos)
             throws ClientException
     {
 
@@ -53,6 +63,11 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
         //Hacemos la llamada http
         final String preciosJson = call(POST, url);
 
-        return preciosJson;
+
+        Sucursal[] sucs = GSON.toObject(preciosJson, Sucursal[].class);
+
+        List<Sucursal> sucursales = Arrays.asList(sucs);
+
+        return sucursales;
     }
 }

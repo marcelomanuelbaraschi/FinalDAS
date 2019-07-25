@@ -1,4 +1,4 @@
-package service.Cadenas;
+package ds;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
@@ -44,7 +44,6 @@ public class Sucursal {
 
     @SerializedName("productos")
     private List<ProductoSucursal> productos;
-
 
     @SerializedName("cantidadDeProductosConPrecioMasBajo")
     private int cantidadDeProductosConPrecioMasBajo;

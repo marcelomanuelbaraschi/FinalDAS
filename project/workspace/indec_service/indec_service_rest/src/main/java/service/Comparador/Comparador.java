@@ -3,13 +3,11 @@ package service.Comparador;
 import db.beans.Cadena;
 import db.beans.Producto;
 
-import service.Cadenas.ProductoSucursal;
-import service.Cadenas.Sucursal;
+import ds.ProductoSucursal;
+import ds.Sucursal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class Comparador {

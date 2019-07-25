@@ -7,6 +7,7 @@ import db.beans.Configuracion;
 import contract.CadenaServiceContract;
 import db.Bean;
 import db.DaoFactory;
+import ds.Sucursal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utilities.GSON;
@@ -85,13 +86,7 @@ public class Cadenas {
 
             String jsonResponse;
 
-            jsonResponse = client.sucursales(codigoentidadfederal,localidad);
-
-            logger.error(jsonResponse);
-
-            Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
-
-            List<Sucursal> sucursales = Arrays.asList(cadenas);
+            List<Sucursal> sucursales = client.sucursales(codigoentidadfederal,localidad);
 
             final boolean haySucursales = sucursales != null && !(sucursales.isEmpty());
 
@@ -117,13 +112,7 @@ public class Cadenas {
         try{
             CadenaServiceContract client = buildClient(configuracion);
 
-            String jsonResponse;
-
-            jsonResponse = client.preciosSucursales(codigoentidadfederal,localidad,codigos);
-
-            Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
-
-            List<Sucursal> sucursales = Arrays.asList(cadenas);
+            List<Sucursal> sucursales = client.preciosSucursales(codigoentidadfederal,localidad,codigos);
 
             final boolean haySucursales = sucursales != null && !(sucursales.isEmpty());
 
