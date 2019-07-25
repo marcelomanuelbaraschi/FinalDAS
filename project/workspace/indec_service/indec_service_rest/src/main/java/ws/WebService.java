@@ -23,7 +23,7 @@ import static service.MenuSaludable.MenuSaludable.armarPlato;
 import static service.MenuSaludable.MenuSaludable.obtenerMenuSemanal;
 import static utilities.GSON.toJson;
 
-@Path("/app")
+@Path("/comparador-app")
 @Produces(MediaType.APPLICATION_JSON)
 public class WebService {
 
@@ -49,7 +49,7 @@ public class WebService {
     }
 
     @GET
-    @Path("/buscarproductos")
+    @Path("/productos")
     public void buscarproductos(@Suspended final AsyncResponse response
                                ,@QueryParam("idcategoria") final Short idcategoria
                                ,@QueryParam("marcas") final String marcas
