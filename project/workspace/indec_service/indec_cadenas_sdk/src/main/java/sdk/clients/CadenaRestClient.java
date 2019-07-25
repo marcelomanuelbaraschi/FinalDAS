@@ -1,15 +1,15 @@
-package clients;
+package sdk.clients;
 
-import clients.exceptions.ClientException;
-import clients.genericClients.RestClient;
-import contract.CadenaServiceContract;
-import ds.Sucursal;
-import utils.GSON;
+import sdk.clients.exceptions.ClientException;
+import sdk.clients.genericClients.RestClient;
+import sdk.contract.CadenaServiceContract;
+import sdk.ds.Sucursal;
+import sdk.utils.GSON;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static clients.constants.Constants.*;
+import static sdk.clients.constants.Constants.*;
 
 public class CadenaRestClient extends RestClient implements CadenaServiceContract {
 

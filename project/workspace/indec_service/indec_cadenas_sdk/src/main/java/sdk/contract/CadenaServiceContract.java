@@ -1,7 +1,7 @@
-package contract;
+package sdk.contract;
 
-import clients.exceptions.ClientException;
-import ds.Sucursal;
+import sdk.clients.exceptions.ClientException;
+import sdk.ds.Sucursal;
 
 import java.util.List;
 

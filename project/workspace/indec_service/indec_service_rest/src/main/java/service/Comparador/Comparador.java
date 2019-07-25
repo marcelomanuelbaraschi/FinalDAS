@@ -3,8 +3,8 @@ package service.Comparador;
 import db.beans.Cadena;
 import db.beans.Producto;
 
-import ds.ProductoSucursal;
-import ds.Sucursal;
+import sdk.ds.ProductoSucursal;
+import sdk.ds.Sucursal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

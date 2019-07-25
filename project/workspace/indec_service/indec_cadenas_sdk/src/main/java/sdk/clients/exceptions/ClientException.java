@@ -1,4 +1,4 @@
-package clients.exceptions;
+package sdk.clients.exceptions;
 
 public class ClientException extends RuntimeException {
 

@@ -1,6 +1,6 @@
 package utilities;
 
-import contract.CadenaServiceContract;
+import sdk.contract.CadenaServiceContract;
 import db.beans.Configuracion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import service.Cadenas.Cadenas;
 import java.util.LinkedList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static service.Cadenas.Cadenas.obtenerConfiguraciones;
 
 public class ServiceHealth {

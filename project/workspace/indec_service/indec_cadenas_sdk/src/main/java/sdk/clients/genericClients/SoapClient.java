@@ -1,6 +1,6 @@
-package clients.genericClients;
+package sdk.clients.genericClients;
 
-import clients.exceptions.ClientException;
+import sdk.clients.exceptions.ClientException;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 

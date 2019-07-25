@@ -1,9 +1,9 @@
-package clients.factory;
+package sdk.clients.factory;
 
-import clients.CadenaRestClient;
-import clients.CadenaSoapClient;
-import clients.exceptions.ClientException;
-import contract.CadenaServiceContract;
+import sdk.clients.CadenaRestClient;
+import sdk.clients.CadenaSoapClient;
+import sdk.clients.exceptions.ClientException;
+import sdk.contract.CadenaServiceContract;
 
 public class CadenaClientFactory {
 

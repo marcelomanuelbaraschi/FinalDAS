@@ -1,5 +1,5 @@
-package clients.genericClients;
-import clients.exceptions.ClientException;
+package sdk.clients.genericClients;
+import sdk.clients.exceptions.ClientException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static clients.constants.Constants.*;
+import static sdk.clients.constants.Constants.*;
 public class RestClient  {
     private final String url;
     private final HttpClient client;

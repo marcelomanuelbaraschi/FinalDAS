@@ -1,22 +1,25 @@
 package service.Cadenas;
 
 import Exceptions.APIException;
-import clients.factory.CadenaClientFactory;
+import sdk.clients.factory.CadenaClientFactory;
+
 import db.beans.Cadena;
 import db.beans.Configuracion;
-import contract.CadenaServiceContract;
 import db.Bean;
 import db.DaoFactory;
-import ds.Sucursal;
+
+import sdk.ds.Sucursal;
+import sdk.contract.CadenaServiceContract;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import utilities.GSON;
-
-
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
 import static java.util.stream.Collectors.toList;
 
 public class Cadenas {

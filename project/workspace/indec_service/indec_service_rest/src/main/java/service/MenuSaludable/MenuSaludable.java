@@ -7,8 +7,8 @@ import db.DaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.Cadenas.Cadenas;
-import ds.ProductoSucursal;
-import ds.Sucursal;
+import sdk.ds.ProductoSucursal;
+import sdk.ds.Sucursal;
 import utilities.GSON;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package clients.constants;
+package sdk.clients.constants;
 
 public class Constants {
 
