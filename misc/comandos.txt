@@ -1,0 +1,3 @@
+
+ sudo fuser -k  4200/tcp
+ sudo watch docker ps

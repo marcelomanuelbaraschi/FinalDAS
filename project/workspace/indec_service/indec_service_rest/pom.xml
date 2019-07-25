@@ -15,7 +15,7 @@
 
     <properties>
         <!-- SERVER -->
-        <tomcat.server>indec-services</tomcat.server>
+        <tomcat.server>INDEC Services</tomcat.server>
         <tomcat.url>http://localhost:9000/manager/text</tomcat.url>
         <tomcat.path>/${project.build.finalName}</tomcat.path>
         <tomcat.port>9000</tomcat.port>
@@ -119,7 +119,7 @@
 
     <!-- Plugin configuration -->
     <build>
-        <finalName>IndecService</finalName>
+        <finalName>indec-services</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
