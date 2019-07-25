@@ -36,7 +36,7 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
 
     }
 
-    public String precios(String codigoentidadfederal, String localidad, String codigos)
+    public String preciosSucursales(String codigoentidadfederal, String localidad, String codigos)
             throws ClientException
     {
 
@@ -45,7 +45,7 @@ public class CadenaRestClient extends RestClient implements CadenaServiceContrac
 
 
         //Contruimos el formato de la query string
-        final String query = getQuery(PRECIOS,CODIGO_ENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
+        final String query = getQuery(PRECIOSSUCURSALES,CODIGO_ENTIDAD_FEDERAL, LOCALIDAD, CODIGOS);
 
         //Injectamos los parametros a la query string.
         final String url = String.format(query,codigoentidadfederal, localidad, codigos);

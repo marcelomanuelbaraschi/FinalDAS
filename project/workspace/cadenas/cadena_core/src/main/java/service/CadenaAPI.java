@@ -33,7 +33,7 @@ public class CadenaAPI {
             List<Bean> sucs;
 
             sucs = DaoFactory.getDao("Sucursales")
-                    .select(criterio);
+                             .select(criterio);
 
             return GSON.toJson(sucs);
 
@@ -111,7 +111,7 @@ public class CadenaAPI {
             for(Sucursal s : sucursales ){
 
                 beans = DaoFactory.getDao("PreciosProductos")
-                        .select(s);
+                                  .select(s);
 
                 productos = GSON.transform(beans, Producto[].class);
 
@@ -128,7 +128,7 @@ public class CadenaAPI {
                 }
 
                 DaoFactory.getDao("PreciosProductos")
-                        .insertBatch(beans);
+                          .insertBatch(beans);
             }
 
         } catch (SQLException ex) {

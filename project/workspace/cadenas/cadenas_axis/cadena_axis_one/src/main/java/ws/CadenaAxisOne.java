@@ -15,7 +15,7 @@ public class CadenaAxisOne {
         return CadenaAPI.sucursales(codigoentidadfederal, localidad);
     }
 
-    public String precios (final String codigoentidadfederal
+    public String preciosSucursales (final String codigoentidadfederal
             ,final String localidad
             ,final String codigos)
             throws Exception {

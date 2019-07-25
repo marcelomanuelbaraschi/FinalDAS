@@ -39,7 +39,7 @@ public class CadenaRestTwo  {
     }
 
     @POST
-    @Path("/precios")
+    @Path("/preciosSucursales")
     public Response preciosSucursales (@QueryParam("codigoentidadfederal") final String codigoEntidadFederal
             ,@QueryParam("localidad") final String localidad
             ,@QueryParam("codigos") final String codigos)

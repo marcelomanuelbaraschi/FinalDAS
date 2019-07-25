@@ -8,5 +8,5 @@ public  interface  CadenaServiceContract{
 
      String sucursales (String codigoentidadfederal, String localidad) throws ClientException;
 
-     String precios (String codigoentidadfederal, String localidad, String codigos)  throws ClientException;
+     String preciosSucursales (String codigoentidadfederal, String localidad, String codigos)  throws ClientException;
 }

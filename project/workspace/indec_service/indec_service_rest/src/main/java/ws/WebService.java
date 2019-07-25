@@ -42,7 +42,7 @@ public class WebService {
         try{
             response.resume(toJson(obtenerCategorias()));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -71,7 +71,7 @@ public class WebService {
 
             response.resume(toJson(productos));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -91,7 +91,7 @@ public class WebService {
         try{
             response.resume(toJson(obtenerProvincias()));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -110,7 +110,7 @@ public class WebService {
         try{
             response.resume(toJson(obtenerLocalidades()));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -128,7 +128,7 @@ public class WebService {
         try{
             response.resume(toJson(obtenerCadenas()));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -157,7 +157,7 @@ public class WebService {
             response.resume(toJson(infosuc));
 
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -177,25 +177,21 @@ public class WebService {
                         .build()));
 
         try{
-            System.out.println(1);
             List<Configuracion> configuraciones = obtenerConfiguraciones();
-            System.out.println(2);
 
             List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
-            System.out.println(3);
+
             List<Producto> productosDelCarrito = buscarProductosPorCodigos(codigos);
-            System.out.println(4);
+
             //separar
             Comparador comparador = new Comparador(cadenas, productosDelCarrito);
-            System.out.println(5);
 
             comparador.comparar();
 
-
             List<Cadena> comparadas = comparador.obtenerComparacion();
-            System.out.println(7);
+
             response.resume(toJson(comparadas));
-            System.out.println(8);
+
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
@@ -215,7 +211,7 @@ public class WebService {
         try{
             response.resume(toJson(obtenerMenuSemanal()));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -237,7 +233,7 @@ public class WebService {
         try{
             response.resume(toJson(armarPlato(codigoentidadfederal,localidad,idplato)));
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }
@@ -255,11 +251,10 @@ public class WebService {
 
         try{
             List<String> ls = ServiceHealth.traversalHealth();
-            logger.debug( "entro" );
             response.resume(ls.toString());
 
         }catch(Exception exception){
-            logger.error("Endpoint Failure, {}",exception.getLocalizedMessage());
+            logger.error("Endpoint Failure, {}",exception.getMessage());
             response.resume(status(INTERNAL_SERVER_ERROR)
                     .build());
         }

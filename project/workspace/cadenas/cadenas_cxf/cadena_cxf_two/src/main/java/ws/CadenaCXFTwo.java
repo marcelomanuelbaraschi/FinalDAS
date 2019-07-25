@@ -33,8 +33,8 @@ public class CadenaCXFTwo {
         return CadenaAPI.sucursales(codigoentidadfederal, localidad);
     }
 
-    @WebMethod(operationName = "precios", action = "urn:Precios")
-    public String precios
+    @WebMethod(operationName = "preciosSucursales", action = "urn:PreciosSucursales")
+    public String preciosSucursales
             (@WebParam(name = "codigoentidadfederal") final String codigoentidadfederal
                     ,@WebParam(name = "localidad") final String localidad
                     ,@WebParam(name = "codigos") final String codigos) throws Exception{

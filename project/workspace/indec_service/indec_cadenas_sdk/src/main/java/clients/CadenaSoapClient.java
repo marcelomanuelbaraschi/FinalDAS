@@ -35,14 +35,14 @@ public class CadenaSoapClient extends SoapClient implements CadenaServiceContrac
     }
 
 
-    public String precios
+    public String preciosSucursales
             (final String codigoentidadfederal
             ,final String localidad
             ,final String codigos)throws ClientException
     {
 
         //Ejecutamos el metodo en el servicio con el cual mantenemos conexion
-        final Object object = executeMethod(PRECIOS,codigoentidadfederal,localidad,codigos);
+        final Object object = executeMethod(PRECIOSSUCURSALES,codigoentidadfederal,localidad,codigos);
 
         //Obtenemos el json de respuesta
         final String preciosJson = object.toString();

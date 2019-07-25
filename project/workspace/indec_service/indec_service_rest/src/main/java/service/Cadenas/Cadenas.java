@@ -119,7 +119,7 @@ public class Cadenas {
 
             String jsonResponse;
 
-            jsonResponse = client.precios(codigoentidadfederal,localidad,codigos);
+            jsonResponse = client.preciosSucursales(codigoentidadfederal,localidad,codigos);
 
             Sucursal[] cadenas = GSON.toObject(jsonResponse, Sucursal[].class);
 
