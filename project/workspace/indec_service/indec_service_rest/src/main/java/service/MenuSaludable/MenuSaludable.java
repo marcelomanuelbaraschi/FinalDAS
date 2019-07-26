@@ -76,14 +76,11 @@ public class MenuSaludable {
 
             final List<Configuracion> configuraciones = Cadenas.obtenerConfiguraciones();
 
-            /*for (Producto producto : productosIngrediente) {
-                System.out.println(producto.getCodigoDeBarras() + "-" + producto.getIdIngrediente());
-            }*/
 
             String codigos =
                     productosIngrediente.stream().map(p -> p.getCodigoDeBarras()).collect(Collectors.joining(","));
 
-            List<Cadena> cadenas = Cadenas.obtenerPrecios(codigoentidadfederal,localidad,codigos,configuraciones);
+            List<Cadena> cadenas = Cadenas.preciosSucursales(codigoentidadfederal,localidad,codigos,configuraciones);
 
             List<Cadena> cadenasDisponibles = new LinkedList<>();
             List<Cadena> cadenasNoDisponibles = new LinkedList<>();

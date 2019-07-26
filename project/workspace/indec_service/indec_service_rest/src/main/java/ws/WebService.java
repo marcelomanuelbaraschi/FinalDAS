@@ -2,6 +2,7 @@ package ws;
 import db.beans.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.Cadenas.Cadenas;
 import service.Comparador.Comparador;
 import utilities.ListUtils;
 import utilities.ServiceHealth;
@@ -50,7 +51,7 @@ public class WebService {
 
     @GET
     @Path("/productos")
-    public void buscarproductos(@Suspended final AsyncResponse response
+    public void productos(@Suspended final AsyncResponse response
                                ,@QueryParam("idcategoria") final Short idcategoria
                                ,@QueryParam("marcas") final String marcas
                                ,@QueryParam("palabraclave") final String palabraclave)
@@ -152,7 +153,7 @@ public class WebService {
             logger.error(configuraciones.toString());
 
 
-            List<Cadena> infosuc = obtenerSucursales(codigoentidadfederal,localidad,configuraciones);
+            List<Cadena> infosuc = Cadenas.sucursales(codigoentidadfederal,localidad,configuraciones);
 
             response.resume(toJson(infosuc));
 
@@ -179,7 +180,7 @@ public class WebService {
         try{
             List<Configuracion> configuraciones = obtenerConfiguraciones();
 
-            List<Cadena> cadenas = obtenerPrecios(codigoentidadfederal, localidad, codigos, configuraciones);
+            List<Cadena> cadenas = preciosSucursales(codigoentidadfederal, localidad, codigos, configuraciones);
 
             List<Producto> productosDelCarrito = buscarProductosPorCodigos(codigos);
 
@@ -188,9 +189,9 @@ public class WebService {
 
             comparador.comparar();
 
-            List<Cadena> comparadas = comparador.obtenerComparacion();
+            List<Cadena> resultadoComparacion = comparador.obtenerComparacion();
 
-            response.resume(toJson(comparadas));
+            response.resume(toJson(resultadoComparacion));
 
         }catch(Exception exception){
             logger.error("Endpoint Failure, {}",exception.getMessage());

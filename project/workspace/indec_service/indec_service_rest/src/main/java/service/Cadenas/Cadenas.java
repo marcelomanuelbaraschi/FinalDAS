@@ -54,19 +54,19 @@ public class Cadenas {
         }
     }
 
-    public static List<Cadena> obtenerSucursales
+    public static List<Cadena> sucursales
             (final String codigoentidadfederal
                     ,final String localidad
                     ,final List<Configuracion> configuraciones)
     {
         return configuraciones
                 .parallelStream()
-                .map((config) -> obtenerSucursalesDeCadena(codigoentidadfederal,localidad,config))
+                .map((config) -> sucursales(codigoentidadfederal,localidad,config))
                 .collect(toList());
 
     }
 
-    public static List<Cadena> obtenerPrecios
+    public static List<Cadena> preciosSucursales
             (final String codigoentidadfederal
                     ,final String localidad
                     ,final String codigos
@@ -74,11 +74,11 @@ public class Cadenas {
     {
         return configuraciones
                 .parallelStream()
-                .map((config) -> obtenerPreciosDeCadena(codigoentidadfederal,localidad,codigos,config))
+                .map((config) -> preciosSucursales(codigoentidadfederal,localidad,codigos,config))
                 .collect(toList());
     }
 
-    public static Cadena obtenerSucursalesDeCadena
+    public static Cadena sucursales
             (final String codigoentidadfederal
                     ,final String localidad
                     ,final Configuracion configuracion)
@@ -106,7 +106,7 @@ public class Cadenas {
 
     }
 
-    public static Cadena obtenerPreciosDeCadena
+    public static Cadena preciosSucursales
             (final String codigoentidadfederal
                     ,final String localidad
                     ,final String codigos,final Configuracion configuracion)
